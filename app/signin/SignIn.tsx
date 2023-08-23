@@ -29,25 +29,21 @@ export default function SignIn() {
     event.preventDefault();
   };
   const boxStyles = {
-    marginTop: 8,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    border: "3px solid #F1F1F1",
+    background: "#FFFFFF",
+    padding: "3vh", //  padding
+    margin: "5vh auto", // margin
+    maxWidth: "400px", // Max width for tablets
   };
 
   return (
     <Container component="main">
       <Box
         sx={{
-          marginX: "370px",
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          border: "3px solid #F1F1F1",
-          background: "#FFFFFF",
-          paddingTop: "15px",
-          paddingBottom: "15px",
+          ...boxStyles,
         }}
       >
         <Typography component="h1" variant="h5">
@@ -57,14 +53,14 @@ export default function SignIn() {
         <Box
           component="form"
           noValidate
-          sx={{ mt: 1, width: 340, paddingTop: "8px" }}
+          sx={{ mt: 2, width: { xs: "100%", sm: "80%" } }} // Adjusted width for different screen sizes
         >
           <Typography>Email</Typography>
 
           <FormControl
             variant="outlined"
             fullWidth
-            sx={{ marginBottom: "16px" }}
+            sx={{marginBottom: 2}}
           >
             <InputLabel htmlFor="email">Email Address</InputLabel>
             <OutlinedInput
@@ -78,7 +74,7 @@ export default function SignIn() {
           <FormControl
             variant="outlined"
             fullWidth
-            sx={{ marginBottom: "16px" }}
+            sx={{marginBottom: 2}}
           >
             <InputLabel htmlFor="outlined-adornment-password">
               Password
