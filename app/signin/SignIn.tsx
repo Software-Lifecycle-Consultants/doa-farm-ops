@@ -29,32 +29,39 @@ export default function SignIn() {
     event.preventDefault();
   };
   const boxStyles = {
-    marginTop: 8,
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
+    border: "3px solid #F1F1F1",
+    background: "#FFFFFF",
+    padding: "3vh", //  padding
+    margin: "5vh auto", // margin
+    maxWidth: "400px", // Max width for tablets
   };
 
   return (
     <Container component="main">
-      <CssBaseline />
-
       <Box
         sx={{
-          marginTop: 8,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          ...boxStyles,
         }}
       >
         <Typography component="h1" variant="h5">
           Welcome DOA Platform
         </Typography>
 
-        <Box component="form" noValidate sx={{ mt: 1, width: 340 }}>
+        <Box
+          component="form"
+          noValidate
+          sx={{ mt: 2, width: { xs: "100%", sm: "80%" } }} // Adjusted width for different screen sizes
+        >
           <Typography>Email</Typography>
 
-          <FormControl variant="outlined" fullWidth>
+          <FormControl
+            variant="outlined"
+            fullWidth
+            sx={{marginBottom: 2}}
+          >
             <InputLabel htmlFor="email">Email Address</InputLabel>
             <OutlinedInput
               id="email"
@@ -64,7 +71,11 @@ export default function SignIn() {
           </FormControl>
 
           <Typography>Password</Typography>
-          <FormControl variant="outlined" fullWidth>
+          <FormControl
+            variant="outlined"
+            fullWidth
+            sx={{marginBottom: 2}}
+          >
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
@@ -128,43 +139,16 @@ export default function SignIn() {
             Sign In
           </Button>
 
-          <Box
-            sx={{ width: "100%", display: "flex", alignItems: "center", my: 2 }}
+          <Grid
+            sx={{ padding: "5px" }}
+            direction="row"
+            justifyContent="center"
+            alignItems="center"
+            container
           >
-            <hr style={{ flex: 1 }} />
-            <Typography variant="body2" sx={{ px: 2 }}>
-              or
-            </Typography>
-            <hr style={{ flex: 1 }} />
-          </Box>
-
-          <Button
-            variant="outlined"
-            sx={{
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              backgroundColor: "#f0f0f0",
-              padding: 1,
-            }}
-          >
-            <img
-              src="https://www.freepnglogos.com/uploads/google-logo-png/google-logo-png-webinar-optimizing-for-success-google-business-webinar-13.png"
-              alt="Google Logo"
-              style={{ width: "24px", height: "24px", marginRight: "8px" }}
-            />
-            <Typography variant="body2" sx={{ fontSize: 12 }}>
-              Google
-            </Typography>
-          </Button>
-
-          <Grid container>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
+            <Link href="#" variant="body2">
+              {"Don't have an account? Sign Up"}
+            </Link>
           </Grid>
         </Box>
       </Box>
