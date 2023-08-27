@@ -39,7 +39,7 @@ export default function OfficerProfile() {
                   fontStyle: "normal",
                   fontWeight: "500",
                   lineHeight: "normal",
-                  marginBottom:"4px"
+                  marginBottom:"4px",
                   
                 }}
               >
@@ -90,6 +90,7 @@ export default function OfficerProfile() {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
+                alignItems: "center"
               }}
             >
               <Typography
@@ -326,6 +327,7 @@ export default function OfficerProfile() {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
+                alignItems: "center"
               }}
             >
               <Typography
@@ -349,7 +351,7 @@ export default function OfficerProfile() {
               </Button>
             </Grid>
 
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={12} >
               <Typography
                 sx={{
                   color: "#9D9D9D",
@@ -358,6 +360,7 @@ export default function OfficerProfile() {
                   fontStyle: "normal",
                   fontWeight: "400",
                   lineHeight: "normal",
+                  
                 }}
               >
                 Name
