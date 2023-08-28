@@ -17,11 +17,16 @@ export default function Home() {
     router.push("/OfficerProfile");
   };
 
+  const navigationToFarmerProfile = () => {
+    router.push("/FarmerProfile");
+  };
+
   return (
     <>
       <button onClick={navigationToSignIn}>Go to Login</button>
       <button onClick={navigationToRegistration}>Go to SignUp</button>
-      <button onClick={navigationToOfficerProfile}>Go to Officer Profile</button>
+      <button onClick={navigationToOfficerProfile}>Go to Officer Profile </button>
+      <button onClick={navigationToFarmerProfile}>Go to Farmer Profile</button>
     </>
   );
 }

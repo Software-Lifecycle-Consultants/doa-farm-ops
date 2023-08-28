@@ -1,7 +1,6 @@
 
 import * as React from "react";
 import Box from "@mui/material/Box";
-import Profile from "../pages/OfficerProfile";
 import { Typography } from "@mui/material";
 interface  ProfileTitleProps  {
     title: string;
