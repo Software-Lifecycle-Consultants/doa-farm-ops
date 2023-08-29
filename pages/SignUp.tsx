@@ -12,15 +12,22 @@ import Container from '@mui/material/Container';
 
 export default function SignUp() {
  
+  const boxStyles = {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    border: "3px solid #F1F1F1",
+    background: "#FFFFFF",
+    padding: "3vh", //  padding
+    margin: "5vh auto", // margin
+    maxWidth: "400px", // Max width for tablets
+  };
 
   return (
       <Container component="main" maxWidth="xs">
         <Box
           sx={{
-            marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            ...boxStyles,
           }}
         >
           
