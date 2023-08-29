@@ -20,13 +20,17 @@ export default function Home() {
   const navigationToFarmerProfile = () => {
     router.push("/FarmerProfile");
   };
+  const navigationToAddLand = () => {
+    router.push("/AddLand");
+  };
 
   return (
     <>
       <button onClick={navigationToSignIn}>Go to Login</button>
       <button onClick={navigationToRegistration}>Go to SignUp</button>
       <button onClick={navigationToOfficerProfile}>Go to Officer Profile </button>
-      <button onClick={navigationToFarmerProfile}>Go to Farmer Profile</button>
+      <button onClick={navigationToFarmerProfile}>Go to Farmer Profile </button>
+      <button onClick={navigationToAddLand}>Go to Add Land</button>
     </>
   );
 }
