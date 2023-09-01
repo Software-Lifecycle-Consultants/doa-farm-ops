@@ -23,6 +23,12 @@ export default function Home() {
   const navigationToAddLand = () => {
     router.push("/AddLand");
   };
+  const navigationToAddCrop = () => {
+    router.push("/AddCrop");
+  };
+  const navigationToTest = () => {
+    router.push("/Test");
+  };
 
   return (
     <>
@@ -31,6 +37,8 @@ export default function Home() {
       <button onClick={navigationToOfficerProfile}>Go to Officer Profile </button>
       <button onClick={navigationToFarmerProfile}>Go to Farmer Profile </button>
       <button onClick={navigationToAddLand}>Go to Add Land</button>
+      <button onClick={navigationToAddCrop}>Go to Add Crop</button>
+      <button onClick={navigationToTest}>Go to test</button>
     </>
   );
 }
