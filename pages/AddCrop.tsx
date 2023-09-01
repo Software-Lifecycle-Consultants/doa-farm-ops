@@ -13,6 +13,12 @@ import FormLabel from "@mui/material/FormLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { Stack, Switch } from "@mui/material";
 
+const styles = {
+    label: {
+      color: 'black', // Change the label color to black
+    },
+  };
+
 export default function AddCrop() {
   const [value, setValue] = React.useState("female");
 
@@ -102,22 +108,30 @@ export default function AddCrop() {
 
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
+            
             <Grid item xs={12}>
+            <Typography>
+            Crop Name
+            </Typography>
               <TextField
                 autoComplete="given-name"
                 name="cropName"
                 required
                 fullWidth
                 id="cropName"
-                label="Crop Name"
+                placeholder="Enter crop name"
                 autoFocus
               />
             </Grid>
+            
             <Grid item xs={12} sm={6}>
+            <Typography>
+            Season
+            </Typography>
               <TextField
                 select
                 fullWidth
-                label="Season"
+                label="Select season"
                 defaultValue={"Season"}
                 value={selectedOption}
                 onChange={handleOptionChange}
@@ -130,9 +144,9 @@ export default function AddCrop() {
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl>
-                <FormLabel id="demo-controlled-radio-buttons-group">
+                <Typography id="demo-controlled-radio-buttons-group">
                   Crop Type
-                </FormLabel>
+                </Typography>
                 <RadioGroup
                   style={{ width: "100%" }}
                   aria-labelledby="demo-controlled-radio-buttons-group"
@@ -155,46 +169,61 @@ export default function AddCrop() {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
+            <Typography>
+            Total sold quantity
+            </Typography>
               <TextField
                 fullWidth
                 id="soldQuantity"
-                label="Total sold quantity"
+                placeholder="Enter total sold quantity"
                 name="soldQuantity"
                 autoComplete="soldQuantity"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+            <Typography>
+            Total income for crop
+            </Typography>
               <TextField
                 fullWidth
                 name="income"
-                label="Total income for crop"
+                placeholder="Enter total income for crop"
                 id="income"
                 autoComplete="income"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+            <Typography>
+            Quantity kept for home
+            </Typography>
               <TextField
                 fullWidth
                 id="QtyForHome"
-                label="Quantity kept for home"
+                placeholder="Enter quantity kept for home"
                 name="QtyForHome"
                 autoComplete="QtyForHome"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+            <Typography>
+            Quantity kept for seed
+            </Typography>
               <TextField
                 fullWidth
                 name="qtyForSeed"
-                label="Quantity kept for seed"
+                placeholder="Enter quantity kept for seed"
                 id="qtyForSeed"
                 autoComplete="qtyForSeed"
               />
             </Grid>
             <Grid item xs={12} sm={6}>
+            <Typography>
+            Number of picks
+            </Typography>
               <TextField
                 fullWidth
                 id="NoOfPicks"
-                label="Number of picks"
+                placeholder="Enter number of picks"
                 name="NoOfPicks"
                 autoComplete="NoOfPicks"
               />
@@ -210,6 +239,9 @@ export default function AddCrop() {
                   onChange={handleCultivationLoanChange}
                   variant="outlined"
                   autoFocus
+                  InputLabelProps={{
+                    style: styles.label, // Apply the label color style here
+                  }}
                 >
                   <MenuItem value="">Select an Option</MenuItem>
                   <MenuItem value="yes">Yes</MenuItem>
@@ -230,35 +262,7 @@ export default function AddCrop() {
             </Grid>
           </Grid>
 
-          <Grid item xs={12}>
-            <FormControl>
-              
-              <Box>
-                <FormControlLabel
-                  sx={{ marginLeft: "2px" }}
-                  labelPlacement="start"
-                  label="Cultivation loan obtained?"
-                  value={cultivationLoan}
-                  control={<Switch defaultChecked  
-                  checked={cultivationLoan2}
-                  onChange={handleCultivationLoan2Change}/>}
-                  
-                />
-              </Box>
-              {cultivationLoan2 &&
-                  <TextField
-                    autoComplete="given-name"
-                    name="cultivationLoan"
-                    fullWidth
-                    id="cultivationLoan"
-                    label="Cultivation loan amount"
-                    autoFocus
-                    required
-                  />
-
-              }
-            </FormControl>
-          </Grid>
+          
 
           <Button
             type="submit"
