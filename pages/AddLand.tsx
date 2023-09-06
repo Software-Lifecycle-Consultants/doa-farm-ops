@@ -57,62 +57,77 @@ export default function AddLand() {
         <Box  sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
+            <Typography>
+            Land Name
+            </Typography>
               <TextField
                 required
                 fullWidth
-                id="email"
-                label="Land Name"
-                name="email"
-                autoComplete="email"
+                id="landName"
+                placeholder="Enter landName"
+                name="landName"
+                autoComplete="landName"
               />
             </Grid>
             <Grid item xs={12}>
+            <Typography>
+            District
+            </Typography>
               <TextField
                 required
                 fullWidth
-                id="phoneNumber"
-                label="District"
-                name="phoneNumber"
-                autoComplete="phoneNumber"
+                id="district"
+                placeholder="Enter district"
+                name="district"
+                autoComplete="district"
               />
             </Grid>
             <Grid item xs={12}>
+            <Typography>
+            Division
+            </Typography>
               <TextField
                 required
                 fullWidth
-                name="password"
-                label="Division"
-                type="password"
-                id="password"
-                autoComplete="new-password"
+                name="division"
+                placeholder="Enter division"
+                type="division"
+                id="division"
+                autoComplete="division"
               />
             </Grid>
             <Grid item xs={12}>
+            <Typography>
+            Land Rent
+            </Typography>
               <TextField
                 required
                 fullWidth
-                name="password"
-                label="Land Rent"
-                type="password"
-                id="password"
-                autoComplete="new-password"
+                name="landRent"
+                placeholder="Enter land rent"
+                type="landRent"
+                id="landRent"
+                autoComplete="landRent"
               />
             </Grid>
             <Grid item xs={12}>
+            <Typography>
+            Mode of Irrigation
+            </Typography>
               <TextField
                 required
                 fullWidth
-                name="password"
-                label="Mode of Irrigation"
-                type="password"
-                id="password"
-                autoComplete="new-password"
+                name="modeOfIrrigation"
+                placeholder="Enter Mode of Irrigation"
+                type="modeOfIrrigation"
+                id="modeOfIrrigation"
+                autoComplete="modeOfIrrigation"
               />
             </Grid>
           </Grid>
 
           <Grid>
-            <Stack direction="row" spacing={2} paddingTop={2}>
+            <Stack direction="row" spacing={8} paddingTop={4}>
               <Button
                 type="submit"
                 variant="outlined"
