@@ -1,3 +1,4 @@
+// Import necessary modules and components
 "use client";
 import React, { useState } from "react";
 import Button from "@mui/material/Button";
@@ -18,16 +19,22 @@ import InputAdornment from "@mui/material/InputAdornment";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
+// Export the sign-in component
 export default function SignIn() {
+  // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
 
+  // Function to toggle password visibility
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
+  // Prevent default event handling for password visibility button
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
   };
+
+  // Styling for the Box element
   const boxStyles = {
     display: "flex",
     flexDirection: "column",
@@ -41,6 +48,7 @@ export default function SignIn() {
 
   return (
     <Container component="main">
+      {/* Main content container */}
       <Box
         sx={{
           ...boxStyles,
@@ -50,13 +58,14 @@ export default function SignIn() {
           Welcome DOA Platform
         </Typography>
 
+        {/* Sign-in form */}
         <Box
           component="form"
           noValidate
           sx={{ mt: 2, width: { xs: "100%", sm: "80%" } }} // Adjusted width for different screen sizes
         >
           <Typography>Email</Typography>
-
+          {/* Email input field */}
           <FormControl
             variant="outlined"
             fullWidth
@@ -71,6 +80,7 @@ export default function SignIn() {
           </FormControl>
 
           <Typography>Password</Typography>
+          {/* Password input field with visibility toggle */}
           <FormControl
             variant="outlined"
             fullWidth
@@ -98,6 +108,7 @@ export default function SignIn() {
             />
           </FormControl>
 
+          {/* Remember me and Forgot password options */}
           <Grid container>
             <Grid item xs={6} alignItems="center" justifyContent="flex-end">
               <FormControlLabel
@@ -129,7 +140,8 @@ export default function SignIn() {
               </Link>
             </Grid>
           </Grid>
-
+          
+          {/* Sign-in button */}
           <Button
             type="submit"
             fullWidth
@@ -138,7 +150,8 @@ export default function SignIn() {
           >
             Sign In
           </Button>
-
+          
+          {/* Link to sign-up page */}
           <Grid
             sx={{ padding: "5px" }}
             direction="row"

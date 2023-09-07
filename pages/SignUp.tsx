@@ -43,52 +43,67 @@ export default function SignUp() {
           <Box component="form" noValidate  sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
+              <Typography>
+              First Name
+            </Typography>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  placeholder="Enter first name"
                   autoFocus
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
+              <Typography>
+              Last Name
+            </Typography>
                 <TextField
                   required
                   fullWidth
                   id="lastName"
-                  label="Last Name"
+                  placeholder="Enter last name"
                   name="lastName"
                   autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
+              <Typography>
+              Email Address
+            </Typography>
                 <TextField
                   required
                   fullWidth
                   id="email"
-                  label="Email Address"
+                  placeholder="Enter email address"
                   name="email"
                   autoComplete="email"
                 />
               </Grid>
               <Grid item xs={12}>
+              <Typography>
+              Phone Number
+            </Typography>
                 <TextField
                   required
                   fullWidth
                   id="phoneNumber"
-                  label="Phone Number"
+                  placeholder="Enter phone number"
                   name="phoneNumber"
                   autoComplete="phoneNumber"
                 />
               </Grid>
               <Grid item xs={12}>
+              <Typography>
+            District
+            </Typography>
                 <TextField
                   required
                   fullWidth
                   name="password"
-                  label="Password"
+                  placeholder="Enter Password"
                   type="password"
                   id="password"
                   autoComplete="new-password"
