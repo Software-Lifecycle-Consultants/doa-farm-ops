@@ -10,6 +10,8 @@ import TableContainer from "@mui/material/TableContainer";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
+import Stack from "@mui/material/Stack";
+
 import {
   Box,
   IconButton,
@@ -100,37 +102,49 @@ export default function AddOperationCost() {
       foodCostPerDay: 18,
     },
   ];
+  const cropName = "Crop 1";
+  const cropType = "Paddy";
   const materialCostData = [
     {
       _id: "m1as34sd67sk89054",
-      material: "Wood",
+      material: "Material 1",
       quantity: 100,
       costOfMaterial: 5000,
     },
     {
       _id: "m2df76asdg23gjk789",
-      material: "Concrete",
+      material: "Material 2",
       quantity: 50,
       costOfMaterial: 3500,
     },
     {
       _id: "m3fgh45hj67k2klm098",
-      material: "Steel",
+      material: "Material 3",
       quantity: 200,
       costOfMaterial: 8000,
     },
     {
       _id: "m4pqr12xyz56a7bc8901",
-      material: "Bricks",
+      material: "Material 3",
       quantity: 5000,
       costOfMaterial: 2500,
     },
   ];
   return (
     <Grid item container xs={12} p={2} rowGap={2}>
-      <Grid item xs={12} p={2} md={12}>
-        <ProfileTitle title="Add Operation Cost for <Crop 1>" />
+      <Grid item md={12}>
+        
       </Grid>
+      <Stack
+        direction="row"
+        justifyContent="space-between"
+        alignItems="center"
+        spacing={2}
+        width={"100%"}
+      >
+        <ProfileTitle title={`Add Operation Cost for ${cropName}`} />
+        <Typography>Crop Type: {cropType}</Typography>
+      </Stack>
 
       <Grid
         item
@@ -149,7 +163,7 @@ export default function AddOperationCost() {
           sx={{ m: 1, width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
         >
           <InputLabel id="demo-simple-select-filled-label">
-            Nursery Operations
+            Major Operations
           </InputLabel>
           <Select
             labelId="demo-simple-select-filled-label"
@@ -160,9 +174,9 @@ export default function AddOperationCost() {
             <MenuItem value="">
               <em>None</em>
             </MenuItem>
-            <MenuItem value={10}>Season 1</MenuItem>
-            <MenuItem value={20}>Season 2</MenuItem>
-            <MenuItem value={30}>Season 3</MenuItem>
+            <MenuItem value={10}>Input 1</MenuItem>
+            <MenuItem value={20}>Input 2</MenuItem>
+            <MenuItem value={30}>Input 3</MenuItem>
           </Select>
         </FormControl>
 
@@ -176,7 +190,7 @@ export default function AddOperationCost() {
           <Grid item xs={12} sm={6} md={3} lg={2}>
             <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
               <InputLabel id="demo-simple-select-filled-label">
-                Goda Thawana
+                Sub Operations
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
@@ -187,9 +201,9 @@ export default function AddOperationCost() {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>Season 1</MenuItem>
-                <MenuItem value={20}>Season 2</MenuItem>
-                <MenuItem value={30}>Season 3</MenuItem>
+                <MenuItem value={10}>Input 1</MenuItem>
+                <MenuItem value={20}>Input 2</MenuItem>
+                <MenuItem value={30}>Input 3</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -207,9 +221,9 @@ export default function AddOperationCost() {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>Land 1</MenuItem>
-                <MenuItem value={20}>Land 2</MenuItem>
-                <MenuItem value={30}>Land 3</MenuItem>
+                <MenuItem value={10}>Input 1</MenuItem>
+                <MenuItem value={20}>Input 2</MenuItem>
+                <MenuItem value={30}>Input 3</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -227,9 +241,9 @@ export default function AddOperationCost() {
                 <MenuItem value="">
                   <em>None</em>
                 </MenuItem>
-                <MenuItem value={10}>Land 1</MenuItem>
-                <MenuItem value={20}>Land 2</MenuItem>
-                <MenuItem value={30}>Land 3</MenuItem>
+                <MenuItem value={10}>Input 1</MenuItem>
+                <MenuItem value={20}>Input 2</MenuItem>
+                <MenuItem value={30}>Input 3</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -915,6 +929,17 @@ export default function AddOperationCost() {
               </Table>
             </TableContainer>
           </Paper>
+        </Grid>
+      </Grid>
+      <Grid container justifyContent="center" alignItems="center">
+        <Grid item>
+          <Button
+            type="submit"
+            variant="contained"
+            sx={{ mt: 3, mb: 2, width: "25vw" }}
+          >
+            Save
+          </Button>
         </Grid>
       </Grid>
     </Grid>
