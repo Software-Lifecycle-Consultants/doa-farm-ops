@@ -11,12 +11,14 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
 import Stack from "@mui/material/Stack";
+import NavBar from "@/components/NavBar";
+import CssBaseline from '@mui/material/CssBaseline';
+import {machineryCostData, laborCostData, materialCostData, cropName, cropType} from "../data/operationCostData";
+
 
 import {
-  Box,
   IconButton,
   Input,
-  OutlinedInput,
   Table,
   TableBody,
   TableCell,
@@ -34,107 +36,16 @@ export default function AddOperationCost() {
   const handleChange2 = (event: SelectChangeEvent) => {
     setLandFilter(event.target.value);
   };
-  const machineryCostData = [
-    {
-      _id: "s323a4sd667sk89054",
-      method: "method 1",
-      ownedOrHired: "Owned",
-      noOfTimes: 12,
-      days: 7,
-      cost: "2000",
-    },
-    {
-      _id: "sdf76asdg234gjk789",
-      method: "method 2",
-      ownedOrHired: "Hired",
-      noOfTimes: 5,
-      days: 4,
-      cost: "1500",
-    },
-    {
-      _id: "fgh45hj67k23klm098",
-      method: "method 3",
-      ownedOrHired: "Owned",
-      noOfTimes: 8,
-      days: 6,
-      cost: "2800",
-    },
-    {
-      _id: "pqr12xyz56abc78901",
-      method: "method 4",
-      ownedOrHired: "Hired",
-      noOfTimes: 10,
-      days: 5,
-      cost: "1900",
-    },
-  ];
-  const laborCostData = [
-    {
-      _id: "l1as34sd67sk89054",
-      gender: "Male",
-      freeOrHired: "Hired",
-      quantity: 5,
-      dailyWage: 100,
-      foodCostPerDay: 20,
-    },
-    {
-      _id: "l2df76asdg23gjk789",
-      gender: "Female",
-      freeOrHired: "Hired",
-      quantity: 3,
-      dailyWage: 90,
-      foodCostPerDay: 15,
-    },
-    {
-      _id: "l3fgh45hj67k2klm098",
-      gender: "Male",
-      freeOrHired: "Free",
-      quantity: 8,
-      dailyWage: 0, // Daily wage is 0 for free labor
-      foodCostPerDay: 25,
-    },
-    {
-      _id: "l4pqr12xyz56a7bc8901",
-      gender: "Male",
-      freeOrHired: "Hired",
-      quantity: 6,
-      dailyWage: 110,
-      foodCostPerDay: 18,
-    },
-  ];
-  const cropName = "Crop 1";
-  const cropType = "Paddy";
-  const materialCostData = [
-    {
-      _id: "m1as34sd67sk89054",
-      material: "Material 1",
-      quantity: 100,
-      costOfMaterial: 5000,
-    },
-    {
-      _id: "m2df76asdg23gjk789",
-      material: "Material 2",
-      quantity: 50,
-      costOfMaterial: 3500,
-    },
-    {
-      _id: "m3fgh45hj67k2klm098",
-      material: "Material 3",
-      quantity: 200,
-      costOfMaterial: 8000,
-    },
-    {
-      _id: "m4pqr12xyz56a7bc8901",
-      material: "Material 3",
-      quantity: 5000,
-      costOfMaterial: 2500,
-    },
-  ];
+  
+  
+
+  
   return (
+    <>
+    
+    <CssBaseline/>
     <Grid item container xs={12} p={2} rowGap={2}>
-      <Grid item md={12}>
-        
-      </Grid>
+      
       <Stack
         direction="row"
         justifyContent="space-between"
@@ -943,5 +854,6 @@ export default function AddOperationCost() {
         </Grid>
       </Grid>
     </Grid>
+    </>
   );
 }

@@ -11,6 +11,7 @@ import Button from "@mui/material/Button";
 import { IconButton, Stack } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {rows} from "../data/landsData";
 
 interface Column {
   id:
@@ -57,33 +58,7 @@ const columns: readonly Column[] = [
   },
 ];
 
-interface Data {
-  landname: string;
-  district: string;
-  division: string;
-  rent: number;
-  irrigation: string;
-  button: string;
-  icons: string;
-}
 
-function createData(
-  landname: string,
-  district: string,
-  division: string,
-  rent: number,
-  irrigation: string,
-  button: string,
-  icons: string
-): Data {
-  return { landname, district, division, rent, irrigation, button, icons };
-}
-
-const rows = [
-  createData("Udumulla Land", "Colombo", "Kaduwela", 33, "Well", "", ""),
-  createData("Udumulla Land 2", "Colombo", "Kaduwela", 33, "Well", "", ""),
-  createData("Udumulla Land 3", "Colombo", "Kaduwela", 33, "Well", "", ""),
-];
 
 interface TableTitleProps {
   title: string;

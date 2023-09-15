@@ -7,8 +7,15 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+
+
 
 export default function AddLand() {
+
+  const router = useRouter();
+
   const boxStyles = {
     display: "flex",
     flexDirection: "column",
@@ -136,6 +143,8 @@ export default function AddLand() {
               >
                 Save & exit to my crops
               </Button>
+
+              
               <Button
                 type="submit"
                 variant="contained"
@@ -144,6 +153,8 @@ export default function AddLand() {
               >
                 Save & proceed to add crop
               </Button>
+
+              
             </Stack>
           </Grid>
         </Box>

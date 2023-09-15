@@ -8,8 +8,15 @@ import Container from "@mui/material/Container";
 import ProfileTitle from "../components/ProfileTitle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import { useRouter } from 'next/router';
+import Link from 'next/link';
+
+import { OfficerProfileData, sampleOfficerProfileData } from "../data/officerProfile";
 
 export default function OfficerProfile() {
+
+  const router = useRouter();
+
   return (
     <>
       <Grid container direction="column" rowGap={2}>
@@ -43,7 +50,7 @@ export default function OfficerProfile() {
                   
                 }}
               >
-                Sugath Jayaweera
+                {sampleOfficerProfileData.firstname} {sampleOfficerProfileData.lastname}
               </Typography>
               <Typography
                 sx={{
@@ -136,7 +143,7 @@ export default function OfficerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                Sugath
+                {sampleOfficerProfileData.firstname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6} >
@@ -162,7 +169,7 @@ export default function OfficerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                Jayaweera
+                {sampleOfficerProfileData.lastname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6} >
@@ -188,7 +195,7 @@ export default function OfficerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                sugath@gmail.com
+                {sampleOfficerProfileData.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -214,7 +221,7 @@ export default function OfficerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                991234567V
+                {sampleOfficerProfileData.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6} >
@@ -240,7 +247,7 @@ export default function OfficerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                112/B, Kahanthota Rd, Malabe
+                {sampleOfficerProfileData.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -266,33 +273,7 @@ export default function OfficerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                (+94)712345678
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography
-                sx={{
-                  color: "#9D9D9D",
-                  fontFamily: "DM Sans",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
-                  lineHeight: "normal",
-                }}
-              >
-                Households
-              </Typography>
-              <Typography
-                sx={{
-                  color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
-                  lineHeight: "normal",
-                }}
-              >
-                3
+                {sampleOfficerProfileData.phonenumber}
               </Typography>
             </Grid>
           </Grid>
@@ -375,7 +356,7 @@ export default function OfficerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                Green Asia Pvt.Ltd
+                {sampleOfficerProfileData.organization.name}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
@@ -401,10 +382,11 @@ export default function OfficerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                112/B, Kahanthota Rd, Malabe
+                {sampleOfficerProfileData.organization.address}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={12}>
+
+            <Grid container item xs={12} md={12}  >
               <Typography
                 sx={{
                   fontFamily: "DM Sans",
@@ -417,7 +399,7 @@ export default function OfficerProfile() {
                 Education
               </Typography>
             </Grid>
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={12} >
               <Typography
                 sx={{
                   color: "#9D9D9D",
@@ -440,7 +422,7 @@ export default function OfficerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                University of Colombo
+                {sampleOfficerProfileData.education.university}
               </Typography>
             </Grid>
           </Grid>
