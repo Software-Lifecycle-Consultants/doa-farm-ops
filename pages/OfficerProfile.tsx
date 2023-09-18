@@ -389,7 +389,7 @@ export default function OfficerProfile() {
               </Typography>
             </Grid>
 
-            <Grid container item xs={12} md={12}>
+            <Grid container item xs={12} md={12} paddingTop={'2vh'}>
               <Typography
                 sx={{
                   fontFamily: "DM Sans",
