@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Button,
   TextField,
@@ -9,13 +9,30 @@ import {
   Box,
   Typography,
   Container,
+  OutlinedInput,
+  InputAdornment,
+  IconButton
 } from "@mui/material";
-
+import {Visibility as Visibility, VisibilityOff as VisibilityOff} from "@mui/icons-material";
 /**
  * SignUp page allows to users to register to the system
  */
 
 export default function SignUp() {
+
+  // State to manage password visibility
+  const [showPassword, setShowPassword] = useState(false);
+
+  // Function to toggle password visibility
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  // Prevent default event handling for password visibility button
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
+
   // Styles for the main content container
   const boxStyles = {
     display: "flex",
@@ -94,22 +111,32 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>District</Typography>
-              <TextField
-                required
-                fullWidth
-                name="password"
-                placeholder="Enter Password"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-              />
+              <Typography>Password</Typography>
+              <OutlinedInput
+              fullWidth
+              id="outlined-adornment-password"
+              placeholder="Enter password"
+              type={showPassword ? "text" : "password"}
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
+              label="Password"
+            />
             </Grid>
             {/* Terms & Conditions Checkbox */}
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="By signing up you agree to our Terms & Conditions and Privacy Policy"
+                label="By signing up you agree to our terms & conditions and privacy policy"
               />
             </Grid>
           </Grid>
@@ -126,7 +153,7 @@ export default function SignUp() {
           <Grid container justifyContent="center">
             <Grid item>
               <Link href="#" variant="body2">
-                Already have an account? Sign in
+                Already have an account? Login
               </Link>
             </Grid>
           </Grid>
