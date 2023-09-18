@@ -17,6 +17,7 @@ import {
   Delete as DeleteIcon,
 } from "@mui/icons-material";
 import { rows } from "../data/landsData";
+import { useRouter } from "next/navigation";
 
 // Define columns for the table
 interface Column {
@@ -73,6 +74,7 @@ interface TableTitleProps {
  */
 
 export default function LandsTable({ title }: TableTitleProps) {
+  const router = useRouter();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -87,8 +89,13 @@ export default function LandsTable({ title }: TableTitleProps) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+  //Function to navigate to add crop page
+  const navigationToAddCrop = () => {
+    router.push("/AddCrop");
+  };
 
   return (
+    
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
@@ -117,7 +124,7 @@ export default function LandsTable({ title }: TableTitleProps) {
                         <>
                           {column.id === "button" ? (
                             <TableCell key={column.id} align={column.align}>
-                              <Button>Add Crop</Button>
+                              <Button onClick={navigationToAddCrop}>Add Crop</Button>
                             </TableCell>
                           ) : column.id === "icons" ? (
                             <TableCell key={column.id} align={column.align}>
