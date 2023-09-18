@@ -66,11 +66,7 @@ export default function SignIn() {
         >
           <Typography>Email</Typography>
           {/* Email input field */}
-          <FormControl
-            variant="outlined"
-            fullWidth
-            sx={{marginBottom: 2}}
-          >
+          <FormControl variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
             <InputLabel htmlFor="email">Email Address</InputLabel>
             <OutlinedInput
               id="email"
@@ -81,11 +77,7 @@ export default function SignIn() {
 
           <Typography>Password</Typography>
           {/* Password input field with visibility toggle */}
-          <FormControl
-            variant="outlined"
-            fullWidth
-            sx={{marginBottom: 2}}
-          >
+          <FormControl variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
             <InputLabel htmlFor="outlined-adornment-password">
               Password
             </InputLabel>
@@ -140,7 +132,7 @@ export default function SignIn() {
               </Link>
             </Grid>
           </Grid>
-          
+
           {/* Sign-in button */}
           <Button
             type="submit"
@@ -150,7 +142,7 @@ export default function SignIn() {
           >
             Sign In
           </Button>
-          
+
           {/* Link to sign-up page */}
           <Grid
             sx={{ padding: "5px" }}

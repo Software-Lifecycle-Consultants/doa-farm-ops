@@ -11,8 +11,9 @@ import Button from "@mui/material/Button";
 import { IconButton, Stack } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {rows} from "../data/cropsData";
+import { rows } from "../data/cropsData";
 
+// Define the table columns
 interface Column {
   id:
     | "landname"
@@ -31,7 +32,7 @@ interface Column {
   align?: "right";
   format?: (value: number) => string;
 }
-
+// Define the columns for the table
 const columns: readonly Column[] = [
   { id: "landname", label: "Land Name", minWidth: 170 },
   { id: "season", label: "Season", minWidth: 170 },
@@ -82,23 +83,20 @@ const columns: readonly Column[] = [
   },
 ];
 
-
-
-
-
-
+// Define the component to display the table
 interface TableTitleProps {
   title: string;
 }
 
 export default function CropsTable({ title }: TableTitleProps) {
+  // State for handling pagination
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
-
+  // Function to handle changing the page
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
   };
-
+  // Function to handle changing the number of rows per page
   const handleChangeRowsPerPage = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
@@ -110,6 +108,7 @@ export default function CropsTable({ title }: TableTitleProps) {
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
+          {/* Table header */}
           <TableHead>
             <TableRow>
               {columns.map((column) => (
@@ -123,6 +122,7 @@ export default function CropsTable({ title }: TableTitleProps) {
               ))}
             </TableRow>
           </TableHead>
+          {/* Table body */}
           <TableBody>
             {rows
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
@@ -164,6 +164,7 @@ export default function CropsTable({ title }: TableTitleProps) {
           </TableBody>
         </Table>
       </TableContainer>
+      {/* Table pagination */}
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"

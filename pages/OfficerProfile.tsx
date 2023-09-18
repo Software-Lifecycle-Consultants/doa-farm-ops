@@ -7,22 +7,26 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import ProfileTitle from "../components/ProfileTitle";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-import { OfficerProfileData, sampleOfficerProfileData } from "../data/officerProfile";
+import {
+  OfficerProfileData,
+  sampleOfficerProfileData,
+} from "../data/officerProfile";
 
 export default function OfficerProfile() {
-
   const router = useRouter();
 
   return (
     <>
       <Grid container direction="column" rowGap={2}>
         <Grid item xs={12}>
+          {/* Page title */}
           <ProfileTitle title="Officer profile" />
         </Grid>
+        {/* Officer Info */}
         <Grid item xs={12}>
           <Box
             sx={{
@@ -34,10 +38,10 @@ export default function OfficerProfile() {
               gap: "53px",
             }}
           >
-            <Box >
-            <AccountCircleIcon sx={{fontSize: "50px"}}/>
+            <Box>
+              <AccountCircleIcon sx={{ fontSize: "50px" }} />
             </Box>
-            <Box >
+            <Box>
               <Typography
                 sx={{
                   color: "#000",
@@ -46,11 +50,11 @@ export default function OfficerProfile() {
                   fontStyle: "normal",
                   fontWeight: "500",
                   lineHeight: "normal",
-                  marginBottom:"4px",
-                  
+                  marginBottom: "4px",
                 }}
               >
-                {sampleOfficerProfileData.firstname} {sampleOfficerProfileData.lastname}
+                {sampleOfficerProfileData.firstname}{" "}
+                {sampleOfficerProfileData.lastname}
               </Typography>
               <Typography
                 sx={{
@@ -67,7 +71,7 @@ export default function OfficerProfile() {
             </Box>
           </Box>
         </Grid>
-
+        {/* Personal Information Section */}
         <Grid
           item
           container
@@ -97,7 +101,7 @@ export default function OfficerProfile() {
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <Typography
@@ -111,7 +115,7 @@ export default function OfficerProfile() {
               >
                 Personal Information
               </Typography>
-
+              {/* Edit Button */}
               <Button
                 sx={{ backgroundColor: "#FFFFFF" }}
                 variant="outlined"
@@ -120,7 +124,8 @@ export default function OfficerProfile() {
                 Edit
               </Button>
             </Grid>
-            <Grid item xs={12} md={6} >
+            {/* Personal Information Fields */}
+            <Grid item xs={12} md={6}>
               <Typography
                 sx={{
                   color: "#9D9D9D",
@@ -146,7 +151,7 @@ export default function OfficerProfile() {
                 {sampleOfficerProfileData.firstname}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6} >
+            <Grid item xs={12} md={6}>
               <Typography
                 sx={{
                   color: "#9D9D9D",
@@ -172,7 +177,7 @@ export default function OfficerProfile() {
                 {sampleOfficerProfileData.lastname}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6} >
+            <Grid item xs={12} md={6}>
               <Typography
                 sx={{
                   color: "#9D9D9D",
@@ -224,7 +229,7 @@ export default function OfficerProfile() {
                 {sampleOfficerProfileData.nic}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6} >
+            <Grid item xs={12} md={6}>
               <Typography
                 sx={{
                   color: "#9D9D9D",
@@ -278,7 +283,7 @@ export default function OfficerProfile() {
             </Grid>
           </Grid>
         </Grid>
-
+        {/* Organization & Education Details Section*/}
         <Grid
           item
           xs={12}
@@ -303,12 +308,11 @@ export default function OfficerProfile() {
               item
               xs={12}
               md={12}
-              
               sx={{
                 display: "flex",
                 flexDirection: "row",
                 justifyContent: "space-between",
-                alignItems: "center"
+                alignItems: "center",
               }}
             >
               <Typography
@@ -332,7 +336,7 @@ export default function OfficerProfile() {
               </Button>
             </Grid>
 
-            <Grid item xs={12} md={12} >
+            <Grid item xs={12} md={12}>
               <Typography
                 sx={{
                   color: "#9D9D9D",
@@ -341,7 +345,6 @@ export default function OfficerProfile() {
                   fontStyle: "normal",
                   fontWeight: "400",
                   lineHeight: "normal",
-                  
                 }}
               >
                 Name
@@ -386,7 +389,7 @@ export default function OfficerProfile() {
               </Typography>
             </Grid>
 
-            <Grid container item xs={12} md={12}  >
+            <Grid container item xs={12} md={12}>
               <Typography
                 sx={{
                   fontFamily: "DM Sans",
@@ -399,7 +402,7 @@ export default function OfficerProfile() {
                 Education
               </Typography>
             </Grid>
-            <Grid item xs={12} md={12} >
+            <Grid item xs={12} md={12}>
               <Typography
                 sx={{
                   color: "#9D9D9D",

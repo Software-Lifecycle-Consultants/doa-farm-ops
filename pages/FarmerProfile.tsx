@@ -8,22 +8,25 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import AddIcon from "@mui/icons-material/Add";
 import LandsTable from "@/components/LandsTable";
-import { useRouter } from 'next/router';
-import Link from 'next/link';
+import { useRouter } from "next/router";
+import Link from "next/link";
 
-import { FarmerProfileData, sampleFarmerProfileData } from "../data/farmerProfile";
-
-
+import {
+  FarmerProfileData,
+  sampleFarmerProfileData,
+} from "../data/farmerProfile";
 
 export default function FarmerProfile() {
-
   const router = useRouter();
   return (
     <>
+      {/* Main grid container */}
       <Grid container direction="column" rowGap={2}>
+        {/* Title */}
         <Grid item xs={12}>
           <ProfileTitle title="Farmer profile" />
         </Grid>
+        {/* Farmer Info */}
         <Grid item xs={12}>
           <Box
             sx={{
@@ -50,7 +53,8 @@ export default function FarmerProfile() {
                   marginBottom: "4px",
                 }}
               >
-                {sampleFarmerProfileData.firstname} {sampleFarmerProfileData.lastname}
+                {sampleFarmerProfileData.firstname}{" "}
+                {sampleFarmerProfileData.lastname}
               </Typography>
               <Typography
                 sx={{
@@ -67,7 +71,7 @@ export default function FarmerProfile() {
             </Box>
           </Box>
         </Grid>
-
+        {/* Personal Information Section */}
         <Grid
           item
           container
@@ -111,7 +115,7 @@ export default function FarmerProfile() {
               >
                 Personal Information
               </Typography>
-
+              {/* Edit Button */}
               <Button
                 sx={{ backgroundColor: "#FFFFFF" }}
                 variant="outlined"
@@ -120,6 +124,7 @@ export default function FarmerProfile() {
                 Edit
               </Button>
             </Grid>
+            {/* Personal Information Fields */}
             <Grid item xs={12} md={6}>
               <Typography
                 sx={{
@@ -304,7 +309,7 @@ export default function FarmerProfile() {
             </Grid>
           </Grid>
         </Grid>
-
+        {/* Other Details Section*/}
         <Grid
           item
           xs={12}
@@ -347,7 +352,7 @@ export default function FarmerProfile() {
               >
                 Other Details
               </Typography>
-
+              {/* Edit Button */}
               <Button
                 sx={{ backgroundColor: "#FFFFFF" }}
                 variant="outlined"
@@ -356,7 +361,7 @@ export default function FarmerProfile() {
                 Edit
               </Button>
             </Grid>
-
+            {/* Other Details Fields */}
             <Grid item xs={12} md={12}>
               <Typography
                 sx={{
@@ -411,6 +416,8 @@ export default function FarmerProfile() {
             </Grid>
           </Grid>
         </Grid>
+
+        {/* Land Details */}
         <Grid
           container
           item
@@ -443,16 +450,18 @@ export default function FarmerProfile() {
             >
               Land Details
             </Typography>
+            {/* Add Button for Adding Land */}
             <Link href="/AddLand">
-            <Button
-              sx={{ backgroundColor: "#FFFFFF" }}
-              variant="outlined"
-              endIcon={<AddIcon />}
-            >
-              Add
-            </Button>
+              <Button
+                sx={{ backgroundColor: "#FFFFFF" }}
+                variant="outlined"
+                endIcon={<AddIcon />}
+              >
+                Add
+              </Button>
             </Link>
           </Grid>
+          {/* Include the LandsTable component */}
           <Grid item xs={12}>
             <LandsTable title="Farmer profile" />
           </Grid>

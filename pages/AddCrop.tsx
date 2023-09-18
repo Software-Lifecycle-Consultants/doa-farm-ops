@@ -13,39 +13,43 @@ import FormLabel from "@mui/material/FormLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { Stack, Switch } from "@mui/material";
 
+// Styles for labels
 const styles = {
-    label: {
-      color: 'black', // Change the label color to black
-    },
-  };
+  label: {
+    color: "black",
+  },
+};
 
 export default function AddCrop() {
+  // State variables for form fields
   const [value, setValue] = React.useState("female");
-
   const [cultivationLoan, setCultivationLoan] = useState("");
   const [cultivationLoan2, setCultivationLoan2] = useState(true);
   const [isCultivationLoan, setIsCultivationLoan] = useState("");
   const [selectedOption, setSelectedOption] = useState("");
 
-  const handleCultivationLoan2Change = (event: React.ChangeEvent<HTMLInputElement>) => {
+  // Handle switch change for cultivation loan
+  const handleCultivationLoan2Change = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
     setCultivationLoan2(event.target.checked);
   };
-
+  // Handle selection change for "Select Land" dropdown
   const handleOptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedOption(event.target.value);
   };
-
+  // Handle radio button change for crop type
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setValue((event.target as HTMLInputElement).value);
   };
-
+  // Handle selection change for "Cultivation loan obtained?" dropdown
   const handleCultivationLoanChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     setIsCultivationLoan(event.target.value);
     setCultivationLoan("");
   };
-
+  // Styles for the container box
   const boxStyles = {
     display: "flex",
     flexDirection: "column",
@@ -64,15 +68,11 @@ export default function AddCrop() {
           ...boxStyles,
         }}
       >
-        
         <Box sx={{ width: "100%" }}>
-        
-
-            <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={6}>
             <Stack direction="row" spacing={2} paddingTop={2}>
-              
               <TextField
-              required
+                required
                 select
                 fullWidth
                 label="Select Land"
@@ -87,8 +87,8 @@ export default function AddCrop() {
               </TextField>
 
               <Typography component="h1" variant="subtitle1" gutterBottom>
-            or
-          </Typography>
+                or
+              </Typography>
               <Button
                 type="submit"
                 variant="outlined"
@@ -100,19 +100,20 @@ export default function AddCrop() {
             </Stack>
           </Grid>
 
-
-          <Typography component="h1" variant="subtitle1" paddingTop={'15px'} gutterBottom>
+          <Typography
+            component="h1"
+            variant="subtitle1"
+            paddingTop={"15px"}
+            gutterBottom
+          >
             Fill the bellow details to add crop
           </Typography>
         </Box>
 
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
-            
             <Grid item xs={12}>
-            <Typography>
-            Crop Name
-            </Typography>
+              <Typography>Crop Name</Typography>
               <TextField
                 autoComplete="given-name"
                 name="cropName"
@@ -123,11 +124,9 @@ export default function AddCrop() {
                 autoFocus
               />
             </Grid>
-            
+
             <Grid item xs={12} sm={6}>
-            <Typography>
-            Season
-            </Typography>
+              <Typography>Season</Typography>
               <TextField
                 select
                 fullWidth
@@ -169,9 +168,7 @@ export default function AddCrop() {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-            <Typography>
-            Total sold quantity
-            </Typography>
+              <Typography>Total sold quantity</Typography>
               <TextField
                 fullWidth
                 id="soldQuantity"
@@ -181,9 +178,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-            <Typography>
-            Total income for crop
-            </Typography>
+              <Typography>Total income for crop</Typography>
               <TextField
                 fullWidth
                 name="income"
@@ -193,9 +188,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-            <Typography>
-            Quantity kept for home
-            </Typography>
+              <Typography>Quantity kept for home</Typography>
               <TextField
                 fullWidth
                 id="QtyForHome"
@@ -205,9 +198,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-            <Typography>
-            Quantity kept for seed
-            </Typography>
+              <Typography>Quantity kept for seed</Typography>
               <TextField
                 fullWidth
                 name="qtyForSeed"
@@ -217,9 +208,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-            <Typography>
-            Number of picks
-            </Typography>
+              <Typography>Number of picks</Typography>
               <TextField
                 fullWidth
                 id="NoOfPicks"
@@ -228,7 +217,12 @@ export default function AddCrop() {
                 autoComplete="NoOfPicks"
               />
             </Grid>
-            <Grid container spacing={0.5} paddingLeft={'16px'} paddingTop={'16px'}>
+            <Grid
+              container
+              spacing={0.5}
+              paddingLeft={"16px"}
+              paddingTop={"16px"}
+            >
               <Grid item xs={5.9}>
                 <TextField
                   select
@@ -261,8 +255,6 @@ export default function AddCrop() {
               </Grid>
             </Grid>
           </Grid>
-
-          
 
           <Button
             type="submit"
