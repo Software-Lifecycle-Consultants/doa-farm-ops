@@ -36,6 +36,7 @@ export default function OfficerProfile() {
               padding: "3vh",
               Width: "90%",
               gap: "53px",
+              borderRadius: "12px",
             }}
           >
             <Box>
