@@ -49,6 +49,7 @@ export default function AddCrop() {
     setIsCultivationLoan(event.target.value);
     setCultivationLoan("");
   };
+
   // Styles for the container box
   const boxStyles = {
     display: "flex",
@@ -58,7 +59,7 @@ export default function AddCrop() {
     background: "#FFFFFF",
     padding: "3vh", //  padding
     margin: "5vh auto", // margin
-    maxWidth: "500px", // Max width for tablets
+    maxWidth: "600px", // Max width for tablets
   };
 
   return (
@@ -69,7 +70,12 @@ export default function AddCrop() {
         }}
       >
         <Box sx={{ width: "100%" }}>
-          <Grid item xs={12} sm={6}>
+          <Typography component="h1" variant="h5" gutterBottom >
+            Add Crop
+          </Typography>
+        </Box>
+        <Box sx={{ width: "100%" }}>
+          <Grid item xs={12} sm={6} >
             <Stack direction="row" spacing={2} paddingTop={2}>
               <TextField
                 required
@@ -113,7 +119,7 @@ export default function AddCrop() {
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography>Crop Name</Typography>
+              <Typography>Crop Name *</Typography>
               <TextField
                 autoComplete="given-name"
                 name="cropName"
@@ -121,12 +127,13 @@ export default function AddCrop() {
                 fullWidth
                 id="cropName"
                 placeholder="Enter crop name"
-                autoFocus
+                
+                
               />
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <Typography>Season</Typography>
+              <Typography>Season *</Typography>
               <TextField
                 select
                 fullWidth
@@ -144,13 +151,13 @@ export default function AddCrop() {
             <Grid item xs={12} sm={6}>
               <FormControl>
                 <Typography id="demo-controlled-radio-buttons-group">
-                  Crop Type
+                  Crop Type *
                 </Typography>
                 <RadioGroup
                   style={{ width: "100%" }}
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
-                  value={value}
+                  value="paddy"
                   onChange={handleChange}
                   row
                 >
