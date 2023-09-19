@@ -12,6 +12,8 @@ import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { Stack, Switch } from "@mui/material";
+import { useRouter } from "next/router";
+
 
 // Styles for labels
 const styles = {
@@ -21,6 +23,7 @@ const styles = {
 };
 
 export default function AddCrop() {
+  const router = useRouter();
   // State variables for form fields
   const [value, setValue] = React.useState("female");
   const [cultivationLoan, setCultivationLoan] = useState("");
@@ -48,6 +51,15 @@ export default function AddCrop() {
   ) => {
     setIsCultivationLoan(event.target.value);
     setCultivationLoan("");
+  };
+
+  //Function to navigate to add land page
+  const navigationToAddLand = () => {
+    router.push("/AddLand");
+  };
+  //Function to navigate to my crops page clicking save button
+  const navigationToMyCrops = () => {
+    router.push("/MyCrops");
   };
 
   // Styles for the container box
@@ -100,6 +112,7 @@ export default function AddCrop() {
                 variant="outlined"
                 fullWidth
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
+                onClick={navigationToAddLand}
               >
                 Add a new Land
               </Button>
@@ -268,6 +281,7 @@ export default function AddCrop() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={navigationToMyCrops}
           >
             Save
           </Button>
