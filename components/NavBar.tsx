@@ -17,23 +17,27 @@ import {
 import Image from "next/image";
 import logo from "../public/images/logo.png";
 import DrawerComponent from "./DrawerComponent";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import LanguageIcon from "@mui/icons-material/Language";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+import {Language as LanguageIcon, ExitToApp as ExitToAppIcon} from "@mui/icons-material";
+import { ChangeEvent } from 'react';
 
+//Define the pages and routes for navigation
 const pages = [
   { label: "Home", route: "/" },
   { label: "Profile ", route: "/FarmerProfile" },
   { label: "Crops", route: "/AddOperationCost" },
 ];
-
+//Define languages for the language selector button
 const languages = [
   { label: "English", code: "en" },
   { label: "Sinhala", code: "si" },
   { label: "Tamil", code: "ta" },
 ];
 
+
+/**
+ * Navbar handles navigation to homepage, profile, crops, login, and language selector. 
+ */
 const NavBar = () => {
   const [value, setValue] = useState("one");
   const [languageAnchorEl, setLanguageAnchorEl] = useState(null);
@@ -41,25 +45,25 @@ const NavBar = () => {
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
-  const handleChange = (event, newValue) => {
+//Function to handle tab change
+  const handleChange = (event: ChangeEvent<{}>, newValue: string) => {
     setValue(newValue);
   };
-
-  const navigationToScreens = (route) => {
+//Function to navigate to screens
+  const navigationToScreens = (route: string) => {
     router.push(route);
   };
-
+//Function to handle language selector
   const handleLanguageClick = (event) => {
     setLanguageAnchorEl(event.currentTarget);
   };
-
+//Function to close language selector
   const handleLanguageClose = () => {
     setLanguageAnchorEl(null);
   };
-
+//Function to handle language change
   const changeLanguage = (code) => {
     // Implement language change logic here
-    console.log(`Changing language to ${code}`);
     handleLanguageClose();
   };
 
@@ -82,6 +86,7 @@ const NavBar = () => {
 
           {isMatch ? (
             <>
+            {/* Call the drawer component for mobile views */}
               <DrawerComponent />
             </>
           ) : (
@@ -104,7 +109,7 @@ const NavBar = () => {
                   />
                 ))}
               </Tabs>
-
+              {/* Language selector button */}
               <Button
                 variant="text"
                 sx={{
@@ -119,7 +124,7 @@ const NavBar = () => {
                 English<LanguageIcon sx={{ marginLeft: "5px" }} />
                 
               </Button>
-
+              {/* Language selector */}
               <Menu
                 anchorEl={languageAnchorEl}
                 open={Boolean(languageAnchorEl)}
@@ -134,7 +139,7 @@ const NavBar = () => {
                   </MenuItem>
                 ))}
               </Menu>
-
+              {/* Signout button */}
               <Button
                 variant="text"
                 sx={{

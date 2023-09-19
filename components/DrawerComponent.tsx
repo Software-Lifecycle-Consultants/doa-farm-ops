@@ -1,3 +1,4 @@
+//Import necessary modules
 "use client";
 import {
   List,
@@ -11,21 +12,29 @@ import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRouter } from "next/navigation";
 
+/**
+ * Drawer component represents navigation menu for mobile view.
+ * It handles navigation to homepage, profile, crops, login, and language selector.
+ */
+
+//Define pages for the navigation drawer component
 const pages = ["Home", "Profile", "Crops"];
+
 
 const DrawerComponent = () => {
   const router = useRouter();
   const [openDrawer, setOpenDrawer] = useState(false);
-
-const navigationToExploreScreen = (id: string) => {
-  if (id === "Profile") {
-    router.push("/FarmerProfile");
-  } else if (id === "Crops") {
-    router.push("/MyCrops");
-  } else {
-    router.push("/");
-  }
-};
+  
+  //Set navigation to screens from navigation bar
+  const navigationToScreens = (id: string) => {
+    if (id === "Profile") {
+      router.push("/FarmerProfile");
+    } else if (id === "Crops") {
+      router.push("/MyCrops");
+    } else {
+      router.push("/");
+    }
+  };
   return (
     <>
       <Drawer
@@ -38,14 +47,15 @@ const navigationToExploreScreen = (id: string) => {
           },
         }}
       >
+        {/* Render navigation items */}
         <List>
           {pages.map((page, index) => (
             <ListItemButton onClick={() => setOpenDrawer(false)} key={index}>
               <ListItemIcon>
                 <ListItemText
                   sx={{ color: "#FFF" }}
-                  onClick={(e) => navigationToExploreScreen(page)}
-                  >
+                  onClick={(e) => navigationToScreens(page)}
+                >
                   {page}
                 </ListItemText>
               </ListItemIcon>

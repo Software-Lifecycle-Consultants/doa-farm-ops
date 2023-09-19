@@ -1,23 +1,33 @@
 import * as React from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Stack from "@mui/material/Stack";
+import {
+  Button,
+  TextField,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  Stack,
+} from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
+import { useRouter } from "next/router";
+import Link from "next/link";
+
+/**
+ * Add Land page serves as a form to add details about land properties.
+ */
 
 export default function AddLand() {
+  const router = useRouter();
+  // Styles for the container box
   const boxStyles = {
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
     border: "3px solid #F1F1F1",
     background: "#FFFFFF",
-    padding: "3vh", //  padding
-    margin: "5vh auto", // margin
-    maxWidth: "500px", // Max width for tablets
+    padding: "3vh", 
+    margin: "5vh auto", 
+    maxWidth: "500px",
   };
 
   return (
@@ -32,34 +42,33 @@ export default function AddLand() {
             Add Land
           </Typography>
         </Box>
-
-        <Grid  container
-          item
-          rowGap={2}>
-          
-            <Grid item xs={12} md={12} sx={{
+        {/* Grid for Land Details */}
+        <Grid container item rowGap={2}>
+          <Grid
+            item
+            xs={12}
+            md={12}
+            sx={{
               display: "flex",
               flexDirection: "row",
               justifyContent: "space-between",
               alignItems: "center",
-            }}>
-              <Typography component="h1" variant="subtitle1" gutterBottom>
-                Fill the details bellow to add land
-              </Typography>
-            
-            
-              <Button endIcon={<PlaceOutlinedIcon />}>Mark on Map</Button>
-            
+            }}
+          >
+            <Typography component="h1" variant="subtitle1" gutterBottom>
+              Fill the details bellow to add land
+            </Typography>
+
+            {/* Button for marking on the map */}
+            <Button endIcon={<PlaceOutlinedIcon />}>Mark on Map</Button>
           </Grid>
         </Grid>
 
-        
-        <Box  sx={{ mt: 3 }}>
+        {/* Form for Land Details */}
+        <Box sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-            <Typography>
-            Land Name
-            </Typography>
+              <Typography>Land Name</Typography>
               <TextField
                 required
                 fullWidth
@@ -70,9 +79,7 @@ export default function AddLand() {
               />
             </Grid>
             <Grid item xs={12}>
-            <Typography>
-            District
-            </Typography>
+              <Typography>District</Typography>
               <TextField
                 required
                 fullWidth
@@ -83,9 +90,7 @@ export default function AddLand() {
               />
             </Grid>
             <Grid item xs={12}>
-            <Typography>
-            Division
-            </Typography>
+              <Typography>Division</Typography>
               <TextField
                 required
                 fullWidth
@@ -97,9 +102,7 @@ export default function AddLand() {
               />
             </Grid>
             <Grid item xs={12}>
-            <Typography>
-            Land Rent
-            </Typography>
+              <Typography>Land Rent</Typography>
               <TextField
                 required
                 fullWidth
@@ -111,9 +114,7 @@ export default function AddLand() {
               />
             </Grid>
             <Grid item xs={12}>
-            <Typography>
-            Mode of Irrigation
-            </Typography>
+              <Typography>Mode of Irrigation</Typography>
               <TextField
                 required
                 fullWidth
@@ -125,7 +126,7 @@ export default function AddLand() {
               />
             </Grid>
           </Grid>
-
+          {/* Buttons for saving and proceeding */}
           <Grid>
             <Stack direction="row" spacing={8} paddingTop={4}>
               <Button
@@ -136,6 +137,7 @@ export default function AddLand() {
               >
                 Save & exit to my crops
               </Button>
+
               <Button
                 type="submit"
                 variant="contained"
