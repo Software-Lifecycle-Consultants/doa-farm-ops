@@ -15,6 +15,7 @@ import {
   FarmerProfileData,
   sampleFarmerProfileData,
 } from "../data/farmerProfile";
+import { Padding } from "@mui/icons-material";
 
 export default function FarmerProfile() {
   const router = useRouter();
@@ -24,7 +25,7 @@ export default function FarmerProfile() {
       <Grid container direction="column" rowGap={2}>
         {/* Title */}
         <Grid item xs={12}>
-          <ProfileTitle title="Farmer profile" />
+          <ProfileTitle  title="Farmer profile" />
         </Grid>
         {/* Farmer Info */}
         <Grid item xs={12}>
@@ -36,6 +37,7 @@ export default function FarmerProfile() {
               padding: "3vh",
               Width: "90%",
               gap: "53px",
+              borderRadius: "12px"
             }}
           >
             <Box>

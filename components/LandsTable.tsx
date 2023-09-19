@@ -124,7 +124,7 @@ export default function LandsTable({ title }: TableTitleProps) {
                         <>
                           {column.id === "button" ? (
                             <TableCell key={column.id} align={column.align}>
-                              <Button onClick={navigationToAddCrop}>Add Crop</Button>
+                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '80%'}}  onClick={navigationToAddCrop}>Add Crop</Button>
                             </TableCell>
                           ) : column.id === "icons" ? (
                             <TableCell key={column.id} align={column.align}>
