@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import * as React from "react";
 import {
   Grid,
@@ -11,6 +12,7 @@ import {
 import ProfileTitle from "../components/ProfileTitle";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CropsTable from "@/components/CropsTable";
+// Import the router object to handle routing
 import { useRouter } from "next/router";
 
 /**
@@ -49,6 +51,7 @@ export default function MyCrops() {
     router.push("/AddCrop");
   };
   
+  // Return the JSX for rendering
   return (
     <Grid container direction="column" rowGap={2}>
       {/* Page title */}
