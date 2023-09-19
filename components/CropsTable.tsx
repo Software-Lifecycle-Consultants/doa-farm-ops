@@ -142,7 +142,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                         <>
                           {column.id === "button" ? (
                             <TableCell key={column.id} align={column.align}>
-                              <Button onClick={navigationToAddOperationCost}>Add Operation Cost</Button>
+                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Operation Cost</Button>
                             </TableCell>
                           ) : column.id === "icons" ? (
                             <TableCell key={column.id} align={column.align}>
