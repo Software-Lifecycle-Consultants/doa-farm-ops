@@ -1,32 +1,32 @@
+// Import necessary modules and components
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { Grid, Box, Button,Typography, } from "@mui/material";
 import ProfileTitle from "../components/ProfileTitle";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import { useRouter } from "next/router";
-import Link from "next/link";
+import {EditNote as EditNoteIcon, AccountCircle as AccountCircleIcon}from "@mui/icons-material";
 
+// Import the router object to handle routing
+import { useRouter } from "next/router";
+
+//Import necessary date from relevent data files
 import {
   OfficerProfileData,
   sampleOfficerProfileData,
 } from "../data/officerProfile";
 
+// OfficerProfile component renders a profile page for an officer.
 export default function OfficerProfile() {
   const router = useRouter();
 
+  // Return the JSX for rendering
   return (
     <>
+       {/* Main grid container */}
       <Grid container direction="column" rowGap={2}>
         <Grid item xs={12}>
           {/* Page title */}
           <ProfileTitle title="Officer profile" />
         </Grid>
-        {/* Officer Info */}
+        {/* Officer Info Section*/}
         <Grid item xs={12}>
           <Box
             sx={{

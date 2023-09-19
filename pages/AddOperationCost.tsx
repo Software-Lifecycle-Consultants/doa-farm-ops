@@ -13,6 +13,7 @@ import TableHead from "@mui/material/TableHead";
 import Stack from "@mui/material/Stack";
 import NavBar from "@/components/NavBar";
 import CssBaseline from "@mui/material/CssBaseline";
+import { useRouter } from "next/router";
 import {
   machineryCostData,
   laborCostData,
@@ -32,6 +33,7 @@ import {
 } from "@mui/material";
 
 export default function AddOperationCost() {
+  const router = useRouter();
   // State to manage filters for season and land
   const [seasonFilter, setSeasonFilter] = React.useState("");
   const [landFilter, setLandFilter] = React.useState("");
@@ -42,6 +44,10 @@ export default function AddOperationCost() {
   // Event handler for land filter change
   const handleChange2 = (event: SelectChangeEvent) => {
     setLandFilter(event.target.value);
+  };
+  //Function to navigate to my crops page
+  const navigationToMyCrops = () => {
+    router.push("/MyCrops");
   };
 
   return (
@@ -864,7 +870,7 @@ export default function AddOperationCost() {
         </Grid>
         {/* Save Button */}
         <Grid container justifyContent="center" alignItems="center">
-          <Grid item>
+          {/* <Grid item>
             <Button
               type="submit"
               variant="contained"
@@ -872,6 +878,29 @@ export default function AddOperationCost() {
             >
               Save
             </Button>
+          </Grid> */}
+          <Grid item>
+            <Stack direction="row" spacing={4} paddingTop={4}>
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 3, mb: 2, width: "18vw" }}
+                onClick={navigationToMyCrops}
+              >
+                Cancel
+              </Button>
+
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 3, mb: 2, width: "18vw" }}
+                onClick={navigationToMyCrops}
+              >
+                Save
+              </Button>
+            </Stack>
           </Grid>
         </Grid>
       </Grid>

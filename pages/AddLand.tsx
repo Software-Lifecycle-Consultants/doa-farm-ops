@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { useRouter } from "next/router";
-import Link from "next/link";
+
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -18,6 +18,15 @@ import Link from "next/link";
 
 export default function AddLand() {
   const router = useRouter();
+
+  //Function to navigate to my crops page clicking save & exit to my crops button
+  const navigationToMyCrops = () => {
+    router.push("/MyCrops");
+  };
+  //Function to navigate to add crop page
+  const navigationToAddCrop = () => {
+    router.push("/AddCrop");
+  };
   // Styles for the container box
   const boxStyles = {
     display: "flex",
@@ -128,12 +137,13 @@ export default function AddLand() {
           </Grid>
           {/* Buttons for saving and proceeding */}
           <Grid>
-            <Stack direction="row" spacing={8} paddingTop={4}>
+            <Stack direction="row" spacing={4} paddingTop={4}>
               <Button
                 type="submit"
                 variant="outlined"
                 fullWidth
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
+                onClick={navigationToMyCrops}
               >
                 Save & exit to my crops
               </Button>
@@ -143,6 +153,7 @@ export default function AddLand() {
                 variant="contained"
                 fullWidth
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
+                onClick={navigationToAddCrop}
               >
                 Save & proceed to add crop
               </Button>

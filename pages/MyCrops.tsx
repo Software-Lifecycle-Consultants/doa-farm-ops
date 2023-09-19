@@ -11,6 +11,7 @@ import {
 import ProfileTitle from "../components/ProfileTitle";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CropsTable from "@/components/CropsTable";
+import { useRouter } from "next/router";
 
 /**
  * My Crops page displays a table containing comprehensive details of crops cultivated on a specific land.
@@ -31,7 +32,7 @@ export default function MyCrops() {
     { value: 30, label: 'Land 3' },
   ];
   
-
+  const router = useRouter();
   // State variables to store filter values
   const [seasonFilter, setSeasonFilter] = React.useState("");
   const [landFilter, setLandFilter] = React.useState("");
@@ -42,6 +43,10 @@ export default function MyCrops() {
   // Event handler for land filter change
   const handleChange2 = (event: SelectChangeEvent) => {
     setLandFilter(event.target.value);
+  };
+  //Function to navigate to add crop page
+  const navigationToAddCrop = () => {
+    router.push("/AddCrop");
   };
   
   return (
@@ -103,6 +108,7 @@ export default function MyCrops() {
               type="submit"
               variant="outlined"
               sx={{ fontSize: 11, padding: "25px", height: "50px" }}
+              onClick={navigationToAddCrop}
             >
               Add Crop
             </Button>
