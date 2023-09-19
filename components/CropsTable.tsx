@@ -12,6 +12,7 @@ import { IconButton, Stack } from "@mui/material";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { rows } from "../data/cropsData";
+import { useRouter } from "next/navigation";
 
 // Define the table columns
 interface Column {
@@ -89,6 +90,7 @@ interface TableTitleProps {
 }
 
 export default function CropsTable({ title }: TableTitleProps) {
+  const router = useRouter();
   // State for handling pagination
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -102,6 +104,11 @@ export default function CropsTable({ title }: TableTitleProps) {
   ) => {
     setRowsPerPage(+event.target.value);
     setPage(0);
+  };
+
+  //Function to navigate to add operation cost page
+  const navigationToAddOperationCost = () => {
+    router.push("/AddOperationCost");
   };
 
   return (
@@ -135,7 +142,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                         <>
                           {column.id === "button" ? (
                             <TableCell key={column.id} align={column.align}>
-                              <Button>Add Operation Cost</Button>
+                              <Button onClick={navigationToAddOperationCost}>Add Operation Cost</Button>
                             </TableCell>
                           ) : column.id === "icons" ? (
                             <TableCell key={column.id} align={column.align}>

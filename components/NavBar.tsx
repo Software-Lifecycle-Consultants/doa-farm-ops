@@ -25,7 +25,7 @@ import { ChangeEvent } from 'react';
 const pages = [
   { label: "Home", route: "/" },
   { label: "Profile ", route: "/FarmerProfile" },
-  { label: "Crops", route: "/AddOperationCost" },
+  { label: "Crops", route: "/MyCrops" },
 ];
 //Define languages for the language selector button
 const languages = [
