@@ -1,15 +1,9 @@
+// Import necessary modules and components
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import DeleteIcon from "@mui/icons-material/Delete";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
+import { Grid, Box, Button,Typography, } from "@mui/material";
 import ProfileTitle from "../components/ProfileTitle";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import {EditNote as EditNoteIcon, AccountCircle as AccountCircleIcon}from "@mui/icons-material";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 import {
   OfficerProfileData,
