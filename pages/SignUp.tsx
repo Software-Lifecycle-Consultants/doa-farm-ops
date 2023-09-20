@@ -136,7 +136,13 @@ export default function SignUp() {
             <Grid item xs={12}>
               <FormControlLabel
                 control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label="By signing up you agree to our terms & conditions and privacy policy"
+                label={
+                  <>
+                    By signing up you agree to our{" "}
+                    <a href="/terms-and-conditions">Terms & Conditions</a> and{" "}
+                    <a href="/privacy-policy">Privacy Policy</a>
+                  </>
+                }
               />
             </Grid>
           </Grid>
