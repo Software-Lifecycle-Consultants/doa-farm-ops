@@ -8,7 +8,7 @@ interface  ProfileTitleProps  {
 
 export default function ProfileTitle({title}: ProfileTitleProps) {
   return (
-    <Box sx={{ backgroundColor: "", paddingTop:"30px" }}>
+    <Box sx={{ backgroundColor: "", paddingTop:"30px",paddingLeft:"5px" }}>
       <Typography
         component="h1"
         variant="h5"
@@ -21,6 +21,8 @@ export default function ProfileTitle({title}: ProfileTitleProps) {
           fontStyle: "normal",
           fontWeight: "500",
           lineHeight: "normal",
+          borderLeft: '6px solid #3665C5',
+          padding: '5px'
         }}
       >
         {title}
