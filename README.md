@@ -36,8 +36,8 @@ Follow these instructions to set up the Hotel Management System project locally 
 
 1. Clone the repository to your local machine:
  ```bash
-git clone https://github.com/your-username/hotel-management-system.gitgg
-cd hotel-management-system
+git https://github.com/Software-Lifecycle-Consultants/doa-farm-ops.git
+cd  doa-farm-ops
  ```
 2. Install the Node Modules:
 
@@ -47,22 +47,18 @@ npm install
  
 3. Install the Other NPM packages that are used in this project:
 
-- [react-date-range](https://www.npmjs.com/package/react-date-range) - Version 1.4.4
-  - A date library agnostic React component for choosing dates and date ranges. 
-  - Uses date-fns for date operations.
-  - Install the pkg/s using the following commands and import skeleton and theme styles.
+- [@mui/material](https://mui.com/material-ui/getting-started/installation/) - Version 5.14.5
+  - Material UI is a comprehensive library of components that features our implementation of Google's Material Design system.
+  - Install the package in your project directory using the following commands.
  ```bash
-npm install --save react-date-range
-npm install --save react date-fns
+npm install @mui/material @emotion/react @emotion/styled
  ```
 
-- [react-slick](https://www.npmjs.com/package/react-slick) - Version 0.23.10
-  - Carousel component built with React. It is a react port of slick carousel.
-  - Also install slick-carousel for css and font
-  - Install the pkg/s using the following commands and import skeleton and theme styles.
-```bash
-npm install react-slick --save
-npm install slick-carousel
+- [@mui/icons-material](https://mui.com/material-ui/icons/) - Version 5.14.3
+  - This package provides the Google Material Icons converted to SvgIcon components.
+  - Install the package in your project directory using the following commands.
+ ```bash
+npm install @mui/icons-material
  ```
 
 4. Set up the environment variables:
