@@ -97,7 +97,44 @@ export const machineryCostData = [
     },
   ];
 
-
-  
   export const cropName = "Crop 1";
   export const cropType = "Paddy";
+
+  
+  export const majorOps = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Input 1' },
+    { value: 20, label: 'Input 2' },
+    { value: 30, label: 'Input 3' },
+  ];
+  export const subOps = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Input 1' },
+    { value: 20, label: 'Input 2' },
+    { value: 30, label: 'Input 3' },
+  ];
+  export const fertilizerApps = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Input 1' },
+    { value: 20, label: 'Input 2' },
+    { value: 30, label: 'Input 3' },
+  ];
+  export const fertilizers = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Input 1' },
+    { value: 20, label: 'Input 2' },
+    { value: 30, label: 'Input 3' },
+  ];
+
+  export const machinery = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Method 1' },
+    { value: 20, label: 'Method 2' },
+    { value: 30, label: 'Method 3' },
+  ];
+  export const material = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Material 1' },
+    { value: 20, label: 'Material 2' },
+    { value: 30, label: 'Material 3' },
+  ];
