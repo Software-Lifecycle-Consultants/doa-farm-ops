@@ -11,7 +11,6 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
 import Stack from "@mui/material/Stack";
-import NavBar from "@/components/NavBar";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useRouter } from "next/router";
 import {
@@ -32,18 +31,82 @@ import {
   Typography,
 } from "@mui/material";
 
+/**
+ * Add Operation Cost page represents a page where users can add operation costs for a specific crop.(Machinery Cost, Labor Cost, Material Cost)
+ */
+
 export default function AddOperationCost() {
+
+  const majorOps = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Input 1' },
+    { value: 20, label: 'Input 2' },
+    { value: 30, label: 'Input 3' },
+  ];
+  const subOps = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Input 1' },
+    { value: 20, label: 'Input 2' },
+    { value: 30, label: 'Input 3' },
+  ];
+  const fertilizerApps = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Input 1' },
+    { value: 20, label: 'Input 2' },
+    { value: 30, label: 'Input 3' },
+  ];
+  const fertilizers = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Input 1' },
+    { value: 20, label: 'Input 2' },
+    { value: 30, label: 'Input 3' },
+  ];
+
+  const machinery = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Method 1' },
+    { value: 20, label: 'Method 2' },
+    { value: 30, label: 'Method 3' },
+  ];
+  const material = [
+    { value: '', label: 'None' },
+    { value: 10, label: 'Material 1' },
+    { value: 20, label: 'Material 2' },
+    { value: 30, label: 'Material 3' },
+  ];
+
   const router = useRouter();
-  // State to manage filters for season and land
-  const [seasonFilter, setSeasonFilter] = React.useState("");
-  const [landFilter, setLandFilter] = React.useState("");
-  // Event handler for season filter change
+  // State to manage filters
+  const [majorOperations, setMajorOperations] = React.useState("");
+  const [subOperations, setSubOperations] = React.useState("");
+  const [fertilizerApplication, setFertilizerApplication] = React.useState("");
+  const [selectFertilizer, setSelectFertilizer] = React.useState("");
+  const [machineryMethod, setMachineryMethod] = React.useState("");
+  const [materialCost, setMaterialCost] = React.useState("");
+
+  // Event handler for major operations filter change
   const handleChange1 = (event: SelectChangeEvent) => {
-    setSeasonFilter(event.target.value);
+    setMajorOperations(event.target.value);
   };
-  // Event handler for land filter change
+  // Event handler for sub operations filter change
   const handleChange2 = (event: SelectChangeEvent) => {
-    setLandFilter(event.target.value);
+    setSubOperations(event.target.value);
+  };
+  // Event handler for fertilizer application filter change
+  const handleChange3 = (event: SelectChangeEvent) => {
+    setFertilizerApplication(event.target.value);
+  };
+  // Event handler for select fertilizer filter change
+  const handleChange4 = (event: SelectChangeEvent) => {
+    setSelectFertilizer(event.target.value);
+  };
+  // Event handler for select machinery cost method filter change in machinery cost table
+  const handleChange5 = (event: SelectChangeEvent) => {
+    setMachineryMethod(event.target.value);
+  };
+  // Event handler for select material cost filter change in material cost table
+  const handleChange6 = (event: SelectChangeEvent) => {
+    setMaterialCost(event.target.value);
   };
   //Function to navigate to my crops page
   const navigationToMyCrops = () => {
@@ -94,15 +157,14 @@ export default function AddOperationCost() {
             <Select
               labelId="demo-simple-select-filled-label"
               id="demo-simple-select-filled"
-              // value={seasonFilter}
-              // onChange={handleChange1}
+              value={majorOperations}
+              onChange={handleChange1}
             >
-              <MenuItem value="">
-                <em>None</em>
-              </MenuItem>
-              <MenuItem value={10}>Input 1</MenuItem>
-              <MenuItem value={20}>Input 2</MenuItem>
-              <MenuItem value={30}>Input 3</MenuItem>
+              {majorOps.map((majorOp) => (
+        <MenuItem key={majorOp.value} value={majorOp.value}>
+          {majorOp.label}
+        </MenuItem>
+      ))}
             </Select>
           </FormControl>
           {/* Sub-operations, Fertilizer Application, and Select Fertilizer */}
@@ -122,15 +184,14 @@ export default function AddOperationCost() {
                 <Select
                   labelId="demo-simple-select-filled-label"
                   id="demo-simple-select-filled"
-                  // value={seasonFilter}
-                  // onChange={handleChange1}
+                  value={subOperations}
+                  onChange={handleChange2}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Input 1</MenuItem>
-                  <MenuItem value={20}>Input 2</MenuItem>
-                  <MenuItem value={30}>Input 3</MenuItem>
+                  {subOps.map((subOp) => (
+        <MenuItem key={subOp.value} value={subOp.value}>
+          {subOp.label}
+        </MenuItem>
+      ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -144,15 +205,14 @@ export default function AddOperationCost() {
                 <Select
                   labelId="demo-simple-select-filled-label"
                   id="demo-simple-select-filled"
-                  // value={landFilter}
-                  // onChange={handleChange2}
+                  value={fertilizerApplication}
+                  onChange={handleChange3}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Input 1</MenuItem>
-                  <MenuItem value={20}>Input 2</MenuItem>
-                  <MenuItem value={30}>Input 3</MenuItem>
+                  {fertilizerApps.map((fertilizer) => (
+        <MenuItem key={fertilizer.value} value={fertilizer.value}>
+          {fertilizer.label}
+        </MenuItem>
+      ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -166,15 +226,14 @@ export default function AddOperationCost() {
                 <Select
                   labelId="demo-simple-select-filled-label"
                   id="demo-simple-select-filled"
-                  // value={landFilter}
-                  // onChange={handleChange2}
+                  value={selectFertilizer}
+                  onChange={handleChange4}
                 >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value={10}>Input 1</MenuItem>
-                  <MenuItem value={20}>Input 2</MenuItem>
-                  <MenuItem value={30}>Input 3</MenuItem>
+                  {fertilizers.map((select) => (
+        <MenuItem key={select.value} value={select.value}>
+          {select.label}
+        </MenuItem>
+      ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -226,15 +285,14 @@ export default function AddOperationCost() {
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                // value={seasonFilter}
-                // onChange={handleChange1}
+                value={machineryMethod}
+                onChange={handleChange5}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Method 1</MenuItem>
-                <MenuItem value={20}>Method 2</MenuItem>
-                <MenuItem value={30}>Method 3</MenuItem>
+                {machinery.map((select) => (
+        <MenuItem key={select.value} value={select.value}>
+          {select.label}
+        </MenuItem>
+      ))}
               </Select>
             </FormControl>
             <FormControl
@@ -310,15 +368,14 @@ export default function AddOperationCost() {
                           <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
-                            // value={seasonFilter}
-                            // onChange={handleChange1}
+                            value={machineryMethod}
+                            onChange={handleChange5}
                           >
-                            <MenuItem value="">
-                              <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Method 1</MenuItem>
-                            <MenuItem value={20}>Method 2</MenuItem>
-                            <MenuItem value={30}>Method 3</MenuItem>
+                            {machinery.map((select) => (
+                                <MenuItem key={select.value} value={select.value}>
+                                {select.label}
+                                </MenuItem>
+                            ))}
                           </Select>
                         </FormControl>
                       </TableCell>
@@ -732,15 +789,14 @@ export default function AddOperationCost() {
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                // value={seasonFilter}
-                // onChange={handleChange1}
+                value={materialCost}
+                onChange={handleChange6}
               >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                <MenuItem value={10}>Material 1</MenuItem>
-                <MenuItem value={20}>Material 2</MenuItem>
-                <MenuItem value={30}>Material 3</MenuItem>
+                {material.map((season) => (
+                    <MenuItem key={season.value} value={season.value}>
+                      {season.label}
+                    </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <FormControl
@@ -789,15 +845,14 @@ export default function AddOperationCost() {
                           <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
-                            // value={seasonFilter}
-                            // onChange={handleChange1}
+                            value={materialCost}
+                            onChange={handleChange6}
                           >
-                            <MenuItem value="">
-                              <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={10}>Material 1</MenuItem>
-                            <MenuItem value={20}>Material 2</MenuItem>
-                            <MenuItem value={30}>Material 3</MenuItem>
+                            {material.map((season) => (
+                            <MenuItem key={season.value} value={season.value}>
+                              {season.label}
+                          </MenuItem>
+                          ))}
                           </Select>
                         </FormControl>
                       </TableCell>

@@ -1,3 +1,4 @@
+// Import necessary modules and components
 import * as React from "react";
 import {
   Button,
@@ -9,8 +10,8 @@ import {
   Stack,
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
+// Import the router object to handle routing
 import { useRouter } from "next/router";
-
 
 /**
  * Add Land page serves as a form to add details about land properties.
