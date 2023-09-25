@@ -14,25 +14,13 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CropsTable from "@/components/CropsTable";
 // Import the router object to handle routing
 import { useRouter } from "next/router";
+import {seasons, lands} from "../data/cropsData";
 
 /**
  * My Crops page displays a table containing comprehensive details of crops cultivated on a specific land.
  * Users can view vital information about each crop, and can add operation cost details.
  */
 export default function MyCrops() {
-
-  const seasons = [
-    { value: '', label: 'None' },
-    { value: 10, label: 'Season 1' },
-    { value: 20, label: 'Season 2' },
-    { value: 30, label: 'Season 3' },
-  ];
-  const lands = [
-    { value: '', label: 'None' },
-    { value: 10, label: 'Land 1' },
-    { value: 20, label: 'Land 2' },
-    { value: 30, label: 'Land 3' },
-  ];
   
   const router = useRouter();
   // State variables to store filter values
