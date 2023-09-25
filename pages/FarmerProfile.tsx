@@ -1,22 +1,23 @@
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import { Grid, Box, Button, Typography } from "@mui/material";
+import {
+  EditNote as EditNoteIcon,
+  AccountCircle as AccountCircleIcon,
+  Add as AddIcon,
+} from "@mui/icons-material";
 import ProfileTitle from "../components/ProfileTitle";
-import EditNoteIcon from "@mui/icons-material/EditNote";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-import AddIcon from "@mui/icons-material/Add";
 import LandsTable from "@/components/LandsTable";
 import { useRouter } from "next/router";
 import Link from "next/link";
 
 import {
-  FarmerProfileData,
   sampleFarmerProfileData,
 } from "../data/farmerProfile";
-import { Padding } from "@mui/icons-material";
 
+/**
+ * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
+ * Users can view and edit their profile information, as well as add new land details.
+ */
 export default function FarmerProfile() {
   const router = useRouter();
   return (

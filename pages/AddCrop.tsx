@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
-import MenuItem from "@mui/material/MenuItem";
-import { Stack, Switch } from "@mui/material";
+import {
+  Stack,
+  Button,
+  MenuItem,
+  FormControl,
+  RadioGroup,
+  Radio,
+  Container,
+  Typography,
+  Box,
+  Grid,
+  FormControlLabel,
+  TextField,
+} from "@mui/material";
 import { useRouter } from "next/router";
-
 
 // Styles for labels
 const styles = {
@@ -22,6 +22,9 @@ const styles = {
   },
 };
 
+/**
+ * Add Crop page serves as a form to add details about crop properties.
+ */
 export default function AddCrop() {
   const router = useRouter();
   // State variables for form fields
@@ -82,12 +85,12 @@ export default function AddCrop() {
         }}
       >
         <Box sx={{ width: "100%" }}>
-          <Typography component="h1" variant="h5" gutterBottom >
+          <Typography component="h1" variant="h5" gutterBottom>
             Add Crop
           </Typography>
         </Box>
         <Box sx={{ width: "100%" }}>
-          <Grid item xs={12} sm={6} >
+          <Grid item xs={12} sm={6}>
             <Stack direction="row" spacing={2} paddingTop={2}>
               <TextField
                 required
@@ -140,8 +143,6 @@ export default function AddCrop() {
                 fullWidth
                 id="cropName"
                 placeholder="Enter crop name"
-                
-                
               />
             </Grid>
 

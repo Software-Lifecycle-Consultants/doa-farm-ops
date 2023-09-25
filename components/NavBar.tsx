@@ -12,7 +12,6 @@ import {
   Link as MuiLink,
   Menu,
   MenuItem,
-  IconButton,
 } from "@mui/material";
 import Image from "next/image";
 import logo from "../public/images/logo.png";
