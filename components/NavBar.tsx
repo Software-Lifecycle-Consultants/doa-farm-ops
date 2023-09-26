@@ -39,7 +39,9 @@ const languages = [
  */
 const NavBar = () => {
   const [value, setValue] = useState(0);
-  const [languageAnchorEl, setLanguageAnchorEl] = useState(null);
+  const [languageAnchorEl, setLanguageAnchorEl] = useState<null | EventTarget & HTMLElement>(null);
+
+
   const router = useRouter();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
@@ -53,7 +55,7 @@ const NavBar = () => {
     router.push(route);
   };
 //Function to handle language selector
-  const handleLanguageClick = (event) => {
+  const handleLanguageClick = (event: React.MouseEvent<HTMLElement>) => {
     setLanguageAnchorEl(event.currentTarget);
   };
 //Function to close language selector
@@ -61,7 +63,7 @@ const NavBar = () => {
     setLanguageAnchorEl(null);
   };
 //Function to handle language change
-  const changeLanguage = (code) => {
+  const changeLanguage = (code : string) => {
     // Implement language change logic here
     handleLanguageClose();
   };
