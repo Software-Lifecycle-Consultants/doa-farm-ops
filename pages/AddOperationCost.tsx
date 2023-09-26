@@ -11,6 +11,12 @@ import {
   materialCostData,
   cropName,
   cropType,
+  majorOps,
+  subOps,
+  fertilizerApps,
+  fertilizers,
+  machinery,
+  material
 } from "../data/operationCostData";
 
 import {
@@ -36,44 +42,6 @@ import {
  */
 
 export default function AddOperationCost() {
-
-  const majorOps = [
-    { value: '', label: 'None' },
-    { value: 10, label: 'Input 1' },
-    { value: 20, label: 'Input 2' },
-    { value: 30, label: 'Input 3' },
-  ];
-  const subOps = [
-    { value: '', label: 'None' },
-    { value: 10, label: 'Input 1' },
-    { value: 20, label: 'Input 2' },
-    { value: 30, label: 'Input 3' },
-  ];
-  const fertilizerApps = [
-    { value: '', label: 'None' },
-    { value: 10, label: 'Input 1' },
-    { value: 20, label: 'Input 2' },
-    { value: 30, label: 'Input 3' },
-  ];
-  const fertilizers = [
-    { value: '', label: 'None' },
-    { value: 10, label: 'Input 1' },
-    { value: 20, label: 'Input 2' },
-    { value: 30, label: 'Input 3' },
-  ];
-
-  const machinery = [
-    { value: '', label: 'None' },
-    { value: 10, label: 'Method 1' },
-    { value: 20, label: 'Method 2' },
-    { value: 30, label: 'Method 3' },
-  ];
-  const material = [
-    { value: '', label: 'None' },
-    { value: 10, label: 'Material 1' },
-    { value: 20, label: 'Material 2' },
-    { value: 30, label: 'Material 3' },
-  ];
 
   const router = useRouter();
   // State to manage filters
