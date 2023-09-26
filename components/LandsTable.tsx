@@ -91,7 +91,7 @@ export default function LandsTable({ title }: TableTitleProps) {
   };
   //Function to navigate to add crop page
   const navigationToAddCrop = () => {
-    router.push("/AddCrop");
+    router.push("/add-crop");
   };
 
   return (

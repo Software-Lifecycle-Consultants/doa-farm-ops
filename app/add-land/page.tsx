@@ -1,4 +1,5 @@
 // Import necessary modules and components
+"use client";
 import * as React from "react";
 import {
   Button,
@@ -11,7 +12,7 @@ import {
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -22,11 +23,11 @@ export default function AddLand() {
 
   //Function to navigate to my crops page clicking save & exit to my crops button
   const navigationToMyCrops = () => {
-    router.push("/MyCrops");
+    router.push("/my-crops");
   };
   //Function to navigate to add crop page
   const navigationToAddCrop = () => {
-    router.push("/AddCrop");
+    router.push("/add-crop");
   };
   // Styles for the container box
   const boxStyles = {

@@ -22,9 +22,9 @@ import { ChangeEvent } from 'react';
 
 //Define the pages and routes for navigation
 const pages = [
-  { label: "Home", route: "/" },
-  { label: "Profile ", route: "/FarmerProfile" },
-  { label: "Crops", route: "/MyCrops" },
+  { label: "Home", route: "./" },
+  { label: "Profile ", route: "./farmer-profile" },
+  { label: "Crops", route: "./my-crops" },
 ];
 //Define languages for the language selector button
 const languages = [

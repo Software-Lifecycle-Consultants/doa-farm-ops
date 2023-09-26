@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import {
   IconButton,
@@ -113,7 +114,7 @@ export default function CropsTable({ title }: TableTitleProps) {
 
   //Function to navigate to add operation cost page
   const navigationToAddOperationCost = () => {
-    router.push("/AddOperationCost");
+    router.push("/add-operation-cost");
   };
 
   return (

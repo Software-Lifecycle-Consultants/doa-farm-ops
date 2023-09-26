@@ -1,10 +1,11 @@
+"use client";
 import * as React from "react";
-import ProfileTitle from "../components/ProfileTitle";
+import ProfileTitle from "../../components/ProfileTitle";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
 import CssBaseline from "@mui/material/CssBaseline";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import {
   machineryCostData,
   laborCostData,
@@ -17,7 +18,7 @@ import {
   fertilizers,
   machinery,
   material
-} from "../data/operationCostData";
+} from "../../data/operationCostData";
 
 import {
   IconButton,
@@ -78,7 +79,7 @@ export default function AddOperationCost() {
   };
   //Function to navigate to my crops page
   const navigationToMyCrops = () => {
-    router.push("/MyCrops");
+    router.push("/my-crops");
   };
 
   return (

@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import { Grid, Box, Button, Typography } from "@mui/material";
 import {
@@ -5,14 +6,14 @@ import {
   AccountCircle as AccountCircleIcon,
   Add as AddIcon,
 } from "@mui/icons-material";
-import ProfileTitle from "../components/ProfileTitle";
+import ProfileTitle from "../../components/ProfileTitle";
 import LandsTable from "@/components/LandsTable";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 
 import {
   sampleFarmerProfileData,
-} from "../data/farmerProfile";
+} from "../../data/farmerProfile";
 
 /**
  * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
@@ -454,7 +455,7 @@ export default function FarmerProfile() {
               Land Details
             </Typography>
             {/* Add Button for Adding Land */}
-            <Link href="/AddLand">
+            <Link href="/add-land">
               <Button
                 sx={{ backgroundColor: "#FFFFFF" }}
                 variant="outlined"
