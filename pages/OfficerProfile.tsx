@@ -1,6 +1,6 @@
 // Import necessary modules and components
 import * as React from "react";
-import { Grid, Box, Button,Typography, } from "@mui/material";
+import { Grid, Box, Button, Typography } from "@mui/material";
 import ProfileTitle from "../components/ProfileTitle";
 import {EditNote as EditNoteIcon, AccountCircle as AccountCircleIcon}from "@mui/icons-material";
 
