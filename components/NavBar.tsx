@@ -22,9 +22,9 @@ import { ChangeEvent } from 'react';
 
 //Define the pages and routes for navigation
 const pages = [
-  { label: "Home", route: "/" },
-  { label: "Profile ", route: "/FarmerProfile" },
-  { label: "Crops", route: "/MyCrops" },
+  { label: "Home", route: "./" },
+  { label: "Profile ", route: "./farmer-profile" },
+  { label: "Crops", route: "./my-crops" },
 ];
 //Define languages for the language selector button
 const languages = [
@@ -38,14 +38,16 @@ const languages = [
  * Navbar handles navigation to homepage, profile, crops, login, and language selector. 
  */
 const NavBar = () => {
-  const [value, setValue] = useState("one");
-  const [languageAnchorEl, setLanguageAnchorEl] = useState(null);
+  const [value, setValue] = useState(0);
+  const [languageAnchorEl, setLanguageAnchorEl] = useState<null | EventTarget & HTMLElement>(null);
+
+
   const router = useRouter();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
 //Function to handle tab change
-  const handleChange = (event: ChangeEvent<{}>, newValue: string) => {
+  const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 //Function to navigate to screens
@@ -53,7 +55,7 @@ const NavBar = () => {
     router.push(route);
   };
 //Function to handle language selector
-  const handleLanguageClick = (event) => {
+  const handleLanguageClick = (event: React.MouseEvent<HTMLElement>) => {
     setLanguageAnchorEl(event.currentTarget);
   };
 //Function to close language selector
@@ -61,7 +63,7 @@ const NavBar = () => {
     setLanguageAnchorEl(null);
   };
 //Function to handle language change
-  const changeLanguage = (code) => {
+  const changeLanguage = (code : string) => {
     // Implement language change logic here
     handleLanguageClose();
   };

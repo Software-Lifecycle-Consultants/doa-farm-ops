@@ -30,7 +30,7 @@ const DrawerComponent = () => {
     if (id === "Profile") {
       router.push("/FarmerProfile");
     } else if (id === "Crops") {
-      router.push("/MyCrops");
+      router.push("/my-crops");
     } else {
       router.push("/");
     }

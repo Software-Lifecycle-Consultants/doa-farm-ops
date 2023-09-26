@@ -1,4 +1,5 @@
 // Import necessary modules and components
+"use client";
 import * as React from "react";
 import {
   Grid,
@@ -9,12 +10,12 @@ import {
   Stack,
   Box,
 } from "@mui/material";
-import ProfileTitle from "../components/ProfileTitle";
+import ProfileTitle from "../../components/ProfileTitle";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CropsTable from "@/components/CropsTable";
 // Import the router object to handle routing
-import { useRouter } from "next/router";
-import {seasons, lands} from "../data/cropsData";
+import { useRouter } from "next/navigation";
+import {seasons, lands} from "../../data/cropsData";
 
 /**
  * My Crops page displays a table containing comprehensive details of crops cultivated on a specific land.
@@ -36,7 +37,7 @@ export default function MyCrops() {
   };
   //Function to navigate to add crop page
   const navigationToAddCrop = () => {
-    router.push("/AddCrop");
+    router.push("/add-crop");
   };
   
   // Return the JSX for rendering

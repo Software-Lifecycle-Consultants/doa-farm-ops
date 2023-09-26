@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import {
   Stack,
@@ -13,7 +14,7 @@ import {
   FormControlLabel,
   TextField,
 } from "@mui/material";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 // Styles for labels
 const styles = {
@@ -58,11 +59,12 @@ export default function AddCrop() {
 
   //Function to navigate to add land page
   const navigationToAddLand = () => {
-    router.push("/AddLand");
+    router.push("/add-land");
   };
   //Function to navigate to my crops page clicking save button
-  const navigationToMyCrops = () => {
-    router.push("/MyCrops");
+  const navigationToMyCrops = async (event:React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    router.push("/my-crops");
   };
 
   // Styles for the container box

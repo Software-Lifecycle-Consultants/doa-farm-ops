@@ -1,17 +1,18 @@
 // Import necessary modules and components
+"use client";
 import * as React from "react";
 import { Grid, Box, Button, Typography } from "@mui/material";
-import ProfileTitle from "../components/ProfileTitle";
+import ProfileTitle from "../../components/ProfileTitle";
 import {EditNote as EditNoteIcon, AccountCircle as AccountCircleIcon}from "@mui/icons-material";
 
 // Import the router object to handle routing
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 //Import necessary date from relevent data files
 import {
   OfficerProfileData,
   sampleOfficerProfileData,
-} from "../data/officerProfile";
+} from "../../data/officerProfile";
 
 // OfficerProfile component renders a profile page for an officer.
 export default function OfficerProfile() {
