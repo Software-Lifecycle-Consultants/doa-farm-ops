@@ -1,16 +1,8 @@
 import * as React from "react";
-import Grid from "@mui/material/Grid";
-import Button from "@mui/material/Button";
 import ProfileTitle from "../components/ProfileTitle";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Paper from "@mui/material/Paper";
-import TableContainer from "@mui/material/TableContainer";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
-import Stack from "@mui/material/Stack";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useRouter } from "next/router";
 import {
@@ -35,6 +27,14 @@ import {
   TableCell,
   TableRow,
   Typography,
+  Grid,
+  Button,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Paper,
+  TableContainer,
+  Stack,
 } from "@mui/material";
 
 /**
