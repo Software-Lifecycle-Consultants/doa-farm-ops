@@ -64,8 +64,6 @@ export default function AddCrop() {
   //Function to navigate to my crops page clicking save button
   const navigationToMyCrops = async (event:React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior
-
-    console.log("navigationToMyCrops");
     router.push("/my-crops");
   };
 
