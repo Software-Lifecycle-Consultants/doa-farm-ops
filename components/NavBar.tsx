@@ -38,14 +38,14 @@ const languages = [
  * Navbar handles navigation to homepage, profile, crops, login, and language selector. 
  */
 const NavBar = () => {
-  const [value, setValue] = useState("one");
+  const [value, setValue] = useState(0);
   const [languageAnchorEl, setLanguageAnchorEl] = useState(null);
   const router = useRouter();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
 //Function to handle tab change
-  const handleChange = (event: ChangeEvent<{}>, newValue: string) => {
+  const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 //Function to navigate to screens
