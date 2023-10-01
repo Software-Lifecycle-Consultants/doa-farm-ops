@@ -49,7 +49,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "24px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -63,7 +63,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: "400",
@@ -110,7 +110,7 @@ export default function FarmerProfile() {
             >
               <Typography
                 sx={{
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "20px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -133,7 +133,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#9D9D9D",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: "400",
@@ -145,7 +145,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -159,7 +159,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#9D9D9D",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: "400",
@@ -171,7 +171,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -185,7 +185,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#9D9D9D",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: "400",
@@ -197,7 +197,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -211,7 +211,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#9D9D9D",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: "400",
@@ -223,7 +223,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -237,7 +237,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#9D9D9D",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: "400",
@@ -249,7 +249,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -263,7 +263,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#9D9D9D",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: "400",
@@ -275,7 +275,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -289,7 +289,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#9D9D9D",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: "400",
@@ -301,7 +301,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -347,7 +347,7 @@ export default function FarmerProfile() {
             >
               <Typography
                 sx={{
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "20px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -370,7 +370,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#9D9D9D",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: "400",
@@ -382,7 +382,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -396,7 +396,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#9D9D9D",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "14px",
                   fontStyle: "normal",
                   fontWeight: "400",
@@ -408,7 +408,7 @@ export default function FarmerProfile() {
               <Typography
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
+                  
                   fontSize: "16px",
                   fontStyle: "normal",
                   fontWeight: "500",
@@ -445,7 +445,7 @@ export default function FarmerProfile() {
           >
             <Typography
               sx={{
-                fontFamily: "DM Sans",
+                
                 fontSize: "20px",
                 fontStyle: "normal",
                 fontWeight: "500",

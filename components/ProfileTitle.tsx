@@ -16,7 +16,7 @@ export default function ProfileTitle({title}: ProfileTitleProps) {
           color: "#000",
           leadingTrim: "both",
           textEdge: "cap",
-          fontFamily: "DM Sans",
+          
           fontSize: "30px",
           fontStyle: "normal",
           fontWeight: "500",

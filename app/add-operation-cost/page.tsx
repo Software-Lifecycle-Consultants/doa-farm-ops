@@ -224,7 +224,7 @@ export default function AddOperationCost() {
         >
           <Typography
             sx={{
-              fontFamily: "DM Sans",
+              
               fontSize: "20px",
               fontStyle: "normal",
               fontWeight: "500",
@@ -476,7 +476,7 @@ export default function AddOperationCost() {
         >
           <Typography
             sx={{
-              fontFamily: "DM Sans",
+              
               fontSize: "20px",
               fontStyle: "normal",
               fontWeight: "500",
@@ -728,7 +728,7 @@ export default function AddOperationCost() {
         >
           <Typography
             sx={{
-              fontFamily: "DM Sans",
+              
               fontSize: "20px",
               fontStyle: "normal",
               fontWeight: "500",
