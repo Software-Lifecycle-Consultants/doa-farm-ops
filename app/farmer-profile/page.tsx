@@ -46,13 +46,10 @@ export default function FarmerProfile() {
               <AccountCircleIcon sx={{ fontSize: "50px" }} />
             </Box>
             <Box>
-              <Typography
+              <Typography variant="h5"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "24px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
+                  fontWeight: "medium",
                   lineHeight: "normal",
                   marginBottom: "4px",
                 }}
@@ -60,17 +57,13 @@ export default function FarmerProfile() {
                 {sampleFarmerProfileData.firstname}{" "}
                 {sampleFarmerProfileData.lastname}
               </Typography>
-              <Typography
+              <Typography variant="subtitle1"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
                 }}
               >
-                farmer
+                Farmer
               </Typography>
             </Box>
           </Box>
@@ -108,14 +101,8 @@ export default function FarmerProfile() {
                 alignItems: "center",
               }}
             >
-              <Typography
-                sx={{
-                  
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
-                  lineHeight: "16px",
-                }}
+              <Typography variant="h6"
+                
               >
                 Personal Information
               </Typography>
@@ -130,182 +117,133 @@ export default function FarmerProfile() {
             </Grid>
             {/* Personal Information Fields */}
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 First Name
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleFarmerProfileData.firstname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Last Name
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleFarmerProfileData.lastname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Email
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleFarmerProfileData.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 NIC Number
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleFarmerProfileData.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Address
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleFarmerProfileData.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Phone Number
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleFarmerProfileData.phonenumber}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Households
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleFarmerProfileData.household}
@@ -345,14 +283,7 @@ export default function FarmerProfile() {
                 alignItems: "center",
               }}
             >
-              <Typography
-                sx={{
-                  
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
-                  lineHeight: "16px",
-                }}
+              <Typography variant="h6"
               >
                 Other Details
               </Typography>
@@ -367,52 +298,38 @@ export default function FarmerProfile() {
             </Grid>
             {/* Other Details Fields */}
             <Grid item xs={12} md={12}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Organization Name
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleFarmerProfileData.otherdetails.orgname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Address
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleFarmerProfileData.otherdetails.orgaddress}
@@ -443,14 +360,7 @@ export default function FarmerProfile() {
               alignItems: "center",
             }}
           >
-            <Typography
-              sx={{
-                
-                fontSize: "20px",
-                fontStyle: "normal",
-                fontWeight: "500",
-                lineHeight: "16px",
-              }}
+            <Typography variant="h6"
             >
               Land Details
             </Typography>

@@ -117,7 +117,6 @@ const NavBar = () => {
                   color: "#000000",
                   textTransform: "none",
                   margin: "5px",
-                  fontSize: "16px",
                   marginLeft: "auto",
                 }}
                 onClick={handleLanguageClick}
@@ -144,16 +143,12 @@ const NavBar = () => {
               <Button
                 variant="text"
                 sx={{
-                  width: "121px",
-                  height: "47px",
-                  padding: "10px 25px",
                   justifyContent: "center",
                   alignItems: "center",
                   borderRadius: "100px",
                   background: "#FFF",
                   color: "#000000",
                   textTransform: "none",
-                  fontSize: "16px",
                   marginLeft: "0px",
                   marginRight: "5px",
                   whiteSpace: "nowrap",
