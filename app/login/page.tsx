@@ -21,11 +21,20 @@ import {
   VisibilityOff as VisibilityOff,
   CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
 } from "@mui/icons-material";
+import { useDispatch } from "react-redux";
+import { login, setPassword, setUsername } from "@/redux/authSlice";
 
 // Export the sign-in component
 export default function SignIn() {
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
+
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const dispatch = useDispatch();
 
   // Function to toggle password visibility
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -35,6 +44,38 @@ export default function SignIn() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
+  };
+
+  // Define a function to handle user login.
+  const handleLogin = () => {
+    // Simulate a login action by creating a user data object.
+    const userData = { username: formData.email, password: formData.password, name: 'vishwa', age: 24 }; // Use email as username for simplicity
+    // Dispatch the 'login' action from the 'authSlice' with the user data.
+    dispatch(login(userData));
+  };
+
+  const handleChangeEmail = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: string
+  ) => {
+    setFormData({
+      ...formData,
+      [field]: event.target.value,
+    });
+    // Dispatch the setUsername action to update the Redux state with the username
+    dispatch(setUsername(event.target.value));
+  };
+
+  const handleChangePassword = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: string
+  ) => {
+    setFormData({
+      ...formData,
+      [field]: event.target.value,
+    });
+    // Dispatch the setPassword action to update the Redux state with the password
+    dispatch(setPassword(event.target.value));
   };
 
   // Styling for the Box element
@@ -75,6 +116,9 @@ export default function SignIn() {
               id="email"
               autoComplete="email"
               label="Email Address"
+              value={formData.email}
+              onChange={(e) => handleChangeEmail(e, "email")}
+              required
             />
           </FormControl>
 
@@ -86,6 +130,8 @@ export default function SignIn() {
             </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
+              value={formData.password}
+              onChange={(e) => handleChangePassword(e, "password")}
               type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
@@ -138,10 +184,11 @@ export default function SignIn() {
 
           {/* Sign-in button */}
           <Button
-            type="submit"
+            // type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={handleLogin}
           >
             Login
           </Button>
