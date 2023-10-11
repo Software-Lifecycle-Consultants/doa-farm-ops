@@ -1,5 +1,8 @@
+"use client";
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
+import { Provider } from "react-redux";
+import store from "../redux/store";
 import CssBaseline from '@mui/material/CssBaseline'; // Import the CssBaseline component
 import Navbar from "../components/NavBar";
 
@@ -18,11 +21,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
+      <Provider store={store}>
       {/* Add the CssBaseline component to override the 8px margin */}
       <CssBaseline />
       {/* Add navigation bar */}
       <Navbar /> 
       <div className="container">{children}</div>
+      </Provider>
       </body>
     </html>
   )
