@@ -49,7 +49,7 @@ export default function SignIn() {
   // Define a function to handle user login.
   const handleLogin = () => {
     // Simulate a login action by creating a user data object.
-    const userData = { username: formData.email, password: formData.password, name: 'vishwa', age: 24 }; // Use email as username for simplicity
+    const userData = { username: formData.email, password: formData.password}; // Use email as username for simplicity
     // Dispatch the 'login' action from the 'authSlice' with the user data.
     dispatch(login(userData));
   };
