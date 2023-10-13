@@ -46,3 +46,31 @@ export const lands = [
   { value: 20, label: 'Land 2' },
   { value: 30, label: 'Land 3' },
 ];
+
+export const cropList = [
+      {
+        type: 'Paddy',
+        name: 'Basmati'
+      },
+      {
+        type: 'Paddy',
+        name: 'Red Rice'
+      },
+      {
+        type: 'Paddy',
+        name: 'Samba'
+      },
+      {
+        type: 'Paddy',
+        name: 'Keeri Samba'
+      },
+      {
+        type: 'Paddy',
+        name: 'Nadu'
+      },
+      {
+        type: 'Tea',
+        name: 'Black Tea'
+      },
+      
+]
