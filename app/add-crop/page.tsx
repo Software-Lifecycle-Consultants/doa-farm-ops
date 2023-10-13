@@ -92,11 +92,12 @@ export default function AddCrop() {
   //Function to navigate to my crops page clicking save button
   const handleOnClickAddCrop = async (event:React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    router.push("/my-crops");
     // Simulate add crop action by creating a user data object.
     const cropData = {landId, cropDetails: formData };
     // Dispatch the 'login' action from the 'authSlice' with the user data.
     dispatch(addCrop(cropData));
+    //Navigate to my crops page
+    router.push("/my-crops");
   };
 
   // Define a function to handle add crop.
@@ -193,17 +194,6 @@ export default function AddCrop() {
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <Typography>Crop Name *</Typography>
-              {/* <TextField
-                autoComplete="given-name"
-                name="cropName"
-                required
-                fullWidth
-                id="cropName"
-                placeholder="Enter crop name"
-                value={formData.cropName}
-                onChange={(e) => handleChangeAddCrop(e, "cropName")}
-              /> */}
-             
               <Autocomplete
                 options={cropNames}
                 getOptionLabel={(option) => option}

@@ -62,8 +62,6 @@ export default function SignIn() {
       ...formData,
       [field]: event.target.value,
     });
-    // Dispatch the setUsername action to update the Redux state with the username
-    dispatch(setUsername(event.target.value));
   };
 
   const handleChangePassword = (
@@ -74,8 +72,6 @@ export default function SignIn() {
       ...formData,
       [field]: event.target.value,
     });
-    // Dispatch the setPassword action to update the Redux state with the password
-    dispatch(setPassword(event.target.value));
   };
 
   // Styling for the Box element
