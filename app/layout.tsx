@@ -25,7 +25,7 @@ export default function RootLayout({
       <CssBaseline />
       {/* Add navigation bar */}
       <Navbar /> 
-      <div className="container">{children}</div>
+      <div className="container" style={{padding:"20px"}}>{children}</div>
       </ThemeProvider>
       </body>
     </html>

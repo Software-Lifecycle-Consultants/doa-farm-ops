@@ -42,51 +42,51 @@ interface Column {
 // Define the columns for the table
 const columns: readonly Column[] = [
   { id: "landname", label: "Land Name", minWidth: 170 },
-  { id: "season", label: "Season", minWidth: 170 },
+  { id: "season", label: "Season", minWidth: 50 },
   {
     id: "cropName",
     label: "CropName",
-    minWidth: 170,
+    minWidth: 50,
   },
   {
     id: "cropType",
-    label: "Crop Type",
-    minWidth: 170,
+    label: "Type",
+    minWidth: 50,
   },
   {
     id: "soldQty",
-    label: "Sold Quantity",
-    minWidth: 170,
+    label: "Sold",
+    minWidth: 50,
   },
   {
     id: "totalIncome",
-    label: "Total Income",
-    minWidth: 170,
+    label: "Income",
+    minWidth: 50,
   },
   {
     id: "reservedQty",
-    label: "Reserved Quantity",
-    minWidth: 170,
+    label: "Reserved",
+    minWidth: 50,
   },
   {
     id: "qtyForSeed",
-    label: "Quantity for Seed",
-    minWidth: 170,
+    label: "Qty Seeds",
+    minWidth: 50,
   },
   {
     id: "noOfPicks",
-    label: "No of Picks",
-    minWidth: 170,
+    label: "Picks",
+    minWidth: 50,
   },
   {
     id: "icons",
     label: "",
-    minWidth: 170,
+    minWidth: 50,
   },
   {
     id: "button",
     label: "",
-    minWidth: 170,
+    minWidth: 50,
   },
 ];
 
@@ -148,7 +148,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                         <>
                           {column.id === "button" ? (
                             <TableCell key={column.id} align={column.align}>
-                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Operation Cost</Button>
+                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Cost</Button>
                             </TableCell>
                           ) : column.id === "icons" ? (
                             <TableCell key={column.id} align={column.align}>
