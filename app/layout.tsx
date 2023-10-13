@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { dm_sans } from './fonts'
 import CssBaseline from '@mui/material/CssBaseline'; // Import the CssBaseline component
 import Navbar from "../components/NavBar";
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '@/Theme';
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'DOA Cost of Cultivation Reporting System',
@@ -16,13 +18,15 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html lang="en" >
+      <body className={dm_sans.className}>
+        <ThemeProvider theme={theme}>
       {/* Add the CssBaseline component to override the 8px margin */}
       <CssBaseline />
       {/* Add navigation bar */}
       <Navbar /> 
       <div className="container">{children}</div>
+      </ThemeProvider>
       </body>
     </html>
   )

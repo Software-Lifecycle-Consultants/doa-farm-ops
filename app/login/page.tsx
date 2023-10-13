@@ -109,13 +109,13 @@ export default function SignIn() {
               <FormControlLabel
                 control={
                   <Checkbox
-                    icon={<CheckBoxOutlineBlankIcon fontSize="small" />}
+                    icon={<CheckBoxOutlineBlankIcon />}
                     value="remember"
                     color="primary"
                   />
                 }
                 label={
-                  <Typography variant="body2" sx={{ fontSize: 12 }}>
+                  <Typography variant="caption">
                     Remember me
                   </Typography>
                 }
@@ -130,7 +130,7 @@ export default function SignIn() {
                 justifyContent: "center",
               }}
             >
-              <Link href="#" variant="body2" sx={{ fontSize: 12 }}>
+              <Link href="#" variant="caption">
                 Forgot password?
               </Link>
             </Grid>

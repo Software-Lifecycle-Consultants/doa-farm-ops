@@ -116,7 +116,6 @@ export default function AddCrop() {
                 type="submit"
                 variant="outlined"
                 fullWidth
-                sx={{ fontSize: 11, padding: 0, height: "50px" }}
                 onClick={navigationToAddLand}
               >
                 Add a new Land
@@ -268,6 +267,7 @@ export default function AddCrop() {
               <Grid item xs={6}>
                 <TextField
                   label="Cultivation loan amount"
+                  fullWidth
                   value={cultivationLoan}
                   onChange={(e) => setCultivationLoan(e.target.value)}
                   variant="outlined"

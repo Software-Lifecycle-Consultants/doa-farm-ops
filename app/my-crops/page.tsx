@@ -99,7 +99,6 @@ export default function MyCrops() {
             <Button
               type="submit"
               variant="outlined"
-              sx={{ fontSize: 11, padding: "25px", height: "50px" }}
               onClick={navigationToAddCrop}
             >
               Add Crop

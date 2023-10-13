@@ -222,14 +222,7 @@ export default function AddOperationCost() {
             borderRadius: "22px",
           }}
         >
-          <Typography
-            sx={{
-              fontFamily: "DM Sans",
-              fontSize: "20px",
-              fontStyle: "normal",
-              fontWeight: "500",
-              lineHeight: "16px",
-            }}
+          <Typography variant="h6"
           >
             Machinery Cost
           </Typography>
@@ -474,14 +467,7 @@ export default function AddOperationCost() {
             borderRadius: "22px",
           }}
         >
-          <Typography
-            sx={{
-              fontFamily: "DM Sans",
-              fontSize: "20px",
-              fontStyle: "normal",
-              fontWeight: "500",
-              lineHeight: "16px",
-            }}
+          <Typography variant="h6"
           >
             Labor Cost
           </Typography>
@@ -726,14 +712,7 @@ export default function AddOperationCost() {
             borderRadius: "22px",
           }}
         >
-          <Typography
-            sx={{
-              fontFamily: "DM Sans",
-              fontSize: "20px",
-              fontStyle: "normal",
-              fontWeight: "500",
-              lineHeight: "16px",
-            }}
+          <Typography variant="h6"
           >
             Material Cost
           </Typography>
