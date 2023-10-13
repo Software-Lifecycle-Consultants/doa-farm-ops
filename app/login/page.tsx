@@ -33,6 +33,9 @@ export default function SignIn() {
     email: "",
     password: "",
   });
+  // State to manage email and password validation
+  const [emailValid, setEmailValid] = useState(true);
+  const [passwordValid, setPasswordValid] = useState(true);
 
   const dispatch = useDispatch();
 
@@ -54,25 +57,43 @@ export default function SignIn() {
     dispatch(login(userData));
   };
 
+  // Function to handle email input change and validation
   const handleChangeEmail = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
+    const email = event.target.value;
     setFormData({
       ...formData,
       [field]: event.target.value,
     });
+    setEmailValid(isEmailValid(email));
   };
 
+  // Function to handle password input change and validation
   const handleChangePassword = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
+    const password = event.target.value;
     setFormData({
       ...formData,
       [field]: event.target.value,
     });
+    setPasswordValid(isPasswordValid(password));
   };
+
+  // Function to validate email format
+  const isEmailValid = (email: string) => {
+    const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+    return emailRegex.test(email);
+  };
+  
+  // Function to validate password length
+  const isPasswordValid = (password: string | any[]) => {
+    return password.length >= 6; // Set a minimum password length requirement
+  };
+  
 
   // Styling for the Box element
   const boxStyles = {
@@ -116,6 +137,11 @@ export default function SignIn() {
               onChange={(e) => handleChangeEmail(e, "email")}
               required
             />
+            {!emailValid && (
+    <Typography variant="caption" color="error">
+      Invalid email address
+    </Typography>
+  )}
           </FormControl>
 
           <Typography>Password</Typography>
@@ -143,6 +169,11 @@ export default function SignIn() {
               }
               label="Password"
             />
+            {!passwordValid && (
+    <Typography variant="caption" color="error">
+      Password must be at least 6 characters long
+    </Typography>
+  )}
           </FormControl>
 
           {/* Remember me and Forgot password options */}
@@ -185,6 +216,7 @@ export default function SignIn() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleLogin}
+            disabled={!emailValid || !passwordValid}
           >
             Login
           </Button>
