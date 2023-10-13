@@ -44,13 +44,10 @@ export default function OfficerProfile() {
               <AccountCircleIcon sx={{ fontSize: "50px" }} />
             </Box>
             <Box>
-              <Typography
+              <Typography variant="h5"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "24px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
+                  fontWeight: "medium",
                   lineHeight: "normal",
                   marginBottom: "4px",
                 }}
@@ -58,13 +55,9 @@ export default function OfficerProfile() {
                 {sampleOfficerProfileData.firstname}{" "}
                 {sampleOfficerProfileData.lastname}
               </Typography>
-              <Typography
+              <Typography variant="subtitle1"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
                 }}
               >
@@ -106,14 +99,7 @@ export default function OfficerProfile() {
                 alignItems: "center",
               }}
             >
-              <Typography
-                sx={{
-                  fontFamily: "DM Sans",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
-                  lineHeight: "16px",
-                }}
+              <Typography variant="h6"
               >
                 Personal Information
               </Typography>
@@ -128,156 +114,114 @@ export default function OfficerProfile() {
             </Grid>
             {/* Personal Information Fields */}
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  fontFamily: "DM Sans",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 First Name
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleOfficerProfileData.firstname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  fontFamily: "DM Sans",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Last Name
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleOfficerProfileData.lastname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  fontFamily: "DM Sans",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Email
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleOfficerProfileData.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  fontFamily: "DM Sans",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 NIC Number
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleOfficerProfileData.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  fontFamily: "DM Sans",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Address
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleOfficerProfileData.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  fontFamily: "DM Sans",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Phone Number
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleOfficerProfileData.phonenumber}
@@ -317,14 +261,7 @@ export default function OfficerProfile() {
                 alignItems: "center",
               }}
             >
-              <Typography
-                sx={{
-                  fontFamily: "DM Sans",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
-                  lineHeight: "16px",
-                }}
+              <Typography variant="h6"
               >
                 Organization
               </Typography>
@@ -339,52 +276,38 @@ export default function OfficerProfile() {
             </Grid>
 
             <Grid item xs={12} md={12}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  fontFamily: "DM Sans",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Name
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleOfficerProfileData.organization.name}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  fontFamily: "DM Sans",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 Address
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleOfficerProfileData.organization.address}
@@ -392,39 +315,25 @@ export default function OfficerProfile() {
             </Grid>
 
             <Grid container item xs={12} md={12} paddingTop={'2vh'}>
-              <Typography
-                sx={{
-                  fontFamily: "DM Sans",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
-                  lineHeight: "16px",
-                }}
+              <Typography variant="h6"
               >
                 Education
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
+              <Typography variant="caption"
                 sx={{
-                  color: "#9D9D9D",
-                  fontFamily: "DM Sans",
-                  fontSize: "14px",
-                  fontStyle: "normal",
-                  fontWeight: "400",
                   lineHeight: "normal",
+                  color: "#9D9D9D",
                 }}
               >
                 University
               </Typography>
-              <Typography
+              <Typography variant="body1"
                 sx={{
                   color: "#000",
-                  fontFamily: "DM Sans",
-                  fontSize: "16px",
-                  fontStyle: "normal",
-                  fontWeight: "500",
                   lineHeight: "normal",
+                  fontWeight: "500 ",
                 }}
               >
                 {sampleOfficerProfileData.education.university}

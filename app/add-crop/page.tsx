@@ -172,7 +172,6 @@ export default function AddCrop() {
                 type="submit"
                 variant="outlined"
                 fullWidth
-                sx={{ fontSize: 11, padding: 0, height: "50px" }}
                 onClick={navigationToAddLand}
               >
                 Add a new Land

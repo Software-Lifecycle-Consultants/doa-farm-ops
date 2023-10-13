@@ -5,8 +5,10 @@ import { Provider } from "react-redux";
 import store from "../redux/store";
 import CssBaseline from '@mui/material/CssBaseline'; // Import the CssBaseline component
 import Navbar from "../components/NavBar";
+import { ThemeProvider } from '@mui/material/styles';
+import theme from '@/Theme';
 
-const inter = Inter({ subsets: ['latin'] })
+// const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'DOA Cost of Cultivation Reporting System',
