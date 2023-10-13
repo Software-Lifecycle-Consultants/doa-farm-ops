@@ -1,6 +1,6 @@
 // Import necessary modules and components
 "use client";
-import * as React from "react";
+import React, { useState } from "react";
 import {
   Button,
   TextField,
@@ -13,6 +13,8 @@ import {
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
+import { useDispatch } from "react-redux";
+import { addLand } from "@/redux/landSlice";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -21,14 +23,59 @@ import { useRouter } from "next/navigation";
 export default function AddLand() {
   const router = useRouter();
 
+  interface FormData {
+    landName: string;
+    district: string;
+    dsDivision: string;
+    landRent: string;
+    irrigationMode: string;
+  }
+
+  const [formData, setFormData] = useState({
+    landName: "",
+    district: "",
+    dsDivision: "",
+    landRent: "",
+    irrigationMode: "",
+  });
+
+  const dispatch = useDispatch();
+
   //Function to navigate to my crops page clicking save & exit to my crops button
-  const navigationToMyCrops = () => {
+  const handleOnClickAddLand = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    // Simulate add crop action by creating a user data object.
+    const landData = { landDetails: formData };
+    // Dispatch the 'login' action from the 'authSlice' with the user data.
+    dispatch(addLand(landData));
     router.push("/my-crops");
   };
   //Function to navigate to add crop page
-  const navigationToAddCrop = () => {
+  const navigationToAddCrop = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    // Simulate add crop action by creating a user data object.
+    const landData = { landDetails: formData };
+    // Dispatch the 'login' action from the 'authSlice' with the user data.
+    dispatch(addLand(landData));
     router.push("/add-crop");
   };
+
+  // Define a function to handle add land.
+
+  const handleChangeAddLand = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: string
+  ) => {
+    setFormData({
+      ...formData,
+      [field]: event.target.value,
+    });
+  };
+
   // Styles for the container box
   const boxStyles = {
     display: "flex",
@@ -36,8 +83,8 @@ export default function AddLand() {
     alignItems: "center",
     border: "3px solid #F1F1F1",
     background: "#FFFFFF",
-    padding: "3vh", 
-    margin: "5vh auto", 
+    padding: "3vh",
+    margin: "5vh auto",
     maxWidth: "500px",
   };
 
@@ -87,6 +134,8 @@ export default function AddLand() {
                 placeholder="Enter landName"
                 name="landName"
                 autoComplete="landName"
+                value={formData.landName}
+                onChange={(e) => handleChangeAddLand(e, "landName")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -98,6 +147,8 @@ export default function AddLand() {
                 placeholder="Enter district"
                 name="district"
                 autoComplete="district"
+                value={formData.district}
+                onChange={(e) => handleChangeAddLand(e, "district")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -110,6 +161,8 @@ export default function AddLand() {
                 type="division"
                 id="division"
                 autoComplete="division"
+                value={formData.dsDivision}
+                onChange={(e) => handleChangeAddLand(e, "dsDivision")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -122,6 +175,8 @@ export default function AddLand() {
                 type="landRent"
                 id="landRent"
                 autoComplete="landRent"
+                value={formData.landRent}
+                onChange={(e) => handleChangeAddLand(e, "landRent")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -134,6 +189,8 @@ export default function AddLand() {
                 type="modeOfIrrigation"
                 id="modeOfIrrigation"
                 autoComplete="modeOfIrrigation"
+                value={formData.irrigationMode}
+                onChange={(e) => handleChangeAddLand(e, "irrigationMode")}
               />
             </Grid>
           </Grid>
@@ -145,7 +202,7 @@ export default function AddLand() {
                 variant="outlined"
                 fullWidth
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
-                onClick={navigationToMyCrops}
+                onClick={handleOnClickAddLand}
               >
                 Save & exit to my crops
               </Button>
