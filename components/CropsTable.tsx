@@ -44,7 +44,7 @@ const columns: readonly Column[] = [
   { id: "season", label: "Season", minWidth: 50 },
   {
     id: "cropName",
-    label: "CropName",
+    label: "Crop Name",
     minWidth: 50,
   },
   {
