@@ -58,9 +58,9 @@ export default function MyCrops() {
         {/* Filter controls */}
         <Stack direction="row" spacing={2} paddingTop={2} width={"100%"}>
           {/* Season filter dropdown */}
-          <FormControl variant="filled" sx={{ m: 1, minWidth: 170 }}>
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 100 }}>
             <InputLabel id="demo-simple-select-filled-label">
-              Season Filter
+              Season
             </InputLabel>
             <Select
       labelId="demo-simple-select-filled-label"
@@ -76,9 +76,9 @@ export default function MyCrops() {
     </Select>
           </FormControl>
           {/* Land filter dropdown */}
-          <FormControl variant="filled" sx={{ m: 1, minWidth: 170 }}>
+          <FormControl variant="filled" sx={{ m: 1, minWidth: 100 }}>
             <InputLabel id="demo-simple-select-filled-label">
-              Land Filter
+              Land
             </InputLabel>
             <Select
       labelId="demo-simple-select-filled-label"
