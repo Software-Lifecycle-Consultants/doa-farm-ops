@@ -98,6 +98,15 @@ export default function AddOperationCost() {
           <ProfileTitle title={`Add Operation Cost for ${cropName}`} />
           <Typography>Crop Type: {cropType}</Typography>
         </Stack>
+
+        <Grid item>
+        <p>
+        Select the operation you are adding costs to, their sub-operation and where applicable other cost components.
+        Then add detailed costs under each section.
+        </p>
+      </Grid>
+
+
         {/* Machinery Cost Section */}
         <Grid
           item
