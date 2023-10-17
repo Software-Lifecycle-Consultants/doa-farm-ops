@@ -108,6 +108,11 @@ export default function CropsTable({ title }: TableTitleProps) {
     router.push("/add-operation-cost");
   };
 
+  // Function to handle navigation when the Edit icon is clicked
+  const handleEditClick = () => {
+   router.push("/update-crop");
+  };
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -169,7 +174,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                     })}
                     <TableCell align={"right"}>
                               <Stack direction="row" spacing={1}>
-                                <IconButton>
+                                <IconButton onClick={handleEditClick}>
                                   <EditNoteIcon />
                                 </IconButton>
                                 <IconButton>
