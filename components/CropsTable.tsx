@@ -41,7 +41,6 @@ interface Column {
 
 // Define the columns for the table
 const columns: readonly Column[] = [
-  { id: "landname", label: "Land Name", minWidth: 170 },
   { id: "season", label: "Season", minWidth: 50 },
   {
     id: "cropName",
@@ -50,42 +49,32 @@ const columns: readonly Column[] = [
   },
   {
     id: "cropType",
-    label: "Type",
+    label: "Crop Type",
     minWidth: 50,
   },
   {
-    id: "soldQty",
-    label: "Sold",
+    id: "totalSoldQty",
+    label: "Sold Quantity",
     minWidth: 50,
   },
   {
     id: "totalIncome",
-    label: "Income",
+    label: "Total Income",
     minWidth: 50,
   },
   {
-    id: "reservedQty",
+    id: "reservedQtyHome",
     label: "Reserved",
     minWidth: 50,
   },
   {
-    id: "qtyForSeed",
+    id: "reservedQtySeed",
     label: "Qty Seeds",
     minWidth: 50,
   },
   {
     id: "noOfPicks",
     label: "Picks",
-    minWidth: 50,
-  },
-  {
-    id: "icons",
-    label: "",
-    minWidth: 50,
-  },
-  {
-    id: "button",
-    label: "",
     minWidth: 50,
   },
 ];
@@ -170,9 +159,10 @@ export default function CropsTable({ title }: TableTitleProps) {
                       const value = row.cropDetails[column.id];
                       return (
                         <>
-                          {column.id === "button" ? (
-                            <TableCell key={column.id} align={column.align}>
-                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Cost</Button>
+                          <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
                             </TableCell>
                         </>
                       );
@@ -189,7 +179,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                             </TableCell>
                       
                     <TableCell align={"right"}>
-                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Operation Cost</Button>
+                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Cost</Button>
                             </TableCell>
                   </TableRow>
                 );
