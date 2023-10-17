@@ -160,10 +160,10 @@ export default function AddCrop() {
                 variant="outlined"
               >
                 <MenuItem value="">Select an Option</MenuItem>
-                <MenuItem value="f82aa728-3cd1-11ee-be56-0242ac120002">
+                <MenuItem id="f82aa728-3cd1-11ee-be56-0242ac120002" value="Land 1">
                   Land 1
                 </MenuItem>
-                <MenuItem value="cd1-11ee-be56-0242ac120002">Land 2</MenuItem>
+                <MenuItem id="cd1-11ee-be56-0242ac120002"value="Land 2">Land 2</MenuItem>
               </TextField>
 
               <Typography component="h1" variant="subtitle1" gutterBottom>
