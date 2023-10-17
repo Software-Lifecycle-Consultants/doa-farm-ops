@@ -19,26 +19,26 @@ import {
 } from "@mui/icons-material";
 import { rows } from "../data/cropsData";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/types";
 
 // Define the table columns
 interface Column {
   id:
-    | "landname"
-    | "season"
     | "cropName"
+    | "season"
     | "cropType"
-    | "soldQty"
+    | "totalSoldQty"
     | "totalIncome"
-    | "reservedQty"
-    | "qtyForSeed"
-    | "noOfPicks"
-    | "icons"
-    | "button";
+    | "reservedQtyHome"
+    | "reservedQtySeed"
+    | "noOfPicks";
   label: string;
   minWidth?: number;
   align?: "right";
   format?: (value: number) => string;
 }
+
 // Define the columns for the table
 const columns: readonly Column[] = [
   { id: "landname", label: "Land Name", minWidth: 170 },
@@ -97,6 +97,8 @@ interface TableTitleProps {
 
 export default function CropsTable({ title }: TableTitleProps) {
   const router = useRouter();
+  const cropDetails = useSelector((state:RootState) => state.crop);
+
   // State for handling pagination
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -124,6 +126,12 @@ export default function CropsTable({ title }: TableTitleProps) {
           {/* Table header */}
           <TableHead>
             <TableRow>
+            <TableCell
+                  align={"left"}
+                  style={{ minWidth:170 }}
+                >
+                  {"Land Name"}
+                </TableCell>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
@@ -133,25 +141,43 @@ export default function CropsTable({ title }: TableTitleProps) {
                   {column.label}
                 </TableCell>
               ))}
+              <TableCell
+                  align={"right"}
+                  style={{ minWidth:170 }}
+                >
+                  {""}
+                </TableCell>
+                <TableCell
+                  align={"right"}
+                  style={{ minWidth:170 }}
+                >
+                  {""}
+                </TableCell>
             </TableRow>
           </TableHead>
           {/* Table body */}
           <TableBody>
-            {rows
+            {cropDetails
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
                   <TableRow hover role="checkbox" tabIndex={-1}>
+                    <TableCell
+                >
+                  {row.landId}
+                </TableCell>
                     {columns.map((column) => {
-                      const value = row[column.id];
+                      const value = row.cropDetails[column.id];
                       return (
                         <>
                           {column.id === "button" ? (
                             <TableCell key={column.id} align={column.align}>
                               <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Cost</Button>
                             </TableCell>
-                          ) : column.id === "icons" ? (
-                            <TableCell key={column.id} align={column.align}>
+                        </>
+                      );
+                    })}
+                    <TableCell align={"right"}>
                               <Stack direction="row" spacing={1}>
                                 <IconButton>
                                   <EditNoteIcon />
@@ -161,16 +187,10 @@ export default function CropsTable({ title }: TableTitleProps) {
                                 </IconButton>
                               </Stack>
                             </TableCell>
-                          ) : (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
+                      
+                    <TableCell align={"right"}>
+                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Operation Cost</Button>
                             </TableCell>
-                          )}
-                        </>
-                      );
-                    })}
                   </TableRow>
                 );
               })}
@@ -181,7 +201,7 @@ export default function CropsTable({ title }: TableTitleProps) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={rows.length}
+        count={cropDetails.length}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

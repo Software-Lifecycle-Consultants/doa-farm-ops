@@ -1,5 +1,8 @@
+"use client";
 import type { Metadata } from 'next'
 import { dm_sans } from './fonts'
+import { Provider } from "react-redux";
+import store from "../redux/store";
 import CssBaseline from '@mui/material/CssBaseline'; // Import the CssBaseline component
 import Navbar from "../components/NavBar";
 import { ThemeProvider } from '@mui/material/styles';
@@ -18,8 +21,9 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" >
+    <html lang="en">
       <body className={dm_sans.className}>
+        {/* Wrap the application in the 'ThemeProvider' component to provide access to the theme styles. */}
         <ThemeProvider theme={theme}>
       {/* Add the CssBaseline component to override the 8px margin */}
       <CssBaseline />
@@ -29,5 +33,5 @@ export default function RootLayout({
       </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
