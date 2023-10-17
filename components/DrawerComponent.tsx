@@ -28,7 +28,7 @@ const DrawerComponent = () => {
   //Set navigation to screens from navigation bar
   const navigationToScreens = (id: string) => {
     if (id === "Profile") {
-      router.push("/FarmerProfile");
+      router.push("/farmer-profile");
     } else if (id === "Crops") {
       router.push("/my-crops");
     } else {
