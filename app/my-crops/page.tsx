@@ -45,9 +45,15 @@ export default function MyCrops() {
     <Grid container direction="column" rowGap={2}>
       {/* Page title */}
       <Grid item xs={12}>
-        <ProfileTitle title="My Crops" />
+        <ProfileTitle title="My Crops & Operation Cost" />
       </Grid>
 
+      <Grid item>
+        <p>
+        Add your crops and operation costs for the crops you have added by their season and land.
+        </p>
+      </Grid>
+      
       <Grid item>
         {/* Filter controls */}
         <Stack direction="row" spacing={2} paddingTop={2} width={"100%"}>

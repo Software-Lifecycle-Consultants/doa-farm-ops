@@ -25,15 +25,12 @@ export default function RootLayout({
       <body className={dm_sans.className}>
         {/* Wrap the application in the 'ThemeProvider' component to provide access to the theme styles. */}
         <ThemeProvider theme={theme}>
-          {/* Wrap the application in the 'Provider' component to provide access to the Redux store. */}
-          <Provider store={store}>
-            {/* Add the CssBaseline component to override the 8px margin */}
-            <CssBaseline />
-            {/* Add navigation bar */}
-            <Navbar />
-            <div className="container">{children}</div>
-          </Provider>
-        </ThemeProvider>
+      {/* Add the CssBaseline component to override the 8px margin */}
+      <CssBaseline />
+      {/* Add navigation bar */}
+      <Navbar /> 
+      <div className="container" style={{padding:"20px"}}>{children}</div>
+      </ThemeProvider>
       </body>
     </html>
   );
