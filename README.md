@@ -66,6 +66,12 @@ npm install @mui/material @emotion/react @emotion/styled
  ```bash
 npm install @mui/icons-material
  ```
+- [Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started) - Version 1.9.7
+  - The official, opinionated, batteries-included toolset for efficient Redux development.
+  - Install the following packages in your project directory using the following commands.
+ ```bash
+npm install @reduxjs/toolkit react-redux
+ ```
 
 4. Set up the environment variables:
   - Create a .env.local file in the root directory of the project.
