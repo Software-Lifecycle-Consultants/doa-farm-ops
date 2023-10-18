@@ -11,8 +11,7 @@ The "DOA Cost of Cultivation Reporting System" is a remarkable volunteer-driven 
 - **User Profiles**: 
     - Farmer Profile: Farmers can set up and manage their profiles, providing essential information about their agricultural activities.
     - Office Profile: Agriculture department offices can maintain their profiles and oversee regional data.
-      (https://softwareconsultant.info/wp-content/themes/slcc/assets/images/heroBanner.png)
-
+ 
 - **Add Land Details**: Farmers can input information about their agricultural land, including location, size, and ownership details.
 
 - **Add Crop Details**: Farmers can record data about the crops they cultivate, specifying crop types, quantities, and more.
