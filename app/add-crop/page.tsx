@@ -49,6 +49,7 @@ export default function AddCrop() {
     reservedQtyHome: string;
     reservedQtySeed: string;
     noOfPicks: string;
+    isCultivationLoan: string;
     loanObtained: number;
   }
   
@@ -61,6 +62,7 @@ export default function AddCrop() {
     reservedQtyHome: "",
     reservedQtySeed: "",
     noOfPicks: "",
+    isCultivationLoan:"1",
     loanObtained: 0,
   });
 
@@ -97,6 +99,11 @@ export default function AddCrop() {
     // Dispatch the 'login' action from the 'authSlice' with the user data.
     dispatch(addCrop(cropData));
     //Navigate to my crops page
+    router.push("/my-crops");
+  };
+
+  //Function to navigate to my crops page
+  const navigationToMyCrops = () => {
     router.push("/my-crops");
   };
 
@@ -316,51 +323,70 @@ export default function AddCrop() {
             </Grid>
             <Grid
               container
-              spacing={0.5}
+              spacing={2}
               paddingLeft={"16px"}
               paddingTop={"16px"}
             >
-              <Grid item xs={5.9}>
+              <Grid item xs={12} sm={6}>
+              <Typography>Cultivation loan obtained? *</Typography>
                 <TextField
                   select
                   required
                   fullWidth
-                  label="Cultivation loan obtained?"
-                  value={isCultivationLoan}
+                  placeholder="Select an Option"
+                  value={formData.isCultivationLoan}
                   onChange={handleCultivationLoanChange}
                   variant="outlined"
                   InputLabelProps={{
                     style: styles.label, // Apply the label color style here
                   }}
                 >
-                  <MenuItem value="">Select an Option</MenuItem>
-                  <MenuItem value="yes">Yes</MenuItem>
-                  <MenuItem value="no">No</MenuItem>
+                  <MenuItem value="1">Select an Option</MenuItem>
+                  <MenuItem value="Yes">Yes</MenuItem>
+                  <MenuItem value="No">No</MenuItem>
                 </TextField>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
+              <Typography>Cultivation loan amount</Typography>
                 <TextField
-                  label="Cultivation loan amount"
+                  fullWidth
                   value={formData.loanObtained}
                   onChange={(e) => handleChangeAddCrop(e, "loanObtained")}
                   variant="outlined"
                   disabled={
-                    isCultivationLoan === "no" || isCultivationLoan === ""
+                    isCultivationLoan === "No" || isCultivationLoan === ""
                   }
                 />
               </Grid>
             </Grid>
           </Grid>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleOnClickAddCrop}
-          >
-            Save
-          </Button>
+          <Grid container justifyContent="center" alignItems="center">
+          <Grid item>
+            <Stack direction="row" spacing={4} paddingTop={4}>
+              {/* Cancel Button */}
+              <Button
+                type="submit"
+                variant="outlined"
+                fullWidth
+                sx={{ mt: 3, mb: 2, width: "12vw" }}
+                onClick={navigationToMyCrops}
+              >
+                Cancel
+              </Button>
+              {/* Save Button */}
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 3, mb: 2, width: "12vw" }}
+                onClick={handleOnClickAddCrop}
+              >
+                Save
+              </Button>
+            </Stack>
+          </Grid>
+        </Grid>
         </Box>
       </Box>
     </Container>
