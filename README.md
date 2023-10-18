@@ -6,19 +6,25 @@ The "DOA Cost of Cultivation Reporting System" is a remarkable volunteer-driven 
 
 ## Features
 
-- **Login and Registration:**: Users can create new accounts and log in securely to access the system.
+- **Notes**:
+* We have created the front end app, with dummy data loaded from json files to imitate API data. APIs/ Axios calls should be added during integration.
+* We have also added redux tool kit/ redux store for the add crop data as a sample.
+
+- **Login and Registration:**: Farmers and TOs can log in securely to the system.
 
 - **User Profiles**: 
-    - Farmer Profile: Farmers can set up and manage their profiles, providing essential information about their agricultural activities.
-    - Office Profile: Agriculture department offices can maintain their profiles and oversee regional data.
+    - Farmer Profile: Farmers can set up and manage their profiles, providing essential information about their contact, location and agricultural activities.
+    - Technical Officer Profile: Agriculture department statistics unit officers can maintain their profiles and oversee regional data.
  
-- **Add Land Details**: Farmers can input information about their agricultural land, including location, size, and ownership details.
+- **Add Land Details**: Farmers can input information about their agricultural land, season, including location, size, irrigation and ownership details.
 
-- **Add Crop Details**: Farmers can record data about the crops they cultivate, specifying crop types, quantities, and more.
+- **Add Crop Details**: Farmers can record data about the crops they cultivate, specifying crop types, quantities, season and more.
 
 - **Add Crop Operation Cost Details:**: Farmers can keep track of expenses related to crop cultivation, such as seeds, fertilizers, labor, and equipment costs.
 
 - **Real-time Updates**: Utilize real-time updates to notify users about reservation status and service requests.
+
+- **Concluting notes**: A map component is not added yet. Validation library is not included yet.
 
 ## Agricultural Sector Enhancement
 
