@@ -41,41 +41,41 @@ interface Column {
 
 // Define the columns for the table
 const columns: readonly Column[] = [
-  { id: "season", label: "Season", minWidth: 170 },
+  { id: "season", label: "Season", minWidth: 50 },
   {
     id: "cropName",
-    label: "CropName",
-    minWidth: 170,
+    label: "Crop Name",
+    minWidth: 50,
   },
   {
     id: "cropType",
     label: "Crop Type",
-    minWidth: 170,
+    minWidth: 50,
   },
   {
     id: "totalSoldQty",
     label: "Sold Quantity",
-    minWidth: 170,
+    minWidth: 50,
   },
   {
     id: "totalIncome",
     label: "Total Income",
-    minWidth: 170,
+    minWidth: 50,
   },
   {
     id: "reservedQtyHome",
-    label: "Reserved Quantity",
-    minWidth: 170,
+    label: "Reserved",
+    minWidth: 50,
   },
   {
     id: "reservedQtySeed",
-    label: "Quantity for Seed",
-    minWidth: 170,
+    label: "Qty Seeds",
+    minWidth: 50,
   },
   {
     id: "noOfPicks",
-    label: "No of Picks",
-    minWidth: 170,
+    label: "Picks",
+    minWidth: 50,
   },
 ];
 
@@ -184,7 +184,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                             </TableCell>
                       
                     <TableCell align={"right"}>
-                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Operation Cost</Button>
+                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Cost</Button>
                             </TableCell>
                   </TableRow>
                 );

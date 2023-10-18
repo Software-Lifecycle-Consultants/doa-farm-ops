@@ -98,6 +98,15 @@ export default function AddOperationCost() {
           <ProfileTitle title={`Add Operation Cost for ${cropName}`} />
           <Typography>Crop Type: {cropType}</Typography>
         </Stack>
+
+        <Grid item>
+        <p>
+        Select the operation you are adding costs to, their sub-operation and where applicable other cost components.
+        Then add detailed costs under each section.
+        </p>
+      </Grid>
+
+
         {/* Machinery Cost Section */}
         <Grid
           item
@@ -190,7 +199,7 @@ export default function AddOperationCost() {
               {/* Select dropdown for selecting a fertilizer */}
               <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
                 <InputLabel id="demo-simple-select-filled-label">
-                  Select fertilizer
+                  Select Fertilizer
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-filled-label"
@@ -871,29 +880,20 @@ export default function AddOperationCost() {
             </Paper>
           </Grid>
         </Grid>
-        {/* Save Button */}
         <Grid container justifyContent="center" alignItems="center">
-          {/* <Grid item>
-            <Button
-              type="submit"
-              variant="contained"
-              sx={{ mt: 3, mb: 2, width: "25vw" }}
-            >
-              Save
-            </Button>
-          </Grid> */}
           <Grid item>
             <Stack direction="row" spacing={4} paddingTop={4}>
+              {/* Cancel Button */}
               <Button
                 type="submit"
-                variant="contained"
+                variant="outlined"
                 fullWidth
                 sx={{ mt: 3, mb: 2, width: "18vw" }}
                 onClick={navigationToMyCrops}
               >
                 Cancel
               </Button>
-
+              {/* Save Button */}
               <Button
                 type="submit"
                 variant="contained"
