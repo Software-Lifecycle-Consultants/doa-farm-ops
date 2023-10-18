@@ -24,7 +24,7 @@ The "DOA Cost of Cultivation Reporting System" is a remarkable volunteer-driven 
 
 - **Real-time Updates**: Utilize real-time updates to notify users about reservation status and service requests.
 
-- **Concluting notes**: A map component is not added yet. Validation library is not included yet.
+- **Concluding notes**: A map component is not added yet. Validation library is not included yet.
 
 ## Agricultural Sector Enhancement
 
