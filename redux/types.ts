@@ -1,4 +1,4 @@
-interface Data {
+interface Crop {
     cropDetails: {
       cropName: string;
       season: string;
@@ -13,5 +13,5 @@ interface Data {
     landId: string;
   }
   export type RootState = {
-    crop: Data[];
+    crop: Crop[];
   };
