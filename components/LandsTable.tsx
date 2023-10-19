@@ -18,17 +18,17 @@ import {
 } from "@mui/icons-material";
 import { rows } from "../data/landsData";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/types";
 
 // Define columns for the table
 interface Column {
   id:
-    | "landname"
-    | "district"
-    | "division"
-    | "rent"
-    | "irrigation"
-    | "button"
-    | "icons";
+  | "landName"
+  | "district"
+  | "dsDivision"
+  | "landRent"
+  | "irrigationMode";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -36,31 +36,21 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: "landname", label: "Land Name", minWidth: 170 },
+  { id: "landName", label: "Land Name", minWidth: 170 },
   { id: "district", label: "District", minWidth: 170 },
   {
-    id: "division",
+    id: "dsDivision",
     label: "DS Division",
     minWidth: 170,
   },
   {
-    id: "rent",
+    id: "landRent",
     label: "Land Rent",
     minWidth: 170,
   },
   {
-    id: "irrigation",
+    id: "irrigationMode",
     label: "Mode of Irrigation",
-    minWidth: 170,
-  },
-  {
-    id: "button",
-    label: "",
-    minWidth: 170,
-  },
-  {
-    id: "icons",
-    label: "",
     minWidth: 170,
   },
 ];
@@ -75,6 +65,8 @@ interface TableTitleProps {
 
 export default function LandsTable({ title }: TableTitleProps) {
   const router = useRouter();
+  const landDetails = useSelector((state: RootState) => state.land);
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -95,7 +87,6 @@ export default function LandsTable({ title }: TableTitleProps) {
   };
 
   return (
-    
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
         <Table stickyHeader aria-label="sticky table">
@@ -113,7 +104,7 @@ export default function LandsTable({ title }: TableTitleProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows
+            {landDetails
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
@@ -122,31 +113,37 @@ export default function LandsTable({ title }: TableTitleProps) {
                       const value = row[column.id];
                       return (
                         <>
-                          {column.id === "button" ? (
-                            <TableCell key={column.id} align={column.align}>
-                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '80%'}}  onClick={navigationToAddCrop}>Add Crop</Button>
-                            </TableCell>
-                          ) : column.id === "icons" ? (
-                            <TableCell key={column.id} align={column.align}>
-                              <Stack direction="row" spacing={2}>
-                                <IconButton>
-                                  <EditNoteIcon />
-                                </IconButton>
-                                <IconButton>
-                                  <DeleteIcon />
-                                </IconButton>
-                              </Stack>
-                            </TableCell>
-                          ) : (
-                            <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
-                          )}
+                          <TableCell key={column.id} align={column.align}>
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
                         </>
                       );
                     })}
+                    <TableCell align={"right"}>
+                      <Stack direction="row" spacing={2}>
+                        <IconButton>
+                          <EditNoteIcon />
+                        </IconButton>
+                        <IconButton>
+                          <DeleteIcon />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
+                    <TableCell align={"right"}>
+                      <Button
+                        style={{
+                          backgroundColor: "#C2C2C2",
+                          color: "black",
+                          borderRadius: "16px",
+                          width: "80%",
+                        }}
+                        onClick={navigationToAddCrop}
+                      >
+                        Add Crop
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}
