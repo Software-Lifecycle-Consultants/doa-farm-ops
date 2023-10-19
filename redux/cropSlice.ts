@@ -1,23 +1,9 @@
 // Import the createSlice function from Redux Toolkit.
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from './types';
 
 // Define the initial state of the 'crop' slice.
-const initialState = [
-  {
-  landId: null,
-  cropDetails: {
-    cropName: null,
-    season: null,
-    cropType: null,
-    totalSoldQty: null,
-    totalIncome: null,
-    reservedQtyHome: null,
-    reservedQtySeed: null,
-    noOfPicks: null,
-    loanObtained: null,
-  },
-}
-];
+const initialState: RootState["crop"] = [];
 
 const cropSlice = createSlice({
     name: 'crop', // A unique name for this slice, used in the Redux store.

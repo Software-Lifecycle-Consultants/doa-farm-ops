@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Stack,
   Button,
@@ -16,9 +16,10 @@ import {
   Autocomplete 
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { updateCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
+import { RootState } from "@/redux/types";
 
 // Styles for labels
 const styles = {
@@ -65,6 +66,9 @@ export default function UpdateCrop() {
   });
 
   const dispatch = useDispatch();
+
+  // Retrieve data from Redux store
+  // const cropDetails = useSelector((state: RootState) => state.cropSlice.cropDetails);
 
   // Handle selection change for "Select Land" dropdown
   const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -125,6 +129,24 @@ export default function UpdateCrop() {
       cropName: newValue,
     });
   };
+
+  // Populate form fields with retrieved data
+  // useEffect(() => {
+  //   if (addedCropData) {
+  //     setFormData({
+  //       cropName: addedCropData.cropDetails.cropName || null,
+  //       season: addedCropData.cropDetails.season || "1",
+  //       cropType: addedCropData.cropDetails.cropType || "",
+  //       totalSoldQty: addedCropData.cropDetails.totalSoldQty || "",
+  //       totalIncome: addedCropData.cropDetails.totalIncome || "",
+  //       reservedQtyHome: addedCropData.cropDetails.reservedQtyHome || "",
+  //       reservedQtySeed: addedCropData.cropDetails.reservedQtySeed || "",
+  //       noOfPicks: addedCropData.cropDetails.noOfPicks || "",
+  //       loanObtained: addedCropData.cropDetails.loanObtained || 0,
+  //     });
+  //     setLandId(addedCropData.landId || "");
+  //   }
+  // }, [addedCropData]);
 
   // Styles for the container box
   const boxStyles = {

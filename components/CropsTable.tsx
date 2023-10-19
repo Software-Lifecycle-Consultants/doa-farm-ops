@@ -109,9 +109,9 @@ export default function CropsTable({ title }: TableTitleProps) {
   };
 
   // Function to handle navigation when the Edit icon is clicked
-const handleEditClick = () => {
-  router.push("/update-crop");
-};
+  const handleEditClick = () => {
+   router.push("/update-crop");
+  };
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
