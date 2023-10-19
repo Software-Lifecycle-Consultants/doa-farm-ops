@@ -64,8 +64,10 @@ interface TableTitleProps {
  */
 
 export default function LandsTable({ title }: TableTitleProps) {
+  
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
+  
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -85,7 +87,9 @@ export default function LandsTable({ title }: TableTitleProps) {
   const navigationToAddCrop = () => {
     router.push("/add-crop");
   };
-
+const handleEditClick = (id: any) => {
+  // router.push(`/update-crop/${id}`);
+};
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -124,7 +128,9 @@ export default function LandsTable({ title }: TableTitleProps) {
                     <TableCell align={"right"}>
                       <Stack direction="row" spacing={2}>
                         <IconButton>
-                          <EditNoteIcon />
+                          <EditNoteIcon
+                          onClick={() => handleEditClick(row.landId)}
+                          />
                         </IconButton>
                         <IconButton>
                           <DeleteIcon />

@@ -13,8 +13,9 @@ import {
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addLand } from "@/redux/landSlice";
+import { RootState } from "@/redux/types";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -22,8 +23,9 @@ import { addLand } from "@/redux/landSlice";
 
 export default function AddLand() {
   const router = useRouter();
-
+  const landDetails = useSelector((state: RootState) => state.land);
   interface FormData {
+    landId: string;
     landName: string;
     district: string;
     dsDivision: string;
@@ -32,6 +34,7 @@ export default function AddLand() {
   }
 
   const [formData, setFormData] = useState({
+    landId: "",
     landName: "",
     district: "",
     dsDivision: "",
@@ -48,6 +51,7 @@ export default function AddLand() {
     event.preventDefault(); // Prevent the default form submission behavior
     // Simulate add crop action by creating a user data object.
     const landData = { ...formData };
+    console.log("🚀 ~ file: page.tsx:55 ~ AddLand ~ landData:", landData)
     // Dispatch the 'login' action from the 'authSlice' with the user data.
     dispatch(addLand(landData));
     router.push("/my-crops");
@@ -72,6 +76,7 @@ export default function AddLand() {
   ) => {
     setFormData({
       ...formData,
+      landId: (landDetails.length + 1).toString(),
       [field]: event.target.value,
     });
   };
