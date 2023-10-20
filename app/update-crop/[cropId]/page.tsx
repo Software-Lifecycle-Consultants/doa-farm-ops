@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   Stack,
   Button,
@@ -29,18 +29,24 @@ const styles = {
 };
 
 /**
- * Add Crop page serves as a form to add details about crop properties.
+ * Update Crop page serves as a form to update details about crop properties.
  */
-export default function UpdateCrop() {
+export default function UpdateCrop({ params }: { params: { cropId: string } }) {
+
   const router = useRouter();
-    
+  // Extract the cropId from the parameters
+  const cropId = params.cropId;
+  // Get crop details from the Redux store
+  const cropDetails = useSelector((state:RootState) => state.crop);
+  // Find the specific crop detail by matching cropId
+  const cropDetail = cropDetails.find((crop) => crop._id === cropId);
   const cropNames = cropList.map(crop => crop.name);
 
-  // State variables for form fields
-  const [value, setValue] = React.useState("female");
+  // Initialize states
   const [isCultivationLoan, setIsCultivationLoan] = useState("");
-  const [landId, setLandId] = useState("");
+  const [landId, setLandId] = useState(cropDetail?.landId || "");
 
+  // Define a TypeScript interface to represent the form data
   interface FormData {
     cropName: string | null;
     season: string;
@@ -52,8 +58,8 @@ export default function UpdateCrop() {
     noOfPicks: string;
     loanObtained: number;
   }
-  
-  const [formData, setFormData] = useState<FormData>({
+  // Initialize form data state with values
+  const [formData, setFormData] = useState<FormData>(cropDetail?.cropDetails || {
     cropName: null, // Specify the type as string | null
     season: "1",
     cropType: "",
@@ -67,17 +73,6 @@ export default function UpdateCrop() {
 
   const dispatch = useDispatch();
 
-  // Retrieve data from Redux store
-  // const cropDetails = useSelector((state: RootState) => state.cropSlice.cropDetails);
-
-  // Handle selection change for "Select Land" dropdown
-  const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLandId(event.target.value);
-  };
-  // Handle radio button change for crop type
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
   // Handle selection change for "Cultivation loan obtained?" dropdown
   const handleCultivationLoanChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -89,16 +84,12 @@ export default function UpdateCrop() {
     });
   };
 
-  //Function to navigate to add land page
-  const navigationToAddLand = () => {
-    router.push("/add-land");
-  };
   //Function to navigate to my crops page clicking save button
   const handleOnClickUpdateCrop = async (event:React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate add crop action by creating a user data object.
-    const cropData = {landId, cropDetails: formData };
-    // Dispatch the 'login' action from the 'authSlice' with the user data.
+    // Simulate update crop action by updating user data object.
+    const cropData = {landId, _id: cropDetail?._id, cropDetails: formData };
+    // Dispatch the 'update' action from the 'cropSlice' with the user data.
     dispatch(updateCrop(cropData));
     //Navigate to my crops page
     router.push("/my-crops");
@@ -109,7 +100,7 @@ export default function UpdateCrop() {
     router.push("/my-crops");
   };
 
-  // Define a function to handle add crop.
+  // Define a function to handle update crop.
   const handleChangeUpdateCrop = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
@@ -129,25 +120,7 @@ export default function UpdateCrop() {
       cropName: newValue,
     });
   };
-
-  // Populate form fields with retrieved data
-  // useEffect(() => {
-  //   if (addedCropData) {
-  //     setFormData({
-  //       cropName: addedCropData.cropDetails.cropName || null,
-  //       season: addedCropData.cropDetails.season || "1",
-  //       cropType: addedCropData.cropDetails.cropType || "",
-  //       totalSoldQty: addedCropData.cropDetails.totalSoldQty || "",
-  //       totalIncome: addedCropData.cropDetails.totalIncome || "",
-  //       reservedQtyHome: addedCropData.cropDetails.reservedQtyHome || "",
-  //       reservedQtySeed: addedCropData.cropDetails.reservedQtySeed || "",
-  //       noOfPicks: addedCropData.cropDetails.noOfPicks || "",
-  //       loanObtained: addedCropData.cropDetails.loanObtained || 0,
-  //     });
-  //     setLandId(addedCropData.landId || "");
-  //   }
-  // }, [addedCropData]);
-
+  
   // Styles for the container box
   const boxStyles = {
     display: "flex",
@@ -378,3 +351,4 @@ export default function UpdateCrop() {
     </Container>
   );
 }
+

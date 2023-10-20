@@ -72,10 +72,6 @@ export default function AddCrop() {
   const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLandId(event.target.value);
   };
-  // Handle radio button change for crop type
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
-  };
   // Handle selection change for "Cultivation loan obtained?" dropdown
   const handleCultivationLoanChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -96,7 +92,7 @@ export default function AddCrop() {
     event.preventDefault(); // Prevent the default form submission behavior
     // Simulate add crop action by creating a user data object.
     const cropData = {landId, cropDetails: formData };
-    // Dispatch the 'login' action from the 'authSlice' with the user data.
+    // Dispatch the 'crop' action from the 'cropSlice' with the user data.
     dispatch(addCrop(cropData));
     //Navigate to my crops page
     router.push("/my-crops");
@@ -108,7 +104,6 @@ export default function AddCrop() {
   };
 
   // Define a function to handle add crop.
-
   const handleChangeAddCrop = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
