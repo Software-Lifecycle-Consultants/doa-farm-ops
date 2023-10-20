@@ -128,11 +128,10 @@ export default function SignIn() {
           <Typography>Email</Typography>
           {/* Email input field */}
           <FormControl variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
-            <InputLabel htmlFor="email">Email Address</InputLabel>
             <OutlinedInput
               id="email"
               autoComplete="email"
-              label="Email Address"
+              placeholder="Email Address"
               value={formData.email}
               onChange={(e) => handleChangeEmail(e, "email")}
               required
@@ -147,9 +146,6 @@ export default function SignIn() {
           <Typography>Password</Typography>
           {/* Password input field with visibility toggle */}
           <FormControl variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
-            <InputLabel htmlFor="outlined-adornment-password">
-              Password
-            </InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
               value={formData.password}
@@ -167,7 +163,7 @@ export default function SignIn() {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              placeholder="Password"
             />
             {!passwordValid && (
     <Typography variant="caption" color="error">

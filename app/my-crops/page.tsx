@@ -97,7 +97,7 @@ export default function MyCrops() {
           <Box
             sx={{
               width: "100%",
-              paddingRight: "18px",
+              paddingRight: "1vh",
               display: "flex",
               justifyContent: "flex-end",
             }}

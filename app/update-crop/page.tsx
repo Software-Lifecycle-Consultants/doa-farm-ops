@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Stack,
   Button,
@@ -16,9 +16,10 @@ import {
   Autocomplete 
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { updateCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
+import { RootState } from "@/redux/types";
 
 // Styles for labels
 const styles = {
@@ -66,6 +67,9 @@ export default function UpdateCrop() {
 
   const dispatch = useDispatch();
 
+  // Retrieve data from Redux store
+  // const cropDetails = useSelector((state: RootState) => state.cropSlice.cropDetails);
+
   // Handle selection change for "Select Land" dropdown
   const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLandId(event.target.value);
@@ -100,8 +104,12 @@ export default function UpdateCrop() {
     router.push("/my-crops");
   };
 
-  // Define a function to handle add crop.
+  //Function to navigate to my crops page clicking cancel button
+  const navigationToMyCrops = () => {
+    router.push("/my-crops");
+  };
 
+  // Define a function to handle add crop.
   const handleChangeUpdateCrop = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
@@ -121,6 +129,24 @@ export default function UpdateCrop() {
       cropName: newValue,
     });
   };
+
+  // Populate form fields with retrieved data
+  // useEffect(() => {
+  //   if (addedCropData) {
+  //     setFormData({
+  //       cropName: addedCropData.cropDetails.cropName || null,
+  //       season: addedCropData.cropDetails.season || "1",
+  //       cropType: addedCropData.cropDetails.cropType || "",
+  //       totalSoldQty: addedCropData.cropDetails.totalSoldQty || "",
+  //       totalIncome: addedCropData.cropDetails.totalIncome || "",
+  //       reservedQtyHome: addedCropData.cropDetails.reservedQtyHome || "",
+  //       reservedQtySeed: addedCropData.cropDetails.reservedQtySeed || "",
+  //       noOfPicks: addedCropData.cropDetails.noOfPicks || "",
+  //       loanObtained: addedCropData.cropDetails.loanObtained || 0,
+  //     });
+  //     setLandId(addedCropData.landId || "");
+  //   }
+  // }, [addedCropData]);
 
   // Styles for the container box
   const boxStyles = {
@@ -284,16 +310,16 @@ export default function UpdateCrop() {
             </Grid>
             <Grid
               container
-              spacing={0.5}
+              spacing={2}
               paddingLeft={"16px"}
               paddingTop={"16px"}
             >
-              <Grid item xs={5.9}>
+              <Grid item xs={12} sm={6}>
+              <Typography>Cultivation loan obtained? *</Typography>
                 <TextField
                   select
                   required
                   fullWidth
-                  label="Cultivation loan obtained?"
                   value={isCultivationLoan}
                   onChange={handleCultivationLoanChange}
                   variant="outlined"
@@ -306,9 +332,10 @@ export default function UpdateCrop() {
                   <MenuItem value="no">No</MenuItem>
                 </TextField>
               </Grid>
-              <Grid item xs={6}>
+              <Grid item xs={12} sm={6}>
+              <Typography>Cultivation loan amount</Typography>
                 <TextField
-                  label="Cultivation loan amount"
+                  fullWidth
                   value={formData.loanObtained}
                   onChange={(e) => handleChangeUpdateCrop(e, "loanObtained")}
                   variant="outlined"
@@ -320,15 +347,32 @@ export default function UpdateCrop() {
             </Grid>
           </Grid>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            onClick={handleOnClickUpdateCrop}
-          >
-            Update
-          </Button>
+          <Grid container justifyContent="center" alignItems="center">
+          <Grid item>
+            <Stack direction="row" spacing={4} paddingTop={4}>
+              {/* Cancel Button */}
+              <Button
+                type="submit"
+                variant="outlined"
+                fullWidth
+                sx={{ mt: 3, mb: 2, width: "12vw" }}
+                onClick={navigationToMyCrops}
+              >
+                Cancel
+              </Button>
+              {/* Save Button */}
+              <Button
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{ mt: 3, mb: 2, width: "12vw" }}
+                onClick={handleOnClickUpdateCrop}
+              >
+                Save
+              </Button>
+            </Stack>
+          </Grid>
+        </Grid>
         </Box>
       </Box>
     </Container>
