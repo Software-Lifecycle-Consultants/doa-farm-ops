@@ -51,7 +51,6 @@ export default function AddLand() {
     event.preventDefault(); // Prevent the default form submission behavior
     // Simulate add crop action by creating a user data object.
     const landData = { ...formData };
-    console.log("🚀 ~ file: page.tsx:55 ~ AddLand ~ landData:", landData)
     // Dispatch the 'login' action from the 'authSlice' with the user data.
     dispatch(addLand(landData));
     router.push("/my-crops");

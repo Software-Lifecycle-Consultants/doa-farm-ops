@@ -12,14 +12,20 @@ const landSlice = createSlice({
     addLand: (state, action) => {
       state.push(action.payload); // Set 'land' to the payload provided in the action.
     },
-    // updateLand: (state, action) => {
-    //   state.land = action.payload; // Set 'land' to the payload provided in the action.
-    // },
+    updateLand: (state, action) => {
+      const { landId } = action.payload;
+      const index = state.findIndex((crop) => crop.landId === landId);
+      if (index !== -1) {
+        state[index] = {
+          ...action.payload
+        };
+      }
+    },
   },
 });
 
 // Export the action creators for external use.
-export const { addLand } = landSlice.actions;
+export const { addLand, updateLand } = landSlice.actions;
 
 // Define a selector function to extract the 'land' state from the Redux store.
 export const selectAddLand = (state: { land: any }) => state.land;
