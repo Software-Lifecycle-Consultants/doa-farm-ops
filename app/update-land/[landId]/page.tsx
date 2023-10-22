@@ -18,7 +18,7 @@ import { updateLand } from "@/redux/landSlice";
 import { RootState } from "@/redux/types";
 
 /**
- * Add Land page serves as a form to add details about land properties.
+ * UpdateLand page is a form to edit or update details about land properties.
  */
 
 export default function UpdateLand({ params }: { params: { landId: string } }) {
@@ -58,9 +58,9 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate add crop action by creating a user data object.
+    // Simulate an update land action by creating a land data object.
     const landData = { landId, ...formData };
-    // Dispatch the 'login' action from the 'authSlice' with the user data.
+
     dispatch(updateLand(landData));
     router.push("/my-crops");
   };
@@ -69,10 +69,6 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate add crop action by creating a user data object.
-    const landData = { landDetails: formData };
-    // Dispatch the 'login' action from the 'authSlice' with the user data.
-    dispatch(updateLand(landData));
     router.push("/add-crop");
   };
 

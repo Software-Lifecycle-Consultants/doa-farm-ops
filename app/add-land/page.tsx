@@ -24,6 +24,7 @@ import { RootState } from "@/redux/types";
 export default function AddLand() {
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
+  // Define the structure of the form data
   interface FormData {
     landId: string;
     landName: string;
@@ -49,9 +50,10 @@ export default function AddLand() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate add crop action by creating a user data object.
+
     const landData = { ...formData };
-    // Dispatch the 'login' action from the 'authSlice' with the user data.
+
+    // Simulate an add land action by creating a land data object.
     dispatch(addLand(landData));
     router.push("/my-crops");
   };
@@ -60,15 +62,10 @@ export default function AddLand() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate add crop action by creating a user data object.
-    const landData = { landDetails: formData };
-    // Dispatch the 'login' action from the 'authSlice' with the user data.
-    dispatch(addLand(landData));
     router.push("/add-crop");
   };
 
-  // Define a function to handle add land.
-
+  // Event handler to add form field data
   const handleChangeAddLand = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
