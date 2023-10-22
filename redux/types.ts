@@ -11,6 +11,7 @@ interface Crop {
       loanObtained: number;
     };
     landId: string;
+    _id: string;
   }
 interface Land {
   landId: string;
@@ -20,7 +21,8 @@ interface Land {
   landRent: string;
   irrigationMode: string;
 }
+  // Define the structure of the Redux store's state using the RootState type.
   export type RootState = {
-    crop: Crop[];
+    crop: Crop[];// An array of Crop objects, representing the state of crop data.
     land: Land[];
   };

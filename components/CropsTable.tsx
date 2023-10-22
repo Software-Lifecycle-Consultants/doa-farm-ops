@@ -21,6 +21,7 @@ import { rows } from "../data/cropsData";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/types";
+import Link from 'next/link';
 
 // Define the table columns
 interface Column {
@@ -109,8 +110,9 @@ export default function CropsTable({ title }: TableTitleProps) {
   };
 
   // Function to handle navigation when the Edit icon is clicked
-  const handleEditClick = () => {
-   router.push("/update-crop");
+  const handleEditClick = (id: string) => {
+   router.push(`/update-crop/${id}`);
+   
   };
 
   return (
@@ -174,7 +176,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                     })}
                     <TableCell align={"right"}>
                               <Stack direction="row" spacing={1}>
-                                <IconButton onClick={handleEditClick}>
+                                <IconButton onClick={()=>handleEditClick(row._id)}>
                                   <EditNoteIcon />
                                 </IconButton>
                                 <IconButton>
