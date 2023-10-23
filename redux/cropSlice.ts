@@ -30,21 +30,23 @@ const cropSlice = createSlice({
       },
       // Reducer to delete a crop from the state
       deleteCrop: (state, action) => {
-        const landIdToDelete = action.payload;
-        const indexToDelete = state.findIndex((crop) => crop._id === landIdToDelete);
-        if (indexToDelete !== -1) {
-          state.splice(indexToDelete, 1); // Remove the crop from the array.
+        const { landId, _id } = action.payload;
+        const index = state.findIndex((crop) => crop._id === _id && crop.landId === landId);
+  
+        if (index !== -1) {
+          state.splice(index, 1); // Remove the crop from the state
         }
       },
     },
   });
   
   // Export the action creators for external use.
-export const { addCrop, updateCrop } = cropSlice.actions;
+export const { addCrop, updateCrop, deleteCrop  } = cropSlice.actions;
 
 // Define a selector function to extract the 'crop' state from the Redux store.
 export const selectAddCrop = (state: { crop: any; }) => state.crop;
 export const selectUpdateCrop = (state: { crop: any; }) => state.crop;
+export const selectDeleteCrop = (state: { crop: any; }) => state.crop;
 
 // Export the 'cropSlice.reducer' as the default export.
 export default cropSlice.reducer;
