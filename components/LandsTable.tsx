@@ -88,7 +88,7 @@ export default function LandsTable({ title }: TableTitleProps) {
     router.push("/add-crop");
   };
 const handleEditClick = (id: any) => {
-  // router.push(`/update-crop/${id}`);
+  router.push(`/update-land/${id}`);
 };
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
