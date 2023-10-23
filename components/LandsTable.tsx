@@ -65,7 +65,6 @@ interface TableTitleProps {
  */
 
 export default function LandsTable({ title }: TableTitleProps) {
-  
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
   const dispatch = useDispatch();
@@ -88,10 +87,11 @@ export default function LandsTable({ title }: TableTitleProps) {
   const navigationToAddCrop = () => {
     router.push("/add-crop");
   };
-const handleEditClick = (id: any) => {
-  router.push(`/update-land/${id}`);
+  const handleEditClick = (id: any) => {
+    router.push(`/update-land/${id}`);
   };
-  
+
+  //Function for deleting a land
   const handleDeleteClick = (landId: any) => {
     // Dispatch the deleteLand action with the landId to delete
     dispatch(deleteLand(landId));

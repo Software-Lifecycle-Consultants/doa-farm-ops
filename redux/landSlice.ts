@@ -10,20 +10,20 @@ const landSlice = createSlice({
   initialState, // The initial state of the 'land' slice.
   reducers: {
     addLand: (state, action) => {
-      state.push(action.payload); // Set 'land' to the payload provided in the action.
+      state.push(action.payload); // Add a new land to the state using the payload.
     },
     updateLand: (state, action) => {
       const { landId } = action.payload;
       const index = state.findIndex((land) => land.landId === landId);
       if (index !== -1) {
         state[index] = {
-          ...action.payload,
+          ...action.payload, // Update an existing land in the state with new data.
         };
       }
     },
     deleteLand: (state, action) => {
       const landIdToDelete = action.payload;
-      // Use the landId to filter out the land you want to delete
+      // Filter out the land to delete based on landId.
       state = state.filter((land) => land.landId !== landIdToDelete);
       return state;
     },
