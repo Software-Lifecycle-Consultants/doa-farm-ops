@@ -14,18 +14,24 @@ const landSlice = createSlice({
     },
     updateLand: (state, action) => {
       const { landId } = action.payload;
-      const index = state.findIndex((crop) => crop.landId === landId);
+      const index = state.findIndex((land) => land.landId === landId);
       if (index !== -1) {
         state[index] = {
-          ...action.payload
+          ...action.payload,
         };
       }
+    },
+    deleteLand: (state, action) => {
+      const landIdToDelete = action.payload;
+      // Use the landId to filter out the land you want to delete
+      state = state.filter((land) => land.landId !== landIdToDelete);
+      return state;
     },
   },
 });
 
 // Export the action creators for external use.
-export const { addLand, updateLand } = landSlice.actions;
+export const { addLand, updateLand, deleteLand } = landSlice.actions;
 
 // Define a selector function to extract the 'land' state from the Redux store.
 export const selectAddLand = (state: { land: any }) => state.land;

@@ -18,8 +18,9 @@ import {
 } from "@mui/icons-material";
 import { rows } from "../data/landsData";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/types";
+import { deleteLand } from "@/redux/landSlice";
 
 // Define columns for the table
 interface Column {
@@ -67,7 +68,7 @@ export default function LandsTable({ title }: TableTitleProps) {
   
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
-  
+  const dispatch = useDispatch();
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -89,7 +90,12 @@ export default function LandsTable({ title }: TableTitleProps) {
   };
 const handleEditClick = (id: any) => {
   router.push(`/update-land/${id}`);
-};
+  };
+  
+  const handleDeleteClick = (landId: any) => {
+    // Dispatch the deleteLand action with the landId to delete
+    dispatch(deleteLand(landId));
+  };
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -112,7 +118,12 @@ const handleEditClick = (id: any) => {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1}>
+                  <TableRow
+                    key={row.landId}
+                    hover
+                    role="checkbox"
+                    tabIndex={-1}
+                  >
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
@@ -129,11 +140,13 @@ const handleEditClick = (id: any) => {
                       <Stack direction="row" spacing={2}>
                         <IconButton>
                           <EditNoteIcon
-                          onClick={() => handleEditClick(row.landId)}
+                            onClick={() => handleEditClick(row.landId)}
                           />
                         </IconButton>
                         <IconButton>
-                          <DeleteIcon />
+                          <DeleteIcon
+                            onClick={() => handleDeleteClick(row.landId)}
+                          />
                         </IconButton>
                       </Stack>
                     </TableCell>
