@@ -13,16 +13,37 @@ import {
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateLand } from "@/redux/landSlice";
+import { RootState } from "@/redux/types";
 
 /**
- * Add Land page serves as a form to add details about land properties.
+ * UpdateLand page is a form to edit or update details about land properties.
  */
 
-export default function UpdateLand() {
+export default function UpdateLand({ params }: { params: { landId: string } }) {
+  // Get the Next.js router object
   const router = useRouter();
+  // Extract the landId from the params object
+  const landId = params.landId;
+  // Get the land details from the Redux store
+  const landDetails = useSelector((state: RootState) => state.land);
+  // Get the Redux dispatch function
   const dispatch = useDispatch();
+
+  // Initialize form data with the data from the state based on landId
+  const initialFormData = landDetails.find(
+    (land) => land.landId === landId
+  ) || {
+    landName: "",
+    district: "",
+    dsDivision: "",
+    landRent: "",
+    irrigationMode: "",
+  };
+
+  // Create state to manage form data
+  const [formData, setFormData] = useState(initialFormData);
 
   interface FormData {
     landName: string;
@@ -32,22 +53,14 @@ export default function UpdateLand() {
     irrigationMode: string;
   }
 
-  const [formData, setFormData] = useState({
-    landName: "",
-    district: "",
-    dsDivision: "",
-    landRent: "",
-    irrigationMode: "",
-  });
-
   //Function to navigate to my crops page clicking save & exit to my crops button
   const handleOnClickUpdateLand = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate add crop action by creating a user data object.
-    const landData = { landDetails: formData };
-    // Dispatch the 'login' action from the 'authSlice' with the user data.
+    // Simulate an update land action by creating a land data object.
+    const landData = { landId, ...formData };
+
     dispatch(updateLand(landData));
     router.push("/my-crops");
   };
@@ -56,15 +69,10 @@ export default function UpdateLand() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate add crop action by creating a user data object.
-    const landData = { landDetails: formData };
-    // Dispatch the 'login' action from the 'authSlice' with the user data.
-    dispatch(updateLand(landData));
     router.push("/add-crop");
   };
 
-  // Define a function to handle add land.
-
+  // Event handler to update form field data
   const handleChangeUpdateLand = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
@@ -96,7 +104,7 @@ export default function UpdateLand() {
       >
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
-            Add Land
+            Update Land
           </Typography>
         </Box>
         {/* Grid for Land Details */}
