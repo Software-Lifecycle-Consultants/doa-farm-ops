@@ -9,8 +9,30 @@
       "noAccount": "ගිනුමක් නැතිනම්? ලියන්න"
     },
     "farmerProfile": {
-      "name": "ගොවි ගිණුම"
+      "txtProfileName": "ගොවි ගිණුම",
+      "txtProfileType": "ගොවියා",
+      "txtPersonalInformation": "පුද්ගලික තොරතුරු",
+      "capBtnEdit": "සංස්කරණය කරන්න",
+      "txtFirstName": "මුල් නම",
+      "txtLastName": "අවසන් නම",
+      "txtEmail": "ඊමේල්",
+      "txtNicNumber": "ජාතික හැඳුනුම්පත් අංකය",
+      "txtAddress": "ලිපිනය",
+      "txtPhoneNumber": "දුරකථන අංකය",
+      "txtHouseholds": "ගෘහවාසීන්",
+      "txtOtherDetails": "වෙනත් විස්තර",
+      "txtOrgName": "සංවිධානයේ නම",
+      "txtOrgAddress": "ලිපිනය",
+      "txtLandDetails": "ඉඩම් විස්තර",
+      "capBtnAdd": "එකතු කරන්න",
+      "tblLand": {
+        "colLandName": "ඉඩමේ නම",
+        "colDistrict": "දිස්ත්‍රික්කය",
+        "colDsDivision": "ප්‍රාදේශීය ලේකම් කොට්ඨාශය",
+        "colLandRent": "ඉඩම් කුලිය",
+        "colIrrigationMode": "වාරිමාර්ග ආකාරය",
+        "capBtnAddCrop": "අස්වැන්න එකතු කරන්න"
     }
-    
+  }
   }
   

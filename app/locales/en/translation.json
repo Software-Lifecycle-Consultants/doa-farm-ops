@@ -9,7 +9,30 @@
       "noAccount": "Don't have an account? Sign Up"
     },
     "farmerProfile": {
-      "name": "Farmer Profile"
+      "txtProfileName": "Farmer Profile",
+      "txtProfileType": "Farmer",
+      "txtPersonalInformation": "Personal Information",
+      "capBtnEdit": "Edit",
+      "txtFirstName": "First Name",
+      "txtLastName": "Last Name",
+      "txtEmail": "Email",
+      "txtNicNumber": "NIC Number",
+      "txtAddress": "Address",
+      "txtPhoneNumber": "Phone Number",
+      "txtHouseholds": "Households",
+      "txtOtherDetails": "Other Details",
+      "txtOrgName": "Organization Name",
+      "txtOrgAddress": "Address",
+      "txtLandDetails": "Land Details",
+      "capBtnAdd": "Add",
+      "tblLand": {
+        "colLandName": "Land Name",
+        "colDistrict": "District",
+        "colDsDivision": "DS Division",
+        "colLandRent": "Land Rent",
+        "colIrrigationMode": "Mode of Irrigation",
+        "capBtnAddCrop": "Add Crop"
+      }
     }
   }
   
