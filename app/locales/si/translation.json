@@ -51,6 +51,43 @@
     "txtOrgAddress": "ලිපිනය",
     "txtEducation": "අධ්‍යාපනික තොරතුරු",
     "txtUniversity": "විශ්ව විද්‍යාලය"
+  },
+  "operationCost": {
+    "txtTitle": " සඳහා මෙහෙයුම් පිරිවැය එක් කරන්න",
+    "txtCropType": "බෝග වර්ගය:",
+    "paddy": "වී",
+    "txtDescription": "ඔබ වියදම් එකතු කරන මෙහෙයුම, ඒවායේ උප-මෙහෙයුම් සහ අදාළ අනෙකුත් වියදම් සංරචක තෝරන්න. ඉන්පසු එක් එක් කොටස යටතේ විස්තරාත්මක පිරිවැය එකතු කරන්න.",
+    "txtMajorOperations": "ප්‍රධාන මෙහෙයුම්",
+    "txtSubOperations": "උප මෙහෙයුම්",
+    "txtFertilizerApplication": "පොහොර යෙදීම",
+    "txtSelectFertilizer": "පොහොර තෝරන්න",
+    "tblMachineryCost": {
+      "txtMachineryCost": "යන්ත්‍රෝපකරණ පිරිවැය",
+      "colMethod": "ක්‍රමය",
+      "colOwnedOrHired": "අයිති/කුලියට ගත්",
+      "colNumberOfTimes": "වාර ගණන",
+      "colDays": "දවස්",
+      "colCost": "පිරිවැය",
+      "capBtnAdd": "එකතු කරන්න"
+    },
+    "tblLaborCost": {
+      "txtLaborCost": "ශ්‍රම පිරිවැය",
+      "colGender": "ස්ත්‍රී පුරුෂ භාවය",
+      "colFreeOrHired": "නොමිලේ/කුලියට",
+      "colQuantity": "ප්‍රමාණය",
+      "colDailyWage": "දෛනික වැටුප",
+      "colFoodCostPerDay": "දිනකට ආහාර පිරිවැය",
+      "capBtnAdd": "එකතු කරන්න"
+    },
+    "tblMaterialCost": {
+      "txtMaterialCost": "ද්‍රව්‍යමය පිරිවැය",
+      "colMaterial": "ද්‍රව්‍යය",
+      "colQuantity": "ප්‍රමාණය",
+      "colCostForTheMaterial": "ද්‍රව්‍යය සඳහා පිරිවැය",
+      "capBtnAdd": "එකතු කරන්න"
+    },
+    "capBtnCancel": "අවලංගු කරන්න",
+    "capBtnSave": "සුරකින්න"
   }
   }
   
