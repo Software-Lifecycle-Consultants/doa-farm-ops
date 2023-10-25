@@ -23,11 +23,16 @@ import {
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { login, setPassword, setUsername } from "@/redux/authSlice";
+import { useTranslation } from 'react-i18next';
+import i18n from "../config/i18n";// Import the i18n instance
 
 // Export the sign-in component
 export default function SignIn() {
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
+
+  // Initialize the 't' function to access translations within the 'login' namespace.
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -116,7 +121,8 @@ export default function SignIn() {
         }}
       >
         <Typography component="h1" variant="h5">
-          Welcome DOA Platform
+          {/* Display a translated 'welcome' message based on the selected language. */}
+          {i18n.t('login.welcome')}
         </Typography>
 
         {/* Sign-in form */}
@@ -125,7 +131,7 @@ export default function SignIn() {
           noValidate
           sx={{ mt: 2, width: { xs: "100%", sm: "80%" } }} // Adjusted width for different screen sizes
         >
-          <Typography>Email</Typography>
+          <Typography>{i18n.t('login.email')}</Typography>
           {/* Email input field */}
           <FormControl variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
             <OutlinedInput
@@ -143,7 +149,7 @@ export default function SignIn() {
   )}
           </FormControl>
 
-          <Typography>Password</Typography>
+          <Typography>{i18n.t('login.password')}</Typography>
           {/* Password input field with visibility toggle */}
           <FormControl variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
             <OutlinedInput
@@ -214,7 +220,7 @@ export default function SignIn() {
             onClick={handleLogin}
             disabled={!emailValid || !passwordValid}
           >
-            Login
+            {i18n.t('login.loginButton')}
           </Button>
 
           {/* Link to sign-up page */}
