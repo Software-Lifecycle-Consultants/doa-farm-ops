@@ -37,7 +37,6 @@ export default function AddCrop() {
 
   // State variables for form fields
   const [value, setValue] = React.useState("female");
-  const [isCultivationLoan, setIsCultivationLoan] = useState("");
   const [landId, setLandId] = useState("");
 
   interface FormData {
@@ -76,9 +75,9 @@ export default function AddCrop() {
   const handleCultivationLoanChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setIsCultivationLoan(event.target.value);
     setFormData({
       ...formData,
+      isCultivationLoan:event.target.value,
       loanObtained: 0,
     });
   };
@@ -349,7 +348,7 @@ export default function AddCrop() {
                   onChange={(e) => handleChangeAddCrop(e, "loanObtained")}
                   variant="outlined"
                   disabled={
-                    isCultivationLoan === "No" || isCultivationLoan === ""
+                    formData.isCultivationLoan === "No" || formData.isCultivationLoan === ""|| formData.isCultivationLoan === "1"
                   }
                 />
               </Grid>
