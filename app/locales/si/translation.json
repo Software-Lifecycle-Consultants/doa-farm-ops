@@ -33,6 +33,24 @@
         "colIrrigationMode": "වාරිමාර්ග ආකාරය",
         "capBtnAddCrop": "අස්වැන්න එකතු කරන්න"
     }
+  },
+  "officerProfile": {
+    "txtProfileName": "නිලධාරි ගිණුම",
+    "txtProfileType": "නිලධාරියා",
+    "txtPersonalInformation": "පුද්ගලික තොරතුරු",
+    "capBtnEdit": "සංස්කරණය කරන්න",
+    "txtFirstName": "මුල් නම",
+    "txtLastName": "අවසන් නම",
+    "txtEmail": "ඊමේල්",
+    "txtNicNumber": "ජාතික හැඳුනුම්පත් අංකය",
+    "txtAddress": "ලිපිනය",
+    "txtPhoneNumber": "දුරකථන අංකය",
+    "txtOrganization": "ආයතනය",
+    "capBtnEditOrganization": "සංස්කරණය කරන්න",
+    "txtOrgName": "නම",
+    "txtOrgAddress": "ලිපිනය",
+    "txtEducation": "අධ්‍යාපනික තොරතුරු",
+    "txtUniversity": "විශ්ව විද්‍යාලය"
   }
   }
   

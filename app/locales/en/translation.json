@@ -33,6 +33,24 @@
         "colIrrigationMode": "Mode of Irrigation",
         "capBtnAddCrop": "Add Crop"
       }
+    },
+    "officerProfile": {
+      "txtProfileName": "Farmer Profile",
+      "txtProfileType": "Farmer",
+      "txtPersonalInformation": "Personal Information",
+      "capBtnEdit": "Edit",
+      "txtFirstName": "First Name",
+      "txtLastName": "Last Name",
+      "txtEmail": "Email",
+      "txtNicNumber": "NIC Number",
+      "txtAddress": "Address",
+      "txtPhoneNumber": "Phone Number",
+      "txtOrganization": "Organization",
+      "capBtnEditOrganization": "Edit",
+      "txtOrgName": "Name",
+      "txtOrgAddress": "Address",
+      "txtEducation": "Education",
+      "txtUniversity": "University"
     }
   }
   
