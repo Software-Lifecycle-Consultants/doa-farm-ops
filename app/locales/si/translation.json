@@ -1,0 +1,16 @@
+{
+    "login": {
+      "welcome": "ආයුබෝවන් DOA",
+      "email": "ඊමේල්",
+      "password": "මුරපදය",
+      "rememberMe": "මතක තබනවා",
+      "forgotPassword": "මුරපදය අමතන",
+      "loginButton": "පිවිසීම",
+      "noAccount": "ගිනුමක් නැතිනම්? ලියන්න"
+    },
+    "farmerProfile": {
+      "name": "ගොවි ගිණුම"
+    }
+    
+  }
+  

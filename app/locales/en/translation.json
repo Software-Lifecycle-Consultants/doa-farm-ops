@@ -1,0 +1,15 @@
+{
+    "login": {
+      "welcome": "Welcome DOA Platform",
+      "email": "Email",
+      "password": "Password",
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot password?",
+      "loginButton": "Login",
+      "noAccount": "Don't have an account? Sign Up"
+    },
+    "farmerProfile": {
+      "name": "Farmer Profile"
+    }
+  }
+  
