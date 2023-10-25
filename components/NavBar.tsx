@@ -21,6 +21,8 @@ import {Language as LanguageIcon, ExitToApp as ExitToAppIcon} from "@mui/icons-m
 import { ChangeEvent } from 'react';
 import { logout } from "@/redux/authSlice";
 import { useDispatch } from "react-redux";
+import { useTranslation } from 'react-i18next'; // Import useTranslation
+import i18n from '../app/config/i18n';
 
 //Define the pages and routes for navigation
 const pages = [
@@ -35,41 +37,58 @@ const languages = [
   { label: "Tamil", code: "ta" },
 ];
 
-
 /**
  * Navbar handles navigation to homepage, profile, crops, login, and language selector. 
  */
 const NavBar = () => {
   const [value, setValue] = useState(0);
+  // Define state variable for menu anchor element
   const [languageAnchorEl, setLanguageAnchorEl] = useState<null | EventTarget & HTMLElement>(null);
 
-  const dispatch = useDispatch();
+  // Define a state variable to hold the selected language code
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
+  const dispatch = useDispatch();
   const router = useRouter();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
 
-//Function to handle tab change
+  // Access the t function from useTranslation
+  const { t } = useTranslation();
+
+  //Function to handle tab change
   const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
-//Function to navigate to screens
+
+  //Function to navigate to screens
   const navigationToScreens = (route: string) => {
     router.push(route);
   };
-//Function to handle language selector
+
+  //Function to handle language selector
   const handleLanguageClick = (event: React.MouseEvent<HTMLElement>) => {
+    console.log('Opening language selector menu');
     setLanguageAnchorEl(event.currentTarget);
   };
-//Function to close language selector
+
+ //Function to close language selector
   const handleLanguageClose = () => {
     setLanguageAnchorEl(null);
   };
-//Function to handle language change
-  const changeLanguage = (code : string) => {
-    // Implement language change logic here
-    handleLanguageClose();
+
+  // Function to handle language change
+  const changeLanguage = (code: string) => {
+    i18n.changeLanguage(code).then(() => {
+      // Ensure the language change is complete before updating UI
+      handleLanguageClose();
+      // Update the selected language in the state
+      setSelectedLanguage(code);
+    });
   };
+
+// Find the selected language label, or use "Unknown Language" if not found
+const selectedLanguageLabel = languages.find((lang) => lang.code === selectedLanguage)?.label ?? "Unknown Language";
 
  // Define a function to handle user logout.
   const handleLogout = () => {
@@ -130,8 +149,8 @@ const NavBar = () => {
                 }}
                 onClick={handleLanguageClick}
               >
-                English<LanguageIcon sx={{ marginLeft: "5px" }} />
-                
+                {selectedLanguageLabel}
+                <LanguageIcon sx={{ marginLeft: "5px" }} />  
               </Button>
               {/* Language selector */}
               <Menu
@@ -143,6 +162,7 @@ const NavBar = () => {
                   <MenuItem
                     key={lang.code}
                     onClick={() => changeLanguage(lang.code)}
+                    selected={selectedLanguage === lang.code} // Set 'selected' prop
                   >
                     {lang.label}
                   </MenuItem>
