@@ -68,7 +68,6 @@ const NavBar = () => {
 
   //Function to handle language selector
   const handleLanguageClick = (event: React.MouseEvent<HTMLElement>) => {
-    console.log('Opening language selector menu');
     setLanguageAnchorEl(event.currentTarget);
   };
 
