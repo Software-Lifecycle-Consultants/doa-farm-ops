@@ -15,19 +15,24 @@ import {
   sampleFarmerProfileData,
 } from "../../data/farmerProfile";
 
+import { useTranslation } from 'react-i18next';
+import i18n from "../config/i18n";// Import the i18n instance
+
 /**
  * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
  * Users can view and edit their profile information, as well as add new land details.
  */
 export default function FarmerProfile() {
   const router = useRouter();
+  const { t } = useTranslation();
+  console.log('Translated welcome message:', t('welcome'));
   return (
     <>
       {/* Main grid container */}
       <Grid container direction="column" rowGap={2}>
         {/* Title */}
         <Grid item xs={12}>
-          <ProfileTitle  title="Farmer profile" />
+          <ProfileTitle  title={i18n.t('farmerProfile.name')} />
         </Grid>
         {/* Farmer Info */}
         <Grid item xs={12}>
@@ -63,7 +68,7 @@ export default function FarmerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                Farmer
+                {i18n.t('farmerProfile.famermer')}
               </Typography>
             </Box>
           </Box>
