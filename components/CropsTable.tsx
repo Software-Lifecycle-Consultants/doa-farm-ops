@@ -22,11 +22,9 @@ import {
   EditNote as EditNoteIcon,
   Delete as DeleteIcon,
 } from "@mui/icons-material";
-import { rows } from "../data/cropsData";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/types";
-import Link from 'next/link';
 import { useDispatch } from "react-redux";
 import { deleteCrop } from "@/redux/cropSlice"; // Import the Redux action for updating crops
 
@@ -188,7 +186,7 @@ export default function CropsTable({ title }: TableTitleProps) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1}>
+                  <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
                     <TableCell
                 >
                   {row.landId}

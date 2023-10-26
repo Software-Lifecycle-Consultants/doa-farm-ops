@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import {
   Button,
@@ -11,7 +12,8 @@ import {
   Container,
   OutlinedInput,
   InputAdornment,
-  IconButton
+  IconButton,
+  InputLabel
 } from "@mui/material";
 import {Visibility as Visibility, VisibilityOff as VisibilityOff} from "@mui/icons-material";
 /**
@@ -129,7 +131,7 @@ export default function SignUp() {
                   </IconButton>
                 </InputAdornment>
               }
-              label="Password"
+              label={<InputLabel disabled={true}  />}
             />
             </Grid>
             {/* Terms & Conditions Checkbox */}
