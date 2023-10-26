@@ -1,12 +1,48 @@
 {
-    "login": {
-      "welcome": "வரவேற்கிறோம் DOA இயங்குதளம்",
-      "email": "மின்னஞ்சல்",
-      "password": "கடவுச்சொல்",
-      "rememberMe": "என்னை நினைவில் வையுங்கள்",
-      "forgotPassword": "கடவுச்சொல்லை மறந்துவிட்டீர்களா?",
-      "loginButton": "உள்நுழைய",
-      "noAccount": "கணக்கு இல்லையா? பதிவு செய்யவும்"
-    }
+  "login": {
+    "txtWelcome": "வரவேற்கிறோம் DOA இயங்குதளம்",
+    "lblEmail": "மின்னஞ்சல்",
+    "hintTxtEmail": "மின்னஞ்சல்",
+    "lblPassword": "கடவுச்சொல்",
+    "hintTxtPassword": "கடவுச்சொல்",
+    "txtRememberMe": "என்னை நினைவில் வையுங்கள்",
+    "txtForgotPassword": "கடவுச்சொல்லை மறந்துவிட்டீர்களா?",
+    "capBtnLogin": "உள்நுழைய",
+    "txtNoAccount": "கணக்கு இல்லையா? பதிவு செய்யவும்"
+  },
+  "addLand": {
+    "txtAddLand": "நிலத்தைச் சேர்",
+    "txtFillDetails": "நிலத்தைச் சேர்க்க கீழே உள்ள விவரங்களை நிரப்பவும்",
+    "capBtnMark": "வரைபடத்தில் குறி",
+    "lblLandName": "நிலப் பெயர்",
+    "hintTxtLandName": "நிலப் பெயரை உள்ளிடவும்",
+    "lblDistrict": "மாவட்டம்",
+    "hintTxtDistrict": "மாவட்டத்தை உள்ளிடவும்",
+    "lblDivision": "பிரிவு",
+    "hintTxtDivision": "பிரிவை உள்ளிடவும்",
+    "lblLandRent": "நிலம் வாடகை",
+    "hintTxtLandRent": "நில வாடகையை உள்ளிடவும்",
+    "lblMode": "பாசன முறை",
+    "hintTxtMode": "நீர்ப்பாசன முறையை உள்ளிடவும்",
+    "capBtnSave&Exit": "சேமி & என் பயிர்களுக்கு வெளியேறு",
+    "capBtnSave&Proceed": "சேமித்து பயிர் சேர்க்க தொடரவும்"
+  },
+  "updateLand": {
+    "txtUpdateLand": "நிலத்தைச் சேர்",
+    "txtFillDetails": "நிலத்தைச் சேர்க்க கீழே உள்ள விவரங்களை நிரப்பவும்",
+    "capBtnMark": "வரைபடத்தில் குறி",
+    "lblLandName": "நிலப் பெயர்",
+    "hintTxtLandName": "நிலப் பெயரை உள்ளிடவும்",
+    "lblDistrict": "மாவட்டம்",
+    "hintTxtDistrict": "மாவட்டத்தை உள்ளிடவும்",
+    "lblDivision": "பிரிவு",
+    "hintTxtDivision": "பிரிவை உள்ளிடவும்",
+    "lblLandRent": "நிலம் வாடகை",
+    "hintTxtLandRent": "நில வாடகையை உள்ளிடவும்",
+    "lblMode": "பாசன முறை",
+    "hintTxtMode": "நீர்ப்பாசன முறையை உள்ளிடவும்",
+    "capBtnSave&Exit": "சேமி & என் பயிர்களுக்கு வெளியேறு",
+    "capBtnSave&Proceed": "சேமித்து பயிர் சேர்க்க தொடரவும்"
   }
+}
   
