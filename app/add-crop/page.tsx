@@ -19,6 +19,8 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { addCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
+import { useTranslation } from 'react-i18next';
+import i18n from "../config/i18n";// Import the i18n instance
 
 // Styles for labels
 const styles = {
@@ -32,7 +34,7 @@ const styles = {
  */
 export default function AddCrop() {
   const router = useRouter();
-
+  const { t } = useTranslation();
   const cropNames = cropList.map(crop => crop.name);
 
   // State variables for form fields
@@ -145,7 +147,7 @@ export default function AddCrop() {
       >
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
-            Add Crop
+            {i18n.t("addCrop.txtAddCrop")}
           </Typography>
         </Box>
         <Box sx={{ width: "100%" }}>
@@ -162,10 +164,15 @@ export default function AddCrop() {
                 variant="outlined"
               >
                 <MenuItem value="">Select an Option</MenuItem>
-                <MenuItem id="f82aa728-3cd1-11ee-be56-0242ac120002" value="Land 1">
+                <MenuItem
+                  id="f82aa728-3cd1-11ee-be56-0242ac120002"
+                  value="Land 1"
+                >
                   Land 1
                 </MenuItem>
-                <MenuItem id="cd1-11ee-be56-0242ac120002" value="Land 2">Land 2</MenuItem>
+                <MenuItem id="cd1-11ee-be56-0242ac120002" value="Land 2">
+                  Land 2
+                </MenuItem>
               </TextField>
 
               <Typography component="h1" variant="subtitle1" gutterBottom>
@@ -323,7 +330,7 @@ export default function AddCrop() {
               paddingTop={"16px"}
             >
               <Grid item xs={12} sm={6}>
-              <Typography>Cultivation loan obtained? *</Typography>
+                <Typography>Cultivation loan obtained? *</Typography>
                 <TextField
                   select
                   required
@@ -342,7 +349,7 @@ export default function AddCrop() {
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={6}>
-              <Typography>Cultivation loan amount</Typography>
+                <Typography>Cultivation loan amount</Typography>
                 <TextField
                   fullWidth
                   value={formData.loanObtained}
@@ -357,31 +364,31 @@ export default function AddCrop() {
           </Grid>
 
           <Grid container justifyContent="center" alignItems="center">
-          <Grid item>
-            <Stack direction="row" spacing={4} paddingTop={4}>
-              {/* Cancel Button */}
-              <Button
-                type="submit"
-                variant="outlined"
-                fullWidth
-                sx={{ mt: 3, mb: 2, width: "12vw" }}
-                onClick={navigationToMyCrops}
-              >
-                Cancel
-              </Button>
-              {/* Save Button */}
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                sx={{ mt: 3, mb: 2, width: "12vw" }}
-                onClick={handleOnClickAddCrop}
-              >
-                Save
-              </Button>
-            </Stack>
+            <Grid item>
+              <Stack direction="row" spacing={4} paddingTop={4}>
+                {/* Cancel Button */}
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  fullWidth
+                  sx={{ mt: 3, mb: 2, width: "12vw" }}
+                  onClick={navigationToMyCrops}
+                >
+                  {i18n.t("addCrop.capBtnCancel")}
+                </Button>
+                {/* Save Button */}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  sx={{ mt: 3, mb: 2, width: "12vw" }}
+                  onClick={handleOnClickAddCrop}
+                >
+                  {i18n.t("addCrop.capBtnCancel")}
+                </Button>
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
         </Box>
       </Box>
     </Container>

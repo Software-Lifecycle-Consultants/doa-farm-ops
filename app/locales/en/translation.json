@@ -1,14 +1,16 @@
 {
-    "login": {
-      "welcome": "Welcome DOA Platform",
-      "email": "Email",
-      "password": "Password",
-      "rememberMe": "Remember me",
-      "forgotPassword": "Forgot password?",
-      "loginButton": "Login",
-      "noAccount": "Don't have an account? Sign Up"
-    },
-    "farmerProfile": {
+  "login": {
+    "txtWelcome": "Welcome DOA Platform",
+    "lblEmail": "Email",
+    "hintTxtEmail": "Email Address",
+    "lblPassword": "Password",
+    "hintTxtPassword": "Password",
+    "txtRememberMe": "Remember me",
+    "txtForgotPassword": "Forgot password?",
+    "capBtnLogin": "Login",
+    "txtNoAccount": "Don't have an account? Sign Up"
+  },
+  "farmerProfile": {
       "txtProfileName": "Farmer Profile",
       "txtProfileType": "Farmer",
       "txtPersonalInformation": "Personal Information",
@@ -34,7 +36,7 @@
         "capBtnAddCrop": "Add Crop"
       }
     },
-    "officerProfile": {
+"officerProfile": {
       "txtProfileName": "Farmer Profile",
       "txtProfileType": "Farmer",
       "txtPersonalInformation": "Personal Information",
@@ -52,7 +54,7 @@
       "txtEducation": "Education",
       "txtUniversity": "University"
     },
-    "operationCost": {
+ "operationCost": {
       "txtTitle": "Add Operation Cost for ",
       "txtCropType": "Crop Type:",
       "paddy": "Paddy",
@@ -70,7 +72,7 @@
         "colCost": "Cost",
         "capBtnAdd": "Add"
       },
-      "tblLaborCost": {
+    "tblLaborCost": {
         "txtLaborCost": "Labor Cost",
         "colGender": "Gender",
         "colFreeOrHired": "Free/Hired",
@@ -88,6 +90,75 @@
       },
       "capBtnCancel": "Cancel",
       "capBtnSave": "Save"
-    }
+    },
+  "addLand": {
+    "txtAddLand": "Add Land",
+    "txtFillDetails": "Fill the details bellow to add land",
+    "capBtnMark": "Mark on Map",
+    "lblLandName": "Land Name",
+    "hintTxtLandName": "Enter Land Name",
+    "lblDistrict": "District",
+    "hintTxtDistrict": "Enter District",
+    "lblDivision": "Division",
+    "hintTxtDivision": "Enter Division",
+    "lblLandRent": "Land Rent",
+    "hintTxtLandRent": "Enter Land Rent",
+    "lblMode": "Mode of Irrigation",
+    "hintTxtMode": "Enter Mode of Irrigation",
+    "capBtnSave&Exit": "Save & Exit to My Crops",
+    "capBtnSave&Proceed": "Save & Proceed to Add Crop"
+  },
+  "updateLand": {
+    "txtUpdateLand": "Update Land",
+    "txtFillDetails": "Fill the details bellow to add land",
+    "capBtnMark": "Mark on Map",
+    "lblLandName": "Land Name",
+    "hintTxtLandName": "Enter Land Name",
+    "lblDistrict": "District",
+    "hintTxtDistrict": "Enter District",
+    "lblDivision": "Division",
+    "hintTxtDivision": "Enter Division",
+    "lblLandRent": "Land Rent",
+    "hintTxtLandRent": "Enter Land Rent",
+    "lblMode": "Mode of Irrigation",
+    "hintTxtMode": "Enter Mode of Irrigation",
+    "capBtnSave&Exit": "Save & Exit to My Crops",
+    "capBtnSave&Proceed": "Save & Proceed to Add Crop"
+  },
+  "addCrop": {
+    "txtAddCrop": "Add Crop",
+    "menuItemTxtSelectOption": "Select an Option",
+    "menuItemTxtLand1": "Land 1",
+    "menuItemTxtLand2": "Land 2",
+    "txtOr": "or",
+    "capBtnAddLand": "Add a new Land",
+    "txtFillDetails": "Fill the bellow details to add crop",
+    "lblCropName": "Crop Name *",
+    "hintTxtSelectCrop": "Select Crop",
+    "lblSeason": "Season *",
+    "txtSelectSeason": "Select season",
+    "lblMode": "Select an Option",
+    "hintTxtMode": "Yala",
+    "capBtnSave&Exit": "Maha",
+    "lblCropType": "Crop Type *",
+    "hintTxtLandRent": "Paddy",
+    "lblMode": "Other",
+    "hintTxtMode": "Total income for crop",
+    "capBtnSave&Exit": "Enter total income for crop",
+    "capBtnSave&Proceed": "Quantity kept for home",
+    "capBtnSave&Exit": "Enter quantity kept for home",
+    "capBtnSave&Proceed": "Quantity kept for seed",
+    "hintTxtLandRent": "Enter quantity kept for seed",
+    "lblMode": "Number of picks",
+    "hintTxtMode": "Enter number of picks",
+    "capBtnSave&Exit": "Cultivation loan obtained? *",
+    "capBtnSave&Proceed": "Select an Option",
+    "lblMode": "Select an Option",
+    "hintTxtMode": "Yes",
+    "capBtnSave&Exit": "No",
+    "capBtnSave&Proceed": "Cultivation loan amount",
+    "capBtnCancel": "Cancel",
+    "capBtnSave": "Save"
   }
+}
   

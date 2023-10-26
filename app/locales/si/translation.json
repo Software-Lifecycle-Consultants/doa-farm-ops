@@ -1,14 +1,16 @@
 {
-    "login": {
-      "welcome": "ආයුබෝවන් DOA",
-      "email": "ඊමේල්",
-      "password": "මුරපදය",
-      "rememberMe": "මතක තබනවා",
-      "forgotPassword": "මුරපදය අමතන",
-      "loginButton": "පිවිසීම",
-      "noAccount": "ගිනුමක් නැතිනම්? ලියන්න"
-    },
-    "farmerProfile": {
+  "login": {
+    "txtWelcome": "ආයුබෝවන් DOA",
+    "lblEmail": "ඊමේල්",
+    "hintTxtEmail": "ඊතැපැල් ලිපිනය",
+    "lblPassword": "මුරපදය",
+    "hintTxtPassword": "මුරපදය",
+    "txtRememberMe": "මතක තබනවා",
+    "txtForgotPassword": "මුරපදය අමතක වුණා ද?",
+    "capBtnLogin": "පිවිසීම",
+    "txtNoAccount": "ගිනුමක් නැතිනම්? ලියාපදිංචි වන්න"
+  },
+"farmerProfile": {
       "txtProfileName": "ගොවි ගිණුම",
       "txtProfileType": "ගොවියා",
       "txtPersonalInformation": "පුද්ගලික තොරතුරු",
@@ -88,6 +90,40 @@
     },
     "capBtnCancel": "අවලංගු කරන්න",
     "capBtnSave": "සුරකින්න"
+  },
+  "addLand": {
+    "txtAddLand": "ඉඩම් එකතු කරන්න",
+    "txtFillDetails": "ඉඩම් එකතු කිරීමට පහත විස්තර පුරවන්න",
+    "capBtnMark": "සිතියම මත ලකුණු කරන්න",
+    "lblLandName": "ඉඩමේ නම",
+    "hintTxtLandName": "ඉඩමේ නම ඇතුලත් කරන්න",
+    "lblDistrict": "දිස්ත්‍රික්කය",
+    "hintTxtDistrict": "දිස්ත්රික්කය ඇතුල් කරන්න",
+    "lblDivision": "අංශය",
+    "hintTxtDivision": "අංශය ඇතුල් කරන්න",
+    "lblLandRent": "ඉඩම් කුලිය",
+    "hintTxtLandRent": "ඉඩම් කුලිය ඇතුල් කරන්න",
+    "lblMode": "වාරිමාර්ග ආකාරය",
+    "hintTxtMode": "වාරිමාර්ග ආකාරය ඇතුලත් කරන්න",
+    "capBtnSave&Exit": "මගේ බෝග වලට සුරකින්න සහ පිටවෙන්න",
+    "capBtnSave&Proceed": "සුරකින්න සහ බෝග එකතු කිරීමට ඉදිරියට යන්න"
+  },
+  "updateLand": {
+    "txtUpdateLand": "ඉඩම් එකතු කරන්න",
+    "txtFillDetails": "ඉඩම් එකතු කිරීමට පහත විස්තර පුරවන්න",
+    "capBtnMark": "සිතියම මත ලකුණු කරන්න",
+    "lblLandName": "ඉඩමේ නම",
+    "hintTxtLandName": "ඉඩමේ නම ඇතුලත් කරන්න",
+    "lblDistrict": "දිස්ත්‍රික්කය",
+    "hintTxtDistrict": "දිස්ත්රික්කය ඇතුල් කරන්න",
+    "lblDivision": "අංශය",
+    "hintTxtDivision": "අංශය ඇතුල් කරන්න",
+    "lblLandRent": "ඉඩම් කුලිය",
+    "hintTxtLandRent": "ඉඩම් කුලිය ඇතුල් කරන්න",
+    "lblMode": "වාරිමාර්ග ආකාරය",
+    "hintTxtMode": "වාරිමාර්ග ආකාරය ඇතුලත් කරන්න",
+    "capBtnSave&Exit": "මගේ බෝග වලට සුරකින්න සහ පිටවෙන්න",
+    "capBtnSave&Proceed": "සුරකින්න සහ බෝග එකතු කිරීමට ඉදිරියට යන්න"
   }
-  }
+}
   
