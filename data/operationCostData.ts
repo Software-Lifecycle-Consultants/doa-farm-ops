@@ -98,7 +98,7 @@ export const machineryCostData = [
   ];
 
   export const cropName = "Crop 1";
-  export const cropType = "Paddy";
+  export const cropType = "paddy";
 
   
   export const majorOps = [

@@ -9,8 +9,85 @@
       "noAccount": "ගිනුමක් නැතිනම්? ලියන්න"
     },
     "farmerProfile": {
-      "name": "ගොවි ගිණුම"
+      "txtProfileName": "ගොවි ගිණුම",
+      "txtProfileType": "ගොවියා",
+      "txtPersonalInformation": "පුද්ගලික තොරතුරු",
+      "capBtnEdit": "සංස්කරණය කරන්න",
+      "txtFirstName": "මුල් නම",
+      "txtLastName": "අවසන් නම",
+      "txtEmail": "ඊමේල්",
+      "txtNicNumber": "ජාතික හැඳුනුම්පත් අංකය",
+      "txtAddress": "ලිපිනය",
+      "txtPhoneNumber": "දුරකථන අංකය",
+      "txtHouseholds": "ගෘහවාසීන්",
+      "txtOtherDetails": "වෙනත් විස්තර",
+      "txtOrgName": "සංවිධානයේ නම",
+      "txtOrgAddress": "ලිපිනය",
+      "txtLandDetails": "ඉඩම් විස්තර",
+      "capBtnAdd": "එකතු කරන්න",
+      "tblLand": {
+        "colLandName": "ඉඩමේ නම",
+        "colDistrict": "දිස්ත්‍රික්කය",
+        "colDsDivision": "ප්‍රාදේශීය ලේකම් කොට්ඨාශය",
+        "colLandRent": "ඉඩම් කුලිය",
+        "colIrrigationMode": "වාරිමාර්ග ආකාරය",
+        "capBtnAddCrop": "අස්වැන්න එකතු කරන්න"
     }
-    
+  },
+  "officerProfile": {
+    "txtProfileName": "නිලධාරි ගිණුම",
+    "txtProfileType": "නිලධාරියා",
+    "txtPersonalInformation": "පුද්ගලික තොරතුරු",
+    "capBtnEdit": "සංස්කරණය කරන්න",
+    "txtFirstName": "මුල් නම",
+    "txtLastName": "අවසන් නම",
+    "txtEmail": "ඊමේල්",
+    "txtNicNumber": "ජාතික හැඳුනුම්පත් අංකය",
+    "txtAddress": "ලිපිනය",
+    "txtPhoneNumber": "දුරකථන අංකය",
+    "txtOrganization": "ආයතනය",
+    "capBtnEditOrganization": "සංස්කරණය කරන්න",
+    "txtOrgName": "නම",
+    "txtOrgAddress": "ලිපිනය",
+    "txtEducation": "අධ්‍යාපනික තොරතුරු",
+    "txtUniversity": "විශ්ව විද්‍යාලය"
+  },
+  "operationCost": {
+    "txtTitle": " සඳහා මෙහෙයුම් පිරිවැය එක් කරන්න",
+    "txtCropType": "බෝග වර්ගය:",
+    "paddy": "වී",
+    "txtDescription": "ඔබ වියදම් එකතු කරන මෙහෙයුම, ඒවායේ උප-මෙහෙයුම් සහ අදාළ අනෙකුත් වියදම් සංරචක තෝරන්න. ඉන්පසු එක් එක් කොටස යටතේ විස්තරාත්මක පිරිවැය එකතු කරන්න.",
+    "txtMajorOperations": "ප්‍රධාන මෙහෙයුම්",
+    "txtSubOperations": "උප මෙහෙයුම්",
+    "txtFertilizerApplication": "පොහොර යෙදීම",
+    "txtSelectFertilizer": "පොහොර තෝරන්න",
+    "tblMachineryCost": {
+      "txtMachineryCost": "යන්ත්‍රෝපකරණ පිරිවැය",
+      "colMethod": "ක්‍රමය",
+      "colOwnedOrHired": "අයිති/කුලියට ගත්",
+      "colNumberOfTimes": "වාර ගණන",
+      "colDays": "දවස්",
+      "colCost": "පිරිවැය",
+      "capBtnAdd": "එකතු කරන්න"
+    },
+    "tblLaborCost": {
+      "txtLaborCost": "ශ්‍රම පිරිවැය",
+      "colGender": "ස්ත්‍රී පුරුෂ භාවය",
+      "colFreeOrHired": "නොමිලේ/කුලියට",
+      "colQuantity": "ප්‍රමාණය",
+      "colDailyWage": "දෛනික වැටුප",
+      "colFoodCostPerDay": "දිනකට ආහාර පිරිවැය",
+      "capBtnAdd": "එකතු කරන්න"
+    },
+    "tblMaterialCost": {
+      "txtMaterialCost": "ද්‍රව්‍යමය පිරිවැය",
+      "colMaterial": "ද්‍රව්‍යය",
+      "colQuantity": "ප්‍රමාණය",
+      "colCostForTheMaterial": "ද්‍රව්‍යය සඳහා පිරිවැය",
+      "capBtnAdd": "එකතු කරන්න"
+    },
+    "capBtnCancel": "අවලංගු කරන්න",
+    "capBtnSave": "සුරකින්න"
+  }
   }
   

@@ -21,6 +21,8 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/types";
 
+import { useTranslation } from 'react-i18next';
+
 // Define columns for the table
 interface Column {
   id:
@@ -36,21 +38,21 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: "landName", label: "Land Name", minWidth: 170 },
-  { id: "district", label: "District", minWidth: 170 },
+  { id: "landName", label: "farmerProfile.tblLand.colLandName", minWidth: 170 },
+  { id: "district", label: "farmerProfile.tblLand.colDistrict", minWidth: 170 },
   {
     id: "dsDivision",
-    label: "DS Division",
+    label: "farmerProfile.tblLand.colDsDivision",
     minWidth: 170,
   },
   {
     id: "landRent",
-    label: "Land Rent",
+    label: "farmerProfile.tblLand.colLandRent",
     minWidth: 170,
   },
   {
     id: "irrigationMode",
-    label: "Mode of Irrigation",
+    label: "farmerProfile.tblLand.colIrrigationMode",
     minWidth: 170,
   },
 ];
@@ -90,6 +92,7 @@ export default function LandsTable({ title }: TableTitleProps) {
 const handleEditClick = (id: any) => {
   router.push(`/update-land/${id}`);
 };
+const { t } = useTranslation();
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -102,7 +105,7 @@ const handleEditClick = (id: any) => {
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
-                  {column.label}
+                  {t(column.label)}
                 </TableCell>
               ))}
             </TableRow>
@@ -147,7 +150,7 @@ const handleEditClick = (id: any) => {
                         }}
                         onClick={navigationToAddCrop}
                       >
-                        Add Crop
+                        {t('farmerProfile.tblLand.capBtnAddCrop')}
                       </Button>
                     </TableCell>
                   </TableRow>
