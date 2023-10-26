@@ -10,6 +10,87 @@
     "capBtnLogin": "Login",
     "txtNoAccount": "Don't have an account? Sign Up"
   },
+  "farmerProfile": {
+      "txtProfileName": "Farmer Profile",
+      "txtProfileType": "Farmer",
+      "txtPersonalInformation": "Personal Information",
+      "capBtnEdit": "Edit",
+      "txtFirstName": "First Name",
+      "txtLastName": "Last Name",
+      "txtEmail": "Email",
+      "txtNicNumber": "NIC Number",
+      "txtAddress": "Address",
+      "txtPhoneNumber": "Phone Number",
+      "txtHouseholds": "Households",
+      "txtOtherDetails": "Other Details",
+      "txtOrgName": "Organization Name",
+      "txtOrgAddress": "Address",
+      "txtLandDetails": "Land Details",
+      "capBtnAdd": "Add",
+      "tblLand": {
+        "colLandName": "Land Name",
+        "colDistrict": "District",
+        "colDsDivision": "DS Division",
+        "colLandRent": "Land Rent",
+        "colIrrigationMode": "Mode of Irrigation",
+        "capBtnAddCrop": "Add Crop"
+      }
+    },
+"officerProfile": {
+      "txtProfileName": "Farmer Profile",
+      "txtProfileType": "Farmer",
+      "txtPersonalInformation": "Personal Information",
+      "capBtnEdit": "Edit",
+      "txtFirstName": "First Name",
+      "txtLastName": "Last Name",
+      "txtEmail": "Email",
+      "txtNicNumber": "NIC Number",
+      "txtAddress": "Address",
+      "txtPhoneNumber": "Phone Number",
+      "txtOrganization": "Organization",
+      "capBtnEditOrganization": "Edit",
+      "txtOrgName": "Name",
+      "txtOrgAddress": "Address",
+      "txtEducation": "Education",
+      "txtUniversity": "University"
+    },
+ "operationCost": {
+      "txtTitle": "Add Operation Cost for ",
+      "txtCropType": "Crop Type:",
+      "paddy": "Paddy",
+      "txtDescription": "Select the operation you are adding costs to, their sub-operation and where applicable other cost components. Then add detailed costs under each section.",
+      "txtMajorOperations": "Major Operations",
+      "txtSubOperations": "Sub Operations",
+      "txtFertilizerApplication": "Fertilizer Application",
+      "txtSelectFertilizer": "Select Fertilizer",
+      "tblMachineryCost": {
+        "txtMachineryCost": "Machinery Cost",
+        "colMethod": "Method",
+        "colOwnedOrHired": "Owned/Hired",
+        "colNumberOfTimes": "Number of times",
+        "colDays": "Days",
+        "colCost": "Cost",
+        "capBtnAdd": "Add"
+      },
+    "tblLaborCost": {
+        "txtLaborCost": "Labor Cost",
+        "colGender": "Gender",
+        "colFreeOrHired": "Free/Hired",
+        "colQuantity": "Quantity",
+        "colDailyWage": "Daily wage",
+        "colFoodCostPerDay": "Food cost/day",
+        "capBtnAdd": "Add"
+      },
+      "tblMaterialCost": {
+        "txtMaterialCost": "Material Cost",
+        "colMaterial": "Material",
+        "colQuantity": "Quantity",
+        "colCostForTheMaterial": "Cost for the Material",
+        "capBtnAdd": "Add"
+      },
+      "capBtnCancel": "Cancel",
+      "capBtnSave": "Save"
+    },
   "addLand": {
     "txtAddLand": "Add Land",
     "txtFillDetails": "Fill the details bellow to add land",
