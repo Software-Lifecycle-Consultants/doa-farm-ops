@@ -163,20 +163,22 @@ export default function AddCrop() {
                 onChange={handleOnChangeLand}
                 variant="outlined"
               >
-                <MenuItem value="">Select an Option</MenuItem>
+                <MenuItem value="">
+                  {i18n.t("addCrop.menuItemTxtSelectOption1")}
+                </MenuItem>
                 <MenuItem
                   id="f82aa728-3cd1-11ee-be56-0242ac120002"
                   value="Land 1"
                 >
-                  Land 1
+                  {i18n.t("addCrop.menuItemTxtLand1")}
                 </MenuItem>
                 <MenuItem id="cd1-11ee-be56-0242ac120002" value="Land 2">
-                  Land 2
+                  {i18n.t("addCrop.menuItemTxtLand2")}
                 </MenuItem>
               </TextField>
 
               <Typography component="h1" variant="subtitle1" gutterBottom>
-                or
+                {i18n.t("addCrop.txtOr")}
               </Typography>
               <Button
                 type="submit"
@@ -184,7 +186,7 @@ export default function AddCrop() {
                 fullWidth
                 onClick={navigationToAddLand}
               >
-                Add a new Land
+                {i18n.t("addCrop.capBtnAddLand")}
               </Button>
             </Stack>
           </Grid>
@@ -195,14 +197,14 @@ export default function AddCrop() {
             paddingTop={"15px"}
             gutterBottom
           >
-            Fill the bellow details to add crop
+            {i18n.t("addCrop.txtFillDetails")}
           </Typography>
         </Box>
 
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography>Crop Name *</Typography>
+              <Typography>{i18n.t("addCrop.lblCropName")}</Typography>
               <Autocomplete
                 options={cropNames}
                 getOptionLabel={(option) => option}
@@ -214,7 +216,7 @@ export default function AddCrop() {
                   <TextField
                     {...params}
                     name="cropName"
-                    placeholder="Select Crop"
+                    placeholder={i18n.t("addCrop.hintTxtSelectCrop")}
                     variant="outlined"
                   />
                 )}
@@ -222,7 +224,7 @@ export default function AddCrop() {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <Typography>Season *</Typography>
+              <Typography>{i18n.t("addCrop.lblSeason")}</Typography>
               <TextField
                 select
                 fullWidth
