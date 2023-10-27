@@ -115,7 +115,8 @@ const selectedLanguageLabel = languages.find((lang) => lang.code === selectedLan
           {isMatch ? (
             <>
             {/* Call the drawer component for mobile views */}
-              <DrawerComponent />
+              {/* DrawerComponent with various props */}
+              <DrawerComponent changeLanguage={changeLanguage} handleLanguageClick={handleLanguageClick} selectedLanguageLabel={selectedLanguageLabel} languageAnchorEl={languageAnchorEl} handleLanguageClose={handleLanguageClose} selectedLanguage={selectedLanguage} />
             </>
           ) : (
             <>
