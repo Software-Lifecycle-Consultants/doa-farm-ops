@@ -158,15 +158,11 @@ export default function LandsTable({ title }: TableTitleProps) {
                     })}
                     <TableCell align={"right"}>
                       <Stack direction="row" spacing={2}>
-                        <IconButton>
-                          <EditNoteIcon
-                            onClick={() => handleEditClick(row.landId)}
-                          />
+                        <IconButton onClick={() => handleEditClick(row.landId)}>
+                          <EditNoteIcon/>
                         </IconButton>
-                        <IconButton>
-                          <DeleteIcon
-                            onClick={() => openDeleteConfirmation(row.landId)}
-                          />
+                        <IconButton onClick={() => openDeleteConfirmation(row.landId)}>
+                          <DeleteIcon/>
                         </IconButton>
                       </Stack>
                     </TableCell>
