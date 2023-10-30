@@ -19,6 +19,8 @@ import DrawerComponent from "./DrawerComponent";
 import { useRouter } from "next/navigation";
 import {Language as LanguageIcon, ExitToApp as ExitToAppIcon} from "@mui/icons-material";
 import { ChangeEvent } from 'react';
+import { logout } from "@/redux/authSlice";
+import { useDispatch } from "react-redux";
 
 //Define the pages and routes for navigation
 const pages = [
@@ -41,6 +43,7 @@ const NavBar = () => {
   const [value, setValue] = useState(0);
   const [languageAnchorEl, setLanguageAnchorEl] = useState<null | EventTarget & HTMLElement>(null);
 
+  const dispatch = useDispatch();
 
   const router = useRouter();
   const theme = useTheme();
@@ -67,6 +70,12 @@ const NavBar = () => {
     // Implement language change logic here
     handleLanguageClose();
   };
+
+ // Define a function to handle user logout.
+  const handleLogout = () => {
+  // Simulate a logout action by dispatching the 'logout' action from 'authSlice'.
+  dispatch(logout());
+};
 
   return (
     <>
@@ -117,7 +126,6 @@ const NavBar = () => {
                   color: "#000000",
                   textTransform: "none",
                   margin: "5px",
-                  fontSize: "16px",
                   marginLeft: "auto",
                 }}
                 onClick={handleLanguageClick}
@@ -144,20 +152,17 @@ const NavBar = () => {
               <Button
                 variant="text"
                 sx={{
-                  width: "121px",
-                  height: "47px",
-                  padding: "10px 25px",
                   justifyContent: "center",
                   alignItems: "center",
                   borderRadius: "100px",
                   background: "#FFF",
                   color: "#000000",
                   textTransform: "none",
-                  fontSize: "16px",
                   marginLeft: "0px",
                   marginRight: "5px",
                   whiteSpace: "nowrap",
                 }}
+                onClick={handleLogout}
               >
                 Sign Out <ExitToAppIcon sx={{ marginLeft: "5px" }} />
               </Button>

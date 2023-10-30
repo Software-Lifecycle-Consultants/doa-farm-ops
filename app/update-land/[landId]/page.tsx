@@ -14,19 +14,38 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { addLand } from "@/redux/landSlice";
+import { updateLand } from "@/redux/landSlice";
 import { RootState } from "@/redux/types";
 
 /**
- * Add Land page serves as a form to add details about land properties.
+ * UpdateLand page is a form to edit or update details about land properties.
  */
 
-export default function AddLand() {
+export default function UpdateLand({ params }: { params: { landId: string } }) {
+  // Get the Next.js router object
   const router = useRouter();
+  // Extract the landId from the params object
+  const landId = params.landId;
+  // Get the land details from the Redux store
   const landDetails = useSelector((state: RootState) => state.land);
-  // Define the structure of the form data
+  // Get the Redux dispatch function
+  const dispatch = useDispatch();
+
+  // Initialize form data with the data from the state based on landId
+  const initialFormData = landDetails.find(
+    (land) => land.landId === landId
+  ) || {
+    landName: "",
+    district: "",
+    dsDivision: "",
+    landRent: "",
+    irrigationMode: "",
+  };
+
+  // Create state to manage form data
+  const [formData, setFormData] = useState(initialFormData);
+
   interface FormData {
-    landId: string;
     landName: string;
     district: string;
     dsDivision: string;
@@ -34,45 +53,32 @@ export default function AddLand() {
     irrigationMode: string;
   }
 
-  const [formData, setFormData] = useState({
-    landId: "",
-    landName: "",
-    district: "",
-    dsDivision: "",
-    landRent: "",
-    irrigationMode: "",
-  });
-
-  const dispatch = useDispatch();
-
   //Function to navigate to my crops page clicking save & exit to my crops button
-  const handleOnClickAddLand = async (
+  const handleOnClickUpdateLand = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
+    // Simulate an update land action by creating a land data object.
+    const landData = { landId, ...formData };
 
-    const landData = { ...formData };
-
-    // Simulate an add land action by creating a land data object.
-    dispatch(addLand(landData));
+    dispatch(updateLand(landData));
     router.push("/my-crops");
   };
   //Function to navigate to add crop page
-  const navigationToAddCrop = async (
+  const navigationToUpdateCrop = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     router.push("/add-crop");
   };
 
-  // Event handler to add form field data
-  const handleChangeAddLand = (
+  // Event handler to update form field data
+  const handleChangeUpdateLand = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
     setFormData({
       ...formData,
-      landId: (landDetails.length + 1).toString(),
       [field]: event.target.value,
     });
   };
@@ -98,7 +104,7 @@ export default function AddLand() {
       >
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
-            Add Land
+            Update Land
           </Typography>
         </Box>
         {/* Grid for Land Details */}
@@ -136,7 +142,7 @@ export default function AddLand() {
                 name="landName"
                 autoComplete="landName"
                 value={formData.landName}
-                onChange={(e) => handleChangeAddLand(e, "landName")}
+                onChange={(e) => handleChangeUpdateLand(e, "landName")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -149,7 +155,7 @@ export default function AddLand() {
                 name="district"
                 autoComplete="district"
                 value={formData.district}
-                onChange={(e) => handleChangeAddLand(e, "district")}
+                onChange={(e) => handleChangeUpdateLand(e, "district")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -163,7 +169,7 @@ export default function AddLand() {
                 id="division"
                 autoComplete="division"
                 value={formData.dsDivision}
-                onChange={(e) => handleChangeAddLand(e, "dsDivision")}
+                onChange={(e) => handleChangeUpdateLand(e, "dsDivision")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -177,7 +183,7 @@ export default function AddLand() {
                 id="landRent"
                 autoComplete="landRent"
                 value={formData.landRent}
-                onChange={(e) => handleChangeAddLand(e, "landRent")}
+                onChange={(e) => handleChangeUpdateLand(e, "landRent")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -191,7 +197,7 @@ export default function AddLand() {
                 id="modeOfIrrigation"
                 autoComplete="modeOfIrrigation"
                 value={formData.irrigationMode}
-                onChange={(e) => handleChangeAddLand(e, "irrigationMode")}
+                onChange={(e) => handleChangeUpdateLand(e, "irrigationMode")}
               />
             </Grid>
           </Grid>
@@ -203,7 +209,7 @@ export default function AddLand() {
                 variant="outlined"
                 fullWidth
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
-                onClick={handleOnClickAddLand}
+                onClick={handleOnClickUpdateLand}
               >
                 Save & exit to my crops
               </Button>
@@ -213,7 +219,7 @@ export default function AddLand() {
                 variant="contained"
                 fullWidth
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
-                onClick={navigationToAddCrop}
+                onClick={navigationToUpdateCrop}
               >
                 Save & proceed to add crop
               </Button>

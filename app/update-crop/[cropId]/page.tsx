@@ -16,9 +16,10 @@ import {
   Autocomplete 
 } from "@mui/material";
 import { useRouter } from "next/navigation";
-import { useDispatch } from "react-redux";
-import { addCrop } from "@/redux/cropSlice";
+import { useSelector, useDispatch } from "react-redux";
+import { updateCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
+import { RootState } from "@/redux/types";
 
 // Styles for labels
 const styles = {
@@ -28,17 +29,24 @@ const styles = {
 };
 
 /**
- * Add Crop page serves as a form to add details about crop properties.
+ * Update Crop page serves as a form to update details about crop properties.
  */
-export default function AddCrop() {
-  const router = useRouter();
+export default function UpdateCrop({ params }: { params: { cropId: string } }) {
 
+  const router = useRouter();
+  // Extract the cropId from the parameters
+  const cropId = params.cropId;
+  // Get crop details from the Redux store
+  const cropDetails = useSelector((state:RootState) => state.crop);
+  // Find the specific crop detail by matching cropId
+  const cropDetail = cropDetails.find((crop) => crop._id === cropId);
   const cropNames = cropList.map(crop => crop.name);
 
-  // State variables for form fields
-  const [value, setValue] = React.useState("female");
-  const [landId, setLandId] = useState("");
+  // Initialize states
+  const [isCultivationLoan, setIsCultivationLoan] = useState("");
+  const [landId, setLandId] = useState(cropDetail?.landId || "");
 
+  // Define a TypeScript interface to represent the form data
   interface FormData {
     cropName: string | null;
     season: string;
@@ -48,11 +56,10 @@ export default function AddCrop() {
     reservedQtyHome: string;
     reservedQtySeed: string;
     noOfPicks: string;
-    isCultivationLoan: string;
     loanObtained: number;
   }
-  
-  const [formData, setFormData] = useState<FormData>({
+  // Initialize form data state with values
+  const [formData, setFormData] = useState<FormData>(cropDetail?.cropDetails || {
     cropName: null, // Specify the type as string | null
     season: "1",
     cropType: "",
@@ -61,49 +68,40 @@ export default function AddCrop() {
     reservedQtyHome: "",
     reservedQtySeed: "",
     noOfPicks: "",
-    isCultivationLoan:"1",
     loanObtained: 0,
   });
 
   const dispatch = useDispatch();
 
-  // Handle selection change for "Select Land" dropdown
-  const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLandId(event.target.value);
-  };
   // Handle selection change for "Cultivation loan obtained?" dropdown
   const handleCultivationLoanChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    setIsCultivationLoan(event.target.value);
     setFormData({
       ...formData,
-      isCultivationLoan:event.target.value,
       loanObtained: 0,
     });
   };
 
-  //Function to navigate to add land page
-  const navigationToAddLand = () => {
-    router.push("/add-land");
-  };
   //Function to navigate to my crops page clicking save button
-  const handleOnClickAddCrop = async (event:React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnClickUpdateCrop = async (event:React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate add crop action by creating a user data object.
-    const cropData = {landId, cropDetails: formData };
-    // Dispatch the 'crop' action from the 'cropSlice' with the user data.
-    dispatch(addCrop(cropData));
+    // Simulate update crop action by updating user data object.
+    const cropData = {landId, _id: cropDetail?._id, cropDetails: formData };
+    // Dispatch the 'update' action from the 'cropSlice' with the user data.
+    dispatch(updateCrop(cropData));
     //Navigate to my crops page
     router.push("/my-crops");
   };
 
-  //Function to navigate to my crops page
+  //Function to navigate to my crops page clicking cancel button
   const navigationToMyCrops = () => {
     router.push("/my-crops");
   };
 
-  // Define a function to handle add crop.
-  const handleChangeAddCrop = (
+  // Define a function to handle update crop.
+  const handleChangeUpdateCrop = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
@@ -114,7 +112,7 @@ export default function AddCrop() {
   };
 
 // Define a function to select crop name.
-  const selectChangeAddCropName = (
+  const selectChangeUpdateCropName = (
     event: any, newValue: string | null
   ) => {
     setFormData({
@@ -122,7 +120,7 @@ export default function AddCrop() {
       cropName: newValue,
     });
   };
-
+  
   // Styles for the container box
   const boxStyles = {
     display: "flex",
@@ -144,42 +142,10 @@ export default function AddCrop() {
       >
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
-            Add Crop
+            Update Crop
           </Typography>
         </Box>
         <Box sx={{ width: "100%" }}>
-          <Grid item xs={12} sm={6}>
-            <Stack direction="row" spacing={2} paddingTop={2}>
-              <TextField
-                required
-                select
-                fullWidth
-                label="Select Land"
-                defaultValue={"land"}
-                value={landId}
-                onChange={handleOnChangeLand}
-                variant="outlined"
-              >
-                <MenuItem value="">Select an Option</MenuItem>
-                <MenuItem id="f82aa728-3cd1-11ee-be56-0242ac120002" value="Land 1">
-                  Land 1
-                </MenuItem>
-                <MenuItem id="cd1-11ee-be56-0242ac120002" value="Land 2">Land 2</MenuItem>
-              </TextField>
-
-              <Typography component="h1" variant="subtitle1" gutterBottom>
-                or
-              </Typography>
-              <Button
-                type="submit"
-                variant="outlined"
-                fullWidth
-                onClick={navigationToAddLand}
-              >
-                Add a new Land
-              </Button>
-            </Stack>
-          </Grid>
 
           <Typography
             component="h1"
@@ -187,7 +153,7 @@ export default function AddCrop() {
             paddingTop={"15px"}
             gutterBottom
           >
-            Fill the bellow details to add crop
+            Fill the bellow details to update the crop
           </Typography>
         </Box>
 
@@ -200,7 +166,7 @@ export default function AddCrop() {
                 getOptionLabel={(option) => option}
                 value={formData.cropName}
                 onChange={(event, newValue) =>
-                  selectChangeAddCropName(event, newValue)
+                  selectChangeUpdateCropName(event, newValue)
                 }
                 renderInput={(params) => (
                   <TextField
@@ -222,7 +188,7 @@ export default function AddCrop() {
                 defaultValue={"Season"}
                 variant="outlined"
                 value={formData.season}
-                onChange={(e) => handleChangeAddCrop(e, "season")}
+                onChange={(e) => handleChangeUpdateCrop(e, "season")}
               >
                 <MenuItem value="1">Select an Option</MenuItem>
                 <MenuItem value="Yala">Yala</MenuItem>
@@ -239,7 +205,7 @@ export default function AddCrop() {
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
                   value={formData.cropType}
-                  onChange={(e) => handleChangeAddCrop(e, "cropType")}
+                  onChange={(e) => handleChangeUpdateCrop(e, "cropType")}
                   row
                 >
                   <FormControlLabel
@@ -264,7 +230,7 @@ export default function AddCrop() {
                 name="soldQuantity"
                 autoComplete="soldQuantity"
                 value={formData.totalSoldQty}
-                onChange={(e) => handleChangeAddCrop(e, "totalSoldQty")}
+                onChange={(e) => handleChangeUpdateCrop(e, "totalSoldQty")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -276,7 +242,7 @@ export default function AddCrop() {
                 id="income"
                 autoComplete="income"
                 value={formData.totalIncome}
-                onChange={(e) => handleChangeAddCrop(e, "totalIncome")}
+                onChange={(e) => handleChangeUpdateCrop(e, "totalIncome")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -288,7 +254,7 @@ export default function AddCrop() {
                 name="QtyForHome"
                 autoComplete="QtyForHome"
                 value={formData.reservedQtyHome}
-                onChange={(e) => handleChangeAddCrop(e, "reservedQtyHome")}
+                onChange={(e) => handleChangeUpdateCrop(e, "reservedQtyHome")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -300,7 +266,7 @@ export default function AddCrop() {
                 id="qtyForSeed"
                 autoComplete="qtyForSeed"
                 value={formData.reservedQtySeed}
-                onChange={(e) => handleChangeAddCrop(e, "reservedQtySeed")}
+                onChange={(e) => handleChangeUpdateCrop(e, "reservedQtySeed")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -312,7 +278,7 @@ export default function AddCrop() {
                 name="NoOfPicks"
                 autoComplete="NoOfPicks"
                 value={formData.noOfPicks}
-                onChange={(e) => handleChangeAddCrop(e, "noOfPicks")}
+                onChange={(e) => handleChangeUpdateCrop(e, "noOfPicks")}
               />
             </Grid>
             <Grid
@@ -327,17 +293,16 @@ export default function AddCrop() {
                   select
                   required
                   fullWidth
-                  placeholder="Select an Option"
-                  value={formData.isCultivationLoan}
+                  value={isCultivationLoan}
                   onChange={handleCultivationLoanChange}
                   variant="outlined"
                   InputLabelProps={{
                     style: styles.label, // Apply the label color style here
                   }}
                 >
-                  <MenuItem value="1">Select an Option</MenuItem>
-                  <MenuItem value="Yes">Yes</MenuItem>
-                  <MenuItem value="No">No</MenuItem>
+                  <MenuItem value="">Select an Option</MenuItem>
+                  <MenuItem value="yes">Yes</MenuItem>
+                  <MenuItem value="no">No</MenuItem>
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={6}>
@@ -345,10 +310,10 @@ export default function AddCrop() {
                 <TextField
                   fullWidth
                   value={formData.loanObtained}
-                  onChange={(e) => handleChangeAddCrop(e, "loanObtained")}
+                  onChange={(e) => handleChangeUpdateCrop(e, "loanObtained")}
                   variant="outlined"
                   disabled={
-                    formData.isCultivationLoan === "No" || formData.isCultivationLoan === ""|| formData.isCultivationLoan === "1"
+                    isCultivationLoan === "no" || isCultivationLoan === ""
                   }
                 />
               </Grid>
@@ -374,7 +339,7 @@ export default function AddCrop() {
                 variant="contained"
                 fullWidth
                 sx={{ mt: 3, mb: 2, width: "12vw" }}
-                onClick={handleOnClickAddCrop}
+                onClick={handleOnClickUpdateCrop}
               >
                 Save
               </Button>
@@ -386,3 +351,4 @@ export default function AddCrop() {
     </Container>
   );
 }
+
