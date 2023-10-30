@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import {Language as LanguageIcon} from "@mui/icons-material";
 
 // Define the props for the component
-interface YourComponentProps {
+interface DrawerComponentProps {
   changeLanguage: (code: string) => void;
   handleLanguageClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void; 
   selectedLanguageLabel: string; languageAnchorEl: (EventTarget & HTMLElement) | null; 
@@ -39,7 +39,7 @@ const languages = [
  * Drawer component represents navigation menu for mobile view.
  * It handles navigation to homepage, profile, crops, login, and language selector.
  */
-const DrawerComponent : React.FC<YourComponentProps>= ({changeLanguage,handleLanguageClick,selectedLanguageLabel,languageAnchorEl,handleLanguageClose,selectedLanguage}) => {
+const DrawerComponent : React.FC<DrawerComponentProps>= ({changeLanguage,handleLanguageClick,selectedLanguageLabel,languageAnchorEl,handleLanguageClose,selectedLanguage}) => {
   const router = useRouter();
   const [openDrawer, setOpenDrawer] = useState(false);
   
