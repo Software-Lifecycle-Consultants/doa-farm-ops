@@ -15,7 +15,9 @@ import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CropsTable from "@/components/CropsTable";
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
-import {seasons, lands} from "../../data/cropsData";
+import { seasons, lands } from "../../data/cropsData";
+import { useTranslation } from 'react-i18next';
+// import i18n from "../config/i18n";// Import the i18n instance
 
 /**
  * My Crops page displays a table containing comprehensive details of crops cultivated on a specific land.
@@ -24,6 +26,7 @@ import {seasons, lands} from "../../data/cropsData";
 export default function MyCrops() {
   
   const router = useRouter();
+  const { t } = useTranslation();
   // State variables to store filter values
   const [seasonFilter, setSeasonFilter] = React.useState("");
   const [landFilter, setLandFilter] = React.useState("");
@@ -45,53 +48,51 @@ export default function MyCrops() {
     <Grid container direction="column" rowGap={2}>
       {/* Page title */}
       <Grid item xs={12}>
-        <ProfileTitle title="My Crops & Operation Cost" />
+        <ProfileTitle title={t("myCrops.txtMyCrops")} />
       </Grid>
 
       <Grid item>
-        <p>
-        Add your crops and operation costs for the crops you have added by their season and land.
-        </p>
+        <p>{t("myCrops.txtAddYourCrops")}</p>
       </Grid>
-      
+
       <Grid item>
         {/* Filter controls */}
         <Stack direction="row" spacing={2} paddingTop={2} width={"100%"}>
           {/* Season filter dropdown */}
           <FormControl variant="filled" sx={{ m: 1, minWidth: 100 }}>
             <InputLabel id="demo-simple-select-filled-label">
-              Season
+              {t("myCrops.lblSeason")}
             </InputLabel>
             <Select
-      labelId="demo-simple-select-filled-label"
-      id="demo-simple-select-filled"
-      value={seasonFilter}
-      onChange={handleChange1}
-    >
-      {seasons.map((season) => (
-        <MenuItem key={season.value} value={season.value}>
-          {season.label}
-        </MenuItem>
-      ))}
-    </Select>
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              value={seasonFilter}
+              onChange={handleChange1}
+            >
+              {seasons.map((season) => (
+                <MenuItem key={season.value} value={season.value}>
+                  {season.label}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
           {/* Land filter dropdown */}
           <FormControl variant="filled" sx={{ m: 1, minWidth: 100 }}>
             <InputLabel id="demo-simple-select-filled-label">
-              Land
+              {t("myCrops.lblLand")}
             </InputLabel>
             <Select
-      labelId="demo-simple-select-filled-label"
-      id="demo-simple-select-filled"
-      value={landFilter}
-      onChange={handleChange2}
-    >
-      {lands.map((land) => (
-        <MenuItem key={land.value} value={land.value}>
-          {land.label}
-        </MenuItem>
-      ))}
-    </Select>
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              value={landFilter}
+              onChange={handleChange2}
+            >
+              {lands.map((land) => (
+                <MenuItem key={land.value} value={land.value}>
+                  {land.label}
+                </MenuItem>
+              ))}
+            </Select>
           </FormControl>
           {/* Add Crop button */}
           <Box
@@ -107,7 +108,7 @@ export default function MyCrops() {
               variant="outlined"
               onClick={navigationToAddCrop}
             >
-              Add Crop
+              {t("myCrops.capBtnAddCrop")}
             </Button>
           </Box>
         </Stack>
