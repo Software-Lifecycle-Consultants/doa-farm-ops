@@ -126,7 +126,7 @@ export default function CropsTable({ title }: TableTitleProps) {
           <TableHead>
             <TableRow>
               <TableCell align={"left"} style={{ minWidth: 170 }}>
-                {"Land Name"}
+                {t("myCrops.tblCrop.colLandName")}
               </TableCell>
               {columns.map((column) => (
                 <TableCell
