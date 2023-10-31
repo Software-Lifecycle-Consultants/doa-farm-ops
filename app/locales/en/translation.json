@@ -222,6 +222,7 @@
     "lblLand": "Land",
     "capBtnAddCrop": "Add Crop",
     "tblCrop": {
+      "colLandName": "Land Name",
       "colSeason": "Season",
       "colCropName": "Crop Name",
       "colCropType": "Crop Type",
@@ -231,6 +232,11 @@
       "colQtySeeds": "Qty Seeds",
       "colPicks": "Picks"
     }
+  },
+  "navBar": {
+    "tabHome": "Home",
+    "tabProfile": "Profile",
+    "tabCrops": "Crops"
   }
 }
   

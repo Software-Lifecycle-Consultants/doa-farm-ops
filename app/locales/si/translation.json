@@ -156,8 +156,8 @@
     "txtFillDetails": "බෝග එකතු කිරීමට පහත විස්තර පුරවන්න",
     "lblCropName": "බෝග නම *",
     "hintTxtSelectCrop": "බෝගය තෝරන්න",
-    "lblSeason": "Season *",
-    "hintTxtSelectSeason": "Select Season",
+    "lblSeason": "කන්නය *",
+    "hintTxtSelectSeason": "කන්නය තෝරන්න",
     "menuItemTxtSelectOption2": "විකල්පයක් තෝරන්න",
     "menuItemTxtYala": "යල",
     "menuItemTxtMaha": "මහ",
@@ -188,8 +188,8 @@
     "txtFillDetails": "බෝගය යාවත්කාලීන කිරීමට පහත විස්තර පුරවන්න",
     "lblCropName": "බෝග නම *",
     "hintTxtSelectCrop": "බෝගය තෝරන්න",
-    "lblSeason": "Season *",
-    "hintTxtSelectSeason": "Select Season",
+    "lblSeason": "කන්නය *",
+    "hintTxtSelectSeason": "කන්නය තෝරන්න",
     "menuItemTxtSelectOption2": "විකල්පයක් තෝරන්න",
     "menuItemTxtYala": "යල",
     "menuItemTxtMaha": "මහ",
@@ -222,7 +222,8 @@
     "lblLand": "ඉඩම්",
     "capBtnAddCrop": "බෝග එකතු කරන්න",
     "tblCrop": {
-      "colSeason": "වාරය",
+      "colLandName": "ඉඩම් නම",
+      "colSeason": "කන්නය",
       "colCropName": "බෝග නම",
       "colCropType": "බෝග වර්ගය",
       "colSoldQty": "විකුණුම් ප්‍රමාණය",
@@ -231,6 +232,11 @@
       "colQtySeeds": "බීජ ‍ප්‍රමාණය",
       "colPicks": "තෝරා ගැනීම්"
     }
+  },
+  "navBar": {
+    "tabHome": "මුහුණු පිටුව",
+    "tabProfile": "විස්තර",
+    "tabCrops": "බෝග"
   }
 }
   

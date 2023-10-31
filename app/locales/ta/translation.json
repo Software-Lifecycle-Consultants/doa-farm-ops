@@ -222,6 +222,7 @@
     "lblLand": "நில",
     "capBtnAddCrop": "பயிரைச் சேர்",
     "tblCrop": {
+      "colLandName": "நிலத்தின் பெயர்",
       "colSeason": "பருவம்",
       "colCropName": "பயிர் பெயர்",
       "colCropType": "பயிர் வகை",
@@ -231,6 +232,11 @@
       "colQtySeeds": "அளவு விதைகள்",
       "colPicks": "தேர்வுகள்"
     }
+  },
+  "navBar": {
+    "tabHome": "முகப்புப் பக்கம்",
+    "tabProfile": "சுயவிவரம்",
+    "tabCrops": "பயிர்கள்"
   }
 }
   

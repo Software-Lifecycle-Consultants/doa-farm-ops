@@ -26,9 +26,9 @@ import i18n from '../app/config/i18n';
 
 //Define the pages and routes for navigation
 const pages = [
-  { label: "Home", route: "./" },
-  { label: "Profile ", route: "./farmer-profile" },
-  { label: "Crops", route: "./my-crops" },
+  { label: "navBar.tabHome", route: "./" },
+  { label: "navBar.tabProfile", route: "./farmer-profile" },
+  { label: "navBar.tabCrops", route: "./my-crops" },
 ];
 //Define languages for the language selector button
 const languages = [
@@ -133,7 +133,7 @@ const selectedLanguageLabel = languages.find((lang) => lang.code === selectedLan
                 {pages.map((page, index) => (
                   <Tab
                     key={index}
-                    label={page.label}
+                    label={t(page.label)}
                     onClick={() => navigationToScreens(page.route)}
                   />
                 ))}
