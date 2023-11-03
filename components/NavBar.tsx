@@ -17,7 +17,7 @@ import Image from "next/image";
 import logo from "../public/images/logo.png";
 import DrawerComponent from "./DrawerComponent";
 import { useRouter } from "next/navigation";
-import {Language as LanguageIcon, ExitToApp as ExitToAppIcon} from "@mui/icons-material";
+import { Language as LanguageIcon, ExitToApp as ExitToAppIcon } from "@mui/icons-material";
 import { ChangeEvent } from 'react';
 import { logout } from "@/redux/authSlice";
 import { useDispatch } from "react-redux";
@@ -71,7 +71,7 @@ const NavBar = () => {
     setLanguageAnchorEl(event.currentTarget);
   };
 
- //Function to close language selector
+  //Function to close language selector
   const handleLanguageClose = () => {
     setLanguageAnchorEl(null);
   };
@@ -86,14 +86,14 @@ const NavBar = () => {
     });
   };
 
-// Find the selected language label, or use "Unknown Language" if not found
-const selectedLanguageLabel = languages.find((lang) => lang.code === selectedLanguage)?.label ?? "Unknown Language";
+  // Find the selected language label, or use "Unknown Language" if not found
+  const selectedLanguageLabel = languages.find((lang) => lang.code === selectedLanguage)?.label ?? "Unknown Language";
 
- // Define a function to handle user logout.
+  // Define a function to handle user logout.
   const handleLogout = () => {
-  // Simulate a logout action by dispatching the 'logout' action from 'authSlice'.
-  dispatch(logout());
-};
+    // Simulate a logout action by dispatching the 'logout' action from 'authSlice'.
+    dispatch(logout());
+  };
 
   return (
     <>
@@ -108,13 +108,13 @@ const selectedLanguageLabel = languages.find((lang) => lang.code === selectedLan
         }}
       >
         <Toolbar disableGutters>
-          <Box sx={{ width:"18vh", height:"7vh", paddingLeft:'2vh'}}>
+          <Box sx={{ width: "18vh", height: "7vh", paddingLeft: '2vh' }}>
             <Image src={logo} width={142} height={50} alt="logo" />
           </Box>
 
           {isMatch ? (
             <>
-            {/* Call the drawer component for mobile views */}
+              {/* Call the drawer component for mobile views */}
               {/* DrawerComponent with various props */}
               <DrawerComponent changeLanguage={changeLanguage} handleLanguageClick={handleLanguageClick} selectedLanguageLabel={selectedLanguageLabel} languageAnchorEl={languageAnchorEl} handleLanguageClose={handleLanguageClose} selectedLanguage={selectedLanguage} />
             </>
@@ -127,7 +127,7 @@ const selectedLanguageLabel = languages.find((lang) => lang.code === selectedLan
                 textColor="inherit"
                 indicatorColor="secondary"
                 TabIndicatorProps={{
-                  style: { backgroundColor: "#000", width:'90px' },
+                  style: { backgroundColor: "#000", width: '90px' },
                 }}
               >
                 {pages.map((page, index) => (
@@ -150,7 +150,7 @@ const selectedLanguageLabel = languages.find((lang) => lang.code === selectedLan
                 onClick={handleLanguageClick}
               >
                 {selectedLanguageLabel}
-                <LanguageIcon sx={{ marginLeft: "5px" }} />  
+                <LanguageIcon sx={{ marginLeft: "5px" }} />
               </Button>
               {/* Language selector */}
               <Menu

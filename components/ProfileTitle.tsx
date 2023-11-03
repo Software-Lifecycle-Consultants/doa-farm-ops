@@ -2,13 +2,13 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import { Typography } from "@mui/material";
-interface  ProfileTitleProps  {
-    title: string;
+interface ProfileTitleProps {
+  title: string;
 }
 
-export default function ProfileTitle({title}: ProfileTitleProps) {
+export default function ProfileTitle({ title }: ProfileTitleProps) {
   return (
-    <Box sx={{ backgroundColor: "", paddingTop:"30px", paddingLeft:"5px" }}>
+    <Box sx={{ backgroundColor: "", paddingTop: "30px", paddingLeft: "5px" }}>
       <Typography
         component="h1"
         variant="h5"
@@ -25,4 +25,5 @@ export default function ProfileTitle({title}: ProfileTitleProps) {
         {title}
       </Typography>
     </Box>
-  );}
+  );
+}

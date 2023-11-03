@@ -21,8 +21,8 @@ import i18n from "../app/config/i18n";
 // Define the props for the component
 interface DrawerComponentProps {
   changeLanguage: (code: string) => void;
-  handleLanguageClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void; 
-  selectedLanguageLabel: string; languageAnchorEl: (EventTarget & HTMLElement) | null; 
+  handleLanguageClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  selectedLanguageLabel: string; languageAnchorEl: (EventTarget & HTMLElement) | null;
   handleLanguageClose: () => void; selectedLanguage: string;
 }
 /**
@@ -47,11 +47,11 @@ const languages = [
  * Drawer component represents navigation menu for mobile view.
  * It handles navigation to homepage, profile, crops, login, and language selector.
  */
-const DrawerComponent : React.FC<DrawerComponentProps>= ({changeLanguage,handleLanguageClick,selectedLanguageLabel,languageAnchorEl,handleLanguageClose,selectedLanguage}) => {
+const DrawerComponent: React.FC<DrawerComponentProps> = ({ changeLanguage, handleLanguageClick, selectedLanguageLabel, languageAnchorEl, handleLanguageClose, selectedLanguage }) => {
   const router = useRouter();
   const { t } = useTranslation();
   const [openDrawer, setOpenDrawer] = useState(false);
-  
+
   //Set navigation to screens from navigation bar
   const navigationToScreens = (id: number) => {
     setOpenDrawer(false)
