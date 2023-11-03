@@ -15,19 +15,22 @@ import {
   sampleFarmerProfileData,
 } from "../../data/farmerProfile";
 
+import { useTranslation } from 'react-i18next';
+
 /**
  * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
  * Users can view and edit their profile information, as well as add new land details.
  */
 export default function FarmerProfile() {
   const router = useRouter();
+  const { t } = useTranslation();
   return (
     <>
       {/* Main grid container */}
       <Grid container direction="column" rowGap={2}>
         {/* Title */}
         <Grid item xs={12}>
-          <ProfileTitle  title="Farmer profile" />
+          <ProfileTitle  title={t('farmerProfile.txtProfileName')} />
         </Grid>
         {/* Farmer Info */}
         <Grid item xs={12}>
@@ -63,7 +66,7 @@ export default function FarmerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                Farmer
+                {t('farmerProfile.txtProfileType')}
               </Typography>
             </Box>
           </Box>
@@ -104,7 +107,7 @@ export default function FarmerProfile() {
               <Typography variant="h6"
                 
               >
-                Personal Information
+                {t('farmerProfile.txtPersonalInformation')}
               </Typography>
               {/* Edit Button */}
               <Button
@@ -112,7 +115,7 @@ export default function FarmerProfile() {
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
               >
-                Edit
+                {t('farmerProfile.capBtnEdit')}
               </Button>
             </Grid>
             {/* Personal Information Fields */}
@@ -123,7 +126,7 @@ export default function FarmerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                First Name
+                {t('farmerProfile.txtFirstName')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -142,7 +145,7 @@ export default function FarmerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Last Name
+                {t('farmerProfile.txtLastName')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -161,7 +164,7 @@ export default function FarmerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Email
+                {t('farmerProfile.txtEmail')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -180,7 +183,7 @@ export default function FarmerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                NIC Number
+                {t('farmerProfile.txtNicNumber')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -199,7 +202,7 @@ export default function FarmerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Address
+                {t('farmerProfile.txtAddress')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -218,7 +221,7 @@ export default function FarmerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Phone Number
+                {t('farmerProfile.txtPhoneNumber')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -237,7 +240,7 @@ export default function FarmerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Households
+                {t('farmerProfile.txtHouseholds')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -285,7 +288,7 @@ export default function FarmerProfile() {
             >
               <Typography variant="h6"
               >
-                Other Details
+                {t('farmerProfile.txtOtherDetails')}
               </Typography>
               {/* Edit Button */}
               <Button
@@ -293,7 +296,7 @@ export default function FarmerProfile() {
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
               >
-                Edit
+                {t('farmerProfile.capBtnEdit')}
               </Button>
             </Grid>
             {/* Other Details Fields */}
@@ -304,7 +307,7 @@ export default function FarmerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Organization Name
+                {t('farmerProfile.txtOrgName')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -323,7 +326,7 @@ export default function FarmerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Address
+                {t('farmerProfile.txtOrgAddress')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -362,7 +365,7 @@ export default function FarmerProfile() {
           >
             <Typography variant="h6"
             >
-              Land Details
+              {t('farmerProfile.txtLandDetails')}
             </Typography>
             {/* Add Button for Adding Land */}
             <Link href="/add-land">
@@ -371,7 +374,7 @@ export default function FarmerProfile() {
                 variant="outlined"
                 endIcon={<AddIcon />}
               >
-                Add
+                {t('farmerProfile.capBtnAdd')}
               </Button>
             </Link>
           </Grid>

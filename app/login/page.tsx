@@ -23,11 +23,16 @@ import {
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
 import { login, setPassword, setUsername } from "@/redux/authSlice";
+import { useTranslation } from 'react-i18next';
+import i18n from "../config/i18n";// Import the i18n instance
 
 // Export the sign-in component
 export default function SignIn() {
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
+
+  // Initialize the 't' function to access translations within the 'login' namespace.
+  const { t } = useTranslation();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -116,7 +121,8 @@ export default function SignIn() {
         }}
       >
         <Typography component="h1" variant="h5">
-          Welcome DOA Platform
+          {/* Display a translated 'welcome' message based on the selected language. */}
+          {i18n.t("login.txtWelcome")}
         </Typography>
 
         {/* Sign-in form */}
@@ -125,25 +131,25 @@ export default function SignIn() {
           noValidate
           sx={{ mt: 2, width: { xs: "100%", sm: "80%" } }} // Adjusted width for different screen sizes
         >
-          <Typography>Email</Typography>
+          <Typography>{i18n.t("login.lblEmail")}</Typography>
           {/* Email input field */}
           <FormControl variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
             <OutlinedInput
               id="email"
               autoComplete="email"
-              placeholder="Email Address"
+              placeholder={i18n.t("login.hintTxtEmail")}
               value={formData.email}
               onChange={(e) => handleChangeEmail(e, "email")}
               required
             />
             {!emailValid && (
-    <Typography variant="caption" color="error">
-      Invalid email address
-    </Typography>
-  )}
+              <Typography variant="caption" color="error">
+                Invalid email address
+              </Typography>
+            )}
           </FormControl>
 
-          <Typography>Password</Typography>
+          <Typography>{i18n.t("login.lblPassword")}</Typography>
           {/* Password input field with visibility toggle */}
           <FormControl variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
             <OutlinedInput
@@ -163,13 +169,13 @@ export default function SignIn() {
                   </IconButton>
                 </InputAdornment>
               }
-              placeholder="Password"
+              placeholder={i18n.t("login.hintTxtPassword")}
             />
             {!passwordValid && (
-    <Typography variant="caption" color="error">
-      Password must be at least 6 characters long
-    </Typography>
-  )}
+              <Typography variant="caption" color="error">
+                Password must be at least 6 characters long
+              </Typography>
+            )}
           </FormControl>
 
           {/* Remember me and Forgot password options */}
@@ -185,7 +191,7 @@ export default function SignIn() {
                 }
                 label={
                   <Typography variant="caption">
-                    Remember me
+                    {i18n.t("login.txtRememberMe")}
                   </Typography>
                 }
               />
@@ -200,7 +206,7 @@ export default function SignIn() {
               }}
             >
               <Link href="#" variant="caption">
-                Forgot password?
+                {i18n.t("login.txtForgotPassword")}
               </Link>
             </Grid>
           </Grid>
@@ -214,7 +220,7 @@ export default function SignIn() {
             onClick={handleLogin}
             disabled={!emailValid || !passwordValid}
           >
-            Login
+            {i18n.t("login.capBtnLogin")}
           </Button>
 
           {/* Link to sign-up page */}
@@ -226,7 +232,7 @@ export default function SignIn() {
             container
           >
             <Link href="#" variant="body2">
-              {"Don't have an account? Sign Up"}
+              {i18n.t("login.txtNoAccount")}
             </Link>
           </Grid>
         </Box>

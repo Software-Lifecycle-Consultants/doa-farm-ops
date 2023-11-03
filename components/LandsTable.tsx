@@ -26,6 +26,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/types";
 import { deleteLand } from "@/redux/landSlice";
 
+import { useTranslation } from 'react-i18next';
+
 // Define columns for the table
 interface Column {
   id:
@@ -41,21 +43,21 @@ interface Column {
 }
 
 const columns: readonly Column[] = [
-  { id: "landName", label: "Land Name", minWidth: 170 },
-  { id: "district", label: "District", minWidth: 170 },
+  { id: "landName", label: "farmerProfile.tblLand.colLandName", minWidth: 170 },
+  { id: "district", label: "farmerProfile.tblLand.colDistrict", minWidth: 170 },
   {
     id: "dsDivision",
-    label: "DS Division",
+    label: "farmerProfile.tblLand.colDsDivision",
     minWidth: 170,
   },
   {
     id: "landRent",
-    label: "Land Rent",
+    label: "farmerProfile.tblLand.colLandRent",
     minWidth: 170,
   },
   {
     id: "irrigationMode",
-    label: "Mode of Irrigation",
+    label: "farmerProfile.tblLand.colIrrigationMode",
     minWidth: 170,
   },
 ];
@@ -91,9 +93,12 @@ export default function LandsTable({ title }: TableTitleProps) {
   const navigationToAddCrop = () => {
     router.push("/add-crop");
   };
+
   const handleEditClick = (id: any) => {
     router.push(`/update-land/${id}`);
   };
+    
+   const { t } = useTranslation();
 
   const [deleteConfirmation, setDeleteConfirmation] = React.useState<{
     open: boolean;
@@ -116,6 +121,7 @@ export default function LandsTable({ title }: TableTitleProps) {
     dispatch(deleteLand(landId));
     closeDeleteConfirmation(); // Close the delete confirmation dialog
   };
+  
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -128,7 +134,7 @@ export default function LandsTable({ title }: TableTitleProps) {
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
-                  {column.label}
+                  {t(column.label)}
                 </TableCell>
               ))}
             </TableRow>
@@ -176,7 +182,7 @@ export default function LandsTable({ title }: TableTitleProps) {
                         }}
                         onClick={navigationToAddCrop}
                       >
-                        Add Crop
+                        {t('farmerProfile.tblLand.capBtnAddCrop')}
                       </Button>
                     </TableCell>
                   </TableRow>

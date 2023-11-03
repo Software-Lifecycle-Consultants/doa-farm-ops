@@ -10,14 +10,16 @@ import { useRouter } from "next/navigation";
 
 //Import necessary date from relevent data files
 import {
-  OfficerProfileData,
   sampleOfficerProfileData,
 } from "../../data/officerProfile";
+
+import { useTranslation } from 'react-i18next';
 
 // OfficerProfile component renders a profile page for an officer.
 export default function OfficerProfile() {
   const router = useRouter();
 
+  const { t } = useTranslation();
   // Return the JSX for rendering
   return (
     <>
@@ -25,7 +27,7 @@ export default function OfficerProfile() {
       <Grid container direction="column" rowGap={2}>
         <Grid item xs={12}>
           {/* Page title */}
-          <ProfileTitle title="Officer profile" />
+          <ProfileTitle title={t('officerProfile.txtProfileName')} />
         </Grid>
         {/* Officer Info Section*/}
         <Grid item xs={12}>
@@ -61,7 +63,7 @@ export default function OfficerProfile() {
                   lineHeight: "normal",
                 }}
               >
-                Officer
+                {t('officerProfile.txtProfileType')}
               </Typography>
             </Box>
           </Box>
@@ -101,7 +103,7 @@ export default function OfficerProfile() {
             >
               <Typography variant="h6"
               >
-                Personal Information
+                {t('officerProfile.txtPersonalInformation')}
               </Typography>
               {/* Edit Button */}
               <Button
@@ -109,7 +111,7 @@ export default function OfficerProfile() {
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
               >
-                Edit
+                {t('officerProfile.capBtnEdit')}
               </Button>
             </Grid>
             {/* Personal Information Fields */}
@@ -120,7 +122,7 @@ export default function OfficerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                First Name
+                {t('officerProfile.txtFirstName')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -139,7 +141,7 @@ export default function OfficerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Last Name
+                {t('officerProfile.txtLastName')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -158,7 +160,7 @@ export default function OfficerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Email
+                {t('officerProfile.txtEmail')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -177,7 +179,7 @@ export default function OfficerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                NIC Number
+                {t('officerProfile.txtNicNumber')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -196,7 +198,7 @@ export default function OfficerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Address
+                {t('officerProfile.txtAddress')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -215,7 +217,7 @@ export default function OfficerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Phone Number
+                {t('officerProfile.txtPhoneNumber')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -263,7 +265,7 @@ export default function OfficerProfile() {
             >
               <Typography variant="h6"
               >
-                Organization
+                {t('officerProfile.txtOrganization')}
               </Typography>
 
               <Button
@@ -271,7 +273,7 @@ export default function OfficerProfile() {
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
               >
-                Edit
+                {t('officerProfile.capBtnEditOrganization')}
               </Button>
             </Grid>
 
@@ -282,7 +284,7 @@ export default function OfficerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Name
+                {t('officerProfile.txtOrgName')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -301,7 +303,7 @@ export default function OfficerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                Address
+                {t('officerProfile.txtOrgAddress')}
               </Typography>
               <Typography variant="body1"
                 sx={{
@@ -317,7 +319,7 @@ export default function OfficerProfile() {
             <Grid container item xs={12} md={12} paddingTop={'2vh'}>
               <Typography variant="h6"
               >
-                Education
+                {t('officerProfile.txtEducation')}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
@@ -327,7 +329,7 @@ export default function OfficerProfile() {
                   color: "#9D9D9D",
                 }}
               >
-                University
+                {t('officerProfile.txtUniversity')}
               </Typography>
               <Typography variant="body1"
                 sx={{
