@@ -29,15 +29,15 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
           {/* Wrap the application in the 'Provider' component to provide access to the Redux store. */}
           <Provider store={store}>
-          {/* Wrap the application with I18nextProvider */}
-          <I18nextProvider i18n={i18n}> 
-            {/* Add the CssBaseline component to override the 8px margin */}
-            <CssBaseline />
-            {/* Add navigation bar */}
-            <Navbar />
-            <div className="container" style={{ padding: "20px" }}>
-              {children}
-            </div>
+            {/* Wrap the application with I18nextProvider */}
+            <I18nextProvider i18n={i18n}>
+              {/* Add the CssBaseline component to override the 8px margin */}
+              <CssBaseline />
+              {/* Add navigation bar */}
+              <Navbar />
+              <div className="container" style={{ padding: "20px" }}>
+                {children}
+              </div>
             </I18nextProvider>
           </Provider>
         </ThemeProvider>

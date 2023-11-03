@@ -138,9 +138,9 @@ export default function SignUp() {
                     </IconButton>
                   </InputAdornment>
                 }
-                 label={<InputLabel disabled={true}  />}
+                label={<InputLabel disabled={true} />}
               />
-              
+
             </Grid>
             {/* Terms & Conditions Checkbox */}
             <Grid item xs={12}>

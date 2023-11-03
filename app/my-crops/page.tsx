@@ -24,7 +24,7 @@ import { useTranslation } from 'react-i18next';
  * Users can view vital information about each crop, and can add operation cost details.
  */
 export default function MyCrops() {
-  
+
   const router = useRouter();
   const { t } = useTranslation();
   // State variables to store filter values
@@ -42,7 +42,7 @@ export default function MyCrops() {
   const navigationToAddCrop = () => {
     router.push("/add-crop");
   };
-  
+
   // Return the JSX for rendering
   return (
     <Grid container direction="column" rowGap={2}>

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { Grid, Box, Button, Typography } from "@mui/material";
 import ProfileTitle from "../../components/ProfileTitle";
-import {EditNote as EditNoteIcon, AccountCircle as AccountCircleIcon}from "@mui/icons-material";
+import { EditNote as EditNoteIcon, AccountCircle as AccountCircleIcon } from "@mui/icons-material";
 
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
@@ -23,7 +23,7 @@ export default function OfficerProfile() {
   // Return the JSX for rendering
   return (
     <>
-       {/* Main grid container */}
+      {/* Main grid container */}
       <Grid container direction="column" rowGap={2}>
         <Grid item xs={12}>
           {/* Page title */}

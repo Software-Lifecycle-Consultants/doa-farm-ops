@@ -57,7 +57,7 @@ export default function SignIn() {
   // Define a function to handle user login.
   const handleLogin = () => {
     // Simulate a login action by creating a user data object.
-    const userData = { username: formData.email, password: formData.password}; // Use email as username for simplicity
+    const userData = { username: formData.email, password: formData.password }; // Use email as username for simplicity
     // Dispatch the 'login' action from the 'authSlice' with the user data.
     dispatch(login(userData));
   };
@@ -93,12 +93,12 @@ export default function SignIn() {
     const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
     return emailRegex.test(email);
   };
-  
+
   // Function to validate password length
   const isPasswordValid = (password: string | any[]) => {
     return password.length >= 6; // Set a minimum password length requirement
   };
-  
+
 
   // Styling for the Box element
   const boxStyles = {

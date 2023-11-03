@@ -30,7 +30,7 @@ export default function FarmerProfile() {
       <Grid container direction="column" rowGap={2}>
         {/* Title */}
         <Grid item xs={12}>
-          <ProfileTitle  title={t('farmerProfile.txtProfileName')} />
+          <ProfileTitle title={t('farmerProfile.txtProfileName')} />
         </Grid>
         {/* Farmer Info */}
         <Grid item xs={12}>
@@ -105,7 +105,7 @@ export default function FarmerProfile() {
               }}
             >
               <Typography variant="h6"
-                
+
               >
                 {t('farmerProfile.txtPersonalInformation')}
               </Typography>

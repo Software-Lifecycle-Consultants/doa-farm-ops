@@ -13,7 +13,7 @@ import {
   Grid,
   FormControlLabel,
   TextField,
-  Autocomplete 
+  Autocomplete
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
@@ -54,7 +54,7 @@ export default function AddCrop() {
     isCultivationLoan: string;
     loanObtained: number;
   }
-  
+
   const [formData, setFormData] = useState<FormData>({
     cropName: null, // Specify the type as string | null
     season: "1",
@@ -64,7 +64,7 @@ export default function AddCrop() {
     reservedQtyHome: "",
     reservedQtySeed: "",
     noOfPicks: "",
-    isCultivationLoan:"1",
+    isCultivationLoan: "1",
     loanObtained: 0,
   });
 
@@ -81,7 +81,7 @@ export default function AddCrop() {
     setIsCultivationLoan(event.target.value);
     setFormData({
       ...formData,
-      isCultivationLoan:event.target.value,
+      isCultivationLoan: event.target.value,
       loanObtained: 0,
     });
   };
@@ -91,10 +91,10 @@ export default function AddCrop() {
     router.push("/add-land");
   };
   //Function to navigate to my crops page clicking save button
-  const handleOnClickAddCrop = async (event:React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnClickAddCrop = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior
     // Simulate add crop action by creating a user data object.
-    const cropData = {landId, cropDetails: formData };
+    const cropData = { landId, cropDetails: formData };
     // Dispatch the 'crop' action from the 'cropSlice' with the user data.
     dispatch(addCrop(cropData));
     //Navigate to my crops page
@@ -117,7 +117,7 @@ export default function AddCrop() {
     });
   };
 
-// Define a function to select crop name.
+  // Define a function to select crop name.
   const selectChangeAddCropName = (
     event: any, newValue: string | null
   ) => {
@@ -373,7 +373,7 @@ export default function AddCrop() {
                   onChange={(e) => handleChangeAddCrop(e, "loanObtained")}
                   variant="outlined"
                   disabled={
-                    formData.isCultivationLoan === "No" || formData.isCultivationLoan === ""|| formData.isCultivationLoan === "1"
+                    formData.isCultivationLoan === "No" || formData.isCultivationLoan === "" || formData.isCultivationLoan === "1"
                   }
                 />
               </Grid>

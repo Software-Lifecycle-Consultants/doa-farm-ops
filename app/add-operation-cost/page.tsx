@@ -84,7 +84,7 @@ export default function AddOperationCost() {
   const navigationToMyCrops = () => {
     router.push("/my-crops");
   };
-  
+
   const { t } = useTranslation();
 
   // Define the title based on the selected language
@@ -108,10 +108,10 @@ export default function AddOperationCost() {
         </Stack>
 
         <Grid item>
-        <p>
-        {t('operationCost.txtDescription')}
-        </p>
-      </Grid>
+          <p>
+            {t('operationCost.txtDescription')}
+          </p>
+        </Grid>
 
 
         {/* Machinery Cost Section */}
@@ -136,7 +136,7 @@ export default function AddOperationCost() {
             }}
           >
             <InputLabel id="demo-simple-select-filled-label">
-            {t('operationCost.txtMajorOperations')}
+              {t('operationCost.txtMajorOperations')}
             </InputLabel>
             {/* Select dropdown for major operations */}
             <Select
@@ -146,10 +146,10 @@ export default function AddOperationCost() {
               onChange={handleChange1}
             >
               {majorOps.map((majorOp) => (
-        <MenuItem key={majorOp.value} value={majorOp.value}>
-          {majorOp.label}
-        </MenuItem>
-      ))}
+                <MenuItem key={majorOp.value} value={majorOp.value}>
+                  {majorOp.label}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           {/* Sub-operations, Fertilizer Application, and Select Fertilizer */}
@@ -164,7 +164,7 @@ export default function AddOperationCost() {
             <Grid item xs={12} sm={6} md={3} lg={2}>
               <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
                 <InputLabel id="demo-simple-select-filled-label">
-                {t('operationCost.txtSubOperations')}
+                  {t('operationCost.txtSubOperations')}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-filled-label"
@@ -173,10 +173,10 @@ export default function AddOperationCost() {
                   onChange={handleChange2}
                 >
                   {subOps.map((subOp) => (
-        <MenuItem key={subOp.value} value={subOp.value}>
-          {subOp.label}
-        </MenuItem>
-      ))}
+                    <MenuItem key={subOp.value} value={subOp.value}>
+                      {subOp.label}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -185,7 +185,7 @@ export default function AddOperationCost() {
               {/* Select dropdown for fertilizer application */}
               <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
                 <InputLabel id="demo-simple-select-filled-label">
-                {t('operationCost.txtFertilizerApplication')}
+                  {t('operationCost.txtFertilizerApplication')}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-filled-label"
@@ -194,10 +194,10 @@ export default function AddOperationCost() {
                   onChange={handleChange3}
                 >
                   {fertilizerApps.map((fertilizer) => (
-        <MenuItem key={fertilizer.value} value={fertilizer.value}>
-          {fertilizer.label}
-        </MenuItem>
-      ))}
+                    <MenuItem key={fertilizer.value} value={fertilizer.value}>
+                      {fertilizer.label}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -206,7 +206,7 @@ export default function AddOperationCost() {
               {/* Select dropdown for selecting a fertilizer */}
               <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
                 <InputLabel id="demo-simple-select-filled-label">
-                {t('operationCost.txtSelectFertilizer')}
+                  {t('operationCost.txtSelectFertilizer')}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-filled-label"
@@ -215,10 +215,10 @@ export default function AddOperationCost() {
                   onChange={handleChange4}
                 >
                   {fertilizers.map((select) => (
-        <MenuItem key={select.value} value={select.value}>
-          {select.label}
-        </MenuItem>
-      ))}
+                    <MenuItem key={select.value} value={select.value}>
+                      {select.label}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -258,7 +258,7 @@ export default function AddOperationCost() {
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
             >
               <InputLabel id="demo-simple-select-filled-label">
-              {t('operationCost.tblMachineryCost.colMethod')}
+                {t('operationCost.tblMachineryCost.colMethod')}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
@@ -267,10 +267,10 @@ export default function AddOperationCost() {
                 onChange={handleChange5}
               >
                 {machinery.map((select) => (
-        <MenuItem key={select.value} value={select.value}>
-          {select.label}
-        </MenuItem>
-      ))}
+                  <MenuItem key={select.value} value={select.value}>
+                    {select.label}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <FormControl
@@ -278,13 +278,13 @@ export default function AddOperationCost() {
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
             >
               <InputLabel id="demo-simple-select-filled-label">
-              {t('operationCost.tblMachineryCost.colOwnedOrHired')}
+                {t('operationCost.tblMachineryCost.colOwnedOrHired')}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                // value={seasonFilter}
-                // onChange={handleChange1}
+              // value={seasonFilter}
+              // onChange={handleChange1}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -341,7 +341,7 @@ export default function AddOperationCost() {
                           }}
                         >
                           <InputLabel id="demo-simple-select-filled-label">
-                          {t('operationCost.tblMachineryCost.colMethod')}
+                            {t('operationCost.tblMachineryCost.colMethod')}
                           </InputLabel>
                           <Select
                             labelId="demo-simple-select-filled-label"
@@ -350,9 +350,9 @@ export default function AddOperationCost() {
                             onChange={handleChange5}
                           >
                             {machinery.map((select) => (
-                                <MenuItem key={select.value} value={select.value}>
+                              <MenuItem key={select.value} value={select.value}>
                                 {select.label}
-                                </MenuItem>
+                              </MenuItem>
                             ))}
                           </Select>
                         </FormControl>
@@ -375,8 +375,8 @@ export default function AddOperationCost() {
                           <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
-                            // value={seasonFilter}
-                            // onChange={handleChange1}
+                          // value={seasonFilter}
+                          // onChange={handleChange1}
                           >
                             <MenuItem value="">
                               <em>None</em>
@@ -505,13 +505,13 @@ export default function AddOperationCost() {
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
             >
               <InputLabel id="demo-simple-select-filled-label">
-              {t('operationCost.tblLaborCost.colGender')}
+                {t('operationCost.tblLaborCost.colGender')}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                // value={seasonFilter}
-                // onChange={handleChange1}
+              // value={seasonFilter}
+              // onChange={handleChange1}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -525,13 +525,13 @@ export default function AddOperationCost() {
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
             >
               <InputLabel id="demo-simple-select-filled-label">
-              {t('operationCost.tblLaborCost.colFreeOrHired')}
+                {t('operationCost.tblLaborCost.colFreeOrHired')}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                // value={seasonFilter}
-                // onChange={handleChange1}
+              // value={seasonFilter}
+              // onChange={handleChange1}
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -577,7 +577,7 @@ export default function AddOperationCost() {
                     <TableRow>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                        {t('operationCost.tblLaborCost.colGender')}
+                          {t('operationCost.tblLaborCost.colGender')}
                         </Typography>
                         <FormControl
                           variant="filled"
@@ -588,13 +588,13 @@ export default function AddOperationCost() {
                           }}
                         >
                           <InputLabel id="demo-simple-select-filled-label">
-                          {t('operationCost.tblLaborCost.colGender')}
+                            {t('operationCost.tblLaborCost.colGender')}
                           </InputLabel>
                           <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
-                            // value={seasonFilter}
-                            // onChange={handleChange1}
+                          // value={seasonFilter}
+                          // onChange={handleChange1}
                           >
                             <MenuItem value="">
                               <em>None</em>
@@ -622,8 +622,8 @@ export default function AddOperationCost() {
                           <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
-                            // value={seasonFilter}
-                            // onChange={handleChange1}
+                          // value={seasonFilter}
+                          // onChange={handleChange1}
                           >
                             <MenuItem value="">
                               <em>None</em>
@@ -750,7 +750,7 @@ export default function AddOperationCost() {
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
             >
               <InputLabel id="demo-simple-select-filled-label">
-              {t('operationCost.tblMaterialCost.colMaterial')}
+                {t('operationCost.tblMaterialCost.colMaterial')}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
@@ -759,9 +759,9 @@ export default function AddOperationCost() {
                 onChange={handleChange6}
               >
                 {material.map((season) => (
-                    <MenuItem key={season.value} value={season.value}>
-                      {season.label}
-                    </MenuItem>
+                  <MenuItem key={season.value} value={season.value}>
+                    {season.label}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -815,10 +815,10 @@ export default function AddOperationCost() {
                             onChange={handleChange6}
                           >
                             {material.map((season) => (
-                            <MenuItem key={season.value} value={season.value}>
-                              {season.label}
-                          </MenuItem>
-                          ))}
+                              <MenuItem key={season.value} value={season.value}>
+                                {season.label}
+                              </MenuItem>
+                            ))}
                           </Select>
                         </FormControl>
                       </TableCell>

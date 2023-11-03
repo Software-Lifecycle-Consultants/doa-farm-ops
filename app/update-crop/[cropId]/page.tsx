@@ -13,7 +13,7 @@ import {
   Grid,
   FormControlLabel,
   TextField,
-  Autocomplete 
+  Autocomplete
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
@@ -40,7 +40,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
   // Extract the cropId from the parameters
   const cropId = params.cropId;
   // Get crop details from the Redux store
-  const cropDetails = useSelector((state:RootState) => state.crop);
+  const cropDetails = useSelector((state: RootState) => state.crop);
   // Find the specific crop detail by matching cropId
   const cropDetail = cropDetails.find((crop) => crop._id === cropId);
   const cropNames = cropList.map(crop => crop.name);
@@ -88,10 +88,10 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
   };
 
   //Function to navigate to my crops page clicking save button
-  const handleOnClickUpdateCrop = async (event:React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnClickUpdateCrop = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior
     // Simulate update crop action by updating user data object.
-    const cropData = {landId, _id: cropDetail?._id, cropDetails: formData };
+    const cropData = { landId, _id: cropDetail?._id, cropDetails: formData };
     // Dispatch the 'update' action from the 'cropSlice' with the user data.
     dispatch(updateCrop(cropData));
     //Navigate to my crops page
@@ -114,7 +114,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
     });
   };
 
-// Define a function to select crop name.
+  // Define a function to select crop name.
   const selectChangeUpdateCropName = (
     event: any, newValue: string | null
   ) => {
@@ -123,7 +123,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
       cropName: newValue,
     });
   };
-  
+
   // Styles for the container box
   const boxStyles = {
     display: "flex",
