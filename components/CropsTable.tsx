@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useState } from 'react';
 import {
   IconButton,
   Stack,
@@ -12,18 +12,25 @@ import {
   TablePagination,
   TableRow,
   Button,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import {
   EditNote as EditNoteIcon,
   Delete as DeleteIcon,
 } from "@mui/icons-material";
-import { rows } from "../data/cropsData";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/types";
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import i18n from "@/app/config/i18n";// Import the i18n instance
+import { useDispatch } from "react-redux";
+import { deleteCrop } from "@/redux/cropSlice"; // Import the Redux action for updating crops
+
 
 // Define the table columns
 interface Column {
@@ -91,10 +98,17 @@ export default function CropsTable({ title }: TableTitleProps) {
   const router = useRouter();
   const { t } = useTranslation();
   const cropDetails = useSelector((state:RootState) => state.crop);
+  const dispatch = useDispatch();
 
   // State for handling pagination
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  // Add confirmation state and deletedCropId
+  const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
+  const [deletedCropId, setDeletedCropId] = useState('');
+  const [deletedLandId, setDeletedLandId] = useState('');
+
   // Function to handle changing the page
   const handleChangePage = (event: unknown, newPage: number) => {
     setPage(newPage);
@@ -115,8 +129,25 @@ export default function CropsTable({ title }: TableTitleProps) {
   // Function to handle navigation when the Edit icon is clicked
   const handleEditClick = (id: string) => {
    router.push(`/update-crop/${id}`);
-   
   };
+
+  // Function to delete crop when the Delete icon is clicked
+  const handleDeleteClick = (landId: string, cropId: string) => {
+    // Open the confirmation dialog and set the deletedCropId
+    setDeletedCropId(cropId);
+    setDeletedLandId(landId);
+    setDeleteConfirmationOpen(true);  
+   };
+
+  // Function to confirm and delete the crop
+  const confirmDelete = () => {
+    if (deletedCropId && deletedLandId) {
+      // Call the deleteCrop action to delete the crop
+      dispatch(deleteCrop({ landId: deletedLandId, _id: deletedCropId }));
+      // Close the confirmation dialog
+      setDeleteConfirmationOpen(false);
+    }
+  }
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -151,8 +182,10 @@ export default function CropsTable({ title }: TableTitleProps) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1}>
-                    <TableCell>{row.landId}</TableCell>
+                  
+                  <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
+                    <TableCell>{row.landId}
+                   </TableCell>
                     {columns.map((column) => {
                       const value = row.cropDetails[column.id];
                       return (
@@ -166,16 +199,17 @@ export default function CropsTable({ title }: TableTitleProps) {
                       );
                     })}
                     <TableCell align={"right"}>
-                      <Stack direction="row" spacing={1}>
-                        <IconButton onClick={() => handleEditClick(row._id)}>
-                          <EditNoteIcon />
-                        </IconButton>
-                        <IconButton>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Stack>
-                    </TableCell>
 
+                              <Stack direction="row" spacing={1}>
+                                <IconButton onClick={()=>handleEditClick(row._id)}>
+                                  <EditNoteIcon />
+                                </IconButton>
+                                <IconButton onClick={()=>handleDeleteClick(row.landId, row._id)}>
+                                  <DeleteIcon />
+                                </IconButton>
+                              </Stack>
+                            </TableCell>
+                      
                     <TableCell align={"right"}>
                       <Button
                         style={{
@@ -205,6 +239,26 @@ export default function CropsTable({ title }: TableTitleProps) {
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      {/* Confirmation Dialog */}
+      <Dialog
+        open={isDeleteConfirmationOpen}
+        onClose={() => setDeleteConfirmationOpen(false)}
+      >
+        <DialogTitle>Confirm Deletion</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Are you sure you want to delete this crop permanently?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setDeleteConfirmationOpen(false)} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={confirmDelete} color="primary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 }

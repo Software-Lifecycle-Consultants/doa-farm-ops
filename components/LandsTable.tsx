@@ -11,6 +11,10 @@ import {
   TableHead,
   TablePagination,
   TableRow,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
 } from "@mui/material";
 import {
   EditNote as EditNoteIcon,
@@ -18,8 +22,9 @@ import {
 } from "@mui/icons-material";
 import { rows } from "../data/landsData";
 import { useRouter } from "next/navigation";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/types";
+import { deleteLand } from "@/redux/landSlice";
 
 import { useTranslation } from 'react-i18next';
 
@@ -66,10 +71,9 @@ interface TableTitleProps {
  */
 
 export default function LandsTable({ title }: TableTitleProps) {
-  
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
-  
+  const dispatch = useDispatch();
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
@@ -89,10 +93,35 @@ export default function LandsTable({ title }: TableTitleProps) {
   const navigationToAddCrop = () => {
     router.push("/add-crop");
   };
-const handleEditClick = (id: any) => {
-  router.push(`/update-land/${id}`);
-};
-const { t } = useTranslation();
+
+  const handleEditClick = (id: any) => {
+    router.push(`/update-land/${id}`);
+  };
+    
+   const { t } = useTranslation();
+
+  const [deleteConfirmation, setDeleteConfirmation] = React.useState<{
+    open: boolean;
+    landId: any;
+  }>({ open: false, landId: null });
+
+  const openDeleteConfirmation = (landId: any) => {
+    // Open the delete confirmation dialog and set the landId
+    setDeleteConfirmation({ open: true, landId });
+  };
+
+  const closeDeleteConfirmation = () => {
+    // Close the delete confirmation dialog
+    setDeleteConfirmation({ open: false, landId: null });
+  };
+
+  //Function for deleting a land
+  const handleDeleteClick = (landId: any) => {
+    // Dispatch the deleteLand action with the landId to delete
+    dispatch(deleteLand(landId));
+    closeDeleteConfirmation(); // Close the delete confirmation dialog
+  };
+  
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -115,7 +144,12 @@ const { t } = useTranslation();
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  <TableRow hover role="checkbox" tabIndex={-1}>
+                  <TableRow
+                    key={row.landId}
+                    hover
+                    role="checkbox"
+                    tabIndex={-1}
+                  >
                     {columns.map((column) => {
                       const value = row[column.id];
                       return (
@@ -130,13 +164,11 @@ const { t } = useTranslation();
                     })}
                     <TableCell align={"right"}>
                       <Stack direction="row" spacing={2}>
-                        <IconButton>
-                          <EditNoteIcon
-                          onClick={() => handleEditClick(row.landId)}
-                          />
+                        <IconButton onClick={() => handleEditClick(row.landId)}>
+                          <EditNoteIcon/>
                         </IconButton>
-                        <IconButton>
-                          <DeleteIcon />
+                        <IconButton onClick={() => openDeleteConfirmation(row.landId)}>
+                          <DeleteIcon/>
                         </IconButton>
                       </Stack>
                     </TableCell>
@@ -168,6 +200,25 @@ const { t } = useTranslation();
         onPageChange={handleChangePage}
         onRowsPerPageChange={handleChangeRowsPerPage}
       />
+      <Dialog
+        open={deleteConfirmation.open}
+        onClose={closeDeleteConfirmation}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+      >
+        <DialogTitle id="delete-dialog-title">Delete Land</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to delete this land?</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeleteConfirmation} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => handleDeleteClick(deleteConfirmation.landId)} color="primary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Paper>
   );
 }

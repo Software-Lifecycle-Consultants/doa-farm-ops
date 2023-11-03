@@ -13,6 +13,7 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
+  InputLabel
 } from "@mui/material";
 import {
   Visibility as Visibility,
@@ -120,6 +121,7 @@ export default function SignUp() {
             <Grid item xs={12}>
               <Typography>{i18n.t("register.lblPassword")}</Typography>
               <OutlinedInput
+
                 fullWidth
                 id="outlined-adornment-password"
                 placeholder={i18n.t("register.hintTxtPassword")}
@@ -136,8 +138,9 @@ export default function SignUp() {
                     </IconButton>
                   </InputAdornment>
                 }
-                label="Password"
+                 label={<InputLabel disabled={true}  />}
               />
+              
             </Grid>
             {/* Terms & Conditions Checkbox */}
             <Grid item xs={12}>
