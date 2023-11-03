@@ -12,12 +12,12 @@ const theme = createTheme({
     },
   },
   components: {
-    MuiButton:{
-        styleOverrides:{
-            root:{
-                fontFamily: '__DM_Sans_6ff133',
-            }
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          fontFamily: '__DM_Sans_6ff133',
         }
+      }
     }
   },
   typography: {
