@@ -78,6 +78,7 @@ export default function AddCrop() {
   const handleCultivationLoanChange = (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
+    setIsCultivationLoan(event.target.value);
     setFormData({
       ...formData,
       isCultivationLoan:event.target.value,
