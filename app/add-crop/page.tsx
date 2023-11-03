@@ -39,6 +39,7 @@ export default function AddCrop() {
 
   // State variables for form fields
   const [value, setValue] = React.useState("female");
+  const [isCultivationLoan, setIsCultivationLoan] = useState("");
   const [landId, setLandId] = useState("");
 
   interface FormData {
