@@ -27,6 +27,7 @@ import MapComponent from "../../components/MapComponent";
 export default function AddLand() {
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
+  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(null);
   const { t } = useTranslation();
   // Define the structure of the form data
   interface FormData {
@@ -48,9 +49,6 @@ export default function AddLand() {
   });
 
   const dispatch = useDispatch();
-
-  // Adding a reference to the map container
-  const mapRef = useRef(null);
 
   // Managing state for displaying the map
   const [showMap, setShowMap] = useState(false);
@@ -141,9 +139,14 @@ export default function AddLand() {
         </Grid>
         {/* Display the map if showMap is true */}
         {showMap && (
-          <Grid ref={mapRef} style={{ width: "100%", height: "450px" }}>
-            <MapComponent />
-          </Grid>
+          <>
+            <MapComponent setMarkerCoordinates={setMarkerCoordinates} />
+            {markerCoordinates && (
+                <Grid>
+                    <p>Marker Coordinates: {markerCoordinates.join(', ')}</p>
+                </Grid>
+            )}
+          </>
         )}
 
         {/* Form for Land Details */}

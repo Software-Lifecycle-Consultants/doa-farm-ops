@@ -16,12 +16,14 @@ import Circle from 'ol/style/Circle'; // Import Circle
 import Fill from 'ol/style/Fill'; // Import Fill
 import Stroke from 'ol/style/Stroke'; // Import Stroke
 import Icon from 'ol/style/Icon';
+import { Box, Grid } from '@mui/material';
+interface  MarkerCoordinates  {
+    setMarkerCoordinates: (marketCoordinates: number[]|null) => void
+}
 
-
-const MapComponent: React.FC = () => {
+const MapComponent: React.FC<MarkerCoordinates> = ({setMarkerCoordinates}) => {
     // State variables to hold map, marker coordinates, and vector source
     const [map, setMap] = useState<Map | null>(null);
-    const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(null);
     const [vectorSource, setVectorSource] = useState<VectorSource | null>(null);
 
     // Create a ref for the map
@@ -97,14 +99,9 @@ const MapComponent: React.FC = () => {
     }, []); 
 
     return (
-        <div>
-            <div id="map" style={{ width: '100%', height: '400px' }}></div>
-            {markerCoordinates && (
-                <div>
-                    <p>Marker Coordinates: {markerCoordinates.join(', ')}</p>
-                </div>
-            )}
-        </div>
+        <Grid sx={{ width: '100%'}}>
+            <Box id="map" sx={{ width: '100%', height: '400px' }}></Box>
+        </Grid>
     );
 };
 
