@@ -1,6 +1,6 @@
 // Import necessary modules and components
 "use client";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import {
   Button,
   TextField,
@@ -18,6 +18,7 @@ import { addLand } from "@/redux/landSlice";
 import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
+import MapComponent from "../../components/MapComponent";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -47,6 +48,17 @@ export default function AddLand() {
   });
 
   const dispatch = useDispatch();
+
+  // Adding a reference to the map container
+  const mapRef = useRef(null);
+
+  // Managing state for displaying the map
+  const [showMap, setShowMap] = useState(false);
+
+  // Function to show the map
+  const handleShowMap = () => {
+    setShowMap(true);
+  };
 
   //Function to navigate to my crops page clicking save & exit to my crops button
   const handleOnClickAddLand = async (
@@ -122,11 +134,17 @@ export default function AddLand() {
             </Typography>
 
             {/* Button for marking on the map */}
-            <Button endIcon={<PlaceOutlinedIcon />}>
+            <Button endIcon={<PlaceOutlinedIcon />} onClick={handleShowMap}>
               {i18n.t("addLand.capBtnMark")}
             </Button>
           </Grid>
         </Grid>
+        {/* Display the map if showMap is true */}
+        {showMap && (
+          <Grid ref={mapRef} style={{ width: "100%", height: "450px" }}>
+            <MapComponent />
+          </Grid>
+        )}
 
         {/* Form for Land Details */}
         <Box sx={{ mt: 3 }}>
