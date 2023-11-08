@@ -20,15 +20,15 @@ import { Box, Grid } from '@mui/material';
 import Polygon from 'ol/geom/Polygon';
 
 interface  MarkerCoordinates  {
-    setMarkerCoordinates: (marketCoordinates: number[]|null) => void
+    setMarkerCoordinates: (markerCoordinates: number[]|null) => void
+    setPolygonCoordinates: (polygonCoordinates: number[][][]) => void
     drawType: 'Point' | 'Polygon'
 }
 
-const MapComponent: React.FC<MarkerCoordinates> = ({setMarkerCoordinates, drawType}) => {
+const MapComponent: React.FC<MarkerCoordinates> = ({setMarkerCoordinates,setPolygonCoordinates, drawType}) => {
     // State variables to hold map, marker coordinates, and vector source
     const [map, setMap] = useState<Map | null>(null);
     const [vectorSource, setVectorSource] = useState<VectorSource | null>(null);
-    const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>([]);
 
     // Create a ref for the map
     const mapRef = useRef<Map | null>(null);
@@ -119,7 +119,8 @@ const MapComponent: React.FC<MarkerCoordinates> = ({setMarkerCoordinates, drawTy
 
         drawPolygonInteraction.on('drawend', (event: any) => {
             const coordinates = event.feature.getGeometry().getCoordinates();
-            setPolygonCoordinates((prevCoordinates) => [...prevCoordinates, coordinates]);
+            setPolygonCoordinates(coordinates);
+            console.log('coordinates', coordinates)
 
             // Display the drawn polygon on the map
             const polygonStyle = new Style({

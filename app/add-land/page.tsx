@@ -30,6 +30,7 @@ export default function AddLand() {
   const landDetails = useSelector((state: RootState) => state.land);
   // State for managing form data and map-related data
   const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(null);
+  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>([]);
   const [drawType, setDrawType] = useState<'Point' | 'Polygon'>('Point');
   const { t } = useTranslation();
   // Define the structure of the form data
@@ -148,7 +149,7 @@ export default function AddLand() {
         {/* Display the map if showMap is true */}
         {showMap && (
           <>
-            <MapComponent setMarkerCoordinates={setMarkerCoordinates} drawType={drawType}/>
+            <MapComponent setMarkerCoordinates={setMarkerCoordinates} setPolygonCoordinates={setPolygonCoordinates} drawType={drawType}/>
             <Grid sx={{ width: '100%' }}>
             <TextField
                 select
@@ -163,10 +164,17 @@ export default function AddLand() {
                 <MenuItem value="Polygon">Polygon</MenuItem>
               </TextField>
             </Grid>
-            {/* Display marker coordinates if it's a point */}
+            {/* Display marker coordinates if it's a point or polygon */}
             {markerCoordinates && drawType==='Point' &&(
                 <Grid>
                     <p>Marker Coordinates: {markerCoordinates.join(', ')}</p>
+                </Grid>
+            )}
+            {polygonCoordinates && drawType==='Polygon' &&(
+                <Grid>
+                    {polygonCoordinates.map((Coordinates) => (
+                        <p>Marker Coordinates: {Coordinates.join(', ')}</p>
+                    ))}
                 </Grid>
             )}
           </>
