@@ -9,6 +9,7 @@ import {
   Typography,
   Container,
   Stack,
+  MenuItem,
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
@@ -18,6 +19,7 @@ import { addLand } from "@/redux/landSlice";
 import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
+import MapComponent from "../../components/MapComponent";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -26,6 +28,10 @@ import i18n from "../config/i18n";// Import the i18n instance
 export default function AddLand() {
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
+  // State for managing form data and map-related data
+  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(null);
+  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>([]);
+  const [drawType, setDrawType] = useState<'Point' | 'Polygon'>('Point');
   const { t } = useTranslation();
   // Define the structure of the form data
   interface FormData {
@@ -47,6 +53,14 @@ export default function AddLand() {
   });
 
   const dispatch = useDispatch();
+
+  // Managing state for displaying the map
+  const [showMap, setShowMap] = useState(false);
+
+  // Function to show the map
+  const handleShowMap = () => {
+    setShowMap(true);
+  };
 
   //Function to navigate to my crops page clicking save & exit to my crops button
   const handleOnClickAddLand = async (
@@ -78,6 +92,11 @@ export default function AddLand() {
       landId: (landDetails.length + 1).toString(),
       [field]: event.target.value,
     });
+  };
+
+  // Handler for changing the drawing type on the map
+  const handleDrawTypeChange = (type: "Point" | "Polygon") => {
+    setDrawType(type);
   };
 
   // Styles for the container box
@@ -122,11 +141,44 @@ export default function AddLand() {
             </Typography>
 
             {/* Button for marking on the map */}
-            <Button endIcon={<PlaceOutlinedIcon />}>
+            <Button endIcon={<PlaceOutlinedIcon />} onClick={handleShowMap}>
               {i18n.t("addLand.capBtnMark")}
             </Button>
           </Grid>
         </Grid>
+        {/* Display the map if showMap is true */}
+        {showMap && (
+          <>
+            <MapComponent setMarkerCoordinates={setMarkerCoordinates} setPolygonCoordinates={setPolygonCoordinates} drawType={drawType}/>
+            <Grid sx={{ width: '100%' }}>
+            <TextField
+                select
+                fullWidth
+                placeholder="Select Map Drawer"
+                defaultValue="Point"
+                variant="outlined"
+                value={drawType}
+                onChange={(e) => handleDrawTypeChange(e.target.value as 'Point' | 'Polygon')}
+              >
+                <MenuItem value="Point">Point</MenuItem>
+                <MenuItem value="Polygon">Polygon</MenuItem>
+              </TextField>
+            </Grid>
+            {/* Display marker coordinates if it's a point or polygon */}
+            {markerCoordinates && drawType==='Point' &&(
+                <Grid>
+                    <p>Marker Coordinates: {markerCoordinates.join(', ')}</p>
+                </Grid>
+            )}
+            {polygonCoordinates && drawType==='Polygon' &&(
+                <Grid>
+                    {polygonCoordinates.map((Coordinates) => (
+                        <p>Marker Coordinates: {Coordinates.join(', ')}</p>
+                    ))}
+                </Grid>
+            )}
+          </>
+        )}
 
         {/* Form for Land Details */}
         <Box sx={{ mt: 3 }}>
