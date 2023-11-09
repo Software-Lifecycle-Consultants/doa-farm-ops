@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Box,
@@ -17,10 +17,10 @@ import Image from "next/image";
 import logo from "../public/images/logo.png";
 import DrawerComponent from "./DrawerComponent";
 import { useRouter } from "next/navigation";
-import { Language as LanguageIcon, ExitToApp as ExitToAppIcon } from "@mui/icons-material";
+import { Language as LanguageIcon, ExitToApp as ExitToAppIcon, Login as LoginIcon } from "@mui/icons-material";
 import { ChangeEvent } from 'react';
-import { logout } from "@/redux/authSlice";
-import { useDispatch } from "react-redux";
+import { logout, selectAuth } from "@/redux/authSlice";
+import { useDispatch, useSelector  } from "react-redux";
 import { useTranslation } from 'react-i18next'; // Import useTranslation
 import i18n from '../app/config/i18n';
 
@@ -52,6 +52,9 @@ const NavBar = () => {
   const router = useRouter();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+
+  // Fetch the authentication status from Redux store
+  const { isAuthenticated } = useSelector(selectAuth);
 
   // Access the t function from useTranslation
   const { t } = useTranslation();
@@ -91,8 +94,13 @@ const NavBar = () => {
 
   // Define a function to handle user logout.
   const handleLogout = () => {
+    router.push('./');
     // Simulate a logout action by dispatching the 'logout' action from 'authSlice'.
     dispatch(logout());
+  };
+  // Define a function to handle user login.
+  const handleLogin = () => {
+    router.push('./login');
   };
 
   return (
@@ -111,33 +119,43 @@ const NavBar = () => {
           <Box sx={{ width: "18vh", height: "7vh", paddingLeft: '2vh' }}>
             <Image src={logo} width={142} height={50} alt="logo" />
           </Box>
-
+  
           {isMatch ? (
             <>
               {/* Call the drawer component for mobile views */}
               {/* DrawerComponent with various props */}
-              <DrawerComponent changeLanguage={changeLanguage} handleLanguageClick={handleLanguageClick} selectedLanguageLabel={selectedLanguageLabel} languageAnchorEl={languageAnchorEl} handleLanguageClose={handleLanguageClose} selectedLanguage={selectedLanguage} />
+              <DrawerComponent
+                changeLanguage={changeLanguage}
+                handleLanguageClick={handleLanguageClick}
+                selectedLanguageLabel={selectedLanguageLabel}
+                languageAnchorEl={languageAnchorEl}
+                handleLanguageClose={handleLanguageClose}
+                selectedLanguage={selectedLanguage}
+              />
             </>
           ) : (
             <>
-              <Tabs
-                sx={{ marginLeft: "auto" }}
-                value={value}
-                onChange={handleChange}
-                textColor="inherit"
-                indicatorColor="secondary"
-                TabIndicatorProps={{
-                  style: { backgroundColor: "#000", width: '90px' },
-                }}
-              >
-                {pages.map((page, index) => (
-                  <Tab
-                    key={index}
-                    label={t(page.label)}
-                    onClick={() => navigationToScreens(page.route)}
-                  />
-                ))}
-              </Tabs>
+              {isAuthenticated && (
+                <Tabs
+                  sx={{ marginLeft: "auto" }}
+                  value={value}
+                  onChange={handleChange}
+                  textColor="inherit"
+                  indicatorColor="secondary"
+                  TabIndicatorProps={{
+                    style: { backgroundColor: "#000", width: '90px' },
+                  }}
+                >
+                  {pages.map((page, index) => (
+                    <Tab
+                      key={index}
+                      label={t(page.label)}
+                      onClick={() => navigationToScreens(page.route)}
+                    />
+                  ))}
+                </Tabs>
+              )}
+  
               {/* Language selector button */}
               <Button
                 variant="text"
@@ -152,6 +170,7 @@ const NavBar = () => {
                 {selectedLanguageLabel}
                 <LanguageIcon sx={{ marginLeft: "5px" }} />
               </Button>
+  
               {/* Language selector */}
               <Menu
                 anchorEl={languageAnchorEl}
@@ -168,30 +187,53 @@ const NavBar = () => {
                   </MenuItem>
                 ))}
               </Menu>
-              {/* Signout button */}
-              <Button
-                variant="text"
-                sx={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderRadius: "100px",
-                  background: "#FFF",
-                  color: "#000000",
-                  textTransform: "none",
-                  marginLeft: "0px",
-                  marginRight: "5px",
-                  whiteSpace: "nowrap",
-                }}
-                onClick={handleLogout}
-              >
-                Sign Out <ExitToAppIcon sx={{ marginLeft: "5px" }} />
-              </Button>
+  
+              {/* SignOut button */}
+              {isAuthenticated && (
+                <Button
+                  variant="text"
+                  sx={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "100px",
+                    background: "#FFF",
+                    color: "#000000",
+                    textTransform: "none",
+                    marginLeft: "0px",
+                    marginRight: "5px",
+                    whiteSpace: "nowrap",
+                  }}
+                  onClick={handleLogout}
+                >
+                  Sign Out <ExitToAppIcon sx={{ marginLeft: "5px" }} />
+                </Button>
+              )}
+              {!isAuthenticated && (
+                // SignIn button
+                <Button
+                  variant="text"
+                  sx={{
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "100px",
+                    background: "#FFF",
+                    color: "#000000",
+                    textTransform: "none",
+                    marginLeft: "0px",
+                    marginRight: "5px",
+                    whiteSpace: "nowrap",
+                  }}
+                  onClick={handleLogin}
+                >
+                  Sign In <LoginIcon sx={{ marginLeft: "5px" }} />
+                </Button>
+              )}
             </>
           )}
         </Toolbar>
       </AppBar>
     </>
   );
-};
+}  
 
 export default NavBar;
