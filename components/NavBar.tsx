@@ -31,6 +31,7 @@ const pages = [
   { label: "navBar.tabProfile", route: "./farmer-profile" },
   { label: "navBar.tabCrops", route: "./my-crops" },
 ];
+
 //Define languages for the language selector button
 const languages = [
   { label: "English", code: "en" },
@@ -42,30 +43,35 @@ const languages = [
  * Navbar handles navigation to homepage, profile, crops, login, and language selector. 
  */
 const NavBar = () => {
-  const [value, setValue] = useState(0);
-  // Define state variable for menu anchor element
-  const [languageAnchorEl, setLanguageAnchorEl] = useState<null | EventTarget & HTMLElement>(null);
-
-  // Define a state variable to hold the selected language code
-  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
-
-  const dispatch = useDispatch();
-  const router = useRouter();
-  const theme = useTheme();
-  const isMatch = useMediaQuery(theme.breakpoints.down("md"));
+  // Define State variables and hooks
+  const [value, setValue] = useState(0); // State for selected tab
+  const [languageAnchorEl, setLanguageAnchorEl] = useState<null | EventTarget & HTMLElement>(null); // State for language selector menu
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language); // State for selected language
+  const dispatch = useDispatch(); // Redux dispatch function
+  const router = useRouter(); // Next.js router
+  const theme = useTheme(); // Material-UI theme
+  const isMatch = useMediaQuery(theme.breakpoints.down("md")); // Media query for responsiveness
+  //const { isAuthenticated, username, password } = useSelector(selectAuth); // Redux state for authentication
+  const { t } = useTranslation(); // Translation function
 
   // Fetch the authentication status from Redux store
   const { isAuthenticated } = useSelector(selectAuth);
 
-  // Access the t function from useTranslation
-  const { t } = useTranslation();
+  // Effect to set initial tab state based on authentication status
+  useEffect(() => {
+    if (isAuthenticated) {
+      setValue(0); // If authenticated, show Home tab
+    } else {
+      setValue(-1); // If not authenticated, no tab selected
+    }
+  }, [isAuthenticated]);  
 
   //Function to handle tab change
   const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
     setValue(newValue);
   };
 
-  //Function to navigate to screens
+  //Function to navigate to different screens
   const navigationToScreens = (route: string) => {
     router.push(route);
   };
@@ -95,10 +101,10 @@ const NavBar = () => {
 
   // Define a function to handle user logout.
   const handleLogout = () => {
-    router.push('./');
-    // Simulate a logout action by dispatching the 'logout' action from 'authSlice'.
-    dispatch(logout());
+    dispatch(logout()); // Dispatch logout action
+    router.push('./'); // Redirect to Home tab after logout
   };
+
   // Define a function to handle user login.
   const handleLogin = () => {
     router.push('./login');
@@ -190,7 +196,7 @@ const NavBar = () => {
               </Menu>
   
               {/* SignOut button */}
-              {isAuthenticated && (
+              {isAuthenticated ? (
                 <Button
                   variant="text"
                   sx={{
@@ -208,8 +214,7 @@ const NavBar = () => {
                 >
                   Sign Out <ExitToAppIcon sx={{ marginLeft: "5px" }} />
                 </Button>
-              )}
-              {!isAuthenticated && (
+              ):(
                 // SignIn button
                 <Button
                   variant="text"
