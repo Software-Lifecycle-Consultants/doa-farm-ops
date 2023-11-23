@@ -1,4 +1,5 @@
 "use client";
+// Import necessary dependencies and components
 import React, { useEffect, useState } from "react";
 import {
   AppBar,
