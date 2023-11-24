@@ -17,6 +17,7 @@ import CropsTable from "@/components/CropsTable";
 import { useRouter } from "next/navigation";
 import { seasons, lands } from "../../data/cropsData";
 import { useTranslation } from 'react-i18next';
+import { customGridStyles2 } from "@/styles/customStyles";
 // import i18n from "../config/i18n";// Import the i18n instance
 
 /**
@@ -114,16 +115,7 @@ export default function MyCrops() {
         </Stack>
       </Grid>
 
-      <Grid
-        container
-        item
-        rowGap={2}
-        p={2}
-        sx={{
-          backgroundColor: "#F1F1F1",
-          borderRadius: "12px",
-        }}
-      >
+      <Grid container item rowGap={2} p={2} sx={customGridStyles2}>
         <Grid
           item
           xs={12}

@@ -21,6 +21,7 @@ import {
 } from "@mui/icons-material";
 import { useTranslation } from "react-i18next";
 import i18n from "../config/i18n"; // Import the i18n instance
+import { CustomBox1 } from "@/Theme";
 /**
  * SignUp page allows to users to register to the system
  */
@@ -41,26 +42,10 @@ export default function SignUp() {
     event.preventDefault();
   };
 
-  // Styles for the main content container
-  const boxStyles = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    border: "3px solid #F1F1F1",
-    background: "#FFFFFF",
-    padding: "3vh",
-    margin: "5vh auto",
-    maxWidth: "400px",
-  };
-
   return (
     <Container component="main" maxWidth="xs">
       {/* Main content container */}
-      <Box
-        sx={{
-          ...boxStyles,
-        }}
-      >
+      <CustomBox1 sx={{ maxWidth: "400px" }}>
         {/* Sign-up form */}
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
@@ -121,7 +106,6 @@ export default function SignUp() {
             <Grid item xs={12}>
               <Typography>{i18n.t("register.lblPassword")}</Typography>
               <OutlinedInput
-
                 fullWidth
                 id="outlined-adornment-password"
                 placeholder={i18n.t("register.hintTxtPassword")}
@@ -140,7 +124,6 @@ export default function SignUp() {
                 }
                 label={<InputLabel disabled={true} />}
               />
-
             </Grid>
             {/* Terms & Conditions Checkbox */}
             <Grid item xs={12}>
@@ -179,7 +162,7 @@ export default function SignUp() {
             </Grid>
           </Grid>
         </Box>
-      </Box>
+      </CustomBox1>
     </Container>
   );
 }

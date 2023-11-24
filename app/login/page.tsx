@@ -26,6 +26,7 @@ import { login, setPassword, setUsername } from "@/redux/authSlice";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
 import { useRouter } from "next/navigation";
+import { CustomBox1 } from "@/Theme";
 
 // Export the sign-in component
 export default function SignIn() {
@@ -102,27 +103,10 @@ export default function SignIn() {
     return password.length >= 6; // Set a minimum password length requirement
   };
 
-
-  // Styling for the Box element
-  const boxStyles = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    border: "3px solid #F1F1F1",
-    background: "#FFFFFF",
-    padding: "3vh", //  padding
-    margin: "5vh auto", // margin
-    maxWidth: "400px", // Max width for tablets
-  };
-
   return (
     <Container component="main">
       {/* Main content container */}
-      <Box
-        sx={{
-          ...boxStyles,
-        }}
-      >
+      <CustomBox1 sx={{ maxWidth: "400px" }}>
         <Typography component="h1" variant="h5">
           {/* Display a translated 'welcome' message based on the selected language. */}
           {i18n.t("login.txtWelcome")}
@@ -239,7 +223,7 @@ export default function SignIn() {
             </Link>
           </Grid>
         </Box>
-      </Box>
+      </CustomBox1>
     </Container>
   );
 }

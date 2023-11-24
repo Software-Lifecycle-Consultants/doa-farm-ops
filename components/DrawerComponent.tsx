@@ -17,6 +17,7 @@ import { Language as LanguageIcon, ExitToApp as ExitToAppIcon, Login as LoginIco
 import { useTranslation } from "react-i18next"; // Import useTranslation
 import { logout, selectAuth } from "@/redux/authSlice";
 import { useDispatch, useSelector  } from "react-redux";
+import { CustomListItemText } from "@/Theme";
 
 // Define the props for the component
 interface DrawerComponentProps {
@@ -92,42 +93,37 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({ changeLanguage, handl
       >
         {/* Render navigation items */}
         <List>
-          {isAuthenticated && <>
-          {pages.map((page, index) => (
-            <ListItemButton
-              onClick={() => navigationToScreens(page.id)}
-              key={index}
-            >
-              <ListItemIcon>
-                <ListItemText
-                  sx={{ color: "#FFF" }}
-                  primary={t(page.label)}
-                ></ListItemText>
-              </ListItemIcon>
-            </ListItemButton>
-          ))}
-          <ListItemButton onClick={handleLogout}>
-            <ListItemText sx={{ color: "#FFF" }}>
-              Sign Out
-            </ListItemText>
-            <ExitToAppIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
-          </ListItemButton>
-          </>
-          }
+          {isAuthenticated && (
+            <>
+              {pages.map((page, index) => (
+                <ListItemButton
+                  onClick={() => navigationToScreens(page.id)}
+                  key={index}
+                >
+                  <ListItemIcon>
+                    <CustomListItemText
+                      // style={CustomListItemText}
+                      primary={t(page.label)}
+                    ></CustomListItemText>
+                  </ListItemIcon>
+                </ListItemButton>
+              ))}
+              <ListItemButton onClick={handleLogout}>
+                <CustomListItemText>Sign Out</CustomListItemText>
+                <ExitToAppIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
+              </ListItemButton>
+            </>
+          )}
 
-          {!isAuthenticated &&
-          <ListItemButton onClick={handleLogin}>
-            <ListItemText sx={{ color: "#FFF" }}>
-              Sign In
-            </ListItemText>
-            <LoginIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
-          </ListItemButton>
-          }
+          {!isAuthenticated && (
+            <ListItemButton onClick={handleLogin}>
+              <CustomListItemText>Sign In</CustomListItemText>
+              <LoginIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
+            </ListItemButton>
+          )}
 
           <ListItemButton onClick={handleLanguageClick}>
-            <ListItemText sx={{ color: "#FFF" }}>
-              {selectedLanguageLabel}
-            </ListItemText>
+            <CustomListItemText>{selectedLanguageLabel}</CustomListItemText>
             <LanguageIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
           </ListItemButton>
           {/* Language selector */}
