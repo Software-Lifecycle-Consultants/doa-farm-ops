@@ -13,10 +13,10 @@ import {
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRouter } from "next/navigation";
-import { Language as LanguageIcon } from "@mui/icons-material";
+import { Language as LanguageIcon, ExitToApp as ExitToAppIcon, Login as LoginIcon } from "@mui/icons-material";
 import { useTranslation } from "react-i18next"; // Import useTranslation
-import i18n from "../app/config/i18n";
-
+import { logout, selectAuth } from "@/redux/authSlice";
+import { useDispatch, useSelector  } from "react-redux";
 
 // Define the props for the component
 interface DrawerComponentProps {
@@ -49,8 +49,12 @@ const languages = [
  */
 const DrawerComponent: React.FC<DrawerComponentProps> = ({ changeLanguage, handleLanguageClick, selectedLanguageLabel, languageAnchorEl, handleLanguageClose, selectedLanguage }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [openDrawer, setOpenDrawer] = useState(false);
+
+  // Fetch the authentication status from Redux store
+  const { isAuthenticated } = useSelector(selectAuth);
 
   //Set navigation to screens from navigation bar
   const navigationToScreens = (id: number) => {
@@ -61,6 +65,18 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({ changeLanguage, handl
     } else {
       router.push("/");
     }
+  };
+
+  // Define a function to handle user logout.
+  const handleLogout = () => {
+    router.push('./');
+    // Simulate a logout action by dispatching the 'logout' action from 'authSlice'.
+    dispatch(logout());
+  };
+
+  // Define a function to handle user login.
+  const handleLogin = () => {
+    router.push('./login');
   };
   return (
     <>
@@ -76,6 +92,7 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({ changeLanguage, handl
       >
         {/* Render navigation items */}
         <List>
+          {isAuthenticated && <>
           {pages.map((page, index) => (
             <ListItemButton
               onClick={() => navigationToScreens(page.id)}
@@ -89,6 +106,24 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({ changeLanguage, handl
               </ListItemIcon>
             </ListItemButton>
           ))}
+          <ListItemButton onClick={handleLogout}>
+            <ListItemText sx={{ color: "#FFF" }}>
+              Sign Out
+            </ListItemText>
+            <ExitToAppIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
+          </ListItemButton>
+          </>
+          }
+
+          {!isAuthenticated &&
+          <ListItemButton onClick={handleLogin}>
+            <ListItemText sx={{ color: "#FFF" }}>
+              Sign In
+            </ListItemText>
+            <LoginIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
+          </ListItemButton>
+          }
+
           <ListItemButton onClick={handleLanguageClick}>
             <ListItemText sx={{ color: "#FFF" }}>
               {selectedLanguageLabel}

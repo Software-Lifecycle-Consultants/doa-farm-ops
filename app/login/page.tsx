@@ -25,6 +25,7 @@ import { useDispatch } from "react-redux";
 import { login, setPassword, setUsername } from "@/redux/authSlice";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
+import { useRouter } from "next/navigation";
 
 // Export the sign-in component
 export default function SignIn() {
@@ -42,6 +43,7 @@ export default function SignIn() {
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
 
+  const router = useRouter();
   const dispatch = useDispatch();
 
   // Function to toggle password visibility
@@ -58,6 +60,7 @@ export default function SignIn() {
   const handleLogin = () => {
     // Simulate a login action by creating a user data object.
     const userData = { username: formData.email, password: formData.password }; // Use email as username for simplicity
+    router.push("./");
     // Dispatch the 'login' action from the 'authSlice' with the user data.
     dispatch(login(userData));
   };
