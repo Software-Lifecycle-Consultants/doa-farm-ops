@@ -27,6 +27,7 @@ import { RootState } from "@/redux/types";
 import { deleteLand } from "@/redux/landSlice";
 
 import { useTranslation } from 'react-i18next';
+import theme from "@/Theme";
 
 // Define columns for the table
 interface Column {
@@ -175,7 +176,7 @@ export default function LandsTable({ title }: TableTitleProps) {
                     <TableCell align={"right"}>
                       <Button
                         style={{
-                          backgroundColor: "#C2C2C2",
+                          backgroundColor: theme.palette.secondary.main,
                           color: "black",
                           borderRadius: "16px",
                           width: "80%",

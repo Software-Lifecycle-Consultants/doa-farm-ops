@@ -30,6 +30,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from "@/app/config/i18n";// Import the i18n instance
 import { useDispatch } from "react-redux";
 import { deleteCrop } from "@/redux/cropSlice"; // Import the Redux action for updating crops
+import theme from '@/Theme';
 
 
 // Define the table columns
@@ -182,10 +183,8 @@ export default function CropsTable({ title }: TableTitleProps) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-
                   <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
-                    <TableCell>{row.landId}
-                    </TableCell>
+                    <TableCell>{row.landId}</TableCell>
                     {columns.map((column) => {
                       const value = row.cropDetails[column.id];
                       return (
@@ -199,12 +198,13 @@ export default function CropsTable({ title }: TableTitleProps) {
                       );
                     })}
                     <TableCell align={"right"}>
-
                       <Stack direction="row" spacing={1}>
                         <IconButton onClick={() => handleEditClick(row._id)}>
                           <EditNoteIcon />
                         </IconButton>
-                        <IconButton onClick={() => handleDeleteClick(row.landId, row._id)}>
+                        <IconButton
+                          onClick={() => handleDeleteClick(row.landId, row._id)}
+                        >
                           <DeleteIcon />
                         </IconButton>
                       </Stack>
@@ -213,7 +213,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                     <TableCell align={"right"}>
                       <Button
                         style={{
-                          backgroundColor: "#C2C2C2",
+                          backgroundColor: theme.palette.secondary.main,
                           color: "black",
                           borderRadius: "16px",
                           width: "100%",

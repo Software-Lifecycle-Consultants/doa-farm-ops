@@ -18,6 +18,7 @@ import { addLand } from "@/redux/landSlice";
 import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
+import { CustomBox1 } from "@/Theme";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -80,25 +81,9 @@ export default function AddLand() {
     });
   };
 
-  // Styles for the container box
-  const boxStyles = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    border: "3px solid #F1F1F1",
-    background: "#FFFFFF",
-    padding: "3vh",
-    margin: "5vh auto",
-    maxWidth: "500px",
-  };
-
   return (
     <Container component="main" maxWidth="xl">
-      <Box
-        sx={{
-          ...boxStyles,
-        }}
-      >
+      <CustomBox1 sx={{maxWidth: "500px"}}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
             {i18n.t("addLand.txtAddLand")}
@@ -225,7 +210,7 @@ export default function AddLand() {
             </Stack>
           </Grid>
         </Box>
-      </Box>
+      </CustomBox1>
     </Container>
   );
 }

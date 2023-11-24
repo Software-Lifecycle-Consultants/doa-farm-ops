@@ -16,6 +16,7 @@ import { useRouter } from "next/navigation";
 import { Language as LanguageIcon } from "@mui/icons-material";
 import { useTranslation } from "react-i18next"; // Import useTranslation
 import i18n from "../app/config/i18n";
+import { CustomListItemText } from "@/Theme";
 
 
 // Define the props for the component
@@ -82,17 +83,15 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({ changeLanguage, handl
               key={index}
             >
               <ListItemIcon>
-                <ListItemText
-                  sx={{ color: "#FFF" }}
+                <CustomListItemText
+                  // style={CustomListItemText}
                   primary={t(page.label)}
-                ></ListItemText>
+                ></CustomListItemText>
               </ListItemIcon>
             </ListItemButton>
           ))}
           <ListItemButton onClick={handleLanguageClick}>
-            <ListItemText sx={{ color: "#FFF" }}>
-              {selectedLanguageLabel}
-            </ListItemText>
+            <CustomListItemText>{selectedLanguageLabel}</CustomListItemText>
             <LanguageIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
           </ListItemButton>
           {/* Language selector */}
