@@ -25,6 +25,8 @@ import { useDispatch } from "react-redux";
 import { login, setPassword, setUsername } from "@/redux/authSlice";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
+import { useRouter } from "next/navigation";
+import { CustomBox1 } from "@/Theme";
 
 // Export the sign-in component
 export default function SignIn() {
@@ -42,6 +44,7 @@ export default function SignIn() {
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
 
+  const router = useRouter();
   const dispatch = useDispatch();
 
   // Function to toggle password visibility
@@ -57,7 +60,8 @@ export default function SignIn() {
   // Define a function to handle user login.
   const handleLogin = () => {
     // Simulate a login action by creating a user data object.
-    const userData = { username: formData.email, password: formData.password}; // Use email as username for simplicity
+    const userData = { username: formData.email, password: formData.password }; // Use email as username for simplicity
+    router.push("./");
     // Dispatch the 'login' action from the 'authSlice' with the user data.
     dispatch(login(userData));
   };
@@ -93,33 +97,16 @@ export default function SignIn() {
     const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
     return emailRegex.test(email);
   };
-  
+
   // Function to validate password length
   const isPasswordValid = (password: string | any[]) => {
     return password.length >= 6; // Set a minimum password length requirement
-  };
-  
-
-  // Styling for the Box element
-  const boxStyles = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    border: "3px solid #F1F1F1",
-    background: "#FFFFFF",
-    padding: "3vh", //  padding
-    margin: "5vh auto", // margin
-    maxWidth: "400px", // Max width for tablets
   };
 
   return (
     <Container component="main">
       {/* Main content container */}
-      <Box
-        sx={{
-          ...boxStyles,
-        }}
-      >
+      <CustomBox1 sx={{ maxWidth: "400px" }}>
         <Typography component="h1" variant="h5">
           {/* Display a translated 'welcome' message based on the selected language. */}
           {i18n.t("login.txtWelcome")}
@@ -236,7 +223,7 @@ export default function SignIn() {
             </Link>
           </Grid>
         </Box>
-      </Box>
+      </CustomBox1>
     </Container>
   );
 }

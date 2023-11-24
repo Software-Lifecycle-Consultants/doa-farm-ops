@@ -40,6 +40,7 @@ import {
 
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";
+import { customGridStyles1 } from "@/styles/customStyles";
 
 /**
  * Add Operation Cost page represents a page where users can add operation costs for a specific crop.(Machinery Cost, Labor Cost, Material Cost)
@@ -84,7 +85,7 @@ export default function AddOperationCost() {
   const navigationToMyCrops = () => {
     router.push("/my-crops");
   };
-  
+
   const { t } = useTranslation();
 
   // Define the title based on the selected language
@@ -104,29 +105,17 @@ export default function AddOperationCost() {
           width={"100%"}
         >
           <ProfileTitle title={title} />
-          <Typography>{t('operationCost.txtCropType')} {t('operationCost.paddy')}</Typography>
+          <Typography>
+            {t("operationCost.txtCropType")} {t("operationCost.paddy")}
+          </Typography>
         </Stack>
 
         <Grid item>
-        <p>
-        {t('operationCost.txtDescription')}
-        </p>
-      </Grid>
-
+          <p>{t("operationCost.txtDescription")}</p>
+        </Grid>
 
         {/* Machinery Cost Section */}
-        <Grid
-          item
-          p={2}
-          rowGap={2}
-          xs={12}
-          md={12}
-          sx={{
-            backgroundColor: "#FFFFFF",
-            border: "3px solid #F1F1F1",
-            borderRadius: "22px",
-          }}
-        >
+        <Grid item p={2} rowGap={2} xs={12} md={12} sx={customGridStyles1}>
           {/* Dropdowns and input fields for machinery costs */}
           <FormControl
             variant="filled"
@@ -136,7 +125,7 @@ export default function AddOperationCost() {
             }}
           >
             <InputLabel id="demo-simple-select-filled-label">
-            {t('operationCost.txtMajorOperations')}
+              {t("operationCost.txtMajorOperations")}
             </InputLabel>
             {/* Select dropdown for major operations */}
             <Select
@@ -146,10 +135,10 @@ export default function AddOperationCost() {
               onChange={handleChange1}
             >
               {majorOps.map((majorOp) => (
-        <MenuItem key={majorOp.value} value={majorOp.value}>
-          {majorOp.label}
-        </MenuItem>
-      ))}
+                <MenuItem key={majorOp.value} value={majorOp.value}>
+                  {majorOp.label}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
           {/* Sub-operations, Fertilizer Application, and Select Fertilizer */}
@@ -164,7 +153,7 @@ export default function AddOperationCost() {
             <Grid item xs={12} sm={6} md={3} lg={2}>
               <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
                 <InputLabel id="demo-simple-select-filled-label">
-                {t('operationCost.txtSubOperations')}
+                  {t("operationCost.txtSubOperations")}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-filled-label"
@@ -173,10 +162,10 @@ export default function AddOperationCost() {
                   onChange={handleChange2}
                 >
                   {subOps.map((subOp) => (
-        <MenuItem key={subOp.value} value={subOp.value}>
-          {subOp.label}
-        </MenuItem>
-      ))}
+                    <MenuItem key={subOp.value} value={subOp.value}>
+                      {subOp.label}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -185,7 +174,7 @@ export default function AddOperationCost() {
               {/* Select dropdown for fertilizer application */}
               <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
                 <InputLabel id="demo-simple-select-filled-label">
-                {t('operationCost.txtFertilizerApplication')}
+                  {t("operationCost.txtFertilizerApplication")}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-filled-label"
@@ -194,10 +183,10 @@ export default function AddOperationCost() {
                   onChange={handleChange3}
                 >
                   {fertilizerApps.map((fertilizer) => (
-        <MenuItem key={fertilizer.value} value={fertilizer.value}>
-          {fertilizer.label}
-        </MenuItem>
-      ))}
+                    <MenuItem key={fertilizer.value} value={fertilizer.value}>
+                      {fertilizer.label}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -206,7 +195,7 @@ export default function AddOperationCost() {
               {/* Select dropdown for selecting a fertilizer */}
               <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
                 <InputLabel id="demo-simple-select-filled-label">
-                {t('operationCost.txtSelectFertilizer')}
+                  {t("operationCost.txtSelectFertilizer")}
                 </InputLabel>
                 <Select
                   labelId="demo-simple-select-filled-label"
@@ -215,10 +204,10 @@ export default function AddOperationCost() {
                   onChange={handleChange4}
                 >
                   {fertilizers.map((select) => (
-        <MenuItem key={select.value} value={select.value}>
-          {select.label}
-        </MenuItem>
-      ))}
+                    <MenuItem key={select.value} value={select.value}>
+                      {select.label}
+                    </MenuItem>
+                  ))}
                 </Select>
               </FormControl>
             </Grid>
@@ -232,15 +221,10 @@ export default function AddOperationCost() {
           p={2}
           xs={12}
           md={12}
-          sx={{
-            backgroundColor: "#FFFFFF",
-            border: "3px solid #F1F1F1",
-            borderRadius: "22px",
-          }}
+          sx={customGridStyles1}
         >
-          <Typography variant="h6"
-          >
-            {t('operationCost.tblMachineryCost.txtMachineryCost')}
+          <Typography variant="h6">
+            {t("operationCost.tblMachineryCost.txtMachineryCost")}
           </Typography>
           {/* Hidden form fields for mobile view */}
           <Grid
@@ -258,7 +242,7 @@ export default function AddOperationCost() {
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
             >
               <InputLabel id="demo-simple-select-filled-label">
-              {t('operationCost.tblMachineryCost.colMethod')}
+                {t("operationCost.tblMachineryCost.colMethod")}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
@@ -267,10 +251,10 @@ export default function AddOperationCost() {
                 onChange={handleChange5}
               >
                 {machinery.map((select) => (
-        <MenuItem key={select.value} value={select.value}>
-          {select.label}
-        </MenuItem>
-      ))}
+                  <MenuItem key={select.value} value={select.value}>
+                    {select.label}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
             <FormControl
@@ -278,7 +262,7 @@ export default function AddOperationCost() {
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
             >
               <InputLabel id="demo-simple-select-filled-label">
-              {t('operationCost.tblMachineryCost.colOwnedOrHired')}
+                {t("operationCost.tblMachineryCost.colOwnedOrHired")}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
@@ -297,28 +281,36 @@ export default function AddOperationCost() {
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <InputLabel>{t('operationCost.tblMachineryCost.colNumberOfTimes')}</InputLabel>
+              <InputLabel>
+                {t("operationCost.tblMachineryCost.colNumberOfTimes")}
+              </InputLabel>
               <Input type={"text"} />
             </FormControl>
             <FormControl
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <InputLabel>{t('operationCost.tblMachineryCost.colDays')}</InputLabel>
+              <InputLabel>
+                {t("operationCost.tblMachineryCost.colDays")}
+              </InputLabel>
               <Input type={"text"} />
             </FormControl>
             <FormControl
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <InputLabel>{t('operationCost.tblMachineryCost.colCost')}</InputLabel>
+              <InputLabel>
+                {t("operationCost.tblMachineryCost.colCost")}
+              </InputLabel>
               <Input type={"text"} />
             </FormControl>
             <FormControl
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <Button variant="outlined">{t('operationCost.tblMachineryCost.capBtnAdd')}</Button>
+              <Button variant="outlined">
+                {t("operationCost.tblMachineryCost.capBtnAdd")}
+              </Button>
             </FormControl>
           </Grid>
           {/* Machinery Cost Data Table */}
@@ -330,7 +322,7 @@ export default function AddOperationCost() {
                     <TableRow>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblMachineryCost.colMethod')}
+                          {t("operationCost.tblMachineryCost.colMethod")}
                         </Typography>
                         <FormControl
                           variant="filled"
@@ -341,7 +333,7 @@ export default function AddOperationCost() {
                           }}
                         >
                           <InputLabel id="demo-simple-select-filled-label">
-                          {t('operationCost.tblMachineryCost.colMethod')}
+                            {t("operationCost.tblMachineryCost.colMethod")}
                           </InputLabel>
                           <Select
                             labelId="demo-simple-select-filled-label"
@@ -350,16 +342,16 @@ export default function AddOperationCost() {
                             onChange={handleChange5}
                           >
                             {machinery.map((select) => (
-                                <MenuItem key={select.value} value={select.value}>
+                              <MenuItem key={select.value} value={select.value}>
                                 {select.label}
-                                </MenuItem>
+                              </MenuItem>
                             ))}
                           </Select>
                         </FormControl>
                       </TableCell>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblMachineryCost.colOwnedOrHired')}
+                          {t("operationCost.tblMachineryCost.colOwnedOrHired")}
                         </Typography>
                         <FormControl
                           variant="filled"
@@ -370,7 +362,9 @@ export default function AddOperationCost() {
                           }}
                         >
                           <InputLabel id="demo-simple-select-filled-label">
-                            {t('operationCost.tblMachineryCost.colOwnedOrHired')}
+                            {t(
+                              "operationCost.tblMachineryCost.colOwnedOrHired"
+                            )}
                           </InputLabel>
                           <Select
                             labelId="demo-simple-select-filled-label"
@@ -388,23 +382,7 @@ export default function AddOperationCost() {
                       </TableCell>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblMachineryCost.colNumberOfTimes')}
-                        </Typography>
-                        <FormControl
-                          variant="standard"
-                          fullWidth
-                          sx={{
-                            minWidth: 120,
-                            display: { xs: "none", sm: "flex" },
-                          }}
-                        >
-                          <InputLabel>{t('operationCost.tblMachineryCost.colNumberOfTimes')}</InputLabel>
-                          <Input type={"text"} />
-                        </FormControl>
-                      </TableCell>
-                      <TableCell>
-                        <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblMachineryCost.colDays')}
+                          {t("operationCost.tblMachineryCost.colNumberOfTimes")}
                         </Typography>
                         <FormControl
                           variant="standard"
@@ -415,14 +393,16 @@ export default function AddOperationCost() {
                           }}
                         >
                           <InputLabel>
-                            {t('operationCost.tblMachineryCost.colDays')}
+                            {t(
+                              "operationCost.tblMachineryCost.colNumberOfTimes"
+                            )}
                           </InputLabel>
                           <Input type={"text"} />
                         </FormControl>
                       </TableCell>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblMachineryCost.colCost')}
+                          {t("operationCost.tblMachineryCost.colDays")}
                         </Typography>
                         <FormControl
                           variant="standard"
@@ -432,7 +412,27 @@ export default function AddOperationCost() {
                             display: { xs: "none", sm: "flex" },
                           }}
                         >
-                          <InputLabel>{t('operationCost.tblMachineryCost.colCost')}</InputLabel>
+                          <InputLabel>
+                            {t("operationCost.tblMachineryCost.colDays")}
+                          </InputLabel>
+                          <Input type={"text"} />
+                        </FormControl>
+                      </TableCell>
+                      <TableCell>
+                        <Typography sx={{ display: { sm: "none" } }}>
+                          {t("operationCost.tblMachineryCost.colCost")}
+                        </Typography>
+                        <FormControl
+                          variant="standard"
+                          fullWidth
+                          sx={{
+                            minWidth: 120,
+                            display: { xs: "none", sm: "flex" },
+                          }}
+                        >
+                          <InputLabel>
+                            {t("operationCost.tblMachineryCost.colCost")}
+                          </InputLabel>
                           <Input type={"text"} />
                         </FormControl>
                       </TableCell>
@@ -445,7 +445,9 @@ export default function AddOperationCost() {
                             display: { xs: "none", sm: "flex" },
                           }}
                         >
-                          <Button variant="outlined">{t('operationCost.tblMachineryCost.capBtnAdd')}</Button>
+                          <Button variant="outlined">
+                            {t("operationCost.tblMachineryCost.capBtnAdd")}
+                          </Button>
                         </FormControl>
                       </TableCell>
                     </TableRow>
@@ -479,15 +481,10 @@ export default function AddOperationCost() {
           p={2}
           xs={12}
           md={12}
-          sx={{
-            backgroundColor: "#FFFFFF",
-            border: "3px solid #F1F1F1",
-            borderRadius: "22px",
-          }}
+          sx={customGridStyles1}
         >
-          <Typography variant="h6"
-          >
-            {t('operationCost.tblLaborCost.txtLaborCost')}
+          <Typography variant="h6">
+            {t("operationCost.tblLaborCost.txtLaborCost")}
           </Typography>
           {/* Hidden form fields for mobile view */}
           <Grid
@@ -505,7 +502,7 @@ export default function AddOperationCost() {
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
             >
               <InputLabel id="demo-simple-select-filled-label">
-              {t('operationCost.tblLaborCost.colGender')}
+                {t("operationCost.tblLaborCost.colGender")}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
@@ -525,7 +522,7 @@ export default function AddOperationCost() {
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
             >
               <InputLabel id="demo-simple-select-filled-label">
-              {t('operationCost.tblLaborCost.colFreeOrHired')}
+                {t("operationCost.tblLaborCost.colFreeOrHired")}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
@@ -544,28 +541,36 @@ export default function AddOperationCost() {
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <InputLabel>{t('operationCost.tblLaborCost.colQuantity')}</InputLabel>
+              <InputLabel>
+                {t("operationCost.tblLaborCost.colQuantity")}
+              </InputLabel>
               <Input type={"text"} />
             </FormControl>
             <FormControl
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <InputLabel>{t('operationCost.tblLaborCost.colDailyWage')}</InputLabel>
+              <InputLabel>
+                {t("operationCost.tblLaborCost.colDailyWage")}
+              </InputLabel>
               <Input type={"text"} />
             </FormControl>
             <FormControl
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <InputLabel>{t('operationCost.tblLaborCost.colFoodCostPerDay')}</InputLabel>
+              <InputLabel>
+                {t("operationCost.tblLaborCost.colFoodCostPerDay")}
+              </InputLabel>
               <Input type={"text"} />
             </FormControl>
             <FormControl
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <Button variant="outlined">{t('operationCost.tblLaborCost.capBtnAdd')}</Button>
+              <Button variant="outlined">
+                {t("operationCost.tblLaborCost.capBtnAdd")}
+              </Button>
             </FormControl>
           </Grid>
           {/* Labor Cost Data Table */}
@@ -577,7 +582,7 @@ export default function AddOperationCost() {
                     <TableRow>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                        {t('operationCost.tblLaborCost.colGender')}
+                          {t("operationCost.tblLaborCost.colGender")}
                         </Typography>
                         <FormControl
                           variant="filled"
@@ -588,7 +593,7 @@ export default function AddOperationCost() {
                           }}
                         >
                           <InputLabel id="demo-simple-select-filled-label">
-                          {t('operationCost.tblLaborCost.colGender')}
+                            {t("operationCost.tblLaborCost.colGender")}
                           </InputLabel>
                           <Select
                             labelId="demo-simple-select-filled-label"
@@ -606,7 +611,7 @@ export default function AddOperationCost() {
                       </TableCell>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblLaborCost.colFreeOrHired')}
+                          {t("operationCost.tblLaborCost.colFreeOrHired")}
                         </Typography>
                         <FormControl
                           variant="filled"
@@ -617,7 +622,7 @@ export default function AddOperationCost() {
                           }}
                         >
                           <InputLabel id="demo-simple-select-filled-label">
-                            {t('operationCost.tblLaborCost.colFreeOrHired')}
+                            {t("operationCost.tblLaborCost.colFreeOrHired")}
                           </InputLabel>
                           <Select
                             labelId="demo-simple-select-filled-label"
@@ -635,7 +640,7 @@ export default function AddOperationCost() {
                       </TableCell>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblLaborCost.colQuantity')}
+                          {t("operationCost.tblLaborCost.colQuantity")}
                         </Typography>
                         <FormControl
                           variant="standard"
@@ -645,13 +650,15 @@ export default function AddOperationCost() {
                             display: { xs: "none", sm: "flex" },
                           }}
                         >
-                          <InputLabel>{t('operationCost.tblLaborCost.colQuantity')}</InputLabel>
+                          <InputLabel>
+                            {t("operationCost.tblLaborCost.colQuantity")}
+                          </InputLabel>
                           <Input type={"text"} />
                         </FormControl>
                       </TableCell>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblLaborCost.colDailyWage')}
+                          {t("operationCost.tblLaborCost.colDailyWage")}
                         </Typography>
                         <FormControl
                           variant="standard"
@@ -661,13 +668,15 @@ export default function AddOperationCost() {
                             display: { xs: "none", sm: "flex" },
                           }}
                         >
-                          <InputLabel>{t('operationCost.tblLaborCost.colDailyWage')}</InputLabel>
+                          <InputLabel>
+                            {t("operationCost.tblLaborCost.colDailyWage")}
+                          </InputLabel>
                           <Input type={"text"} />
                         </FormControl>
                       </TableCell>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblLaborCost.colFoodCostPerDay')}
+                          {t("operationCost.tblLaborCost.colFoodCostPerDay")}
                         </Typography>
                         <FormControl
                           variant="standard"
@@ -677,7 +686,9 @@ export default function AddOperationCost() {
                             display: { xs: "none", sm: "flex" },
                           }}
                         >
-                          <InputLabel>{t('operationCost.tblLaborCost.colFoodCostPerDay')}</InputLabel>
+                          <InputLabel>
+                            {t("operationCost.tblLaborCost.colFoodCostPerDay")}
+                          </InputLabel>
                           <Input type={"text"} />
                         </FormControl>
                       </TableCell>
@@ -690,7 +701,9 @@ export default function AddOperationCost() {
                             display: { xs: "none", sm: "flex" },
                           }}
                         >
-                          <Button variant="outlined">{t('operationCost.tblLaborCost.capBtnAdd')}</Button>
+                          <Button variant="outlined">
+                            {t("operationCost.tblLaborCost.capBtnAdd")}
+                          </Button>
                         </FormControl>
                       </TableCell>
                     </TableRow>
@@ -724,15 +737,10 @@ export default function AddOperationCost() {
           p={2}
           xs={12}
           md={12}
-          sx={{
-            backgroundColor: "#FFFFFF",
-            border: "3px solid #F1F1F1",
-            borderRadius: "22px",
-          }}
+          sx={customGridStyles1}
         >
-          <Typography variant="h6"
-          >
-            {t('operationCost.tblMaterialCost.txtMaterialCost')}
+          <Typography variant="h6">
+            {t("operationCost.tblMaterialCost.txtMaterialCost")}
           </Typography>
           {/* Hidden form fields for mobile view */}
           <Grid
@@ -750,7 +758,7 @@ export default function AddOperationCost() {
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
             >
               <InputLabel id="demo-simple-select-filled-label">
-              {t('operationCost.tblMaterialCost.colMaterial')}
+                {t("operationCost.tblMaterialCost.colMaterial")}
               </InputLabel>
               <Select
                 labelId="demo-simple-select-filled-label"
@@ -759,9 +767,9 @@ export default function AddOperationCost() {
                 onChange={handleChange6}
               >
                 {material.map((season) => (
-                    <MenuItem key={season.value} value={season.value}>
-                      {season.label}
-                    </MenuItem>
+                  <MenuItem key={season.value} value={season.value}>
+                    {season.label}
+                  </MenuItem>
                 ))}
               </Select>
             </FormControl>
@@ -769,21 +777,27 @@ export default function AddOperationCost() {
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <InputLabel>{t('operationCost.tblMaterialCost.colQuantity')}</InputLabel>
+              <InputLabel>
+                {t("operationCost.tblMaterialCost.colQuantity")}
+              </InputLabel>
               <Input type={"text"} />
             </FormControl>
             <FormControl
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <InputLabel>{t('operationCost.tblMaterialCost.colCostForTheMaterial')}</InputLabel>
+              <InputLabel>
+                {t("operationCost.tblMaterialCost.colCostForTheMaterial")}
+              </InputLabel>
               <Input type={"text"} />
             </FormControl>
             <FormControl
               variant="standard"
               sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
             >
-              <Button variant="outlined">{t('operationCost.tblMaterialCost.capBtnAdd')}</Button>
+              <Button variant="outlined">
+                {t("operationCost.tblMaterialCost.capBtnAdd")}
+              </Button>
             </FormControl>
           </Grid>
           {/* Material Cost Data Table */}
@@ -795,7 +809,7 @@ export default function AddOperationCost() {
                     <TableRow>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblMaterialCost.colMaterial')}
+                          {t("operationCost.tblMaterialCost.colMaterial")}
                         </Typography>
                         <FormControl
                           variant="filled"
@@ -806,7 +820,7 @@ export default function AddOperationCost() {
                           }}
                         >
                           <InputLabel id="demo-simple-select-filled-label">
-                            {t('operationCost.tblMaterialCost.colMaterial')}
+                            {t("operationCost.tblMaterialCost.colMaterial")}
                           </InputLabel>
                           <Select
                             labelId="demo-simple-select-filled-label"
@@ -815,16 +829,16 @@ export default function AddOperationCost() {
                             onChange={handleChange6}
                           >
                             {material.map((season) => (
-                            <MenuItem key={season.value} value={season.value}>
-                              {season.label}
-                          </MenuItem>
-                          ))}
+                              <MenuItem key={season.value} value={season.value}>
+                                {season.label}
+                              </MenuItem>
+                            ))}
                           </Select>
                         </FormControl>
                       </TableCell>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblMaterialCost.colQuantity')}
+                          {t("operationCost.tblMaterialCost.colQuantity")}
                         </Typography>
                         <FormControl
                           variant="standard"
@@ -834,13 +848,17 @@ export default function AddOperationCost() {
                             display: { xs: "none", sm: "flex" },
                           }}
                         >
-                          <InputLabel>{t('operationCost.tblMaterialCost.colQuantity')}</InputLabel>
+                          <InputLabel>
+                            {t("operationCost.tblMaterialCost.colQuantity")}
+                          </InputLabel>
                           <Input type={"text"} />
                         </FormControl>
                       </TableCell>
                       <TableCell>
                         <Typography sx={{ display: { sm: "none" } }}>
-                          {t('operationCost.tblMaterialCost.colCostForTheMaterial')}
+                          {t(
+                            "operationCost.tblMaterialCost.colCostForTheMaterial"
+                          )}
                         </Typography>
                         <FormControl
                           variant="standard"
@@ -850,7 +868,11 @@ export default function AddOperationCost() {
                             display: { xs: "none", sm: "flex" },
                           }}
                         >
-                          <InputLabel>{t('operationCost.tblMaterialCost.colCostForTheMaterial')}</InputLabel>
+                          <InputLabel>
+                            {t(
+                              "operationCost.tblMaterialCost.colCostForTheMaterial"
+                            )}
+                          </InputLabel>
                           <Input type={"text"} />
                         </FormControl>
                       </TableCell>
@@ -864,7 +886,9 @@ export default function AddOperationCost() {
                             display: { xs: "none", sm: "flex" },
                           }}
                         >
-                          <Button variant="outlined">{t('operationCost.tblMaterialCost.capBtnAdd')}</Button>
+                          <Button variant="outlined">
+                            {t("operationCost.tblMaterialCost.capBtnAdd")}
+                          </Button>
                         </FormControl>
                       </TableCell>
                     </TableRow>
@@ -900,7 +924,7 @@ export default function AddOperationCost() {
                 sx={{ mt: 3, mb: 2, width: "18vw" }}
                 onClick={navigationToMyCrops}
               >
-                {t('operationCost.capBtnCancel')}
+                {t("operationCost.capBtnCancel")}
               </Button>
               {/* Save Button */}
               <Button
@@ -910,7 +934,7 @@ export default function AddOperationCost() {
                 sx={{ mt: 3, mb: 2, width: "18vw" }}
                 onClick={navigationToMyCrops}
               >
-                {t('operationCost.capBtnSave')}
+                {t("operationCost.capBtnSave")}
               </Button>
             </Stack>
           </Grid>

@@ -13,16 +13,18 @@ import {
 import React, { useState } from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useRouter } from "next/navigation";
-import { Language as LanguageIcon } from "@mui/icons-material";
+import { Language as LanguageIcon, ExitToApp as ExitToAppIcon, Login as LoginIcon } from "@mui/icons-material";
 import { useTranslation } from "react-i18next"; // Import useTranslation
-import i18n from "../app/config/i18n";
-
+import { logout, selectAuth } from "@/redux/authSlice";
+import { useDispatch, useSelector  } from "react-redux";
+import { CustomListItemText } from "@/Theme";
+import { drawerIconStyles } from "@/styles/customStyles";
 
 // Define the props for the component
 interface DrawerComponentProps {
   changeLanguage: (code: string) => void;
-  handleLanguageClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void; 
-  selectedLanguageLabel: string; languageAnchorEl: (EventTarget & HTMLElement) | null; 
+  handleLanguageClick: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
+  selectedLanguageLabel: string; languageAnchorEl: (EventTarget & HTMLElement) | null;
   handleLanguageClose: () => void; selectedLanguage: string;
 }
 /**
@@ -47,11 +49,15 @@ const languages = [
  * Drawer component represents navigation menu for mobile view.
  * It handles navigation to homepage, profile, crops, login, and language selector.
  */
-const DrawerComponent : React.FC<DrawerComponentProps>= ({changeLanguage,handleLanguageClick,selectedLanguageLabel,languageAnchorEl,handleLanguageClose,selectedLanguage}) => {
+const DrawerComponent: React.FC<DrawerComponentProps> = ({ changeLanguage, handleLanguageClick, selectedLanguageLabel, languageAnchorEl, handleLanguageClose, selectedLanguage }) => {
   const router = useRouter();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
   const [openDrawer, setOpenDrawer] = useState(false);
-  
+
+  // Fetch the authentication status from Redux store
+  const { isAuthenticated } = useSelector(selectAuth);
+
   //Set navigation to screens from navigation bar
   const navigationToScreens = (id: number) => {
     setOpenDrawer(false)
@@ -61,6 +67,18 @@ const DrawerComponent : React.FC<DrawerComponentProps>= ({changeLanguage,handleL
     } else {
       router.push("/");
     }
+  };
+
+  // Define a function to handle user logout.
+  const handleLogout = () => {
+    router.push('./');
+    // Simulate a logout action by dispatching the 'logout' action from 'authSlice'.
+    dispatch(logout());
+  };
+
+  // Define a function to handle user login.
+  const handleLogin = () => {
+    router.push('./login');
   };
   return (
     <>
@@ -76,24 +94,38 @@ const DrawerComponent : React.FC<DrawerComponentProps>= ({changeLanguage,handleL
       >
         {/* Render navigation items */}
         <List>
-          {pages.map((page, index) => (
-            <ListItemButton
-              onClick={() => navigationToScreens(page.id)}
-              key={index}
-            >
-              <ListItemIcon>
-                <ListItemText
-                  sx={{ color: "#FFF" }}
-                  primary={t(page.label)}
-                ></ListItemText>
-              </ListItemIcon>
+          {isAuthenticated && (
+            <>
+              {pages.map((page, index) => (
+                <ListItemButton
+                  onClick={() => navigationToScreens(page.id)}
+                  key={index}
+                >
+                  <ListItemIcon>
+                    <CustomListItemText
+                      // style={CustomListItemText}
+                      primary={t(page.label)}
+                    ></CustomListItemText>
+                  </ListItemIcon>
+                </ListItemButton>
+              ))}
+              <ListItemButton onClick={handleLogout}>
+                <CustomListItemText>Sign Out</CustomListItemText>
+                <ExitToAppIcon sx={drawerIconStyles} />
+              </ListItemButton>
+            </>
+          )}
+
+          {!isAuthenticated && (
+            <ListItemButton onClick={handleLogin}>
+              <CustomListItemText>Sign In</CustomListItemText>
+              <LoginIcon sx={drawerIconStyles} />
             </ListItemButton>
-          ))}
+          )}
+
           <ListItemButton onClick={handleLanguageClick}>
-            <ListItemText sx={{ color: "#FFF" }}>
-              {selectedLanguageLabel}
-            </ListItemText>
-            <LanguageIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
+            <CustomListItemText>{selectedLanguageLabel}</CustomListItemText>
+            <LanguageIcon sx={drawerIconStyles} />
           </ListItemButton>
           {/* Language selector */}
           <Menu

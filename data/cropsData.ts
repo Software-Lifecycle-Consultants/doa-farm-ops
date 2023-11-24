@@ -25,7 +25,8 @@ function createData(
   noOfPicks: string,
   loanObtained: number,
 ): Data {
-  return { landId,
+  return {
+    landId,
     cropDetails: {
       cropName,
       season,
@@ -60,29 +61,29 @@ export const lands = [
 ];
 
 export const cropList = [
-      {
-        type: 'Paddy',
-        name: 'Basmati'
-      },
-      {
-        type: 'Paddy',
-        name: 'Red Rice'
-      },
-      {
-        type: 'Paddy',
-        name: 'Samba'
-      },
-      {
-        type: 'Paddy',
-        name: 'Keeri Samba'
-      },
-      {
-        type: 'Paddy',
-        name: 'Nadu'
-      },
-      {
-        type: 'Tea',
-        name: 'Black Tea'
-      },
-      
+  {
+    type: 'Paddy',
+    name: 'Basmati'
+  },
+  {
+    type: 'Paddy',
+    name: 'Red Rice'
+  },
+  {
+    type: 'Paddy',
+    name: 'Samba'
+  },
+  {
+    type: 'Paddy',
+    name: 'Keeri Samba'
+  },
+  {
+    type: 'Paddy',
+    name: 'Nadu'
+  },
+  {
+    type: 'Tea',
+    name: 'Black Tea'
+  },
+
 ]

@@ -30,19 +30,20 @@ import { useTranslation } from 'react-i18next';
 import i18n from "@/app/config/i18n";// Import the i18n instance
 import { useDispatch } from "react-redux";
 import { deleteCrop } from "@/redux/cropSlice"; // Import the Redux action for updating crops
+import theme from '@/Theme';
 
 
 // Define the table columns
 interface Column {
   id:
-    | "cropName"
-    | "season"
-    | "cropType"
-    | "totalSoldQty"
-    | "totalIncome"
-    | "reservedQtyHome"
-    | "reservedQtySeed"
-    | "noOfPicks";
+  | "cropName"
+  | "season"
+  | "cropType"
+  | "totalSoldQty"
+  | "totalIncome"
+  | "reservedQtyHome"
+  | "reservedQtySeed"
+  | "noOfPicks";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -97,7 +98,7 @@ interface TableTitleProps {
 export default function CropsTable({ title }: TableTitleProps) {
   const router = useRouter();
   const { t } = useTranslation();
-  const cropDetails = useSelector((state:RootState) => state.crop);
+  const cropDetails = useSelector((state: RootState) => state.crop);
   const dispatch = useDispatch();
 
   // State for handling pagination
@@ -128,7 +129,7 @@ export default function CropsTable({ title }: TableTitleProps) {
 
   // Function to handle navigation when the Edit icon is clicked
   const handleEditClick = (id: string) => {
-   router.push(`/update-crop/${id}`);
+    router.push(`/update-crop/${id}`);
   };
 
   // Function to delete crop when the Delete icon is clicked
@@ -136,8 +137,8 @@ export default function CropsTable({ title }: TableTitleProps) {
     // Open the confirmation dialog and set the deletedCropId
     setDeletedCropId(cropId);
     setDeletedLandId(landId);
-    setDeleteConfirmationOpen(true);  
-   };
+    setDeleteConfirmationOpen(true);
+  };
 
   // Function to confirm and delete the crop
   const confirmDelete = () => {
@@ -182,10 +183,8 @@ export default function CropsTable({ title }: TableTitleProps) {
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
-                  
                   <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
-                    <TableCell>{row.landId}
-                   </TableCell>
+                    <TableCell>{row.landId}</TableCell>
                     {columns.map((column) => {
                       const value = row.cropDetails[column.id];
                       return (
@@ -199,21 +198,22 @@ export default function CropsTable({ title }: TableTitleProps) {
                       );
                     })}
                     <TableCell align={"right"}>
+                      <Stack direction="row" spacing={1}>
+                        <IconButton onClick={() => handleEditClick(row._id)}>
+                          <EditNoteIcon />
+                        </IconButton>
+                        <IconButton
+                          onClick={() => handleDeleteClick(row.landId, row._id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
 
-                              <Stack direction="row" spacing={1}>
-                                <IconButton onClick={()=>handleEditClick(row._id)}>
-                                  <EditNoteIcon />
-                                </IconButton>
-                                <IconButton onClick={()=>handleDeleteClick(row.landId, row._id)}>
-                                  <DeleteIcon />
-                                </IconButton>
-                              </Stack>
-                            </TableCell>
-                      
                     <TableCell align={"right"}>
                       <Button
                         style={{
-                          backgroundColor: "#C2C2C2",
+                          backgroundColor: theme.palette.secondary.main,
                           color: "black",
                           borderRadius: "16px",
                           width: "100%",

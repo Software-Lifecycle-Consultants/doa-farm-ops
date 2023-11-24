@@ -17,6 +17,7 @@ import CropsTable from "@/components/CropsTable";
 import { useRouter } from "next/navigation";
 import { seasons, lands } from "../../data/cropsData";
 import { useTranslation } from 'react-i18next';
+import { customGridStyles2 } from "@/styles/customStyles";
 // import i18n from "../config/i18n";// Import the i18n instance
 
 /**
@@ -24,7 +25,7 @@ import { useTranslation } from 'react-i18next';
  * Users can view vital information about each crop, and can add operation cost details.
  */
 export default function MyCrops() {
-  
+
   const router = useRouter();
   const { t } = useTranslation();
   // State variables to store filter values
@@ -42,7 +43,7 @@ export default function MyCrops() {
   const navigationToAddCrop = () => {
     router.push("/add-crop");
   };
-  
+
   // Return the JSX for rendering
   return (
     <Grid container direction="column" rowGap={2}>
@@ -114,16 +115,7 @@ export default function MyCrops() {
         </Stack>
       </Grid>
 
-      <Grid
-        container
-        item
-        rowGap={2}
-        p={2}
-        sx={{
-          backgroundColor: "#F1F1F1",
-          borderRadius: "12px",
-        }}
-      >
+      <Grid container item rowGap={2} p={2} sx={customGridStyles2}>
         <Grid
           item
           xs={12}

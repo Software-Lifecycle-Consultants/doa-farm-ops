@@ -1,6 +1,6 @@
 {
   "name": "doa-farm-ops",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -13,6 +13,7 @@
     "@emotion/styled": "^11.11.0",
     "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.5",
+    "@mui/system": "^5.14.16",
     "@reduxjs/toolkit": "^1.9.7",
     "@types/node": "20.5.1",
     "@types/ol": "^7.0.0",

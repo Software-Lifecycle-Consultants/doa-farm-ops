@@ -27,6 +27,7 @@ import { RootState } from "@/redux/types";
 import { deleteLand } from "@/redux/landSlice";
 
 import { useTranslation } from 'react-i18next';
+import theme from "@/Theme";
 
 // Define columns for the table
 interface Column {
@@ -97,8 +98,8 @@ export default function LandsTable({ title }: TableTitleProps) {
   const handleEditClick = (id: any) => {
     router.push(`/update-land/${id}`);
   };
-    
-   const { t } = useTranslation();
+
+  const { t } = useTranslation();
 
   const [deleteConfirmation, setDeleteConfirmation] = React.useState<{
     open: boolean;
@@ -121,7 +122,7 @@ export default function LandsTable({ title }: TableTitleProps) {
     dispatch(deleteLand(landId));
     closeDeleteConfirmation(); // Close the delete confirmation dialog
   };
-  
+
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
       <TableContainer sx={{ maxHeight: 440 }}>
@@ -165,17 +166,17 @@ export default function LandsTable({ title }: TableTitleProps) {
                     <TableCell align={"right"}>
                       <Stack direction="row" spacing={2}>
                         <IconButton onClick={() => handleEditClick(row.landId)}>
-                          <EditNoteIcon/>
+                          <EditNoteIcon />
                         </IconButton>
                         <IconButton onClick={() => openDeleteConfirmation(row.landId)}>
-                          <DeleteIcon/>
+                          <DeleteIcon />
                         </IconButton>
                       </Stack>
                     </TableCell>
                     <TableCell align={"right"}>
                       <Button
                         style={{
-                          backgroundColor: "#C2C2C2",
+                          backgroundColor: theme.palette.secondary.main,
                           color: "black",
                           borderRadius: "16px",
                           width: "80%",

@@ -20,6 +20,7 @@ import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
 import MapComponent from "../../components/MapComponent";
+import { CustomBox1 } from "@/Theme";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -113,11 +114,7 @@ export default function AddLand() {
 
   return (
     <Container component="main" maxWidth="xl">
-      <Box
-        sx={{
-          ...boxStyles,
-        }}
-      >
+      <CustomBox1 sx={{maxWidth: "500px"}}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
             {i18n.t("addLand.txtAddLand")}
@@ -277,7 +274,7 @@ export default function AddLand() {
             </Stack>
           </Grid>
         </Box>
-      </Box>
+      </CustomBox1>
     </Container>
   );
 }

@@ -57,8 +57,8 @@
     }
   },
   "officerProfile": {
-    "txtProfileName": "Farmer Profile",
-    "txtProfileType": "Farmer",
+    "txtProfileName": "Officer Profile",
+    "txtProfileType": "Officer",
     "txtPersonalInformation": "Personal Information",
     "capBtnEdit": "Edit",
     "txtFirstName": "First Name",
@@ -239,4 +239,3 @@
     "tabCrops": "Crops"
   }
 }
-  
