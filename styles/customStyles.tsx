@@ -11,3 +11,5 @@ export const customGridStyles2 = {
 
 export const btnBackgroundColor = { backgroundColor: "#FFFFFF" };
 
+//Drawer Icon Styles
+export const drawerIconStyles = { marginLeft: "5px", color: "#FFF" };

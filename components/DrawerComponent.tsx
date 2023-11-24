@@ -18,6 +18,7 @@ import { useTranslation } from "react-i18next"; // Import useTranslation
 import { logout, selectAuth } from "@/redux/authSlice";
 import { useDispatch, useSelector  } from "react-redux";
 import { CustomListItemText } from "@/Theme";
+import { drawerIconStyles } from "@/styles/customStyles";
 
 // Define the props for the component
 interface DrawerComponentProps {
@@ -110,7 +111,7 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({ changeLanguage, handl
               ))}
               <ListItemButton onClick={handleLogout}>
                 <CustomListItemText>Sign Out</CustomListItemText>
-                <ExitToAppIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
+                <ExitToAppIcon sx={drawerIconStyles} />
               </ListItemButton>
             </>
           )}
@@ -118,13 +119,13 @@ const DrawerComponent: React.FC<DrawerComponentProps> = ({ changeLanguage, handl
           {!isAuthenticated && (
             <ListItemButton onClick={handleLogin}>
               <CustomListItemText>Sign In</CustomListItemText>
-              <LoginIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
+              <LoginIcon sx={drawerIconStyles} />
             </ListItemButton>
           )}
 
           <ListItemButton onClick={handleLanguageClick}>
             <CustomListItemText>{selectedLanguageLabel}</CustomListItemText>
-            <LanguageIcon sx={{ marginLeft: "5px", color: "#FFF" }} />
+            <LanguageIcon sx={drawerIconStyles} />
           </ListItemButton>
           {/* Language selector */}
           <Menu
