@@ -13,3 +13,16 @@ export const btnBackgroundColor = { backgroundColor: "#FFFFFF" };
 
 //Drawer Icon Styles
 export const drawerIconStyles = { marginLeft: "5px", color: "#FFF" };
+
+//Custom styles for navigation bar buttons
+export const navBarBtnStyles = {
+  justifyContent: "center",
+  alignItems: "center",
+  borderRadius: "100px",
+  background: "#FFF",
+  color: "#000000",
+  textTransform: "none",
+  marginLeft: "0px",
+  marginRight: "5px",
+  whiteSpace: "nowrap",
+};

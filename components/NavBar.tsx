@@ -24,6 +24,7 @@ import { logout, selectAuth } from "@/redux/authSlice";
 import { useDispatch, useSelector  } from "react-redux";
 import { useTranslation } from 'react-i18next'; // Import useTranslation
 import i18n from '../app/config/i18n';
+import { navBarBtnStyles } from "@/styles/customStyles";
 
 //Define the pages and routes for navigation
 const pages = [
@@ -119,14 +120,14 @@ const NavBar = () => {
           backgroundColor: "white",
           color: "#000000",
           paddingTop: "20px",
-          boxShadow: '0px 0px 4px 0px rgba(0, 0, 0, 0.25)',
+          boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25)",
         }}
       >
         <Toolbar disableGutters>
-          <Box sx={{ width: "18vh", height: "7vh", paddingLeft: '2vh' }}>
+          <Box sx={{ width: "18vh", height: "7vh", paddingLeft: "2vh" }}>
             <Image src={logo} width={142} height={50} alt="logo" />
           </Box>
-  
+
           {isMatch ? (
             <>
               {/* Call the drawer component for mobile views */}
@@ -150,7 +151,7 @@ const NavBar = () => {
                   textColor="inherit"
                   indicatorColor="secondary"
                   TabIndicatorProps={{
-                    style: { backgroundColor: "#000", width: '90px' },
+                    style: { backgroundColor: "#000", width: "90px" },
                   }}
                 >
                   {pages.map((page, index) => (
@@ -162,7 +163,7 @@ const NavBar = () => {
                   ))}
                 </Tabs>
               )}
-  
+
               {/* Language selector button */}
               <Button
                 variant="text"
@@ -177,7 +178,7 @@ const NavBar = () => {
                 {selectedLanguageLabel}
                 <LanguageIcon sx={{ marginLeft: "5px" }} />
               </Button>
-  
+
               {/* Language selector */}
               <Menu
                 anchorEl={languageAnchorEl}
@@ -194,41 +195,21 @@ const NavBar = () => {
                   </MenuItem>
                 ))}
               </Menu>
-  
+
               {/* SignOut button */}
               {isAuthenticated ? (
                 <Button
                   variant="text"
-                  sx={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: "100px",
-                    background: "#FFF",
-                    color: "#000000",
-                    textTransform: "none",
-                    marginLeft: "0px",
-                    marginRight: "5px",
-                    whiteSpace: "nowrap",
-                  }}
+                  sx={navBarBtnStyles}
                   onClick={handleLogout}
                 >
                   Sign Out <ExitToAppIcon sx={{ marginLeft: "5px" }} />
                 </Button>
-              ):(
+              ) : (
                 // SignIn button
                 <Button
                   variant="text"
-                  sx={{
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: "100px",
-                    background: "#FFF",
-                    color: "#000000",
-                    textTransform: "none",
-                    marginLeft: "0px",
-                    marginRight: "5px",
-                    whiteSpace: "nowrap",
-                  }}
+                  sx={navBarBtnStyles}
                   onClick={handleLogin}
                 >
                   Sign In <LoginIcon sx={{ marginLeft: "5px" }} />
