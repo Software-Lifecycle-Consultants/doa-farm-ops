@@ -9,6 +9,7 @@ import {
   Typography,
   Container,
   Stack,
+  MenuItem,
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
@@ -16,6 +17,10 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { addLand } from "@/redux/landSlice";
 import { RootState } from "@/redux/types";
+import { useTranslation } from 'react-i18next';
+import i18n from "../config/i18n";// Import the i18n instance
+import MapComponent from "../../components/MapComponent";
+import { CustomBox1 } from "@/Theme";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -24,6 +29,11 @@ import { RootState } from "@/redux/types";
 export default function AddLand() {
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
+  // State for managing form data and map-related data
+  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(null);
+  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>([]);
+  const [drawType, setDrawType] = useState<'Point' | 'Polygon'>('Point');
+  const { t } = useTranslation();
   // Define the structure of the form data
   interface FormData {
     landId: string;
@@ -44,6 +54,14 @@ export default function AddLand() {
   });
 
   const dispatch = useDispatch();
+
+  // Managing state for displaying the map
+  const [showMap, setShowMap] = useState(false);
+
+  // Function to show the map
+  const handleShowMap = () => {
+    setShowMap(true);
+  };
 
   //Function to navigate to my crops page clicking save & exit to my crops button
   const handleOnClickAddLand = async (
@@ -77,6 +95,11 @@ export default function AddLand() {
     });
   };
 
+  // Handler for changing the drawing type on the map
+  const handleDrawTypeChange = (type: "Point" | "Polygon") => {
+    setDrawType(type);
+  };
+
   // Styles for the container box
   const boxStyles = {
     display: "flex",
@@ -91,14 +114,10 @@ export default function AddLand() {
 
   return (
     <Container component="main" maxWidth="xl">
-      <Box
-        sx={{
-          ...boxStyles,
-        }}
-      >
+      <CustomBox1 sx={{maxWidth: "500px"}}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
-            Add Land
+            {i18n.t("addLand.txtAddLand")}
           </Typography>
         </Box>
         {/* Grid for Land Details */}
@@ -115,24 +134,59 @@ export default function AddLand() {
             }}
           >
             <Typography component="h1" variant="subtitle1" gutterBottom>
-              Fill the details bellow to add land
+              {i18n.t("addLand.txtFillDetails")}
             </Typography>
 
             {/* Button for marking on the map */}
-            <Button endIcon={<PlaceOutlinedIcon />}>Mark on Map</Button>
+            <Button endIcon={<PlaceOutlinedIcon />} onClick={handleShowMap}>
+              {i18n.t("addLand.capBtnMark")}
+            </Button>
           </Grid>
         </Grid>
+        {/* Display the map if showMap is true */}
+        {showMap && (
+          <>
+            <MapComponent setMarkerCoordinates={setMarkerCoordinates} setPolygonCoordinates={setPolygonCoordinates} drawType={drawType}/>
+            <Grid sx={{ width: '100%' }}>
+            <TextField
+                select
+                fullWidth
+                placeholder="Select Map Drawer"
+                defaultValue="Point"
+                variant="outlined"
+                value={drawType}
+                onChange={(e) => handleDrawTypeChange(e.target.value as 'Point' | 'Polygon')}
+              >
+                <MenuItem value="Point">Point</MenuItem>
+                <MenuItem value="Polygon">Polygon</MenuItem>
+              </TextField>
+            </Grid>
+            {/* Display marker coordinates if it's a point or polygon */}
+            {markerCoordinates && drawType==='Point' &&(
+                <Grid>
+                    <p>Marker Coordinates: {markerCoordinates.join(', ')}</p>
+                </Grid>
+            )}
+            {polygonCoordinates && drawType==='Polygon' &&(
+                <Grid>
+                    {polygonCoordinates.map((Coordinates,index) => (
+                        <p key={index}>Marker Coordinates: {Coordinates.join(', ')}</p>
+                    ))}
+                </Grid>
+            )}
+          </>
+        )}
 
         {/* Form for Land Details */}
         <Box sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography>Land Name</Typography>
+              <Typography>{i18n.t("addLand.lblLandName")}</Typography>
               <TextField
                 required
                 fullWidth
                 id="landName"
-                placeholder="Enter landName"
+                placeholder={i18n.t("addLand.hintTxtLandName")}
                 name="landName"
                 autoComplete="landName"
                 value={formData.landName}
@@ -140,12 +194,12 @@ export default function AddLand() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>District</Typography>
+              <Typography>{i18n.t("addLand.lblDistrict")}</Typography>
               <TextField
                 required
                 fullWidth
                 id="district"
-                placeholder="Enter district"
+                placeholder={i18n.t("addLand.hintTxtDistrict")}
                 name="district"
                 autoComplete="district"
                 value={formData.district}
@@ -153,12 +207,12 @@ export default function AddLand() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>Division</Typography>
+              <Typography>{i18n.t("addLand.lblDivision")}</Typography>
               <TextField
                 required
                 fullWidth
                 name="division"
-                placeholder="Enter division"
+                placeholder={i18n.t("addLand.hintTxtDivision")}
                 type="division"
                 id="division"
                 autoComplete="division"
@@ -167,12 +221,12 @@ export default function AddLand() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>Land Rent</Typography>
+              <Typography>{i18n.t("addLand.lblLandRent")}</Typography>
               <TextField
                 required
                 fullWidth
                 name="landRent"
-                placeholder="Enter land rent"
+                placeholder={i18n.t("addLand.hintTxtLandRent")}
                 type="landRent"
                 id="landRent"
                 autoComplete="landRent"
@@ -181,12 +235,12 @@ export default function AddLand() {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>Mode of Irrigation</Typography>
+              <Typography>{i18n.t("addLand.lblMode")}</Typography>
               <TextField
                 required
                 fullWidth
                 name="modeOfIrrigation"
-                placeholder="Enter Mode of Irrigation"
+                placeholder={i18n.t("addLand.hintTxtMode")}
                 type="modeOfIrrigation"
                 id="modeOfIrrigation"
                 autoComplete="modeOfIrrigation"
@@ -205,7 +259,7 @@ export default function AddLand() {
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
                 onClick={handleOnClickAddLand}
               >
-                Save & exit to my crops
+                {i18n.t("addLand.capBtnSave&Exit")}
               </Button>
 
               <Button
@@ -215,12 +269,12 @@ export default function AddLand() {
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
                 onClick={navigationToAddCrop}
               >
-                Save & proceed to add crop
+                {i18n.t("addLand.capBtnSave&Proceed")}
               </Button>
             </Stack>
           </Grid>
         </Box>
-      </Box>
+      </CustomBox1>
     </Container>
   );
 }

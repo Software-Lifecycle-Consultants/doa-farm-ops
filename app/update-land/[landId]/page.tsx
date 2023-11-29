@@ -16,6 +16,9 @@ import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { updateLand } from "@/redux/landSlice";
 import { RootState } from "@/redux/types";
+import { useTranslation } from 'react-i18next';
+import i18n from "../../config/i18n";// Import the i18n instance
+import { CustomBox1 } from "@/Theme";
 
 /**
  * UpdateLand page is a form to edit or update details about land properties.
@@ -30,6 +33,8 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
   const landDetails = useSelector((state: RootState) => state.land);
   // Get the Redux dispatch function
   const dispatch = useDispatch();
+
+  const { t } = useTranslation();
 
   // Initialize form data with the data from the state based on landId
   const initialFormData = landDetails.find(
@@ -83,28 +88,12 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     });
   };
 
-  // Styles for the container box
-  const boxStyles = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    border: "3px solid #F1F1F1",
-    background: "#FFFFFF",
-    padding: "3vh",
-    margin: "5vh auto",
-    maxWidth: "500px",
-  };
-
   return (
     <Container component="main" maxWidth="xl">
-      <Box
-        sx={{
-          ...boxStyles,
-        }}
-      >
+      <CustomBox1 sx={{ maxWidth: "500px" }}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
-            Update Land
+            {i18n.t("updateLand.txtUpdateLand")}
           </Typography>
         </Box>
         {/* Grid for Land Details */}
@@ -121,11 +110,13 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
             }}
           >
             <Typography component="h1" variant="subtitle1" gutterBottom>
-              Fill the details bellow to add land
+              {i18n.t("updateLand.txtFillDetails")}
             </Typography>
 
             {/* Button for marking on the map */}
-            <Button endIcon={<PlaceOutlinedIcon />}>Mark on Map</Button>
+            <Button endIcon={<PlaceOutlinedIcon />}>
+              {i18n.t("updateLand.capBtnMark")}
+            </Button>
           </Grid>
         </Grid>
 
@@ -133,12 +124,12 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
         <Box sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography>Land Name</Typography>
+              <Typography>{i18n.t("updateLand.lblLandName")}</Typography>
               <TextField
                 required
                 fullWidth
                 id="landName"
-                placeholder="Enter landName"
+                placeholder={i18n.t("updateLand.hintTxtLandName")}
                 name="landName"
                 autoComplete="landName"
                 value={formData.landName}
@@ -146,12 +137,12 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>District</Typography>
+              <Typography>{i18n.t("updateLand.lblDistrict")}</Typography>
               <TextField
                 required
                 fullWidth
                 id="district"
-                placeholder="Enter district"
+                placeholder={i18n.t("updateLand.hintTxtDistrict")}
                 name="district"
                 autoComplete="district"
                 value={formData.district}
@@ -159,12 +150,12 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>Division</Typography>
+              <Typography>{i18n.t("updateLand.lblDivision")}</Typography>
               <TextField
                 required
                 fullWidth
                 name="division"
-                placeholder="Enter division"
+                placeholder={i18n.t("updateLand.hintTxtDivision")}
                 type="division"
                 id="division"
                 autoComplete="division"
@@ -173,12 +164,12 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>Land Rent</Typography>
+              <Typography>{i18n.t("updateLand.lblLandRent")}</Typography>
               <TextField
                 required
                 fullWidth
                 name="landRent"
-                placeholder="Enter land rent"
+                placeholder={i18n.t("updateLand.hintTxtLandRent")}
                 type="landRent"
                 id="landRent"
                 autoComplete="landRent"
@@ -187,12 +178,12 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>Mode of Irrigation</Typography>
+              <Typography>{i18n.t("updateLand.lblMode")}</Typography>
               <TextField
                 required
                 fullWidth
                 name="modeOfIrrigation"
-                placeholder="Enter Mode of Irrigation"
+                placeholder={i18n.t("updateLand.hintTxtMode")}
                 type="modeOfIrrigation"
                 id="modeOfIrrigation"
                 autoComplete="modeOfIrrigation"
@@ -211,7 +202,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
                 onClick={handleOnClickUpdateLand}
               >
-                Save & exit to my crops
+                {i18n.t("updateLand.capBtnSave&Exit")}
               </Button>
 
               <Button
@@ -221,12 +212,12 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
                 onClick={navigationToUpdateCrop}
               >
-                Save & proceed to add crop
+                {i18n.t("updateLand.capBtnSave&Proceed")}
               </Button>
             </Stack>
           </Grid>
         </Box>
-      </Box>
+      </CustomBox1>
     </Container>
   );
 }

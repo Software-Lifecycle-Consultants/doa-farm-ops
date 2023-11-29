@@ -13,12 +13,13 @@ import {
   Grid,
   FormControlLabel,
   TextField,
-  Autocomplete 
+  Autocomplete,
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { addCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
+import { CustomBox1 } from "@/Theme";
 
 // Styles for labels
 const styles = {
@@ -33,7 +34,7 @@ const styles = {
 export default function AddCrop() {
   const router = useRouter();
 
-  const cropNames = cropList.map(crop => crop.name);
+  const cropNames = cropList.map((crop) => crop.name);
 
   // State variables for form fields
   const [value, setValue] = React.useState("female");
@@ -51,7 +52,7 @@ export default function AddCrop() {
     isCultivationLoan: string;
     loanObtained: number;
   }
-  
+
   const [formData, setFormData] = useState<FormData>({
     cropName: null, // Specify the type as string | null
     season: "1",
@@ -61,7 +62,7 @@ export default function AddCrop() {
     reservedQtyHome: "",
     reservedQtySeed: "",
     noOfPicks: "",
-    isCultivationLoan:"1",
+    isCultivationLoan: "1",
     loanObtained: 0,
   });
 
@@ -77,7 +78,7 @@ export default function AddCrop() {
   ) => {
     setFormData({
       ...formData,
-      isCultivationLoan:event.target.value,
+      isCultivationLoan: event.target.value,
       loanObtained: 0,
     });
   };
@@ -87,10 +88,12 @@ export default function AddCrop() {
     router.push("/add-land");
   };
   //Function to navigate to my crops page clicking save button
-  const handleOnClickAddCrop = async (event:React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnClickAddCrop = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     // Simulate add crop action by creating a user data object.
-    const cropData = {landId, cropDetails: formData };
+    const cropData = { landId, cropDetails: formData };
     // Dispatch the 'crop' action from the 'cropSlice' with the user data.
     dispatch(addCrop(cropData));
     //Navigate to my crops page
@@ -113,35 +116,17 @@ export default function AddCrop() {
     });
   };
 
-// Define a function to select crop name.
-  const selectChangeAddCropName = (
-    event: any, newValue: string | null
-  ) => {
+  // Define a function to select crop name.
+  const selectChangeAddCropName = (event: any, newValue: string | null) => {
     setFormData({
       ...formData,
       cropName: newValue,
     });
   };
 
-  // Styles for the container box
-  const boxStyles = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    border: "3px solid #F1F1F1",
-    background: "#FFFFFF",
-    padding: "3vh", //  padding
-    margin: "5vh auto", // margin
-    maxWidth: "600px", // Max width for tablets
-  };
-
   return (
     <Container component="main" maxWidth="xl">
-      <Box
-        sx={{
-          ...boxStyles,
-        }}
-      >
+      <CustomBox1 sx={{maxWidth: "600px"}}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
             Add Crop
@@ -161,10 +146,15 @@ export default function AddCrop() {
                 variant="outlined"
               >
                 <MenuItem value="">Select an Option</MenuItem>
-                <MenuItem id="f82aa728-3cd1-11ee-be56-0242ac120002" value="Land 1">
+                <MenuItem
+                  id="f82aa728-3cd1-11ee-be56-0242ac120002"
+                  value="Land 1"
+                >
                   Land 1
                 </MenuItem>
-                <MenuItem id="cd1-11ee-be56-0242ac120002" value="Land 2">Land 2</MenuItem>
+                <MenuItem id="cd1-11ee-be56-0242ac120002" value="Land 2">
+                  Land 2
+                </MenuItem>
               </TextField>
 
               <Typography component="h1" variant="subtitle1" gutterBottom>
@@ -322,7 +312,7 @@ export default function AddCrop() {
               paddingTop={"16px"}
             >
               <Grid item xs={12} sm={6}>
-              <Typography>Cultivation loan obtained? *</Typography>
+                <Typography>Cultivation loan obtained? *</Typography>
                 <TextField
                   select
                   required
@@ -341,14 +331,16 @@ export default function AddCrop() {
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={6}>
-              <Typography>Cultivation loan amount</Typography>
+                <Typography>Cultivation loan amount</Typography>
                 <TextField
                   fullWidth
                   value={formData.loanObtained}
                   onChange={(e) => handleChangeAddCrop(e, "loanObtained")}
                   variant="outlined"
                   disabled={
-                    formData.isCultivationLoan === "No" || formData.isCultivationLoan === ""|| formData.isCultivationLoan === "1"
+                    formData.isCultivationLoan === "No" ||
+                    formData.isCultivationLoan === "" ||
+                    formData.isCultivationLoan === "1"
                   }
                 />
               </Grid>
@@ -356,33 +348,33 @@ export default function AddCrop() {
           </Grid>
 
           <Grid container justifyContent="center" alignItems="center">
-          <Grid item>
-            <Stack direction="row" spacing={4} paddingTop={4}>
-              {/* Cancel Button */}
-              <Button
-                type="submit"
-                variant="outlined"
-                fullWidth
-                sx={{ mt: 3, mb: 2, width: "12vw" }}
-                onClick={navigationToMyCrops}
-              >
-                Cancel
-              </Button>
-              {/* Save Button */}
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                sx={{ mt: 3, mb: 2, width: "12vw" }}
-                onClick={handleOnClickAddCrop}
-              >
-                Save
-              </Button>
-            </Stack>
+            <Grid item>
+              <Stack direction="row" spacing={4} paddingTop={4}>
+                {/* Cancel Button */}
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  fullWidth
+                  sx={{ mt: 3, mb: 2, width: "12vw" }}
+                  onClick={navigationToMyCrops}
+                >
+                  Cancel
+                </Button>
+                {/* Save Button */}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  sx={{ mt: 3, mb: 2, width: "12vw" }}
+                  onClick={handleOnClickAddCrop}
+                >
+                  Save
+                </Button>
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
         </Box>
-      </Box>
+      </CustomBox1>
     </Container>
   );
 }

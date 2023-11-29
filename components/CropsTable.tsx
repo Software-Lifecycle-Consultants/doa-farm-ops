@@ -25,20 +25,25 @@ import {
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/types";
+import Link from 'next/link';
+import { useTranslation } from 'react-i18next';
+import i18n from "@/app/config/i18n";// Import the i18n instance
 import { useDispatch } from "react-redux";
 import { deleteCrop } from "@/redux/cropSlice"; // Import the Redux action for updating crops
+import theme from '@/Theme';
+
 
 // Define the table columns
 interface Column {
   id:
-    | "cropName"
-    | "season"
-    | "cropType"
-    | "totalSoldQty"
-    | "totalIncome"
-    | "reservedQtyHome"
-    | "reservedQtySeed"
-    | "noOfPicks";
+  | "cropName"
+  | "season"
+  | "cropType"
+  | "totalSoldQty"
+  | "totalIncome"
+  | "reservedQtyHome"
+  | "reservedQtySeed"
+  | "noOfPicks";
   label: string;
   minWidth?: number;
   align?: "right";
@@ -47,40 +52,40 @@ interface Column {
 
 // Define the columns for the table
 const columns: readonly Column[] = [
-  { id: "season", label: "Season", minWidth: 50 },
+  { id: "season", label: "myCrops.tblCrop.colSeason", minWidth: 50 },
   {
     id: "cropName",
-    label: "Crop Name",
+    label: "myCrops.tblCrop.colCropName",
     minWidth: 50,
   },
   {
     id: "cropType",
-    label: "Crop Type",
+    label: "myCrops.tblCrop.colCropType",
     minWidth: 50,
   },
   {
     id: "totalSoldQty",
-    label: "Sold Quantity",
+    label: "myCrops.tblCrop.colSoldQty",
     minWidth: 50,
   },
   {
     id: "totalIncome",
-    label: "Total Income",
+    label: "myCrops.tblCrop.colTotalIncome",
     minWidth: 50,
   },
   {
     id: "reservedQtyHome",
-    label: "Reserved",
+    label: "myCrops.tblCrop.colReserved",
     minWidth: 50,
   },
   {
     id: "reservedQtySeed",
-    label: "Qty Seeds",
+    label: "myCrops.tblCrop.colQtySeeds",
     minWidth: 50,
   },
   {
     id: "noOfPicks",
-    label: "Picks",
+    label: "myCrops.tblCrop.colPicks",
     minWidth: 50,
   },
 ];
@@ -92,7 +97,8 @@ interface TableTitleProps {
 
 export default function CropsTable({ title }: TableTitleProps) {
   const router = useRouter();
-  const cropDetails = useSelector((state:RootState) => state.crop);
+  const { t } = useTranslation();
+  const cropDetails = useSelector((state: RootState) => state.crop);
   const dispatch = useDispatch();
 
   // State for handling pagination
@@ -123,7 +129,7 @@ export default function CropsTable({ title }: TableTitleProps) {
 
   // Function to handle navigation when the Edit icon is clicked
   const handleEditClick = (id: string) => {
-   router.push(`/update-crop/${id}`);
+    router.push(`/update-crop/${id}`);
   };
 
   // Function to delete crop when the Delete icon is clicked
@@ -131,8 +137,8 @@ export default function CropsTable({ title }: TableTitleProps) {
     // Open the confirmation dialog and set the deletedCropId
     setDeletedCropId(cropId);
     setDeletedLandId(landId);
-    setDeleteConfirmationOpen(true);  
-   };
+    setDeleteConfirmationOpen(true);
+  };
 
   // Function to confirm and delete the crop
   const confirmDelete = () => {
@@ -151,33 +157,24 @@ export default function CropsTable({ title }: TableTitleProps) {
           {/* Table header */}
           <TableHead>
             <TableRow>
-            <TableCell
-                  align={"left"}
-                  style={{ minWidth:170 }}
-                >
-                  {"Land Name"}
-                </TableCell>
+              <TableCell align={"left"} style={{ minWidth: 170 }}>
+                {t("myCrops.tblCrop.colLandName")}
+              </TableCell>
               {columns.map((column) => (
                 <TableCell
                   key={column.id}
                   align={column.align}
                   style={{ minWidth: column.minWidth }}
                 >
-                  {column.label}
+                  {t(column.label)}
                 </TableCell>
               ))}
-              <TableCell
-                  align={"right"}
-                  style={{ minWidth:170 }}
-                >
-                  {""}
-                </TableCell>
-                <TableCell
-                  align={"right"}
-                  style={{ minWidth:170 }}
-                >
-                  {""}
-                </TableCell>
+              <TableCell align={"right"} style={{ minWidth: 170 }}>
+                {""}
+              </TableCell>
+              <TableCell align={"right"} style={{ minWidth: 170 }}>
+                {""}
+              </TableCell>
             </TableRow>
           </TableHead>
           {/* Table body */}
@@ -187,36 +184,45 @@ export default function CropsTable({ title }: TableTitleProps) {
               .map((row) => {
                 return (
                   <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
-                    <TableCell
-                >
-                  {row.landId}
-                </TableCell>
+                    <TableCell>{row.landId}</TableCell>
                     {columns.map((column) => {
                       const value = row.cropDetails[column.id];
                       return (
                         <>
                           <TableCell key={column.id} align={column.align}>
-                              {column.format && typeof value === "number"
-                                ? column.format(value)
-                                : value}
-                            </TableCell>
+                            {column.format && typeof value === "number"
+                              ? column.format(value)
+                              : value}
+                          </TableCell>
                         </>
                       );
                     })}
                     <TableCell align={"right"}>
-                              <Stack direction="row" spacing={1}>
-                                <IconButton onClick={()=>handleEditClick(row._id)}>
-                                  <EditNoteIcon />
-                                </IconButton>
-                                <IconButton onClick={()=>handleDeleteClick(row.landId, row._id)}>
-                                  <DeleteIcon />
-                                </IconButton>
-                              </Stack>
-                            </TableCell>
-                      
+                      <Stack direction="row" spacing={1}>
+                        <IconButton onClick={() => handleEditClick(row._id)}>
+                          <EditNoteIcon />
+                        </IconButton>
+                        <IconButton
+                          onClick={() => handleDeleteClick(row.landId, row._id)}
+                        >
+                          <DeleteIcon />
+                        </IconButton>
+                      </Stack>
+                    </TableCell>
+
                     <TableCell align={"right"}>
-                              <Button style={{ backgroundColor: '#C2C2C2', color: 'black', borderRadius: '16px' ,width: '100%'}} onClick={navigationToAddOperationCost}>Add Cost</Button>
-                            </TableCell>
+                      <Button
+                        style={{
+                          backgroundColor: theme.palette.secondary.main,
+                          color: "black",
+                          borderRadius: "16px",
+                          width: "100%",
+                        }}
+                        onClick={navigationToAddOperationCost}
+                      >
+                        Add Cost
+                      </Button>
+                    </TableCell>
                   </TableRow>
                 );
               })}

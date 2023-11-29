@@ -15,38 +15,34 @@ import {
   sampleFarmerProfileData,
 } from "../../data/farmerProfile";
 
+import { useTranslation } from 'react-i18next';
+import { btnBackgroundColor, customGridStyles1, customGridStyles2 } from "@/styles/customStyles";
+import { CustomBox2 } from "@/Theme";
+
 /**
  * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
  * Users can view and edit their profile information, as well as add new land details.
  */
 export default function FarmerProfile() {
   const router = useRouter();
+  const { t } = useTranslation();
   return (
     <>
       {/* Main grid container */}
       <Grid container direction="column" rowGap={2}>
         {/* Title */}
         <Grid item xs={12}>
-          <ProfileTitle  title="Farmer profile" />
+          <ProfileTitle title={t("farmerProfile.txtProfileName")} />
         </Grid>
         {/* Farmer Info */}
         <Grid item xs={12}>
-          <Box
-            sx={{
-              display: "flex",
-              background: "#FFFFFF",
-              border: "3px solid #F1F1F1",
-              padding: "3vh",
-              Width: "90%",
-              gap: "53px",
-              borderRadius: "12px"
-            }}
-          >
+          <CustomBox2>
             <Box>
               <AccountCircleIcon sx={{ fontSize: "50px" }} />
             </Box>
             <Box>
-              <Typography variant="h5"
+              <Typography
+                variant="h5"
                 sx={{
                   color: "#000",
                   fontWeight: "medium",
@@ -57,39 +53,21 @@ export default function FarmerProfile() {
                 {sampleFarmerProfileData.firstname}{" "}
                 {sampleFarmerProfileData.lastname}
               </Typography>
-              <Typography variant="subtitle1"
+              <Typography
+                variant="subtitle1"
                 sx={{
                   color: "#000",
                   lineHeight: "normal",
                 }}
               >
-                Farmer
+                {t("farmerProfile.txtProfileType")}
               </Typography>
             </Box>
-          </Box>
+          </CustomBox2>
         </Grid>
         {/* Personal Information Section */}
-        <Grid
-          item
-          container
-          xs={12}
-          p={2}
-          sx={{
-            backgroundColor: "#FFFFFF",
-            border: "3px solid #F1F1F1",
-            borderRadius: "22px",
-          }}
-        >
-          <Grid
-            container
-            item
-            p={2}
-            rowGap={2}
-            sx={{
-              backgroundColor: "#F1F1F1",
-              borderRadius: "12px",
-            }}
-          >
+        <Grid item container xs={12} p={2} sx={customGridStyles1}>
+          <Grid container item p={2} rowGap={2} sx={customGridStyles2}>
             <Grid
               item
               xs={12}
@@ -101,150 +79,99 @@ export default function FarmerProfile() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h6"
-                
-              >
-                Personal Information
+              <Typography variant="h6">
+                {t("farmerProfile.txtPersonalInformation")}
               </Typography>
               {/* Edit Button */}
               <Button
-                sx={{ backgroundColor: "#FFFFFF" }}
+                sx={btnBackgroundColor}
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
               >
-                Edit
+                {t("farmerProfile.capBtnEdit")}
               </Button>
             </Grid>
             {/* Personal Information Fields */}
             <Grid item xs={12} md={6}>
-              <Typography variant="caption"
-                sx={{
-                  lineHeight: "normal",
-                  color: "#9D9D9D",
-                }}
+              <Typography
+                variant="caption"
               >
-                First Name
+                {t("farmerProfile.txtFirstName")}
               </Typography>
-              <Typography variant="body1"
-                sx={{
-                  color: "#000",
-                  lineHeight: "normal",
-                  fontWeight: "500 ",
-                }}
+              <Typography
+                variant="body1"
               >
                 {sampleFarmerProfileData.firstname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="caption"
-                sx={{
-                  lineHeight: "normal",
-                  color: "#9D9D9D",
-                }}
+              <Typography
+                variant="caption"
               >
-                Last Name
+                {t("farmerProfile.txtLastName")}
               </Typography>
-              <Typography variant="body1"
-                sx={{
-                  color: "#000",
-                  lineHeight: "normal",
-                  fontWeight: "500 ",
-                }}
+              <Typography
+                variant="body1"
               >
                 {sampleFarmerProfileData.lastname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="caption"
-                sx={{
-                  lineHeight: "normal",
-                  color: "#9D9D9D",
-                }}
+              <Typography
+                variant="caption"
               >
-                Email
+                {t("farmerProfile.txtEmail")}
               </Typography>
-              <Typography variant="body1"
-                sx={{
-                  color: "#000",
-                  lineHeight: "normal",
-                  fontWeight: "500 ",
-                }}
+              <Typography
+                variant="body1"
               >
                 {sampleFarmerProfileData.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="caption"
-                sx={{
-                  lineHeight: "normal",
-                  color: "#9D9D9D",
-                }}
+              <Typography
+                variant="caption"
               >
-                NIC Number
+                {t("farmerProfile.txtNicNumber")}
               </Typography>
-              <Typography variant="body1"
-                sx={{
-                  color: "#000",
-                  lineHeight: "normal",
-                  fontWeight: "500 ",
-                }}
+              <Typography
+                variant="body1"
               >
                 {sampleFarmerProfileData.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="caption"
-                sx={{
-                  lineHeight: "normal",
-                  color: "#9D9D9D",
-                }}
+              <Typography
+                variant="caption"
               >
-                Address
+                {t("farmerProfile.txtAddress")}
               </Typography>
-              <Typography variant="body1"
-                sx={{
-                  color: "#000",
-                  lineHeight: "normal",
-                  fontWeight: "500 ",
-                }}
+              <Typography
+                variant="body1"
               >
                 {sampleFarmerProfileData.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="caption"
-                sx={{
-                  lineHeight: "normal",
-                  color: "#9D9D9D",
-                }}
+              <Typography
+                variant="caption"
               >
-                Phone Number
+                {t("farmerProfile.txtPhoneNumber")}
               </Typography>
-              <Typography variant="body1"
-                sx={{
-                  color: "#000",
-                  lineHeight: "normal",
-                  fontWeight: "500 ",
-                }}
+              <Typography
+                variant="body1"
               >
                 {sampleFarmerProfileData.phonenumber}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography variant="caption"
-                sx={{
-                  lineHeight: "normal",
-                  color: "#9D9D9D",
-                }}
+              <Typography
+                variant="caption"
               >
-                Households
+                {t("farmerProfile.txtHouseholds")}
               </Typography>
-              <Typography variant="body1"
-                sx={{
-                  color: "#000",
-                  lineHeight: "normal",
-                  fontWeight: "500 ",
-                }}
+              <Typography
+                variant="body1"
               >
                 {sampleFarmerProfileData.household}
               </Typography>
@@ -252,26 +179,8 @@ export default function FarmerProfile() {
           </Grid>
         </Grid>
         {/* Other Details Section*/}
-        <Grid
-          item
-          xs={12}
-          p={2}
-          sx={{
-            backgroundColor: "#FFFFFF",
-            border: "3px solid #F1F1F1",
-            borderRadius: "22px",
-          }}
-        >
-          <Grid
-            container
-            item
-            rowGap={2}
-            p={2}
-            sx={{
-              backgroundColor: "#F1F1F1",
-              borderRadius: "12px",
-            }}
-          >
+        <Grid item xs={12} p={2} sx={customGridStyles1}>
+          <Grid container item rowGap={2} p={2} sx={customGridStyles2}>
             <Grid
               item
               xs={12}
@@ -283,54 +192,39 @@ export default function FarmerProfile() {
                 alignItems: "center",
               }}
             >
-              <Typography variant="h6"
-              >
-                Other Details
+              <Typography variant="h6">
+                {t("farmerProfile.txtOtherDetails")}
               </Typography>
               {/* Edit Button */}
               <Button
-                sx={{ backgroundColor: "#FFFFFF" }}
+                sx={btnBackgroundColor}
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
               >
-                Edit
+                {t("farmerProfile.capBtnEdit")}
               </Button>
             </Grid>
             {/* Other Details Fields */}
             <Grid item xs={12} md={12}>
-              <Typography variant="caption"
-                sx={{
-                  lineHeight: "normal",
-                  color: "#9D9D9D",
-                }}
+              <Typography
+                variant="caption"
               >
-                Organization Name
+                {t("farmerProfile.txtOrgName")}
               </Typography>
-              <Typography variant="body1"
-                sx={{
-                  color: "#000",
-                  lineHeight: "normal",
-                  fontWeight: "500 ",
-                }}
+              <Typography
+                variant="body1"
               >
                 {sampleFarmerProfileData.otherdetails.orgname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography variant="caption"
-                sx={{
-                  lineHeight: "normal",
-                  color: "#9D9D9D",
-                }}
+              <Typography
+                variant="caption"
               >
-                Address
+                {t("farmerProfile.txtOrgAddress")}
               </Typography>
-              <Typography variant="body1"
-                sx={{
-                  color: "#000",
-                  lineHeight: "normal",
-                  fontWeight: "500 ",
-                }}
+              <Typography
+                variant="body1"
               >
                 {sampleFarmerProfileData.otherdetails.orgaddress}
               </Typography>
@@ -339,16 +233,7 @@ export default function FarmerProfile() {
         </Grid>
 
         {/* Land Details */}
-        <Grid
-          container
-          item
-          rowGap={2}
-          p={2}
-          sx={{
-            backgroundColor: "#F1F1F1",
-            borderRadius: "12px",
-          }}
-        >
+        <Grid container item rowGap={2} p={2} sx={customGridStyles2}>
           <Grid
             item
             xs={12}
@@ -360,18 +245,17 @@ export default function FarmerProfile() {
               alignItems: "center",
             }}
           >
-            <Typography variant="h6"
-            >
-              Land Details
+            <Typography variant="h6">
+              {t("farmerProfile.txtLandDetails")}
             </Typography>
             {/* Add Button for Adding Land */}
             <Link href="/add-land">
               <Button
-                sx={{ backgroundColor: "#FFFFFF" }}
+                sx={btnBackgroundColor}
                 variant="outlined"
                 endIcon={<AddIcon />}
               >
-                Add
+                {t("farmerProfile.capBtnAdd")}
               </Button>
             </Link>
           </Grid>

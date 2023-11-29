@@ -13,13 +13,16 @@ import {
   Grid,
   FormControlLabel,
   TextField,
-  Autocomplete 
+  Autocomplete
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import { updateCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
 import { RootState } from "@/redux/types";
+import { useTranslation } from 'react-i18next';
+import i18n from "../../config/i18n";// Import the i18n instance
+import { CustomBox1} from "@/Theme";
 
 // Styles for labels
 const styles = {
@@ -34,10 +37,11 @@ const styles = {
 export default function UpdateCrop({ params }: { params: { cropId: string } }) {
 
   const router = useRouter();
+  const { t } = useTranslation();
   // Extract the cropId from the parameters
   const cropId = params.cropId;
   // Get crop details from the Redux store
-  const cropDetails = useSelector((state:RootState) => state.crop);
+  const cropDetails = useSelector((state: RootState) => state.crop);
   // Find the specific crop detail by matching cropId
   const cropDetail = cropDetails.find((crop) => crop._id === cropId);
   const cropNames = cropList.map(crop => crop.name);
@@ -85,10 +89,10 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
   };
 
   //Function to navigate to my crops page clicking save button
-  const handleOnClickUpdateCrop = async (event:React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnClickUpdateCrop = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior
     // Simulate update crop action by updating user data object.
-    const cropData = {landId, _id: cropDetail?._id, cropDetails: formData };
+    const cropData = { landId, _id: cropDetail?._id, cropDetails: formData };
     // Dispatch the 'update' action from the 'cropSlice' with the user data.
     dispatch(updateCrop(cropData));
     //Navigate to my crops page
@@ -111,7 +115,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
     });
   };
 
-// Define a function to select crop name.
+  // Define a function to select crop name.
   const selectChangeUpdateCropName = (
     event: any, newValue: string | null
   ) => {
@@ -120,47 +124,30 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
       cropName: newValue,
     });
   };
-  
-  // Styles for the container box
-  const boxStyles = {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    border: "3px solid #F1F1F1",
-    background: "#FFFFFF",
-    padding: "3vh", //  padding
-    margin: "5vh auto", // margin
-    maxWidth: "600px", // Max width for tablets
-  };
 
   return (
     <Container component="main" maxWidth="xl">
-      <Box
-        sx={{
-          ...boxStyles,
-        }}
-      >
+      <CustomBox1 sx={{ maxWidth: "600px" }}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
-            Update Crop
+            {i18n.t("updateCrop.txtUpdateCrop")}
           </Typography>
         </Box>
         <Box sx={{ width: "100%" }}>
-
           <Typography
             component="h1"
             variant="subtitle1"
             paddingTop={"15px"}
             gutterBottom
           >
-            Fill the bellow details to update the crop
+            {i18n.t("updateCrop.txtFillDetails")}
           </Typography>
         </Box>
 
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography>Crop Name *</Typography>
+              <Typography>{i18n.t("updateCrop.lblCropName")}</Typography>
               <Autocomplete
                 options={cropNames}
                 getOptionLabel={(option) => option}
@@ -172,7 +159,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                   <TextField
                     {...params}
                     name="cropName"
-                    placeholder="Select Crop"
+                    placeholder={i18n.t("updateCrop.hintTxtSelectCrop")}
                     variant="outlined"
                   />
                 )}
@@ -184,21 +171,27 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
               <TextField
                 select
                 fullWidth
-                placeholder="Select season"
+                placeholder={i18n.t("updateCrop.lblSeason")}
                 defaultValue={"Season"}
                 variant="outlined"
                 value={formData.season}
                 onChange={(e) => handleChangeUpdateCrop(e, "season")}
               >
-                <MenuItem value="1">Select an Option</MenuItem>
-                <MenuItem value="Yala">Yala</MenuItem>
-                <MenuItem value="Maha">Maha</MenuItem>
+                <MenuItem value="1">
+                  {i18n.t("updateCrop.menuItemTxtSelectOption2")}
+                </MenuItem>
+                <MenuItem value="Yala">
+                  {i18n.t("updateCrop.menuItemTxtYala")}
+                </MenuItem>
+                <MenuItem value="Maha">
+                  {i18n.t("updateCrop.menuItemTxtMaha")}
+                </MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl>
                 <Typography id="demo-controlled-radio-buttons-group">
-                  Crop Type *
+                  {i18n.t("updateCrop.lblCropType")}
                 </Typography>
                 <RadioGroup
                   style={{ width: "100%" }}
@@ -211,22 +204,22 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                   <FormControlLabel
                     value="paddy"
                     control={<Radio />}
-                    label="Paddy"
+                    label={i18n.t("updateCrop.formControlLabel1")}
                   />
                   <FormControlLabel
                     value="other"
                     control={<Radio />}
-                    label="Other"
+                    label={i18n.t("updateCrop.formControlLabel2")}
                   />
                 </RadioGroup>
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Total sold quantity</Typography>
+              <Typography>{i18n.t("updateCrop.lblSoldQuantity")}</Typography>
               <TextField
                 fullWidth
                 id="soldQuantity"
-                placeholder="Enter total sold quantity"
+                placeholder={i18n.t("updateCrop.hintTextTotalSoldQuantity")}
                 name="soldQuantity"
                 autoComplete="soldQuantity"
                 value={formData.totalSoldQty}
@@ -234,11 +227,11 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Total income for crop</Typography>
+              <Typography>{i18n.t("updateCrop.lblIncome")}</Typography>
               <TextField
                 fullWidth
                 name="income"
-                placeholder="Enter total income for crop"
+                placeholder={i18n.t("updateCrop.hintTxtIncome")}
                 id="income"
                 autoComplete="income"
                 value={formData.totalIncome}
@@ -246,11 +239,11 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Quantity kept for home</Typography>
+              <Typography>{i18n.t("updateCrop.lblQuantityHome")}</Typography>
               <TextField
                 fullWidth
                 id="QtyForHome"
-                placeholder="Enter quantity kept for home"
+                placeholder={i18n.t("updateCrop.hintTxtQuantityHome")}
                 name="QtyForHome"
                 autoComplete="QtyForHome"
                 value={formData.reservedQtyHome}
@@ -258,11 +251,11 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Quantity kept for seed</Typography>
+              <Typography>{i18n.t("updateCrop.lblQuantitySeed")}</Typography>
               <TextField
                 fullWidth
                 name="qtyForSeed"
-                placeholder="Enter quantity kept for seed"
+                placeholder={i18n.t("updateCrop.hintTxtQuantitySeed")}
                 id="qtyForSeed"
                 autoComplete="qtyForSeed"
                 value={formData.reservedQtySeed}
@@ -270,11 +263,11 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Number of picks</Typography>
+              <Typography>{i18n.t("updateCrop.lblNoOfPicks")}</Typography>
               <TextField
                 fullWidth
                 id="NoOfPicks"
-                placeholder="Enter number of picks"
+                placeholder={i18n.t("updateCrop.hintTxtNoOfPicks")}
                 name="NoOfPicks"
                 autoComplete="NoOfPicks"
                 value={formData.noOfPicks}
@@ -288,7 +281,9 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
               paddingTop={"16px"}
             >
               <Grid item xs={12} sm={6}>
-              <Typography>Cultivation loan obtained? *</Typography>
+                <Typography>
+                  {i18n.t("updateCrop.lblCultivationLoan")}
+                </Typography>
                 <TextField
                   select
                   required
@@ -300,13 +295,21 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                     style: styles.label, // Apply the label color style here
                   }}
                 >
-                  <MenuItem value="">Select an Option</MenuItem>
-                  <MenuItem value="yes">Yes</MenuItem>
-                  <MenuItem value="no">No</MenuItem>
+                  <MenuItem value="">
+                    {i18n.t("updateCrop.menuItemTxtSelectOption3")}
+                  </MenuItem>
+                  <MenuItem value="yes">
+                    {i18n.t("updateCrop.menuItemTxtYes")}
+                  </MenuItem>
+                  <MenuItem value="no">
+                    {i18n.t("updateCrop.menuItemTxtNo")}
+                  </MenuItem>
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={6}>
-              <Typography>Cultivation loan amount</Typography>
+                <Typography>
+                  {i18n.t("updateCrop.lblCultivationLoanAmount")}
+                </Typography>
                 <TextField
                   fullWidth
                   value={formData.loanObtained}
@@ -321,33 +324,33 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
           </Grid>
 
           <Grid container justifyContent="center" alignItems="center">
-          <Grid item>
-            <Stack direction="row" spacing={4} paddingTop={4}>
-              {/* Cancel Button */}
-              <Button
-                type="submit"
-                variant="outlined"
-                fullWidth
-                sx={{ mt: 3, mb: 2, width: "12vw" }}
-                onClick={navigationToMyCrops}
-              >
-                Cancel
-              </Button>
-              {/* Save Button */}
-              <Button
-                type="submit"
-                variant="contained"
-                fullWidth
-                sx={{ mt: 3, mb: 2, width: "12vw" }}
-                onClick={handleOnClickUpdateCrop}
-              >
-                Save
-              </Button>
-            </Stack>
+            <Grid item>
+              <Stack direction="row" spacing={4} paddingTop={4}>
+                {/* Cancel Button */}
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  fullWidth
+                  sx={{ mt: 3, mb: 2, width: "12vw" }}
+                  onClick={navigationToMyCrops}
+                >
+                  {i18n.t("updateCrop.capBtnCancel")}
+                </Button>
+                {/* Save Button */}
+                <Button
+                  type="submit"
+                  variant="contained"
+                  fullWidth
+                  sx={{ mt: 3, mb: 2, width: "12vw" }}
+                  onClick={handleOnClickUpdateCrop}
+                >
+                  {i18n.t("updateCrop.capBtnSave")}
+                </Button>
+              </Stack>
+            </Grid>
           </Grid>
-        </Grid>
         </Box>
-      </Box>
+      </CustomBox1>
     </Container>
   );
 }

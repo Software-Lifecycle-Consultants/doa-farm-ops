@@ -7,6 +7,8 @@ import CssBaseline from '@mui/material/CssBaseline'; // Import the CssBaseline c
 import Navbar from "../components/NavBar";
 import { ThemeProvider } from '@mui/material/styles';
 import theme from '@/Theme';
+import { I18nextProvider } from 'react-i18next'; // Import I18nextProvider
+import i18n from '../app/config/i18n'; // Import your i18n instance
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -27,13 +29,16 @@ export default function RootLayout({
         <ThemeProvider theme={theme}>
           {/* Wrap the application in the 'Provider' component to provide access to the Redux store. */}
           <Provider store={store}>
-            {/* Add the CssBaseline component to override the 8px margin */}
-            <CssBaseline />
-            {/* Add navigation bar */}
-            <Navbar />
-            <div className="container" style={{ padding: "20px" }}>
-              {children}
-            </div>
+            {/* Wrap the application with I18nextProvider */}
+            <I18nextProvider i18n={i18n}>
+              {/* Add the CssBaseline component to override the 8px margin */}
+              <CssBaseline />
+              {/* Add navigation bar */}
+              <Navbar />
+              <div className="container" style={{ padding: "20px" }}>
+                {children}
+              </div>
+            </I18nextProvider>
           </Provider>
         </ThemeProvider>
       </body>
