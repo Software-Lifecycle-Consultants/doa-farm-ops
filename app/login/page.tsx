@@ -1,6 +1,7 @@
 // Import necessary modules and components
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import {
   Button,
   FormControlLabel,
@@ -30,6 +31,9 @@ import { CustomBox1 } from "@/Theme";
 
 // Export the sign-in component
 export default function SignIn() {
+
+  const [responseData, setResponseData] = useState(null);
+
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
 
@@ -58,9 +62,24 @@ export default function SignIn() {
   };
 
   // Define a function to handle user login.
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // Simulate a login action by creating a user data object.
     const userData = { username: formData.email, password: formData.password }; // Use email as username for simplicity
+    try {
+      const response = await axios.post('http://localhost:5000/api/data', 
+      {
+        userName: formData.email,
+        userPassword: formData.password
+      });
+      if (response && response.status === 200) {
+        console.log(response);
+        setResponseData(response.data);
+      } else {
+        console.error('Failed to fetch data');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
     router.push("./");
     // Dispatch the 'login' action from the 'authSlice' with the user data.
     dispatch(login(userData));
