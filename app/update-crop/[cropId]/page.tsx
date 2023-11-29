@@ -22,7 +22,7 @@ import { cropList } from "@/data/cropsData";
 import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../../config/i18n";// Import the i18n instance
-import { CustomBox } from "@/Theme";
+import { CustomBox1} from "@/Theme";
 
 // Styles for labels
 const styles = {
@@ -127,7 +127,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
 
   return (
     <Container component="main" maxWidth="xl">
-      <CustomBox sx={{ maxWidth: "600px" }}>
+      <CustomBox1 sx={{ maxWidth: "600px" }}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
             {i18n.t("updateCrop.txtUpdateCrop")}
@@ -350,7 +350,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
             </Grid>
           </Grid>
         </Box>
-      </CustomBox>
+      </CustomBox1>
     </Container>
   );
 }
