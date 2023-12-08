@@ -28,6 +28,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
 import { useRouter } from "next/navigation";
 import { CustomBox1 } from "@/Theme";
+import { toast } from "react-toastify";
 
 // Export the sign-in component
 export default function SignIn() {
@@ -66,23 +67,28 @@ export default function SignIn() {
     // Simulate a login action by creating a user data object.
     const userData = { username: formData.email, password: formData.password }; // Use email as username for simplicity
     try {
-      const response = await axios.post('http://localhost:5000/api/data', 
+      const response = await axios.post('http://localhost:5000/api/user/login', 
       {
-        userName: formData.email,
-        userPassword: formData.password
+        email: formData.email,
+        password: formData.password
       });
       if (response && response.status === 200) {
         console.log(response);
         setResponseData(response.data);
-      } else {
+        router.push("./");
+         // Dispatch the 'login' action from the 'authSlice' with the user data.
+        dispatch(login(userData));
+        toast.success("Login Success");
+      } else if (response && response.status === 400) {
         console.error('Failed to fetch data');
+        toast.error("Login Failed");
       }
     } catch (error) {
       console.error('Error fetching data:', error);
+      toast.error("Login Failed");
     }
-    router.push("./");
-    // Dispatch the 'login' action from the 'authSlice' with the user data.
-    dispatch(login(userData));
+    
+   
   };
 
   // Function to handle email input change and validation
