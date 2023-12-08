@@ -22,9 +22,13 @@ The "DOA Cost of Cultivation Reporting System" is a remarkable volunteer-driven 
 
 - **Add Crop Operation Cost Details:**: Farmers can keep track of expenses related to crop cultivation, such as seeds, fertilizers, labor, and equipment costs.
 
+- **Multilingual support**: Allow users to access the platform in multiple languages, including Sinhala, Tamil, and English.
+
+- **Interactive Map Component**: Allow users to mark/draw areas of their lands when adding land details.
+
 - **Real-time Updates**: Utilize real-time updates to notify users about reservation status and service requests.
 
-- **Concluding notes**: A map component is not added yet. Validation library is not included yet.
+- **Concluding notes**: Real-time updates have not been incorporated as of now, and the validation library is also pending inclusion. 
 
 ## Agricultural Sector Enhancement
 
@@ -55,22 +59,35 @@ npm install
 
 - [@mui/material](https://mui.com/material-ui/getting-started/installation/) - Version 5.14.5
   - Material UI is a comprehensive library of components that features our implementation of Google's Material Design system.
-  - Install the package in your project directory using the following commands.
+  - Install the package in your project directory using the following command.
  ```bash
 npm install @mui/material @emotion/react @emotion/styled
  ```
 
 - [@mui/icons-material](https://mui.com/material-ui/icons/) - Version 5.14.3
   - This package provides the Google Material Icons converted to SvgIcon components.
-  - Install the package in your project directory using the following commands.
+  - Install the package in your project directory using the following command.
  ```bash
 npm install @mui/icons-material
  ```
 - [Redux Toolkit](https://redux-toolkit.js.org/introduction/getting-started) - Version 1.9.7
   - The official, opinionated, batteries-included toolset for efficient Redux development.
-  - Install the following packages in your project directory using the following commands.
+  - Install the package in your project directory using the following command.
  ```bash
 npm install @reduxjs/toolkit react-redux
+ ```
+- [i18next](https://www.i18next.com/overview/getting-started) - Version 23.6.0
+  - An internationalization library to enable multilingual support.
+  - Install the package in your project directory using the following command.
+ ```bash
+npm install i18next
+ ```
+ - [OpenLayers](https://openlayers.org/doc/quickstart.html) - Version 8.1.0
+  - A high-performance, feature-packed library for creating interactive maps
+  - Install the package in your project directory using the following commands.
+ ```bash
+npm install ol
+npm install @types/ol
  ```
 
 4. Set up the environment variables:

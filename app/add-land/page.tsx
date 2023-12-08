@@ -169,8 +169,8 @@ export default function AddLand() {
             )}
             {polygonCoordinates && drawType==='Polygon' &&(
                 <Grid>
-                    {polygonCoordinates.map((Coordinates) => (
-                        <p>Marker Coordinates: {Coordinates.join(', ')}</p>
+                    {polygonCoordinates.map((Coordinates,index) => (
+                        <p key={index}>Marker Coordinates: {Coordinates.join(', ')}</p>
                     ))}
                 </Grid>
             )}

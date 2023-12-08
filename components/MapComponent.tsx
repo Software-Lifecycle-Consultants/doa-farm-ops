@@ -152,8 +152,8 @@ const MapComponent: React.FC<MarkerCoordinates> = ({setMarkerCoordinates,setPoly
         };
 
         toggleDrawInteraction(drawType);
-
-    }, [drawType]); 
+    //  Dependency array
+    }, [drawType, setMarkerCoordinates, setPolygonCoordinates]); 
     
 
     return (
