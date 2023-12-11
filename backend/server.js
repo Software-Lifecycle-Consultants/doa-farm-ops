@@ -37,6 +37,8 @@ app.listen(PORT, () => {
 
 //route imports
 const userRoute = require("./routes/userRoute");
+const cropRoute = require("./routes/cropRoute");
 
 //routes
 app.use(userRoute);
+app.use(cropRoute);
