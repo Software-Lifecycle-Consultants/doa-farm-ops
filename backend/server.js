@@ -37,6 +37,8 @@ app.listen(PORT, () => {
 
 //route imports
 const userRoute = require("./routes/userRoute");
+const landRoute = require("./routes/landRoute");
 
 //routes
 app.use(userRoute);
+app.use(landRoute);
