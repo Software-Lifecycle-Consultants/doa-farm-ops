@@ -17,7 +17,7 @@ const landSchema = new Schema(
       required: true,
       trim: true,
     },
-    dsdivison: {
+    dsDivision: {
       type: String,
       required: true,
       trim: true,
@@ -31,6 +31,12 @@ const landSchema = new Schema(
       type: String,
       required: true,
     },
+    crops: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Crop",
+      },
+    ],
   },
   {
     timestamps: true,
