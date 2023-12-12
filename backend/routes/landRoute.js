@@ -10,4 +10,6 @@ landRoute.put(
     landController.addCropToLand
   );
 
+landRoute.post("/api/landAndCrop/add", landController.addLandAndCrop);
+
 module.exports = landRoute; 

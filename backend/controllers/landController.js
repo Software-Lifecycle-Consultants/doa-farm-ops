@@ -109,6 +109,75 @@ const landController = {
       return res.status(500).json({ message: err.message });
     }
   },
+
+  addLandAndCrop: async (req, res) => {
+    try {
+      const {
+        landId,
+        landName,
+        district,
+        dsDivision,
+        landRent,
+        irrigationMode,
+        cropName,
+        season,
+        cropType,
+        totalSoldQty,
+        totalIncome,
+        reservedQtyHome,
+        reservedQtySeed,
+        noOfPicks,
+        isCultivationLoan,
+        loanObtained,
+      } = req.body;
+
+      const existingLand = await Land.findOne({ landName });
+      if (existingLand) {
+        return res.status(400).json({
+          message: "Someone has a land with the same land name.",
+        });
+      }
+
+      const newLand = new Land({
+        landId,
+        landName,
+        district,
+        dsDivision,
+        landRent,
+        irrigationMode,
+      });
+
+      const savedLand = await newLand.save();
+
+      const newCrop = new Crop({
+        cropName,
+        season,
+        cropType,
+        totalSoldQty,
+        totalIncome,
+        reservedQtyHome,
+        reservedQtySeed,
+        noOfPicks,
+        isCultivationLoan,
+        loanObtained,
+      });
+
+      const savedCrop = await newCrop.save();
+
+      await Land.updateOne(
+        { _id: savedLand._id },
+        { $push: { crops: savedCrop._id } }
+      );
+
+      res.status(200).json({
+        message: "Land and crop details added successfully.",
+        land: savedLand,
+        crop: savedCrop,
+      });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
 };
 
 module.exports = landController;
