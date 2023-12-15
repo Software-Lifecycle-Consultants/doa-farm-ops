@@ -35,6 +35,9 @@ export default function AddLand() {
   const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>([]);
   const [drawType, setDrawType] = useState<'Point' | 'Polygon'>('Point');
   const { t } = useTranslation();
+
+  const [responseData, setResponseData] = useState(null);
+  
   // Define the structure of the form data
   interface FormData {
     landId: string;
@@ -45,13 +48,13 @@ export default function AddLand() {
     irrigationMode: string;
   }
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     landId: "",
     landName: "",
     district: "",
     dsDivision: "",
     landRent: "",
-    irrigationMode: "",
+    irrigationMode: ""
   });
 
   const dispatch = useDispatch();
@@ -70,21 +73,32 @@ export default function AddLand() {
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
 
-    const landData = { ...formData };
+    const landData = { landDetails: formData };
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/land/create",
-        landData
+      const response = await axios.post("http://localhost:5000/api/land/create",
+        {
+          landId: formData.landId,
+          landName: formData.landName,
+          district: formData.district,
+          dsDivision: formData.dsDivision,
+          landRent: formData.landRent,
+          irrigationMode: formData.irrigationMode
+        }
       );
-      // Simulate an add land action by creating a land data object.
-      dispatch(addLand(landData));
-      router.push("/my-crops");
+      if (response && response.status === 200){
+        console.log(response);
+        setResponseData(response.data);
+        router.push("/my-crops");
+        // Simulate an add land action by creating a land data object.
+        dispatch(addLand(landData));
+      } else if (response && response.status === 400){
+        console.error('Failed to fetch data');
+      }
     } catch (error) {
-      
+      console.error('Error fetching data:', error);
     }
-
-    
   };
+
   //Function to navigate to add crop page
   const navigationToAddCrop = async (
     event: React.MouseEvent<HTMLButtonElement>
