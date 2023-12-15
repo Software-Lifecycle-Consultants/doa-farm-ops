@@ -20,6 +20,7 @@ import { useDispatch } from "react-redux";
 import { addCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
 import { CustomBox1 } from "@/Theme";
+import axios from 'axios';
 
 // Styles for labels
 const styles = {
@@ -39,6 +40,8 @@ export default function AddCrop() {
   // State variables for form fields
   const [value, setValue] = React.useState("female");
   const [landId, setLandId] = useState("");
+
+  const [responseData, setResponseData] = useState(null);
 
   interface FormData {
     cropName: string | null;
@@ -92,13 +95,44 @@ export default function AddCrop() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
+
     // Simulate add crop action by creating a user data object.
     const cropData = { landId, cropDetails: formData };
-    // Dispatch the 'crop' action from the 'cropSlice' with the user data.
-    dispatch(addCrop(cropData));
-    //Navigate to my crops page
-    router.push("/my-crops");
+
+    try {
+      const response = await axios.put(`http://localhost:5000/api/land/addCrop/${landId}`, 
+      {
+        cropName: formData.cropName,
+        season: formData.season,
+        cropType: formData.cropType,
+        totalSoldQty: formData.totalSoldQty,
+        totalIncome: formData.totalIncome,
+        reservedQtyHome: formData.reservedQtyHome,
+        reservedQtySeed: formData.reservedQtySeed, 
+        noOfPicks: formData.noOfPicks, 
+        isCultivationLoan: formData.isCultivationLoan, 
+        loanObtained: formData.loanObtained
+      });
+      if (response && response.status === 200) {
+        console.log(response);
+        setResponseData(response.data);
+        router.push("/my-crops"); //Navigate to my crops page
+        // Dispatch the 'crop' action from the 'cropSlice' with the user data.
+        dispatch(addCrop(cropData));
+      } else if (response && response.status === 400){
+        console.error('Failed to fetch data');
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
+
+  // // Define a function to handle crop.
+  // const handleCrop = async () => {
+    
+    
+    
+  // };
 
   //Function to navigate to my crops page
   const navigationToMyCrops = () => {
@@ -148,11 +182,13 @@ export default function AddCrop() {
                 <MenuItem value="">Select an Option</MenuItem>
                 <MenuItem
                   id="f82aa728-3cd1-11ee-be56-0242ac120002"
-                  value="Land 1"
+                  value="6576a388b39f65c72454b777"
                 >
                   Land 1
                 </MenuItem>
-                <MenuItem id="cd1-11ee-be56-0242ac120002" value="Land 2">
+                <MenuItem 
+                  id="cd1-11ee-be56-0242ac120002" 
+                  value="6577c2d308858b275eabbc5c">
                   Land 2
                 </MenuItem>
               </TextField>
