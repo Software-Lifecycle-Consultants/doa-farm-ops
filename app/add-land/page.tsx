@@ -21,6 +21,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
 import MapComponent from "../../components/MapComponent";
 import { CustomBox1 } from "@/Theme";
+import axios from "axios";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -70,10 +71,19 @@ export default function AddLand() {
     event.preventDefault(); // Prevent the default form submission behavior
 
     const landData = { ...formData };
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/land/create",
+        landData
+      );
+      // Simulate an add land action by creating a land data object.
+      dispatch(addLand(landData));
+      router.push("/my-crops");
+    } catch (error) {
+      
+    }
 
-    // Simulate an add land action by creating a land data object.
-    dispatch(addLand(landData));
-    router.push("/my-crops");
+    
   };
   //Function to navigate to add crop page
   const navigationToAddCrop = async (
