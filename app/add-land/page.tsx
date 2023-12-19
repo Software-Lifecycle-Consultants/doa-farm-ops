@@ -22,6 +22,7 @@ import i18n from "../config/i18n";// Import the i18n instance
 import MapComponent from "../../components/MapComponent";
 import { CustomBox1 } from "@/Theme";
 import axios from "axios";
+import { format } from "url";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -31,13 +32,17 @@ export default function AddLand() {
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
   // State for managing form data and map-related data
-  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(null);
-  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>([]);
-  const [drawType, setDrawType] = useState<'Point' | 'Polygon'>('Point');
+  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(
+    null
+  );
+  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>(
+    []
+  );
+  const [drawType, setDrawType] = useState<"Point" | "Polygon">("Point");
   const { t } = useTranslation();
 
   const [responseData, setResponseData] = useState(null);
-  
+
   // Define the structure of the form data
   interface FormData {
     landId: string;
@@ -54,7 +59,7 @@ export default function AddLand() {
     district: "",
     dsDivision: "",
     landRent: "",
-    irrigationMode: ""
+    irrigationMode: "",
   });
 
   const dispatch = useDispatch();
@@ -75,27 +80,28 @@ export default function AddLand() {
 
     const landData = { landDetails: formData };
     try {
-      const response = await axios.post("http://localhost:5000/api/land/create",
+      const response = await axios.post(
+        "http://localhost:5000/api/land/create",
         {
           landId: formData.landId,
           landName: formData.landName,
           district: formData.district,
           dsDivision: formData.dsDivision,
           landRent: formData.landRent,
-          irrigationMode: formData.irrigationMode
+          irrigationMode: formData.irrigationMode,
         }
       );
-      if (response && response.status === 200){
+      if (response && response.status === 200) {
         console.log(response);
         setResponseData(response.data);
         router.push("/my-crops");
         // Simulate an add land action by creating a land data object.
         dispatch(addLand(landData));
-      } else if (response && response.status === 400){
-        console.error('Failed to fetch data');
+      } else if (response && response.status === 400) {
+        console.error("Failed to fetch data");
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -103,9 +109,22 @@ export default function AddLand() {
   const navigationToAddCrop = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-    router.push("/add-crop");
+    event.preventDefault();
+    const id = 123;
+    const href = format({
+      pathname: "/add-crop",
+      query: { id },
+    });
+    router.push(href);
   };
+
+  // const navigationToAddCrop = async (
+  //   event: React.MouseEvent<HTMLButtonElement>
+  // ) => {
+  //   event.preventDefault();
+  //   const id = 123;
+  //   router.push(`/add-crop`);
+  // };
 
   // Event handler to add form field data
   const handleChangeAddLand = (
@@ -138,7 +157,7 @@ export default function AddLand() {
 
   return (
     <Container component="main" maxWidth="xl">
-      <CustomBox1 sx={{maxWidth: "500px"}}>
+      <CustomBox1 sx={{ maxWidth: "500px" }}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
             {i18n.t("addLand.txtAddLand")}
@@ -170,33 +189,39 @@ export default function AddLand() {
         {/* Display the map if showMap is true */}
         {showMap && (
           <>
-            <MapComponent setMarkerCoordinates={setMarkerCoordinates} setPolygonCoordinates={setPolygonCoordinates} drawType={drawType}/>
-            <Grid sx={{ width: '100%' }}>
-            <TextField
+            <MapComponent
+              setMarkerCoordinates={setMarkerCoordinates}
+              setPolygonCoordinates={setPolygonCoordinates}
+              drawType={drawType}
+            />
+            <Grid sx={{ width: "100%" }}>
+              <TextField
                 select
                 fullWidth
                 placeholder="Select Map Drawer"
                 defaultValue="Point"
                 variant="outlined"
                 value={drawType}
-                onChange={(e) => handleDrawTypeChange(e.target.value as 'Point' | 'Polygon')}
+                onChange={(e) =>
+                  handleDrawTypeChange(e.target.value as "Point" | "Polygon")
+                }
               >
                 <MenuItem value="Point">Point</MenuItem>
                 <MenuItem value="Polygon">Polygon</MenuItem>
               </TextField>
             </Grid>
             {/* Display marker coordinates if it's a point or polygon */}
-            {markerCoordinates && drawType==='Point' &&(
-                <Grid>
-                    <p>Marker Coordinates: {markerCoordinates.join(', ')}</p>
-                </Grid>
+            {markerCoordinates && drawType === "Point" && (
+              <Grid>
+                <p>Marker Coordinates: {markerCoordinates.join(", ")}</p>
+              </Grid>
             )}
-            {polygonCoordinates && drawType==='Polygon' &&(
-                <Grid>
-                    {polygonCoordinates.map((Coordinates) => (
-                        <p>Marker Coordinates: {Coordinates.join(', ')}</p>
-                    ))}
-                </Grid>
+            {polygonCoordinates && drawType === "Polygon" && (
+              <Grid>
+                {polygonCoordinates.map((Coordinates) => (
+                  <p>Marker Coordinates: {Coordinates.join(", ")}</p>
+                ))}
+              </Grid>
             )}
           </>
         )}

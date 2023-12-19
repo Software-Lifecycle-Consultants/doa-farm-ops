@@ -40,6 +40,7 @@ export default function AddCrop() {
   // State variables for form fields
   const [value, setValue] = React.useState("female");
   const [landId, setLandId] = useState("");
+  const [isLand, setIsLand] = useState(true);
 
   const [responseData, setResponseData] = useState(null);
 
@@ -94,36 +95,67 @@ export default function AddCrop() {
   const handleOnClickAddCrop = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
-    event.preventDefault(); // Prevent the default form submission behavior
+  event.preventDefault(); // Prevent the default form submission behavior
 
-    // Simulate add crop action by creating a user data object.
-    const cropData = { landId, cropDetails: formData };
-
-    try {
-      const response = await axios.put(`http://localhost:5000/api/land/addCrop/${landId}`, 
-      {
-        cropName: formData.cropName,
-        season: formData.season,
-        cropType: formData.cropType,
-        totalSoldQty: formData.totalSoldQty,
-        totalIncome: formData.totalIncome,
-        reservedQtyHome: formData.reservedQtyHome,
-        reservedQtySeed: formData.reservedQtySeed, 
-        noOfPicks: formData.noOfPicks, 
-        isCultivationLoan: formData.isCultivationLoan, 
-        loanObtained: formData.loanObtained
-      });
-      if (response && response.status === 200) {
-        console.log(response);
-        setResponseData(response.data);
-        router.push("/my-crops"); //Navigate to my crops page
-        // Dispatch the 'crop' action from the 'cropSlice' with the user data.
-        dispatch(addCrop(cropData));
-      } else if (response && response.status === 400){
-        console.error('Failed to fetch data');
+    if (isLand) {
+      try {
+        const response = await axios.post(
+          `http://localhost:5000/api/landAndCrop/add`,
+          {
+            landId: "l1",
+            landName: "Land 21",
+            district: "ll",
+            dsDivision: "l",
+            landRent: "l",
+            irrigationMode: "l",
+            cropName: "c",
+            season: "c",
+            cropType: "c",
+            totalSoldQty: "c",
+            totalIncome: "c",
+            reservedQtyHome: "c",
+            reservedQtySeed: "c",
+            noOfPicks: "c",
+            isCultivationLoan: "c",
+            loanObtained: "c",
+          }
+        );
+        console.log("🚀 ~ file: page.tsx:123 ~ AddCrop ~ response:", response);
+      } catch (error) {
+        console.error("Error fetching data:", error);
       }
-    } catch (error) {
-      console.error('Error fetching data:', error);
+    } else {
+      // Simulate add crop action by creating a user data object.
+      const cropData = { landId, cropDetails: formData };
+
+      try {
+        const response = await axios.put(
+          `http://localhost:5000/api/land/addCrop/${landId}`,
+          {
+            cropName: formData.cropName,
+            season: formData.season,
+            cropType: formData.cropType,
+            totalSoldQty: formData.totalSoldQty,
+            totalIncome: formData.totalIncome,
+            reservedQtyHome: formData.reservedQtyHome,
+            reservedQtySeed: formData.reservedQtySeed,
+            noOfPicks: formData.noOfPicks,
+            isCultivationLoan: formData.isCultivationLoan,
+            loanObtained: formData.loanObtained,
+          }
+        );
+        if (response && response.status === 200) {
+          console.log(response);
+          setResponseData(response.data);
+          router.push("/my-crops"); //Navigate to my crops page
+          // Dispatch the 'crop' action from the 'cropSlice' with the user data.
+          dispatch(addCrop(cropData));
+        } else if (response && response.status === 400) {
+          console.error("Failed to fetch data");
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
   };
 
