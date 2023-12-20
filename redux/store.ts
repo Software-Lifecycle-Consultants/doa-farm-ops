@@ -5,6 +5,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './authSlice';
 import cropReducer from './cropSlice';
 import landReducer from "./landSlice";
+import landAndCropReducer from "./landAndCropSlice";
 
 // Create the Redux store for managing application state.
 const store = configureStore({
@@ -12,6 +13,7 @@ const store = configureStore({
     auth: authReducer, // Assign the 'authReducer' to the 'auth' key in the Redux store.
     crop: cropReducer, // Assign the 'cropReducer' to the 'crop' key in the Redux store.
     land: landReducer, // Assign the 'landReducer' to the 'land' key in the Redux store.
+    landAndCrop: landAndCropReducer
   },
 });
 
