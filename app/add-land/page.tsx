@@ -16,13 +16,13 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { addLand } from "@/redux/landSlice";
+import { addLandAndCrop } from "@/redux/landAndCropSlice";
 import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
 import MapComponent from "../../components/MapComponent";
 import { CustomBox1 } from "@/Theme";
 import axios from "axios";
-import { format } from "url";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -110,12 +110,11 @@ export default function AddLand() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-    const id = 123;
-    const href = format({
-      pathname: "/add-crop",
-      query: { id },
-    });
-    router.push(href);
+    
+    const landData = formData;
+
+    router.push("/add-crop");
+    dispatch(addLandAndCrop(landData));
   };
 
   // const navigationToAddCrop = async (

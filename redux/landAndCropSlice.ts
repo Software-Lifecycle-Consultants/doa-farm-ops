@@ -2,8 +2,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./types";
 
-// Define the initial state of the 'land & crop' slice.
-const initialState: RootState["landAndCrop"] = [];
+// Define the initial state of the land slice.
+const initialState = {
+  landToBeAdded: {
+    landId: "",
+    landName: "",
+    district: "",
+    dsDivision: "",
+    landRent: "",
+    irrigationMode: "",
+  },
+  isLandToBeAdded: false
+};
 
 const landAndCropSlice = createSlice({
   name: "landAndCrop", // A unique name for this slice, used in the Redux store.
@@ -11,13 +21,25 @@ const landAndCropSlice = createSlice({
   reducers: {
     // Reducer to add a new crop to the state
     addLandAndCrop: (state, action) => {
-      state.push(action.payload);
+      state.landToBeAdded = action.payload;
+      state.isLandToBeAdded = true;
+    },
+    addLandAndCropSuccess: (state) => {
+      state.landToBeAdded = {
+        landId: "",
+        landName: "",
+        district: "",
+        dsDivision: "",
+        landRent: "",
+        irrigationMode: "",
+      };
+      state.isLandToBeAdded = false;
     },
   },
 });
 
 // Export the action creators for external use.
-export const { addLandAndCrop } = landAndCropSlice.actions;
+export const { addLandAndCrop, addLandAndCropSuccess } = landAndCropSlice.actions;
 
 // Define a selector function to extract the 'landAndCrop' state from the Redux store.
 export const selectAddLandAndCrop = (state: { landAndCrop: any }) => state.landAndCrop;

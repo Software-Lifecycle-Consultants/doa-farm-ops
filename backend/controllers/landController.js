@@ -163,17 +163,17 @@ const landController = {
       });
 
       const savedCrop = await newCrop.save();
-
-      await Land.updateOne(
-        { _id: savedLand._id },
-        { $push: { crops: savedCrop._id } }
-      );
-
+      
       res.status(200).json({
         message: "Land and crop details added successfully.",
         land: savedLand,
         crop: savedCrop,
       });
+
+      await Land.updateOne(
+        { _id: savedLand._id },
+        { $push: { crops: savedCrop._id } }
+      );
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }

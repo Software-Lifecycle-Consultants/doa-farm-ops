@@ -22,6 +22,9 @@ import { cropList } from "@/data/cropsData";
 import { CustomBox1 } from "@/Theme";
 import axios from 'axios';
 
+import { useSelector } from "react-redux";
+import { addLandAndCropSuccess } from "@/redux/landAndCropSlice";
+
 // Styles for labels
 const styles = {
   label: {
@@ -40,10 +43,13 @@ export default function AddCrop() {
   // State variables for form fields
   const [value, setValue] = React.useState("female");
   const [landId, setLandId] = useState("");
-  const [isLand, setIsLand] = useState(true);
 
   const [responseData, setResponseData] = useState(null);
 
+  
+  const landToBeAdded = useSelector((state: any) => state.landAndCrop.landToBeAdded);
+  const isLandToBeAdded = useSelector((state: any) => state.landAndCrop.isLandToBeAdded);
+  console.log(landToBeAdded);
 
   interface FormData {
     cropName: string | null;
@@ -91,12 +97,12 @@ export default function AddCrop() {
   }
 
   const [formLandCrop, setFormLandCrop] = useState<FormLandCrop>({
-    landId: "l1",
-    landName: "Land 21",
-    district: "ll",
-    dsDivision: "l",
-    landRent: "l",
-    irrigationMode: "l",
+    landId: landToBeAdded.landId,
+    landName: landToBeAdded.landName,
+    district: landToBeAdded.district,
+    dsDivision: landToBeAdded.dsDivision,
+    landRent: landToBeAdded.landRent,
+    irrigationMode: landToBeAdded.irrigationMode,
     cropName: formData.cropName,
     season: formData.season,
     cropType: formData.cropType,
@@ -108,7 +114,6 @@ export default function AddCrop() {
     isCultivationLoan: formData.isCultivationLoan,
     loanObtained: formData.loanObtained,
   });
-  console.log("🚀 ~ file: page.tsx:111 ~ AddCrop ~ formLandCrop:", formLandCrop)
 
   const dispatch = useDispatch();
 
@@ -137,30 +142,36 @@ export default function AddCrop() {
   ) => {
   event.preventDefault(); // Prevent the default form submission behavior
 
-    if (isLand) {
+    if (isLandToBeAdded) {
       try {
         const response = await axios.post(
-          `http://localhost:5000/api/landAndCrop/add`,
-          {
-            landId: "l1",
-            landName: "Land 21",
-            district: "ll",
-            dsDivision: "l",
-            landRent: "l",
-            irrigationMode: "l",
-            cropName: "c",
-            season: "c",
-            cropType: "c",
-            totalSoldQty: "c",
-            totalIncome: "c",
-            reservedQtyHome: "c",
-            reservedQtySeed: "c",
-            noOfPicks: "c",
-            isCultivationLoan: "c",
-            loanObtained: "c",
+          `http://localhost:5000/api/landAndCrop/add`,{
+            landId: landToBeAdded.landId,
+            landName: landToBeAdded.landName,
+            district: landToBeAdded.district,
+            dsDivision: landToBeAdded.dsDivision,
+            landRent: landToBeAdded.landRent,
+            irrigationMode: landToBeAdded.irrigationMode,
+            cropName: formData.cropName,
+            season: formData.season,
+            cropType: formData.cropType,
+            totalSoldQty: formData.totalSoldQty,
+            totalIncome: formData.totalIncome,
+            reservedQtyHome: formData.reservedQtyHome,
+            reservedQtySeed: formData.reservedQtySeed,
+            noOfPicks: formData.noOfPicks,
+            isCultivationLoan: formData.isCultivationLoan,
+            loanObtained: formData.loanObtained,
           }
         );
-        console.log("🚀 ~ file: page.tsx:123 ~ AddCrop ~ response:", response);
+        if (response && response.status === 200) {
+          console.log(response);
+          setResponseData(response.data);
+          router.push("/my-crops"); //Navigate to my crops page
+          dispatch(addLandAndCropSuccess());
+        } else if (response && response.status === 400) {
+          console.error("Failed to fetch data");
+        }
       } catch (error) {
         console.error("Error fetching data:", error);
       }
@@ -199,12 +210,6 @@ export default function AddCrop() {
     }
   };
 
-  // // Define a function to handle crop.
-  // const handleCrop = async () => {
-    
-    
-    
-  // };
 
   //Function to navigate to my crops page
   const navigationToMyCrops = () => {
@@ -239,6 +244,7 @@ export default function AddCrop() {
           </Typography>
         </Box>
         <Box sx={{ width: "100%" }}>
+          {!isLandToBeAdded &&
           <Grid item xs={12} sm={6}>
             <Stack direction="row" spacing={2} paddingTop={2}>
               <TextField
@@ -254,7 +260,7 @@ export default function AddCrop() {
                 <MenuItem value="">Select an Option</MenuItem>
                 <MenuItem
                   id="f82aa728-3cd1-11ee-be56-0242ac120002"
-                  value="6576a388b39f65c72454b777"
+                  value="6582c007507344f5dedb0bc9"
                 >
                   Land 1
                 </MenuItem>
@@ -278,6 +284,7 @@ export default function AddCrop() {
               </Button>
             </Stack>
           </Grid>
+         }
 
           <Typography
             component="h1"
