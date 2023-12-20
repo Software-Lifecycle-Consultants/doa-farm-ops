@@ -44,6 +44,7 @@ export default function AddCrop() {
 
   const [responseData, setResponseData] = useState(null);
 
+
   interface FormData {
     cropName: string | null;
     season: string;
@@ -69,6 +70,45 @@ export default function AddCrop() {
     isCultivationLoan: "1",
     loanObtained: 0,
   });
+
+  interface FormLandCrop {
+    landId: string;
+    landName: string;
+    district: string;
+    dsDivision: string;
+    landRent: string;
+    irrigationMode: string;
+    cropName: string | null;
+    season: string;
+    cropType: string;
+    totalSoldQty: string;
+    totalIncome: string;
+    reservedQtyHome: string;
+    reservedQtySeed: string;
+    noOfPicks: string;
+    isCultivationLoan: string;
+    loanObtained: number;
+  }
+
+  const [formLandCrop, setFormLandCrop] = useState<FormLandCrop>({
+    landId: "l1",
+    landName: "Land 21",
+    district: "ll",
+    dsDivision: "l",
+    landRent: "l",
+    irrigationMode: "l",
+    cropName: formData.cropName,
+    season: formData.season,
+    cropType: formData.cropType,
+    totalSoldQty: formData.totalSoldQty,
+    totalIncome: formData.totalIncome,
+    reservedQtyHome: formData.reservedQtyHome,
+    reservedQtySeed: formData.reservedQtySeed,
+    noOfPicks: formData.noOfPicks,
+    isCultivationLoan: formData.isCultivationLoan,
+    loanObtained: formData.loanObtained,
+  });
+  console.log("🚀 ~ file: page.tsx:111 ~ AddCrop ~ formLandCrop:", formLandCrop)
 
   const dispatch = useDispatch();
 
