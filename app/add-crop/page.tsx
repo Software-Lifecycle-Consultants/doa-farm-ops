@@ -24,6 +24,7 @@ import axios from 'axios';
 
 import { useSelector } from "react-redux";
 import { addLandAndCropSuccess } from "@/redux/landAndCropSlice";
+import i18n from "../config/i18n";
 
 // Styles for labels
 const styles = {
@@ -237,54 +238,55 @@ export default function AddCrop() {
 
   return (
     <Container component="main" maxWidth="xl">
-      <CustomBox1 sx={{maxWidth: "600px"}}>
+      <CustomBox1 sx={{ maxWidth: "600px" }}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
-            Add Crop
+            {i18n.t("addCrop.txtAddCrop")}
           </Typography>
         </Box>
         <Box sx={{ width: "100%" }}>
-          {!isLandToBeAdded &&
-          <Grid item xs={12} sm={6}>
-            <Stack direction="row" spacing={2} paddingTop={2}>
-              <TextField
-                required
-                select
-                fullWidth
-                label="Select Land"
-                defaultValue={"land"}
-                value={landId}
-                onChange={handleOnChangeLand}
-                variant="outlined"
-              >
-                <MenuItem value="">Select an Option</MenuItem>
-                <MenuItem
-                  id="f82aa728-3cd1-11ee-be56-0242ac120002"
-                  value="6582c007507344f5dedb0bc9"
+          {!isLandToBeAdded && (
+            <Grid item xs={12} sm={6}>
+              <Stack direction="row" spacing={2} paddingTop={2}>
+                <TextField
+                  required
+                  select
+                  fullWidth
+                  label="Select Land"
+                  defaultValue={"land"}
+                  value={landId}
+                  onChange={handleOnChangeLand}
+                  variant="outlined"
                 >
-                  Land 1
-                </MenuItem>
-                <MenuItem 
-                  id="cd1-11ee-be56-0242ac120002" 
-                  value="6577c2d308858b275eabbc5c">
-                  Land 2
-                </MenuItem>
-              </TextField>
+                  <MenuItem value="">Select an Option</MenuItem>
+                  <MenuItem
+                    id="f82aa728-3cd1-11ee-be56-0242ac120002"
+                    value="6582c007507344f5dedb0bc9"
+                  >
+                    {i18n.t("addCrop.menuItemTxtLand1")}
+                  </MenuItem>
+                  <MenuItem
+                    id="cd1-11ee-be56-0242ac120002"
+                    value="6577c2d308858b275eabbc5c"
+                  >
+                    {i18n.t("addCrop.menuItemTxtLand2")}
+                  </MenuItem>
+                </TextField>
 
-              <Typography component="h1" variant="subtitle1" gutterBottom>
-                or
-              </Typography>
-              <Button
-                type="submit"
-                variant="outlined"
-                fullWidth
-                onClick={navigationToAddLand}
-              >
-                Add a new Land
-              </Button>
-            </Stack>
-          </Grid>
-         }
+                <Typography component="h1" variant="subtitle1" gutterBottom>
+                  {i18n.t("addCrop.txtOr")}
+                </Typography>
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  fullWidth
+                  onClick={navigationToAddLand}
+                >
+                  {i18n.t("addCrop.capBtnAddLand")}
+                </Button>
+              </Stack>
+            </Grid>
+          )}
 
           <Typography
             component="h1"
@@ -292,14 +294,14 @@ export default function AddCrop() {
             paddingTop={"15px"}
             gutterBottom
           >
-            Fill the bellow details to add crop
+            {i18n.t("addCrop.txtFillDetails")}
           </Typography>
         </Box>
 
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography>Crop Name *</Typography>
+              <Typography>{i18n.t("addCrop.lblCropName")}</Typography>
               <Autocomplete
                 options={cropNames}
                 getOptionLabel={(option) => option}
@@ -319,7 +321,7 @@ export default function AddCrop() {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <Typography>Season *</Typography>
+              <Typography>{i18n.t("addCrop.lblSeason")}</Typography>
               <TextField
                 select
                 fullWidth
@@ -329,15 +331,21 @@ export default function AddCrop() {
                 value={formData.season}
                 onChange={(e) => handleChangeAddCrop(e, "season")}
               >
-                <MenuItem value="1">Select an Option</MenuItem>
-                <MenuItem value="Yala">Yala</MenuItem>
-                <MenuItem value="Maha">Maha</MenuItem>
+                <MenuItem value="1">
+                  {i18n.t("addCrop.menuItemTxtSelectOption2")}
+                </MenuItem>
+                <MenuItem value="Yala">
+                  {i18n.t("addCrop.menuItemTxtYala")}
+                </MenuItem>
+                <MenuItem value="Maha">
+                  {i18n.t("addCrop.menuItemTxtMaha")}
+                </MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl>
                 <Typography id="demo-controlled-radio-buttons-group">
-                  Crop Type *
+                  {i18n.t("addCrop.lblCropType")}
                 </Typography>
                 <RadioGroup
                   style={{ width: "100%" }}
@@ -361,7 +369,7 @@ export default function AddCrop() {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Total sold quantity</Typography>
+              <Typography>{i18n.t("addCrop.lblSoldQuantity")}</Typography>
               <TextField
                 fullWidth
                 id="soldQuantity"
@@ -373,7 +381,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Total income for crop</Typography>
+              <Typography>{i18n.t("addCrop.lblIncome")}</Typography>
               <TextField
                 fullWidth
                 name="income"
@@ -385,7 +393,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Quantity kept for home</Typography>
+              <Typography>{i18n.t("addCrop.lblQuantityHome")}</Typography>
               <TextField
                 fullWidth
                 id="QtyForHome"
@@ -397,7 +405,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Quantity kept for seed</Typography>
+              <Typography>{i18n.t("addCrop.lblQuantitySeed")}</Typography>
               <TextField
                 fullWidth
                 name="qtyForSeed"
@@ -409,7 +417,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Number of picks</Typography>
+              <Typography>{i18n.t("addCrop.lblNoOfPicks")}</Typography>
               <TextField
                 fullWidth
                 id="NoOfPicks"
@@ -427,7 +435,7 @@ export default function AddCrop() {
               paddingTop={"16px"}
             >
               <Grid item xs={12} sm={6}>
-                <Typography>Cultivation loan obtained? *</Typography>
+                <Typography>{i18n.t("addCrop.lblCultivationLoan")}</Typography>
                 <TextField
                   select
                   required
@@ -440,13 +448,21 @@ export default function AddCrop() {
                     style: styles.label, // Apply the label color style here
                   }}
                 >
-                  <MenuItem value="1">Select an Option</MenuItem>
-                  <MenuItem value="Yes">Yes</MenuItem>
-                  <MenuItem value="No">No</MenuItem>
+                  <MenuItem value="1">
+                    {i18n.t("addCrop.menuItemTxtSelectOption3")}
+                  </MenuItem>
+                  <MenuItem value="Yes">
+                    {i18n.t("addCrop.menuItemTxtYes")}
+                  </MenuItem>
+                  <MenuItem value="No">
+                    {i18n.t("addCrop.menuItemTxtNo")}
+                  </MenuItem>
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography>Cultivation loan amount</Typography>
+                <Typography>
+                  {i18n.t("addCrop.lblCultivationLoanAmount")}
+                </Typography>
                 <TextField
                   fullWidth
                   value={formData.loanObtained}
@@ -473,7 +489,7 @@ export default function AddCrop() {
                   sx={{ mt: 3, mb: 2, width: "12vw" }}
                   onClick={navigationToMyCrops}
                 >
-                  Cancel
+                  {i18n.t("addCrop.capBtnCancel")}
                 </Button>
                 {/* Save Button */}
                 <Button
@@ -483,7 +499,7 @@ export default function AddCrop() {
                   sx={{ mt: 3, mb: 2, width: "12vw" }}
                   onClick={handleOnClickAddCrop}
                 >
-                  Save
+                  {i18n.t("addCrop.capBtnSave")}
                 </Button>
               </Stack>
             </Grid>
