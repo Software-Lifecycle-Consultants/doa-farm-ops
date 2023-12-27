@@ -25,18 +25,69 @@ import {
 import { useTranslation } from "react-i18next";
 import i18n from "../config/i18n"; // Import the i18n instance
 import { CustomBox1 } from "@/Theme";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { register } from "@/redux/userSlice";
 /**
  * SignUp page allows to users to register to the system
  */
 
 export default function SignUp() {
+
   const { t } = useTranslation();
+
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    nic: string;
+    role: string;
+    address: string;
+    password: string;
+  }
+
+  const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    nic: "",
+    role: "",
+    address: "",
+    password: "",
+  });
 
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
 
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   // Function to toggle password visibility
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  //Function to navigate to login page clicking register button
+  const handleOnClickRegister = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    const userData = { userDetails: formData };
+    console.log(userData);
+    dispatch(register(userData));
+  }
+
+  // Define a function to handle add crop.
+  const handleChangeUserRegister = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: string
+  ) => {
+    setFormData({
+      ...formData,
+      [field]: event.target.value,
+    });
+  };
 
   // Prevent default event handling for password visibility button
   const handleMouseDownPassword = (
@@ -71,6 +122,8 @@ export default function SignUp() {
                 id="firstName"
                 placeholder={i18n.t("register.hintTxtFirstName")}
                 autoFocus
+                value={formData.firstName}
+                onChange={(e) => handleChangeUserRegister(e, "firstName")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -82,6 +135,8 @@ export default function SignUp() {
                 placeholder={i18n.t("register.hintTxtLastName")}
                 name="lastName"
                 autoComplete="family-name"
+                value={formData.lastName}
+                onChange={(e) => handleChangeUserRegister(e, "lastName")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -93,6 +148,8 @@ export default function SignUp() {
                 placeholder={i18n.t("register.hintTxtEmail")}
                 name="email"
                 autoComplete="email"
+                value={formData.email}
+                onChange={(e) => handleChangeUserRegister(e, "email")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -104,6 +161,8 @@ export default function SignUp() {
                 placeholder="Enter phone number"
                 name="phoneNumber"
                 autoComplete={i18n.t("register.hintTxtPhoneNo")}
+                value={formData.phoneNumber}
+                onChange={(e) => handleChangeUserRegister(e, "phoneNumber")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -115,6 +174,8 @@ export default function SignUp() {
                 placeholder="Enter NIC Number"
                 name="nic"
                 autoComplete={i18n.t("register.hintTxtNIC")}
+                value={formData.nic}
+                onChange={(e) => handleChangeUserRegister(e, "nic")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -126,6 +187,8 @@ export default function SignUp() {
                   style={{ width: "100%" }}
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
+                  value={formData.role}
+                  onChange={(e) => handleChangeUserRegister(e, "role")}
                   row
                 >
                   <FormControlLabel
@@ -150,6 +213,8 @@ export default function SignUp() {
                 placeholder="Enter Address"
                 name="address"
                 autoComplete={i18n.t("register.hintTxtAddress")}
+                value={formData.address}
+                onChange={(e) => handleChangeUserRegister(e, "address")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -157,6 +222,8 @@ export default function SignUp() {
               <OutlinedInput
                 fullWidth
                 id="outlined-adornment-password"
+                value={formData.password}
+                onChange={(e) => handleChangeUserRegister(e, "password")}
                 placeholder={i18n.t("register.hintTxtPassword")}
                 type={showPassword ? "text" : "password"}
                 endAdornment={
@@ -199,13 +266,14 @@ export default function SignUp() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={handleOnClickRegister}
           >
             {i18n.t("register.capBtnRegister")}
           </Button>
           {/* Link to Sign In */}
           <Grid container justifyContent="center">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="login" variant="body2">
                 {i18n.t("register.txtAlreadyHaveAccount")}
               </Link>
             </Grid>
