@@ -75,6 +75,7 @@ export default function SignUp() {
 
     const userData = { userDetails: formData };
     console.log(userData);
+    router.push("./login");
     dispatch(register(userData));
   }
 
