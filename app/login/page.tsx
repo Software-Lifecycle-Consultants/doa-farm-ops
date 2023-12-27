@@ -243,7 +243,7 @@ export default function SignIn() {
             alignItems="center"
             container
           >
-            <Link href="#" variant="body2">
+            <Link href="register" variant="body2">
               {i18n.t("login.txtNoAccount")}
             </Link>
           </Grid>
