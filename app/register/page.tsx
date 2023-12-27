@@ -13,7 +13,10 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
-  InputLabel
+  InputLabel,
+  FormControl,
+  RadioGroup,
+  Radio
 } from "@mui/material";
 import {
   Visibility as Visibility,
@@ -101,6 +104,52 @@ export default function SignUp() {
                 placeholder="Enter phone number"
                 name="phoneNumber"
                 autoComplete={i18n.t("register.hintTxtPhoneNo")}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>{i18n.t("register.lblNIC")}</Typography>
+              <TextField
+                required
+                fullWidth
+                id="nic"
+                placeholder="Enter NIC Number"
+                name="nic"
+                autoComplete={i18n.t("register.hintTxtNIC")}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl>
+                <Typography id="demo-controlled-radio-buttons-group">
+                  {i18n.t("register.lblRole")}
+                </Typography>
+                <RadioGroup
+                  style={{ width: "100%" }}
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  row
+                >
+                  <FormControlLabel
+                    value="farmer"
+                    control={<Radio />}
+                    label="Farmer"
+                  />
+                  <FormControlLabel
+                    value="officer"
+                    control={<Radio />}
+                    label="Officer"
+                  />
+                </RadioGroup>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>{i18n.t("register.lblAddress")}</Typography>
+              <TextField
+                required
+                fullWidth
+                id="address"
+                placeholder="Enter Address"
+                name="address"
+                autoComplete={i18n.t("register.hintTxtAddress")}
               />
             </Grid>
             <Grid item xs={12}>
