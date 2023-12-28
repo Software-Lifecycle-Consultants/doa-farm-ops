@@ -1,76 +1,67 @@
+// Import required modules and dependencies
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 
-
+// Function to generate JWT token
 const generateToken = (id) => {
     return jwt.sign({ id }, process.env.JWT_SECRET, {
       expiresIn: "30d",
     });
   };
 
+// Controller for user-related actions
 const userController = {
-    // createUser: async (req, res) => {
-    //     // Access posted data from the request body
-    //     const user="user@gmail.com"
-    //     const password="111222"
-    //     const { userName, userPassword } = req.body;
-    //     if (user===userName && password===userPassword) {
-    //         res.json({ message: `${userName}` });
-    //     } else {
-    //         res.json({ message: `Incorrect username or password` });
-    //     }
-        
-    // }
-
+    // Create new user
     createUser: async (req, res) => {
         try {
-          const { userName, password, role, email, nic, firstName, lastName, address, phoneNumber } = req.body;
+          const { firstName, lastName, email, phoneNumber, nic, role, address, password } = req.body;
           console.log("createUser:",
-            userName,
-            password,
-            role,
-            email,
-            nic,
             firstName, 
-            lastName, 
+            lastName,
+            email,
+            phoneNumber,
+            nic, 
+            role,
             address, 
-            phoneNumber
+            password
           );
+          // Check if user with same email already exists
           const ExistingUser = await User.findOne({ email });
           if (ExistingUser)
             return res.status(400).json({
               message:
                 "Someone has an account with the same email. Please use another email.",
             });
-    
-          if (!userName || !password || !role || !email || !nic || !firstName || !lastName || !address || !phoneNumber)
+          // Check for missing fields
+          if (!firstName || !lastName || !email || !phoneNumber || !nic || !role || !address || !password)
             return res.status(400).json({ msg: "Please fill in all fields." });
     
           // Hash password
           const salt = await bcrypt.genSalt(10);
           const hashedPassword = await bcrypt.hash(password, salt);
     
+          // Create a new User instance
           const newUser = new User({
-            userName,
-            password: hashedPassword,
-            role,
-            email,
-            nic, 
             firstName, 
-            lastName, 
-            address, 
-            phoneNumber
+            lastName,
+            email,
+            phoneNumber,
+            nic, 
+            role,
+            address,
+            password: hashedPassword,
           });
-          const account = await newUser.save();
-          if (account) {
+          // Save the new user
+          const savedUser = await newUser.save();
+          if (savedUser) {
             res.status(200).json({
-              _id: account.id,
-              userName: account.userName,
-              role: account.role,
-              email: account.email,
-              token: generateToken(account._id),
+              _id: savedUser.id,
+              userName: savedUser.firstName +""+ savedUser.lastName,
+              role: savedUser.role,
+              email: savedUser.email,
+              token: generateToken(savedUser._id),
             });
           } else {
             return res.status(400).json({ msg: "Invalid user data" });
@@ -80,7 +71,7 @@ const userController = {
         }
 
       },
-
+      // User login
       login: async (req, res) => {
         const { email, password } = req.body;
         console.log("login: { email, password }", {
@@ -90,12 +81,12 @@ const userController = {
     
         // Check for user email
         const user = await User.findOne({ email });
-    
+        // Check if user exists and compare passwords
         if (user && (await bcrypt.compare(password, user.password))) {
           res.status(200).json({
             _id: user.id,
             email: user.email,
-            userName: user.userName,
+            userName: savedUser.firstName + savedUser.lastName,
             role: user.role,
             token: generateToken(user._id),
           });

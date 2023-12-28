@@ -3,16 +3,12 @@ const { Schema, model } = mongoose;
 
 const userSchema = new Schema(
   {
-    userName: {
+    firstName: {
       type: String,
       required: true,
       trim: true,
     },
-    password: {
-        type: String,
-        required: true,
-      },
-    role: {
+    lastName: {
       type: String,
       required: true,
       trim: true,
@@ -21,30 +17,29 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    phoneNumber: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     nic: {
-        type: String,
-        required: true,
-        trim: true,
+      type: String,
+      required: true,
+      trim: true,
     },
-    firstName: {
-        type: String,
-        required: true,
-        trim: true,
-    },
-    lastName: {
-        type: String,
-        required: true,
-        trim: true,
+    role: {
+      type: String,
+      required: true,
+      trim: true,
     },
     address: {
-        type: String,
-        required: true,
-        trim: true,
+      type: String,
+      required: true,
+      trim: true,
     },
-    phoneNumber: {
-        type: String,
-        required: true,
-        trim: true,
+    password: {
+      type: String,
+      required: true,
     },
   },
   {
