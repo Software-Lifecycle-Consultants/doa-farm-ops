@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from "react";
+import axios from 'axios';
 import {
   Button,
   TextField,
@@ -28,6 +29,7 @@ import { CustomBox1 } from "@/Theme";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { register } from "@/redux/userSlice";
+import { toast } from "react-toastify";
 /**
  * SignUp page allows to users to register to the system
  */
@@ -36,6 +38,9 @@ export default function SignUp() {
 
   const { t } = useTranslation();
 
+  const [responseData, setResponseData] = useState(null);
+
+  // Interface for the form data
   interface FormData {
     firstName: string;
     lastName: string;
@@ -47,6 +52,7 @@ export default function SignUp() {
     password: string;
   }
 
+  // State for the form data
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -67,19 +73,46 @@ export default function SignUp() {
   // Function to toggle password visibility
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
-  //Function to navigate to login page clicking register button
+  // Function to handle user registration
   const handleOnClickRegister = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
 
     const userData = { userDetails: formData };
-    console.log(userData);
-    router.push("./login");
-    dispatch(register(userData));
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/user/register", // Send user registration data to the backend
+        {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phoneNumber: formData.phoneNumber,
+          nic: formData.nic,
+          role: formData.role,
+          address: formData.address,
+          password: formData.password,
+        }
+      );
+      if (response && response.status === 200) {
+        console.log(response);
+        setResponseData(response.data);
+        router.push("./login");
+         // Dispatch the 'register' action from the 'userSlice' with the user data.
+        dispatch(register(userData));
+        toast.success("Registration Success");
+      } else if (response && response.status === 400) {
+        console.error('Failed to fetch data');
+        toast.error("Registration Failed");
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      toast.error("Registration Failed");
+    }
   }
 
-  // Define a function to handle add crop.
+  // Function to handle changes in form fields
   const handleChangeUserRegister = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
