@@ -26,9 +26,11 @@ import {
 import { useTranslation } from "react-i18next";
 import i18n from "../config/i18n"; // Import the i18n instance
 import { CustomBox1 } from "@/Theme";
+import store from '@/redux/store';
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { register } from "@/redux/userSlice";
+import { selectUser } from "@/redux/userSlice";
 // import { toast } from "react-toastify";
 /**
  * SignUp page allows to users to register to the system
@@ -95,14 +97,31 @@ export default function SignUp() {
       console.log('Dispatching action:', action);
       dispatch(action);
 
-      console.log('Registration successful!');
+      // Get user data from the Redux store
+      const userData = selectUser(store.getState());
+
+      // Make the API call using user data from the Redux store
+      const response = await axios.post(
+        "http://localhost:5000/api/user/register", // Send user registration data to the backend
+        userData
+      );
+
+      if (response && response.status === 200) {
+        console.log(response);
+
+        console.log('Registration successful!');
+      } else if (response && response.status === 400) {
+        console.error('Failed to fetch data');
+        console.error('Registration Failed');
+      }
     } catch (error) {
-      console.error('Registration error:', error);
+      console.error('Error fetching data:', error);
+      console.error('Registration Failed');
     }
   };
 
 
-  
+
 
   // Prevent default event handling for password visibility button
   const handleMouseDownPassword = (
