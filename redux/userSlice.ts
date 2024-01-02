@@ -22,8 +22,10 @@ const userSlice = createSlice({
   reducers: {
     // When a 'register' action is dispatched, update the state.
     register: (state, action) => {
+      console.log('Register Action Payload:', action.payload);
       state.isAuthenticated = false; // Set 'isAuthenticated' to 'false'.
-      state.user = action.payload; // Set 'user' to the payload provided in the action.
+      // state.user = action.payload; // Set 'user' to the payload provided in the action.
+      state.user = { ...state.user, ...action.payload }; // Merges existing user data with fields from action.payload.
     }
   },
 });
@@ -32,7 +34,7 @@ const userSlice = createSlice({
 export const { register } = userSlice.actions;
 
 // Define a selector function to extract the 'user' state from the Redux store.
-export const selectAuth = (state: { user: any; }) => state.user;
+export const selectUser = (state: { user: any }) => state.user;
 
 // Export the 'userSlice.reducer' as the default export.
 export default userSlice.reducer;

@@ -29,7 +29,7 @@ import { CustomBox1 } from "@/Theme";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { register } from "@/redux/userSlice";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
 /**
  * SignUp page allows to users to register to the system
  */
@@ -37,8 +37,11 @@ import { toast } from "react-toastify";
 export default function SignUp() {
 
   const { t } = useTranslation();
-
   const [responseData, setResponseData] = useState(null);
+  const router = useRouter();
+  const dispatch = useDispatch();
+  const [termsAgreementChecked, setTermsAgreementChecked] = useState(false);
+
 
   // Interface for the form data
   interface FormData {
@@ -50,6 +53,7 @@ export default function SignUp() {
     role: string;
     address: string;
     password: string;
+    termsAgreement: boolean
   }
 
   // State for the form data
@@ -62,66 +66,43 @@ export default function SignUp() {
     role: "",
     address: "",
     password: "",
+    termsAgreement: false,
   });
 
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
 
-  const router = useRouter();
-  const dispatch = useDispatch();
-
   // Function to toggle password visibility
   const handleClickShowPassword = () => setShowPassword((show) => !show);
-
-  // Function to handle user registration
-  const handleOnClickRegister = async (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-
-    const userData = { userDetails: formData };
-
-    try {
-      const response = await axios.post(
-        "http://localhost:5000/api/user/register", // Send user registration data to the backend
-        {
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          email: formData.email,
-          phoneNumber: formData.phoneNumber,
-          nic: formData.nic,
-          role: formData.role,
-          address: formData.address,
-          password: formData.password,
-        }
-      );
-      if (response && response.status === 200) {
-        console.log(response);
-        setResponseData(response.data);
-        router.push("./login");
-         // Dispatch the 'register' action from the 'userSlice' with the user data.
-        dispatch(register(userData));
-        toast.success("Registration Success");
-      } else if (response && response.status === 400) {
-        console.error('Failed to fetch data');
-        toast.error("Registration Failed");
-      }
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      toast.error("Registration Failed");
-    }
-  }
 
   // Function to handle changes in form fields
   const handleChangeUserRegister = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
-    setFormData({
-      ...formData,
+    setFormData((prevFormData) => ({
+      ...prevFormData,
       [field]: event.target.value,
-    });
+    }));
   };
+  
+  // Function to handle user registration
+  const handleOnClickRegister = async (e:React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); // Prevent default form submission
+    try {
+      // Dispatch the register action from userSlice
+      const action = register(formData);
+      console.log('Dispatching action:', action);
+      dispatch(action);
+
+      console.log('Registration successful!');
+    } catch (error) {
+      console.error('Registration error:', error);
+    }
+  };
+
+
+  
 
   // Prevent default event handling for password visibility button
   const handleMouseDownPassword = (
@@ -278,7 +259,23 @@ export default function SignUp() {
             {/* Terms & Conditions Checkbox */}
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
+                control={<Checkbox
+                  value="allowExtraEmails"
+                  color="primary"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    setTermsAgreementChecked(e.target.checked);
+                    handleChangeUserRegister(
+                      {
+                        target: {
+                          name: "termsAgreement",
+                          value: e.target.checked as any
+                        }
+                      } as React.ChangeEvent<HTMLInputElement>,
+                      "termsAgreement"
+                    );
+                  }}
+                />
+                }
                 label={
                   <>
                     {i18n.t("register.txtAgree")}{" "}
@@ -301,6 +298,7 @@ export default function SignUp() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleOnClickRegister}
+            disabled={!termsAgreementChecked}
           >
             {i18n.t("register.capBtnRegister")}
           </Button>
