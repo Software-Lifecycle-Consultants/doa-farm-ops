@@ -103,9 +103,13 @@ export default function SignUp() {
       // Make the API call using user data from the Redux store
       const response = await axios.post(
         "http://localhost:5000/api/user/register", // Send user registration data to the backend
-        userData
+        JSON.stringify(userData),
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
       );
-
       if (response && response.status === 200) {
         console.log(response);
 
