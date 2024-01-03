@@ -48,11 +48,11 @@ export default function AdditionalRegistration() {
 
 
   // Get user data from the Redux store
-  const userData = selectUser(store.getState());
-  
-  const selectedRole = useSelector(userData.role);
-  // const selectedRole = useSelector((state: RootState) => state.user.role);
-  console.log(userData.role);
+  const userData = useSelector((state: RootState) => state.user);
+
+  const userX = JSON.stringify(userData);
+
+  const selectedRole = userData?.user?.role; 
 
    // Function to handle changes in form fields
    const handleChangeUserRegister = (
@@ -75,9 +75,6 @@ export default function AdditionalRegistration() {
       // console.log('Dispatching action:', action);
       // dispatch(action);
       // router.push("/login");
-
-      
-      // const userRole =  userData.role
 
       // Make the API call using user data from the Redux store
       const response = await axios.post(
