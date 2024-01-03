@@ -5,7 +5,6 @@ import {
   Button,
   TextField,
   FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Box,
@@ -30,7 +29,6 @@ import store from '@/redux/store';
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { register } from "@/redux/userSlice";
-import { selectUser } from "@/redux/userSlice";
 // import { toast } from "react-toastify";
 /**
  * SignUp page allows to users to register to the system
@@ -42,7 +40,6 @@ export default function SignUp() {
   const [responseData, setResponseData] = useState(null);
   const router = useRouter();
   const dispatch = useDispatch();
-  const [termsAgreementChecked, setTermsAgreementChecked] = useState(false);
 
 
   // Interface for the form data
@@ -88,44 +85,21 @@ export default function SignUp() {
     }));
   };
   
+  
   // Function to handle user registration
-  const handleOnClickRegister = async (e:React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnClickNext = async (e:React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default form submission
     try {
       // Dispatch the register action from userSlice
       const action = register(formData);
       console.log('Dispatching action:', action);
       dispatch(action);
+      router.push("/additional-reg-details");
 
-      // Get user data from the Redux store
-      const userData = selectUser(store.getState());
-
-      // Make the API call using user data from the Redux store
-      const response = await axios.post(
-        "http://localhost:5000/api/user/register", // Send user registration data to the backend
-        JSON.stringify(userData),
-        {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        }
-      );
-      if (response && response.status === 200) {
-        console.log(response);
-
-        console.log('Registration successful!');
-      } else if (response && response.status === 400) {
-        console.error('Failed to fetch data');
-        console.error('Registration Failed');
-      }
     } catch (error) {
       console.error('Error fetching data:', error);
-      console.error('Registration Failed');
     }
   };
-
-
-
 
   // Prevent default event handling for password visibility button
   const handleMouseDownPassword = (
@@ -217,6 +191,19 @@ export default function SignUp() {
               />
             </Grid>
             <Grid item xs={12}>
+              <Typography>{i18n.t("register.lblAddress")}</Typography>
+              <TextField
+                required
+                fullWidth
+                id="address"
+                placeholder="Enter Address"
+                name="address"
+                autoComplete={i18n.t("register.hintTxtAddress")}
+                value={formData.address}
+                onChange={(e) => handleChangeUserRegister(e, "address")}
+              />
+            </Grid>
+            <Grid item xs={12}>
               <FormControl>
                 <Typography id="demo-controlled-radio-buttons-group">
                   {i18n.t("register.lblRole")}
@@ -243,19 +230,6 @@ export default function SignUp() {
               </FormControl>
             </Grid>
             <Grid item xs={12}>
-              <Typography>{i18n.t("register.lblAddress")}</Typography>
-              <TextField
-                required
-                fullWidth
-                id="address"
-                placeholder="Enter Address"
-                name="address"
-                autoComplete={i18n.t("register.hintTxtAddress")}
-                value={formData.address}
-                onChange={(e) => handleChangeUserRegister(e, "address")}
-              />
-            </Grid>
-            <Grid item xs={12}>
               <Typography>{i18n.t("register.lblPassword")}</Typography>
               <OutlinedInput
                 fullWidth
@@ -279,51 +253,17 @@ export default function SignUp() {
                 label={<InputLabel disabled={true} />}
               />
             </Grid>
-            {/* Terms & Conditions Checkbox */}
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox
-                  value="allowExtraEmails"
-                  color="primary"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setTermsAgreementChecked(e.target.checked);
-                    handleChangeUserRegister(
-                      {
-                        target: {
-                          name: "termsAgreement",
-                          value: e.target.checked as any
-                        }
-                      } as React.ChangeEvent<HTMLInputElement>,
-                      "termsAgreement"
-                    );
-                  }}
-                />
-                }
-                label={
-                  <>
-                    {i18n.t("register.txtAgree")}{" "}
-                    <a href="/terms-and-conditions">
-                      {i18n.t("register.txtTerms&Conditions")}
-                    </a>{" "}
-                    {i18n.t("register.txtAnd")}{" "}
-                    <a href="/privacy-policy">
-                      {i18n.t("register.txtPrivacyPolicy")}
-                    </a>
-                  </>
-                }
-              />
-            </Grid>
+            
           </Grid>
-          {/* Register Button */}
+          {/* Next Button for Registration */}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            onClick={handleOnClickRegister}
-            disabled={!termsAgreementChecked}
+            onClick={handleOnClickNext}
           >
-            {i18n.t("register.capBtnRegister")}
+            {i18n.t("register.capBtnNext")}
           </Button>
           {/* Link to Sign In */}
           <Grid container justifyContent="center">
