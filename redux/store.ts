@@ -7,6 +7,8 @@ import cropReducer from './cropSlice';
 import landReducer from "./landSlice";
 import landAndCropReducer from "./landAndCropSlice";
 import userReducer from "./userSlice";
+import farmerSlice from './farmerSlice';
+import officerSlice from './officerSlice';
 
 // Create the Redux store for managing application state.
 const store = configureStore({
@@ -15,7 +17,9 @@ const store = configureStore({
     crop: cropReducer, // Assign the 'cropReducer' to the 'crop' key in the Redux store.
     land: landReducer, // Assign the 'landReducer' to the 'land' key in the Redux store.
     landAndCrop: landAndCropReducer,
-    user: userReducer
+    user: userReducer,
+    farmer: farmerSlice,
+    officer: officerSlice
   },
 });
 
