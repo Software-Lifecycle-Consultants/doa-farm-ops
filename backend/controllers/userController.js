@@ -16,7 +16,7 @@ const userController = {
     // Create new user
     createUser: async (req, res) => {
         try {
-          const { firstName, lastName, email, phoneNumber, nic, role, address, password } = req.body;
+          const { firstName, lastName, email, phoneNumber, nic, role, address, password, termsAgreement } = req.body.user;
           console.log("createUser:",
             firstName, 
             lastName,
@@ -25,7 +25,8 @@ const userController = {
             nic, 
             role,
             address, 
-            password
+            password,
+            termsAgreement
           );
           // Check if user with same email already exists
           const ExistingUser = await User.findOne({ email });
@@ -35,7 +36,7 @@ const userController = {
                 "Someone has an account with the same email. Please use another email.",
             });
           // Check for missing fields
-          if (!firstName || !lastName || !email || !phoneNumber || !nic || !role || !address || !password)
+          if (!firstName || !lastName || !email || !phoneNumber || !nic || !role || !address || !password || !termsAgreement)
             return res.status(400).json({ msg: "Please fill in all fields." });
     
           // Hash password
@@ -52,6 +53,7 @@ const userController = {
             role,
             address,
             password: hashedPassword,
+            termsAgreement
           });
           // Save the new user
           const savedUser = await newUser.save();

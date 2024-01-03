@@ -41,6 +41,10 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    termsAgreement: {
+      type: Boolean,
+      required: true,
+    },
   },
   {
     timestamps: true,
