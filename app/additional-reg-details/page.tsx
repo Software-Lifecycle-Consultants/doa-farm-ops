@@ -129,63 +129,10 @@ export default function AdditionalRegistration() {
                 onChange={(e) => handleChangeUserRegister(e, "household")}
               />
             </Grid>
-            <Grid item xs={12}>
-              <Typography>Organization Name</Typography>
-              <TextField
-                required
-                fullWidth
-                id="orgName"
-                placeholder="Enter organization name"
-                name="orgName"
-                autoComplete="orgName"
-                value={formData.orgName}
-                onChange={(e) => handleChangeUserRegister(e, "orgName")}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography>Organization Address</Typography>
-              <TextField
-                required
-                fullWidth
-                id="orgAddress"
-                placeholder="Enter organization address"
-                name="orgAddress"
-                autoComplete="orgAddress"
-                value={formData.orgAddress}
-                onChange={(e) => handleChangeUserRegister(e, "orgAddress")}
-              />
-            </Grid>
             </>
             )}
-            
             {selectedRole === "officer" && (
             <>
-            <Grid item xs={12}>
-              <Typography>Organization Name</Typography>
-              <TextField
-                required
-                fullWidth
-                id="orgName"
-                placeholder="Enter organization name"
-                name="orgName"
-                autoComplete="orgName"
-                value={formData.orgName}
-                onChange={(e) => handleChangeUserRegister(e, "orgName")}
-              />
-            </Grid>
-            <Grid item xs={12}>
-              <Typography>Organization Address</Typography>
-              <TextField
-                required
-                fullWidth
-                id="orgAddress"
-                placeholder="Enter organization address"
-                name="orgAddress"
-                autoComplete="orgAddress"
-                value={formData.orgAddress}
-                onChange={(e) => handleChangeUserRegister(e, "orgAddress")}
-              />
-            </Grid>
             <Grid item xs={12}>
               <Typography>University</Typography>
               <TextField
@@ -201,6 +148,33 @@ export default function AdditionalRegistration() {
             </Grid>
             </>
             )}
+            <Grid item xs={12}>
+              <Typography>Organization Name</Typography>
+              <TextField
+                required
+                fullWidth
+                id="orgName"
+                placeholder="Enter organization name"
+                name="orgName"
+                autoComplete="orgName"
+                value={formData.orgName}
+                onChange={(e) => handleChangeUserRegister(e, "orgName")}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>Organization Address</Typography>
+              <TextField
+                required
+                fullWidth
+                id="orgAddress"
+                placeholder="Enter organization address"
+                name="orgAddress"
+                autoComplete="orgAddress"
+                value={formData.orgAddress}
+                onChange={(e) => handleChangeUserRegister(e, "orgAddress")}
+              />
+            </Grid>
+            
 
             {/* Terms & Conditions Checkbox */}
             <Grid item xs={12}>
