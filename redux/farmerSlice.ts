@@ -3,7 +3,6 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // Define the initial state of the 'farmer' slice.
 const initialState = {
-  isAuthenticated: false, // Indicates whether a farmer is logged in or not.
   farmer: {
     househoHld: null,
     orgName: null,
@@ -18,7 +17,6 @@ const farmerSlice = createSlice({
     // When a 'register' action is dispatched, update the state.
     register: (state, action) => {
       console.log("Register Action Payload:", action.payload);
-      state.isAuthenticated = false; // Set 'isAuthenticated' to 'false'.
       // state.farmer = action.payload; // Set 'farmer' to the payload provided in the action.
       state.farmer = { ...state.farmer, ...action.payload }; // Merges existing farmer data with fields from action.payload.
     },
