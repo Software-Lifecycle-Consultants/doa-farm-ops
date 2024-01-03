@@ -1,9 +1,9 @@
 // Import the createSlice function from Redux Toolkit.
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from './types';
 
 // Define the initial state of the 'user' slice.
-const initialState = {
-    isAuthenticated: false, // Indicates whether a user is logged in or not.
+const initialState =  {
     user: {
       firstName: null,
       lastName: null,
@@ -24,7 +24,6 @@ const userSlice = createSlice({
     // When a 'register' action is dispatched, update the state.
     register: (state, action) => {
       console.log('Register Action Payload:', action.payload);
-      state.isAuthenticated = false; // Set 'isAuthenticated' to 'false'.
       // state.user = action.payload; // Set 'user' to the payload provided in the action.
       state.user = { ...state.user, ...action.payload }; // Merges existing user data with fields from action.payload.
     }
@@ -35,7 +34,7 @@ const userSlice = createSlice({
 export const { register } = userSlice.actions;
 
 // Define a selector function to extract the 'user' state from the Redux store.
-export const selectUser = (state: { user: any }) => state.user;
+export const selectUser = (state:RootState) => state.user;
 
 // Export the 'userSlice.reducer' as the default export.
 export default userSlice.reducer;
