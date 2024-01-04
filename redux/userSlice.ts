@@ -12,8 +12,7 @@ const initialState =  {
       nic: null,
       role: null,
       address: null,
-      password: null,
-      termsAgreement: null
+      password: null
     },
   };
 

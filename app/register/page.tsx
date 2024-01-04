@@ -52,7 +52,6 @@ export default function SignUp() {
     role: string;
     address: string;
     password: string;
-    termsAgreement: boolean
   }
 
   // State for the form data
@@ -64,8 +63,7 @@ export default function SignUp() {
     nic: "",
     role: "",
     address: "",
-    password: "",
-    termsAgreement: false,
+    password: ""
   });
 
   // State to manage password visibility
@@ -212,6 +210,7 @@ export default function SignUp() {
                   style={{ width: "100%" }}
                   aria-labelledby="demo-controlled-radio-buttons-group"
                   name="controlled-radio-buttons-group"
+                  defaultValue="farmer"
                   value={formData.role}
                   onChange={(e) => handleChangeUserRegister(e, "role")}
                   row
@@ -263,7 +262,7 @@ export default function SignUp() {
             sx={{ mt: 3, mb: 2 }}
             onClick={handleOnClickNext}
           >
-            {i18n.t("register.capBtnNext")}
+            Next
           </Button>
           {/* Link to Sign In */}
           <Grid container justifyContent="center">

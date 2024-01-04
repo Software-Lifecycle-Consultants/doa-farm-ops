@@ -41,7 +41,22 @@ interface User {
     role: string;
     address: string;
     password: string;
-    termsAgreement: boolean;
+  };
+}
+
+interface Farmer {
+  farmer: {
+    household: string;
+    orgName: string;
+    orgAddress: string;
+  };
+}
+
+interface Officer {
+  officer: {
+    orgName: string;
+    orgAddress: string;
+    university: string;
   };
 }
 
@@ -51,4 +66,6 @@ interface User {
     land: Land[];
     landAndCrop: LandAndCrop;
     user: User;
+    farmer: Farmer;
+    officer: Officer;
   };
