@@ -27,7 +27,7 @@ const farmerSlice = createSlice({
 export const { farmerRegister } = farmerSlice.actions;
 
 // Define a selector function to extract the 'farmer' state from the Redux store.
-export const selectUser = (state: { farmer: any }) => state.farmer;
+export const selectFarmer = (state: { farmer: any }) => state.farmer;
 
 // Export the 'farmerSlice.reducer' as the default export.
 export default farmerSlice.reducer;

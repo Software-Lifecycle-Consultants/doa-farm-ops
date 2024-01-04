@@ -27,7 +27,7 @@ const officerSlice = createSlice({
 export const { OfficerRegister } = officerSlice.actions;
 
 // Define a selector function to extract the 'officer' state from the Redux store.
-export const selectUser = (state: { officer: any }) => state.officer;
+export const selectOfficer = (state: { officer: any }) => state.officer;
 
 // Export the 'officerSlice.reducer' as the default export.
 export default officerSlice.reducer;

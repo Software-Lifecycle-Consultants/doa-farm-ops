@@ -20,6 +20,10 @@ import { farmerRegister } from "@/redux/farmerSlice";
 import { OfficerRegister } from "@/redux/officerSlice";
 import { useSelector } from 'react-redux';
 import { RootState } from "@/redux/types";
+import store from "@/redux/store";
+// Import the necessary selectors from the respective slices
+import { selectFarmer } from "@/redux/farmerSlice";
+import { selectOfficer } from"@/redux/officerSlice";
 
 export default function AdditionalRegistration() {
 
@@ -54,78 +58,74 @@ export default function AdditionalRegistration() {
     university: ""
   });
 
-
   // Get user data from the Redux store
   const userData = useSelector((state: RootState) => state.user);
-
   const userX = JSON.stringify(userData);
 
+   // Get user roole from the userData
   const selectedRole = userData?.user?.role;
 
-  // const combinedData = {
-  //   user: userData,
-  //   officer: officerData,
-  // };
-
    // Function to handle changes in form fields
-   const handleChangeUserRegister = (
+  const handleChangeUserRegister = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
-  if(selectedRole === "farmer"){
-    {
-      setFarmerFormData((prevFormData) => ({
-        ...prevFormData,
-        [field]: event.target.value,
-      }));
+    if (selectedRole === "farmer") {
+      {
+        setFarmerFormData((prevFormData) => ({
+          ...prevFormData,
+          [field]: event.target.value,
+        }));
+      }
+    } else {
+      {
+        setOfficerFormData((prevFormData) => ({
+          ...prevFormData,
+          [field]: event.target.value,
+        }));
+      }
+    }
   }
-  }else{
-    {
-      setOfficerFormData((prevFormData) => ({
-        ...prevFormData,
-        [field]: event.target.value,
-      }));
-  }
-  }
-  }
+
+  //Decare varibale to append userdata + farmer data Or userdata + officerdata
+  let combinedData;
+
   // Function to handle user registration
-  const handleOnClickRegister = async (e:React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnClickRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default form submission
     try {
-
       if (selectedRole === "farmer") {
         const action = farmerRegister(farmerFormData);
         dispatch(action);
-        console.log("Dispatching action:", action);
-        //Retrieve farmer data from redux
-        const farmerData = useSelector((state: RootState) => state.farmer.farmer);
-        const userF = JSON.stringify(farmerData);
-        console.log("farmer Data--------------------------", farmerData);
-        // combinedData = {
-        //   user: userData,
-        //   farmer: farmerData,
-        // };
-        //TODO --- retrive registered farmer data
+        console.log("Dispatching action for farmer:", action);
+        // Get farmer data from the Redux store
+        const farmerData = selectFarmer(store.getState());
+        console.log("----------farmerData----------------" + farmerData);
+        const farmerDataJSON = JSON.stringify(farmerData);
+        console.log("----------farmerDataJSON----------------" + farmerDataJSON);
+        combinedData = {
+          user: userData,
+          farmer: farmerData,
+        };
       } else {
         const action = OfficerRegister(officerFormData);
         dispatch(action);
-        console.log("Dispatching action:", action);
-        //Retrieve officer data from redux
-        const officerData = useSelector((state: RootState) => state.officer.officer);
-        const userO = JSON.stringify(officerData);
-        console.log("officer Data--------------------------", officerData);
-        // combinedData = {
-        //   user: userData,
-        //   officer: officerData,
-        // };
+        console.log("Dispatching action office:", action);
+        // Get officer data from the Redux store
+        const officerData = selectOfficer(store.getState());
+        console.log("----------officerData----------------" + officerData);
+        combinedData = {
+          user: userData,
+          farmer: officerData,
+        };
       }
 
-      // Make the API call using user data from the Redux store
-      const response = await axios.post(
-        
+      console.log("--- JSON combinedData----" + JSON.stringify(combinedData));
 
+      // Make the API call using combinedData from the Redux store
+      const response = await axios.post(
         "http://localhost:5000/api/user/register", // Send user registration data to the backend
-        JSON.stringify(userData),
+        JSON.stringify(combinedData),
         {
           headers: {
             "Content-Type": "application/json"
