@@ -40,11 +40,7 @@ const userSchema = new Schema(
     password: {
       type: String,
       required: true,
-    },
-    termsAgreement: {
-      type: Boolean,
-      required: true,
-    },
+    }
   },
   {
     timestamps: true,
