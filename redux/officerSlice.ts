@@ -15,7 +15,7 @@ const officerSlice = createSlice({
   initialState, // The initial state of the 'officer' slice.
   reducers: {
     // When a 'register' action is dispatched, update the state.
-    register: (state, action) => {
+    OfficerRegister: (state, action) => {
       console.log("Register Action Payload:", action.payload);
       // state.officer = action.payload; // Set 'officer' to the payload provided in the action.
       state.officer = { ...state.officer, ...action.payload }; // Merges existing officer data with fields from action.payload.
@@ -23,8 +23,8 @@ const officerSlice = createSlice({
   },
 });
 
-// Export the register action creators for external use.
-export const { register } = officerSlice.actions;
+// Export the OfficerRegister action creators for external use.
+export const { OfficerRegister } = officerSlice.actions;
 
 // Define a selector function to extract the 'officer' state from the Redux store.
 export const selectUser = (state: { officer: any }) => state.officer;
