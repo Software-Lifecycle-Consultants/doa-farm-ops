@@ -14,11 +14,10 @@ import {
 import { useTranslation } from "react-i18next";
 import i18n from "../config/i18n"; // Import the i18n instance
 import { CustomBox1 } from "@/Theme";
-import store from "@/redux/store";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { register } from "@/redux/userSlice";
-import { selectUser } from "@/redux/userSlice";
+import { farmerRegister } from "@/redux/farmerSlice";
+import { OfficerRegister } from "@/redux/officerSlice";
 import { useSelector } from 'react-redux';
 import { RootState } from "@/redux/types";
 
@@ -31,16 +30,25 @@ export default function AdditionalRegistration() {
   const dispatch = useDispatch();
 
   // Interface for the form data
-  interface FormData {
+  interface FarmerFormData {
     household: string;
+    orgName: string;
+    orgAddress: string;
+  }
+  interface OfficerFormData {
     orgName: string;
     orgAddress: string;
     university: string;
   }
 
   // State for the form data
-  const [formData, setFormData] = useState<FormData>({
+  const [farmerFormData, setFarmerFormData] = useState<FarmerFormData>({
     household: "",
+    orgName: "",
+    orgAddress: ""
+  });
+  
+  const [officerFormData, setOfficerFormData] = useState<OfficerFormData>({
     orgName: "",
     orgAddress: "",
     university: ""
@@ -52,32 +60,70 @@ export default function AdditionalRegistration() {
 
   const userX = JSON.stringify(userData);
 
-  const selectedRole = userData?.user?.role; 
+  const selectedRole = userData?.user?.role;
+
+  // const combinedData = {
+  //   user: userData,
+  //   officer: officerData,
+  // };
 
    // Function to handle changes in form fields
    const handleChangeUserRegister = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      [field]: event.target.value,
-    }));
-  };
-
-  
+  if(selectedRole === "farmer"){
+    {
+      setFarmerFormData((prevFormData) => ({
+        ...prevFormData,
+        [field]: event.target.value,
+      }));
+  }
+  }else{
+    {
+      setOfficerFormData((prevFormData) => ({
+        ...prevFormData,
+        [field]: event.target.value,
+      }));
+  }
+  }
+  }
   // Function to handle user registration
   const handleOnClickRegister = async (e:React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default form submission
     try {
-      // Dispatch the register action from userSlice
-      // const action = register(formData);
-      // console.log('Dispatching action:', action);
-      // dispatch(action);
-      // router.push("/login");
+
+      if (selectedRole === "farmer") {
+        const action = farmerRegister(farmerFormData);
+        dispatch(action);
+        console.log("Dispatching action:", action);
+        //Retrieve farmer data from redux
+        const farmerData = useSelector((state: RootState) => state.farmer.farmer);
+        const userF = JSON.stringify(farmerData);
+        console.log("farmer Data--------------------------", farmerData);
+        // combinedData = {
+        //   user: userData,
+        //   farmer: farmerData,
+        // };
+        //TODO --- retrive registered farmer data
+      } else {
+        const action = OfficerRegister(officerFormData);
+        dispatch(action);
+        console.log("Dispatching action:", action);
+        //Retrieve officer data from redux
+        const officerData = useSelector((state: RootState) => state.officer.officer);
+        const userO = JSON.stringify(officerData);
+        console.log("officer Data--------------------------", officerData);
+        // combinedData = {
+        //   user: userData,
+        //   officer: officerData,
+        // };
+      }
 
       // Make the API call using user data from the Redux store
       const response = await axios.post(
+        
+
         "http://localhost:5000/api/user/register", // Send user registration data to the backend
         JSON.stringify(userData),
         {
@@ -125,7 +171,7 @@ export default function AdditionalRegistration() {
                 placeholder="Enter your householders"
                 name="household"
                 autoComplete="household"
-                value={formData.household}
+                value={farmerFormData.household}
                 onChange={(e) => handleChangeUserRegister(e, "household")}
               />
             </Grid>
@@ -142,7 +188,7 @@ export default function AdditionalRegistration() {
                 placeholder="Enter your university"
                 name="university"
                 autoComplete="university"
-                value={formData.university}
+                value={officerFormData.university}
                 onChange={(e) => handleChangeUserRegister(e, "university")}
               />
             </Grid>
@@ -157,7 +203,7 @@ export default function AdditionalRegistration() {
                 placeholder="Enter organization name"
                 name="orgName"
                 autoComplete="orgName"
-                value={formData.orgName}
+                value={selectedRole === 'farmer' ? farmerFormData.orgName : officerFormData.orgName}
                 onChange={(e) => handleChangeUserRegister(e, "orgName")}
               />
             </Grid>
@@ -170,7 +216,7 @@ export default function AdditionalRegistration() {
                 placeholder="Enter organization address"
                 name="orgAddress"
                 autoComplete="orgAddress"
-                value={formData.orgAddress}
+                value={selectedRole === 'farmer' ? farmerFormData.orgAddress : officerFormData.orgAddress}
                 onChange={(e) => handleChangeUserRegister(e, "orgAddress")}
               />
             </Grid>
