@@ -16,7 +16,34 @@ const userController = {
     // Create new user
     createUser: async (req, res) => {
         try {
-          const { firstName, lastName, email, phoneNumber, nic, role, address, password } = req.body.user;
+          // New Code starts here---------------------------------------------------------------------------
+
+          // const { firstName, lastName, email, phoneNumber, nic, role, address, password, termsAgreement } = req.body.user;
+          const { user, farmer, officer } = req.body.combinedData;
+          
+          // Extract data
+
+          // Extract common user fields
+          const {
+            firstName,
+            lastName,
+            email,
+            phoneNumber,
+            nic,
+            role,
+            address,
+            password,
+            termsAgreement,
+          } = user;
+
+          // Extract farmer-specific fields
+          const { household, organization } = farmer || {};
+
+          // Extract officer-specific fields
+          const { organization, orgaddress } = officer || {};
+
+          // New Code ends here---------------------------------------------------------------------------
+      
           console.log("createUser:",
             firstName, 
             lastName,
@@ -27,15 +54,18 @@ const userController = {
             address, 
             password
           );
+          
           // Check if user with same email already exists
-          const ExistingUser = await User.findOne({ email });
+          const ExistingUser = await User.findOne({ email }); //chnge var name
+          
           if (ExistingUser)
             return res.status(400).json({
               message:
                 "Someone has an account with the same email. Please use another email.",
             });
-          // Check for missing fields
-          if (!firstName || !lastName || !email || !phoneNumber || !nic || !role || !address || !password)
+
+          // Check for missing fields // no neeed of termsAgreement
+          if (!firstName || !lastName || !email || !phoneNumber || !nic || !role || !address || !password || !termsAgreement)
             return res.status(400).json({ msg: "Please fill in all fields." });
     
           // Hash password
@@ -53,8 +83,37 @@ const userController = {
             address,
             password: hashedPassword
           });
+
           // Save the new user
           const savedUser = await newUser.save();
+          
+          //new code  starts------------------------------------------------------------------------
+
+          // Handle farmer-specific logic
+          if (role === "farmer" && household && organization) {
+            const newFarmer = new Farmer({
+              user: savedUser._id,
+              household,
+              orgnisation,
+            });
+
+            // Save the new farmer
+            await newFarmer.save();
+          }
+          
+          // Handle officer-specific logic
+          if (role === "officer" && organization && orgaddress) {
+            const newOfficer = new Officer({
+              user: savedUser._id,
+              organization,
+              orgaddress,
+            });
+
+            // Save the new officer
+            await newOfficer.save();
+          }
+
+          // ----------------------------------------------New code ends
           if (savedUser) {
             res.status(200).json({
               _id: savedUser.id,
