@@ -20,10 +20,10 @@ const userController = {
         try {
             console.log('Request body:', req.body);
 
-            const { user, farmer, officer } = req.body;
-            console.log("user data:", user);
-            console.log("farmer data:", farmer);
-            console.log("officer data:", officer);
+            const { userData, farmerData, officerData } = req.body;
+            console.log("user data:", userData);
+            console.log("farmer data:", farmerData);
+            console.log("officer data:", officerData);
 
             // Extract common user fields
             const {
@@ -35,7 +35,7 @@ const userController = {
                 role,
                 address,
                 password,
-            } = user;
+            } = userData.user;
 
             console.log("createUserData:",
                 firstName,
@@ -81,9 +81,9 @@ const userController = {
             // Save the new user
             const savedUser = await newUser.save();
 
-            if (user.role === "farmer") {
+            if (userData.user.role === "farmer") {
                 // Extract farmer-specific fields
-                const { household, orgName, orgAddress } = farmer || {};
+                const { household, orgName, orgAddress } = farmerData.farmer || {};
 
                 if (!household || !orgName || !orgAddress) {
                     return res.status(400).json({ msg: "Please fill in all farmer fields." });
@@ -100,9 +100,9 @@ const userController = {
                 console.log("newFarmer--------------"+ newFarmer);
                 // Save the new farmer
                 await newFarmer.save();
-            } else if (user.role === "officer") {
+            } else if (userData.user.role === "officer") {
                 // Extract officer-specific fields
-                const { orgName, orgAddress, university } = officer || {};
+                const { orgName, orgAddress, university } = officerData.officer || {};
 
                 if (!orgName || !orgAddress || !university) {
                     return res.status(400).json({ msg: "Please fill in all officer fields." });
