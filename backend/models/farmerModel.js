@@ -3,7 +3,7 @@ const { Schema, model } = mongoose;
 
 const farmerSchema = new Schema(
   {
-    houseHold: {
+    household: {
       type: String,
       required: true,
       trim: true,
@@ -16,7 +16,7 @@ const farmerSchema = new Schema(
     orgAddress: {
       type: String,
       required: true,
-    },
+    }
   },
   {
     timestamps: true,

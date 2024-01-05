@@ -62,7 +62,7 @@ export default function AdditionalRegistration() {
   const userData = useSelector((state: RootState) => state.user);
   const userX = JSON.stringify(userData);
 
-   // Get user roole from the userData
+   // Get user role from the userData
   const selectedRole = userData?.user?.role;
 
    // Function to handle changes in form fields
@@ -87,7 +87,7 @@ export default function AdditionalRegistration() {
     }
   }
 
-  //Decare varibale to append userdata + farmer data Or userdata + officerdata
+  //Decare variable to append userData + farmer data Or userData + officerData
   let combinedData;
 
   // Function to handle user registration
@@ -104,8 +104,8 @@ export default function AdditionalRegistration() {
         const farmerDataJSON = JSON.stringify(farmerData);
         console.log("----------farmerDataJSON----------------" + farmerDataJSON);
         combinedData = {
-          user: userData,
-          farmer: farmerData,
+          userData,
+          farmerData,
         };
       } else {
         const action = OfficerRegister(officerFormData);
@@ -115,8 +115,8 @@ export default function AdditionalRegistration() {
         const officerData = selectOfficer(store.getState());
         console.log("----------officerData----------------" + officerData);
         combinedData = {
-          user: userData,
-          farmer: officerData,
+          userData,
+          officerData,
         };
       }
 

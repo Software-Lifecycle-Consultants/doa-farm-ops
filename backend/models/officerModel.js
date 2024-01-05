@@ -16,7 +16,7 @@ const officerSchema = new Schema(
     university: {
       type: String,
       required: true,
-    },
+    }
   },
   {
     timestamps: true,

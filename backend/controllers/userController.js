@@ -1,4 +1,6 @@
 // Import required modules and dependencies
+const Farmer = require('../models/farmerModel');
+const Officer = require('../models/officerModel');
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
@@ -17,10 +19,13 @@ const userController = {
     createUser: async (req, res) => {
         try {
           // New Code starts here---------------------------------------------------------------------------
-
+          console.log('Request body:', req.body);
           // const { firstName, lastName, email, phoneNumber, nic, role, address, password, termsAgreement } = req.body.user;
-          const { user, farmer, officer } = req.body.combinedData;
-          
+          // const { user, farmer, officer } = req.body.combinedData;
+          const { user, farmer, officer } = req.body;
+          console.log("user data:", user);
+          console.log("farmer data:", farmer);
+          console.log("officer data:", officer);
           // Extract data
 
           // Extract common user fields
@@ -33,18 +38,9 @@ const userController = {
             role,
             address,
             password,
-            termsAgreement,
           } = user;
 
-          // Extract farmer-specific fields
-          const { household, organization } = farmer || {};
-
-          // Extract officer-specific fields
-          const { organization, orgaddress } = officer || {};
-
-          // New Code ends here---------------------------------------------------------------------------
-      
-          console.log("createUser:",
+          console.log("createUserData:",
             firstName, 
             lastName,
             email,
@@ -54,18 +50,37 @@ const userController = {
             address, 
             password
           );
+
+          if(user.role === "farmer"){
+            console.log("user.role-----------------" + user.role);
+            // Extract farmer-specific fields
+          const { household, orgName, orgAddress } = farmer || {};
+          console.log("household-----------------" + household);
+          console.log("orgName-----------------" + orgName);
+          console.log("orgAddress-----------------" + orgAddress);
+          }else if(user.role === "officer"){
+            // Extract officer-specific fields
+          const { orgName, orgAddress, university } = officer || {};
+          console.log("orgName-----------------" + orgName);
+          console.log("orgAddress-----------------" + orgAddress);
+          console.log("university-----------------" + university);
+          }
+
+          // New Code ends here---------------------------------------------------------------------------
+      
+          
           
           // Check if user with same email already exists
-          const ExistingUser = await User.findOne({ email }); //chnge var name
+          const existingUser = await User.findOne({ email }); //change var name
           
-          if (ExistingUser)
+          if (existingUser)
             return res.status(400).json({
               message:
                 "Someone has an account with the same email. Please use another email.",
             });
 
-          // Check for missing fields // no neeed of termsAgreement
-          if (!firstName || !lastName || !email || !phoneNumber || !nic || !role || !address || !password || !termsAgreement)
+          // Check for missing fields 
+          if (!firstName || !lastName || !email || !phoneNumber || !nic || !role || !address || !password)
             return res.status(400).json({ msg: "Please fill in all fields." });
     
           // Hash password
@@ -87,33 +102,6 @@ const userController = {
           // Save the new user
           const savedUser = await newUser.save();
           
-          //new code  starts------------------------------------------------------------------------
-
-          // Handle farmer-specific logic
-          if (role === "farmer" && household && organization) {
-            const newFarmer = new Farmer({
-              user: savedUser._id,
-              household,
-              orgnisation,
-            });
-
-            // Save the new farmer
-            await newFarmer.save();
-          }
-          
-          // Handle officer-specific logic
-          if (role === "officer" && organization && orgaddress) {
-            const newOfficer = new Officer({
-              user: savedUser._id,
-              organization,
-              orgaddress,
-            });
-
-            // Save the new officer
-            await newOfficer.save();
-          }
-
-          // ----------------------------------------------New code ends
           if (savedUser) {
             res.status(200).json({
               _id: savedUser.id,
@@ -125,6 +113,36 @@ const userController = {
           } else {
             return res.status(400).json({ msg: "Invalid user data" });
           }
+          //new code  starts------------------------------------------------------------------------
+          console.log("savedUser.id-----------------" + savedUser.id);
+          // Handle farmer-specific logic
+          if (user.role === "farmer") {
+            const newFarmer = new Farmer({
+              // user: savedUser._id,
+              household,
+              orgName,
+              orgAddress
+            });
+
+            // Save the new farmer
+            const savedFarmer = await newFarmer.save();
+          }
+          
+          // Handle officer-specific logic
+          if (user.role === "officer") {
+            const newOfficer = new Officer({
+              user: savedUser._id,
+              orgName,
+              orgAddress,
+              university
+            });
+
+            // Save the new officer
+            await newOfficer.save();
+          }
+
+          // ----------------------------------------------New code ends
+          
         } catch (err) {
           return res.status(500).json({ message: err.message });
         }
