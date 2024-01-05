@@ -3,6 +3,11 @@ const { Schema, model } = mongoose;
 
 const officerSchema = new Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     orgName: {
       type: String,
       required: true,

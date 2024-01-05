@@ -109,7 +109,7 @@ const userController = {
                 }
 
                 const newOfficer = new Officer({
-                    user: savedUser._id,
+                    userId: savedUser._id,
                     orgName,
                     orgAddress,
                     university
