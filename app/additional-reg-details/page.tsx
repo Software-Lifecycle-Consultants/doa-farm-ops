@@ -132,6 +132,7 @@ export default function AdditionalRegistration() {
           }
         }
       );
+      router.push("/login");
       if (response && response.status === 200) {
         console.log(response);
         console.log('Registration successful!');
