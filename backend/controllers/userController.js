@@ -89,13 +89,15 @@ const userController = {
                     return res.status(400).json({ msg: "Please fill in all farmer fields." });
                 }
 
+                console.log("savedUser._id--------------"+ savedUser._id);
                 const newFarmer = new Farmer({
-                    user: savedUser._id,
+                    userId: savedUser._id,
                     household,
                     orgName,
                     orgAddress
                 });
 
+                console.log("newFarmer--------------"+ newFarmer);
                 // Save the new farmer
                 await newFarmer.save();
             } else if (user.role === "officer") {

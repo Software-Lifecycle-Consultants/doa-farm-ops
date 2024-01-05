@@ -3,6 +3,11 @@ const { Schema, model } = mongoose;
 
 const farmerSchema = new Schema(
   {
+    userId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
     household: {
       type: String,
       required: true,
@@ -16,7 +21,7 @@ const farmerSchema = new Schema(
     orgAddress: {
       type: String,
       required: true,
-    }
+    },
   },
   {
     timestamps: true,
