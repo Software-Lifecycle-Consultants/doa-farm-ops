@@ -1,19 +1,19 @@
 export interface FarmerProfileData {
   nic: string;
   email: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   address: string;
-  phonenumber: string;
+  phoneNumber: string;
   household: string;
-  otherdetails: {
-    orgname: string,
-    orgaddress: string
+  otherDetails: {
+    orgName: string,
+    orgAddress: string
   },
   landDetails: {
     lname: string,
     district: string,
-    dsdivison: string,
+    dsDivision: string,
     irrigationMode: string,
   },
   createdBy: string,
@@ -23,19 +23,19 @@ export interface FarmerProfileData {
 export const sampleFarmerProfileData: FarmerProfileData = {
   nic: "99123456V",
   email: "sugath@gmail.com",
-  firstname: "Sugath",
-  lastname: "Jayaweera",
+  firstName: "Sugath",
+  lastName: "Jayaweera",
   address: "Pretty View Lane",
-  phonenumber: "+9471345678",
+  phoneNumber: "+9471345678",
   household: "3",
-  otherdetails: {
-    orgname: "Green Asia Pvt Ltd",
-    orgaddress: "115/A, Borella Road, Rajagiriya"
+  otherDetails: {
+    orgName: "Green Asia Pvt Ltd",
+    orgAddress: "115/A, Borella Road, Rajagiriya"
   },
   landDetails: {
     lname: "Udumaulla blk1",
     district: "Monaragala",
-    dsdivison: "Monaragal DV1",
+    dsDivision: "Monaragal DV1",
     irrigationMode: "Surface irrigation",
   },
   createdBy: "+9471345678",

@@ -50,8 +50,8 @@ export default function FarmerProfile() {
                   marginBottom: "4px",
                 }}
               >
-                {sampleFarmerProfileData.firstname}{" "}
-                {sampleFarmerProfileData.lastname}
+                {sampleFarmerProfileData.firstName}{" "}
+                {sampleFarmerProfileData.lastName}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -101,7 +101,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.firstname}
+                {sampleFarmerProfileData.firstName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -113,7 +113,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.lastname}
+                {sampleFarmerProfileData.lastName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -161,7 +161,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.phonenumber}
+                {sampleFarmerProfileData.phoneNumber}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -214,7 +214,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.otherdetails.orgname}
+                {sampleFarmerProfileData.otherDetails.orgName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
@@ -226,7 +226,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.otherdetails.orgaddress}
+                {sampleFarmerProfileData.otherDetails.orgAddress}
               </Typography>
             </Grid>
           </Grid>
