@@ -135,7 +135,7 @@ export default function AdditionalRegistration() {
       );
       if (response && response.status === 200) {
         dispatch(register(response.data))
-        router.push("./");
+        router.push("/login");
         console.log(response);
         console.log('Registration successful!');
       } else if (response && response.status === 400) {
