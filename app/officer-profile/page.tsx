@@ -47,8 +47,8 @@ export default function OfficerProfile() {
                   marginBottom: "4px",
                 }}
               >
-                {sampleOfficerProfileData.firstname}{" "}
-                {sampleOfficerProfileData.lastname}
+                {sampleOfficerProfileData.firstName}{" "}
+                {sampleOfficerProfileData.lastName}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -98,7 +98,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.firstname}
+                {sampleOfficerProfileData.firstName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -110,7 +110,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.lastname}
+                {sampleOfficerProfileData.lastName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -158,7 +158,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.phonenumber}
+                {sampleOfficerProfileData.phoneNumber}
               </Typography>
             </Grid>
           </Grid>

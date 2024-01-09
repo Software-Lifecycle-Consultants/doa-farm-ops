@@ -1,10 +1,10 @@
 export interface OfficerProfileData {
    nic: string;
    email: string;
-   firstname: string;
-   lastname: string;
+   firstName: string;
+   lastName: string;
    address: string;
-   phonenumber: string;
+   phoneNumber: string;
    organization: {
       name: string,
       address: string
@@ -20,10 +20,10 @@ export interface OfficerProfileData {
 export const sampleOfficerProfileData: OfficerProfileData = {
    nic: "99123456V",
    email: "sugath@gmail.com",
-   firstname: "Sugath",
-   lastname: "Jayaweera",
+   firstName: "Sugath",
+   lastName: "Jayaweera",
    address: "Pretty View Lane",
-   phonenumber: "+9471345678",
+   phoneNumber: "+9471345678",
    organization: {
       name: "Green Asia Pvt Ltd",
       address: "115/A, Borella Road, Rajagiriya"
