@@ -113,8 +113,8 @@ export default function AddLand() {
     
     const landData = formData;
 
-    router.push("/add-crop");
     dispatch(addLandAndCrop(landData));
+    router.push("/add-crop");
   };
 
   // const navigationToAddCrop = async (
