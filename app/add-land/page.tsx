@@ -110,11 +110,15 @@ export default function AddLand() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault();
-    
-    const landData = formData;
-
-    router.push("/add-crop");
-    dispatch(addLandAndCrop(landData));
+    try {
+      const landData = formData;
+      const action = addLandAndCrop(landData);
+      dispatch(action);
+      console.log("Dispatching action for land:", action);
+      router.push("/add-crop");
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
   };
 
   // const navigationToAddCrop = async (
