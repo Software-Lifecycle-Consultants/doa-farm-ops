@@ -13,6 +13,8 @@
     "lblNIC": "NIC අංකය",
     "hintTxtNIC": "NIC අංකය ඇතුලත් කරන්න",
     "lblRole": "භූමිකාව",
+    "lblFarmer": "ගොවියා",
+    "lblOfficer": "නිලධාරියා",
     "lblAddress": "ලිපිනය",
     "hintTxtAddress": "ලිපිනය ඇතුලත් කරන්න",
     "lblPassword": "මුරපදය",
@@ -23,6 +25,18 @@
     "txtPrivacyPolicy": "රහස්‍යතා ප්‍රතිපත්තිය",
     "capBtnNext": "ඉදිරියට යන්න",
     "txtAlreadyHaveAccount": "දැනටමත් ගිණුමක් තිබේද? පුරනය වන්න"
+  },
+  "additionalRegister": {
+    "txtOtherDetails": "ඔබේ අනෙකුත් විස්තර එක් කරන්න",
+    "txtFillDetails": "ඔබේ ගිණුම සෑදීමට පහත විස්තර පුරවන්න",
+    "lblHouseholds": "ගෘහ",
+    "hintTxtHouseholds": "ඔබේ නිවැසියන් ඇතුලත් කරන්න",
+    "lblUniversity": "සරසවිය",
+    "hintTxtUniversity": "ඔබේ විශ්වවිද්‍යාලයට ඇතුලත් කරන්න",
+    "lblOrganizationName": "සංවිධානයේ නම",
+    "hintTxtOrg": "සංවිධානයේ නම ඇතුලත් කරන්න",
+    "lblOrganizationAddress": "සංවිධාන ලිපිනය",
+    "hintTxtOrgAddress": "සංවිධාන ලිපිනය ඇතුලත් කරන්න"
   },
   "login": {
     "txtWelcome": "ආයුබෝවන් DOA",

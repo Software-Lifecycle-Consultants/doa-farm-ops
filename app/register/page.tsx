@@ -168,9 +168,9 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="phoneNumber"
-                placeholder="Enter phone number"
+                placeholder={i18n.t("register.hintTxtPhoneNo")}
                 name="phoneNumber"
-                autoComplete={i18n.t("register.hintTxtPhoneNo")}
+                autoComplete="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={(e) => handleChangeUserRegister(e, "phoneNumber")}
               />
@@ -181,9 +181,9 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="nic"
-                placeholder="Enter NIC Number"
+                placeholder={i18n.t("register.hintTxtNIC")}
                 name="nic"
-                autoComplete={i18n.t("register.hintTxtNIC")}
+                autoComplete="nic"
                 value={formData.nic}
                 onChange={(e) => handleChangeUserRegister(e, "nic")}
               />
@@ -194,9 +194,9 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="address"
-                placeholder="Enter Address"
+                placeholder={i18n.t("register.hintTxtAddress")}
                 name="address"
-                autoComplete={i18n.t("register.hintTxtAddress")}
+                autoComplete="address"
                 value={formData.address}
                 onChange={(e) => handleChangeUserRegister(e, "address")}
               />
@@ -218,12 +218,12 @@ export default function SignUp() {
                   <FormControlLabel
                     value="farmer"
                     control={<Radio />}
-                    label="Farmer"
+                    label={i18n.t("register.lblFarmer")}
                   />
                   <FormControlLabel
                     value="officer"
                     control={<Radio />}
-                    label="Officer"
+                    label={i18n.t("register.lblOfficer")}
                   />
                 </RadioGroup>
               </FormControl>
@@ -252,7 +252,6 @@ export default function SignUp() {
                 label={<InputLabel disabled={true} />}
               />
             </Grid>
-            
           </Grid>
           {/* Next Button for Registration */}
           <Button

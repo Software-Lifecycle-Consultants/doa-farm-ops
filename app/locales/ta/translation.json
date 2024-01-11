@@ -13,6 +13,8 @@
     "lblNIC": "NIC எண்",
     "hintTxtNIC": "NIC எண்ணை உள்ளிடவும்",
     "lblRole": "Role",
+    "lblFarmer": "உழவர்",
+    "lblOfficer": "அதிகாரி",
     "lblAddress": "முகவரி",
     "hintTxtAddress": "முகவரியை உள்ளிடவும்",
     "lblPassword": "கடவுச்சொல்",
@@ -23,6 +25,18 @@
     "txtPrivacyPolicy": "தனியுரிமைக் கொள்கை",
     "capBtnRegister": "உள்நுழை",
     "txtAlreadyHaveAccount": "ஏற்கனவே கணக்கு உள்ளதா? உள்நுழைக"
+  },
+  "additionalRegister": {
+    "txtOtherDetails": "உங்கள் மற்ற விவரங்களைச் சேர்க்கவும்",
+    "txtFillDetails": "உங்கள் கணக்கை உருவாக்க கீழே உள்ள விவரங்களை நிரப்பவும்",
+    "lblHouseholds": "குடும்பங்கள்",
+    "hintTxtHouseholds": "உங்கள் வீட்டுக்காரர்களை உள்ளிடவும்",
+    "lblUniversity": "பல்கலைக்கழகம்",
+    "hintTxtUniversity": "உங்கள் பல்கலைக்கழகத்தில் நுழையவும்",
+    "lblOrganizationName": "நிறுவனத்தின் பெயர்",
+    "hintTxtOrg": "நிறுவனத்தின் பெயரை உள்ளிடவும்",
+    "lblOrganizationAddress": "நிறுவன முகவரி",
+    "hintTxtOrgAddress": "நிறுவன முகவரியை உள்ளிடவும்"
   },
   "login": {
     "txtWelcome": "வரவேற்கிறோம் DOA இயங்குதளம்",

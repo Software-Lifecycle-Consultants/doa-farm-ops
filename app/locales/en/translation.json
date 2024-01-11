@@ -13,6 +13,8 @@
     "lblNIC": "NIC Number",
     "hintTxtNIC": "Enter NIC Number",
     "lblRole": "Role",
+    "lblFarmer": "Farmer",
+    "lblOfficer": "Officer",
     "lblAddress": "Address",
     "hintTxtAddress": "Enter Address",
     "lblPassword": "Password",
@@ -23,6 +25,18 @@
     "txtPrivacyPolicy": "Privacy Policy",
     "capBtnNext": "Next",
     "txtAlreadyHaveAccount": "Already have an account? Login"
+  },
+  "additionalRegister": {
+    "txtOtherDetails": "Add your other details",
+    "txtFillDetails": "Fill the details below to create your account",
+    "lblHouseholds": "Households",
+    "hintTxtHouseholds": "Enter your householders",
+    "lblUniversity": "University",
+    "hintTxtUniversity": "Enter your university",
+    "lblOrganizationName": "Organization Name",
+    "hintTxtOrg": "Enter organization name",
+    "lblOrganizationAddress": "Organization Address",
+    "hintTxtOrgAddress": "Enter organization address"
   },
   "login": {
     "txtWelcome": "Welcome DOA Platform",
