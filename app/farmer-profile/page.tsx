@@ -56,6 +56,7 @@ export default function FarmerProfile() {
       const response = await axios.get(`http://localhost:5000/api/get/user/${_id}`);
       console.log('Fetch response-------- ', response);
       if (response.status === 200) {
+        
         setUserData(response.data);
       }
     } catch (error) {
@@ -216,7 +217,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.farmerDetails.household}
+                {UserData.farmerDetails && UserData.farmerDetails.household}
               </Typography>
             </Grid>
           </Grid>
@@ -257,7 +258,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.farmerDetails.orgName}
+                {UserData.farmerDetails && UserData.farmerDetails.orgName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
@@ -269,7 +270,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.farmerDetails.orgAddress}
+                {UserData.farmerDetails && UserData.farmerDetails.orgAddress}
               </Typography>
             </Grid>
           </Grid>

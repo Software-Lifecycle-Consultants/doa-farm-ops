@@ -74,7 +74,7 @@ export default function SignIn() {
         password: formData.password
       });
       if (response && response.status === 200) {
-        console.log(response);
+        console.log("response user data------------", response);
         setResponseData(response.data);
         dispatch(authLogin(response.data));
         router.push("./");

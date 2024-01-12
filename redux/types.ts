@@ -61,8 +61,22 @@ interface Officer {
 }
 
 export interface UserWithOfficer {
-  user: User,
-  officer: Officer
+  user: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    nic: string;
+    role: string;
+    address: string;
+    password: string;
+  };
+  officerDetails: {
+    orgName: string;
+    orgAddress: string;
+    university: string;
+  };
 }
 
 export interface UserWithFarmer {

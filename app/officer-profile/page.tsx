@@ -4,24 +4,74 @@ import * as React from "react";
 import { Grid, Box, Button, Typography } from "@mui/material";
 import ProfileTitle from "../../components/ProfileTitle";
 import { EditNote as EditNoteIcon, AccountCircle as AccountCircleIcon } from "@mui/icons-material";
-
-// Import the router object to handle routing
 import { useRouter } from "next/navigation";
-
-//Import necessary date from relevent data files
-import {
-  sampleOfficerProfileData,
-} from "../../data/officerProfile";
-
 import { useTranslation } from 'react-i18next';
 import { btnBackgroundColor, customGridStyles1, customGridStyles2 } from "@/styles/customStyles";
 import { CustomBox2 } from "@/Theme";
+import { selectAuth } from "@/redux/authSlice";
+import { useSelector } from "react-redux";
+import axios from 'axios';
+import { UserWithOfficer } from "@/redux/types";
+import { useDispatch } from "react-redux";
+import { OfficerRegister, selectOfficer } from "@/redux/officerSlice";
+import store from "@/redux/store";
+import { register } from "@/redux/userSlice";
 
 // OfficerProfile component renders a profile page for an officer.
 export default function OfficerProfile() {
   const router = useRouter();
+  const dispatch = useDispatch();
 
   const { t } = useTranslation();
+
+  // Fetch the authentication status from Redux store
+  const { user } = useSelector(selectAuth);
+
+  // Initialize state for user and officer details
+  const [UserData, setUserData] = React.useState<UserWithOfficer>({
+    user: {
+        _id: "",
+        firstName: "",
+        lastName: "",
+        email: "",
+        phoneNumber: "",
+        nic: "",
+        role: "",
+        address: "",
+        password: ""
+    },
+    officerDetails: {
+        orgName: "",
+        orgAddress: "",
+        university: ""
+    }
+});
+
+// Function to fetch user data based on user ID
+async function fetchData(_id: any) {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/get/user/${_id}`);
+    console.log('Fetch response-------- ', response);
+    
+    if (response.status === 200) {
+      dispatch(register(response.data.user));
+      dispatch(OfficerRegister(response.data.officerDetails));
+      // Get officer data from the Redux store
+      const officerData = selectOfficer(store.getState());
+      console.log('officerData-----------:', officerData);
+      setUserData(response.data);
+    }
+  } catch (error) {
+    console.log('Error fetching data:', error);
+    return error;
+  }
+  
+}
+
+React.useEffect(() => {
+  fetchData(user._id);
+}, []);
+
   // Return the JSX for rendering
   return (
     <>
@@ -47,8 +97,8 @@ export default function OfficerProfile() {
                   marginBottom: "4px",
                 }}
               >
-                {sampleOfficerProfileData.firstName}{" "}
-                {sampleOfficerProfileData.lastName}
+                {UserData.user.firstName}{" "}
+                {UserData.user.lastName}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -98,7 +148,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.firstName}
+                {UserData.user.firstName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -110,7 +160,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.lastName}
+                {UserData.user.lastName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -122,7 +172,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.email}
+                {UserData.user.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -134,7 +184,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.nic}
+                {UserData.user.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -146,7 +196,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.address}
+                {UserData.user.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -158,7 +208,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.phoneNumber}
+                {UserData.user.phoneNumber}
               </Typography>
             </Grid>
           </Grid>
@@ -199,7 +249,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.organization.name}
+                {UserData.officerDetails.orgName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
@@ -211,7 +261,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.organization.address}
+                {UserData.officerDetails.orgAddress}
               </Typography>
             </Grid>
 
@@ -229,7 +279,7 @@ export default function OfficerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleOfficerProfileData.education.university}
+                {UserData.officerDetails.university}
               </Typography>
             </Grid>
           </Grid>
