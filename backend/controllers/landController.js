@@ -4,36 +4,25 @@ require("dotenv").config();
 
 const landController = {
   createLand: async (req, res) => {
-    console.log("request body" + req.body);
     try {
       const {
-        landId,
         landName,
         district,
         dsDivision,
         landRent,
         irrigationMode,
-      } = req.body; 
+      } = req.body;
       console.log("land name: " + landName);
-      // const ExistingLand = await Land.findOne({ landName });
-      // if (ExistingLand)
-      //   return res.status(400).json({
-      //     message:
-      //       "Someone has a land with the same land Id.",
-      //   });
+      const ExistingLand = await Land.findOne({ landName });
+      if (ExistingLand)
+        return res.status(400).json({
+          message: "Someone has a land with the same land Id.",
+        });
 
-      // if (
-      //   !landId ||
-      //   !landName ||
-      //   !district ||
-      //   !dsDivision ||
-      //   !landRent ||
-      //   !irrigationMode 
-      // )
-      //   return res.status(400).json({ msg: "Please fill in all fields." });
+      if (!landName || !district || !dsDivision || !landRent || !irrigationMode)
+        return res.status(400).json({ msg: "Please fill in all fields." });
 
       const newLand = new Land({
-        landId,
         landName,
         district,
         dsDivision,
@@ -41,16 +30,15 @@ const landController = {
         irrigationMode,
       });
 
-      const account = await newLand.save();
-      if (account) {
+      const savedLand = await newLand.save();
+      if (savedLand) {
         res.status(200).json({
-          _id: account.id,
-          landId: account.landId,
-          landName: account.landName,
-          district: account.district,
-          dsDivision: account.dsDivision,
-          landRent: account.landRent,
-          irrigationMode: account.irrigationMode,
+          _id: savedLand.id,
+          landName: savedLand.landName,
+          district: savedLand.district,
+          dsDivision: savedLand.dsDivision,
+          landRent: savedLand.landRent,
+          irrigationMode: savedLand.irrigationMode,
         });
       } else {
         return res.status(400).json({ msg: "Invalid land data" });
@@ -63,7 +51,18 @@ const landController = {
   addCropToLand: async (req, res) => {
     try {
       const id = req.params.id;
-      const { cropName, season, cropType, totalSoldQty, totalIncome, reservedQtyHome, reservedQtySeed, noOfPicks, isCultivationLoan, loanObtained } = req.body;
+      const {
+        cropName,
+        season,
+        cropType,
+        totalSoldQty,
+        totalIncome,
+        reservedQtyHome,
+        reservedQtySeed,
+        noOfPicks,
+        isCultivationLoan,
+        loanObtained,
+      } = req.body;
 
       const ExistingCrop = await Crop.findOne({
         cropName: cropName,
@@ -71,8 +70,7 @@ const landController = {
       const ExistingLand = await Land.findOne({ _id: id });
       if (ExistingCrop)
         return res.status(400).json({
-          message:
-            "Crop with this crop name already exists in the database.",
+          message: "Crop with this crop name already exists in the database.",
         });
 
       if (!ExistingLand) {
@@ -82,16 +80,16 @@ const landController = {
       }
 
       const newCrop = new Crop({
-        cropName, 
-        season, 
-        cropType, 
-        totalSoldQty, 
-        totalIncome, 
-        reservedQtyHome, 
-        reservedQtySeed, 
-        noOfPicks, 
-        isCultivationLoan, 
-        loanObtained
+        cropName,
+        season,
+        cropType,
+        totalSoldQty,
+        totalIncome,
+        reservedQtyHome,
+        reservedQtySeed,
+        noOfPicks,
+        isCultivationLoan,
+        loanObtained,
       });
       const newLandRes = await newCrop.save();
       console.log(" addCropToLand: newLandRes:", newLandRes);
@@ -102,10 +100,7 @@ const landController = {
           data: newCrop,
         });
 
-        await Land.updateOne(
-          { _id: id },
-          { $push: { crops: newCrop._id } }
-        );
+        await Land.updateOne({ _id: id }, { $push: { crops: newCrop._id } });
       }
     } catch (err) {
       return res.status(500).json({ message: err.message });
@@ -165,7 +160,7 @@ const landController = {
       });
 
       const savedCrop = await newCrop.save();
-      
+
       res.status(200).json({
         message: "Land and crop details added successfully.",
         land: savedLand,

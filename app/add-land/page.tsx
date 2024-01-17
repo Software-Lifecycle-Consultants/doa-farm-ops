@@ -50,7 +50,7 @@ export default function AddLand() {
 
   // Define the structure of the form data
   interface FormData {
-    landId: string;
+    // landId: string;
     landName: string;
     district: string;
     dsDivision: string;
@@ -59,7 +59,7 @@ export default function AddLand() {
   }
 
   const [formData, setFormData] = useState<FormData>({
-    landId: "",
+    // landId: "",
     landName: "",
     district: "",
     dsDivision: "",
@@ -89,22 +89,11 @@ export default function AddLand() {
 
       // Get land data from the Redux store
       const landData = selectAddLand(store.getState());
-      console.log("----------selectAddLand----------------" + landData);
-      const landDataJSON = JSON.stringify(landData);
-      console.log("----------landDataJSON----------------" + landDataJSON);
+      const landDataObject = landData[landData.length - 1];
+      console.log("----------getAddLandFromRedux----------------" , landDataObject);
 
       const response = await axios.post(
-        "http://localhost:5000/api/land/create",
-        JSON.stringify(landData)
-
-        // {
-        //   landId: formData.landId,
-        //   landName: formData.landName,
-        //   district: formData.district,
-        //   dsDivision: formData.dsDivision,
-        //   landRent: formData.landRent,
-        //   irrigationMode: formData.irrigationMode,
-        // }
+        "http://localhost:5000/api/land/create", landDataObject
       );
       if (response && response.status === 200) {
         console.log(response);
@@ -144,7 +133,7 @@ export default function AddLand() {
   ) => {
     setFormData({
       ...formData,
-      landId: (landDetails.length + 1).toString(),
+      // landId: (landDetails.length + 1).toString(),
       [field]: event.target.value,
     });
   };
