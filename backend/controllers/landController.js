@@ -4,6 +4,7 @@ require("dotenv").config();
 
 const landController = {
   createLand: async (req, res) => {
+    console.log("request body" + req.body);
     try {
       const {
         landId,
@@ -13,22 +14,23 @@ const landController = {
         landRent,
         irrigationMode,
       } = req.body; 
-      const ExistingLand = await Land.findOne({ landName });
-      if (ExistingLand)
-        return res.status(400).json({
-          message:
-            "Someone has a land with the same land Id.",
-        });
+      console.log("land name: " + landName);
+      // const ExistingLand = await Land.findOne({ landName });
+      // if (ExistingLand)
+      //   return res.status(400).json({
+      //     message:
+      //       "Someone has a land with the same land Id.",
+      //   });
 
-      if (
-        !landId ||
-        !landName ||
-        !district ||
-        !dsDivision ||
-        !landRent ||
-        !irrigationMode 
-      )
-        return res.status(400).json({ msg: "Please fill in all fields." });
+      // if (
+      //   !landId ||
+      //   !landName ||
+      //   !district ||
+      //   !dsDivision ||
+      //   !landRent ||
+      //   !irrigationMode 
+      // )
+      //   return res.status(400).json({ msg: "Please fill in all fields." });
 
       const newLand = new Land({
         landId,

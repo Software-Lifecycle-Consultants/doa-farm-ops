@@ -1,31 +1,48 @@
 // Import the createSlice function from Redux Toolkit.
 import { createSlice } from "@reduxjs/toolkit";
 import { RootState } from "./types";
+import { addCrop } from "./cropSlice";
+
+interface Land {
+  landId: string;
+  landName: string;
+  district: string;
+  dsDivision: string;
+  landRent: string;
+  irrigationMode: string;
+}
+
+interface LandAndCrop extends Land {
+  crops: RootState["crop"]; // Updated to include crops in LandAndCrop
+}
 
 // Define the initial state of the 'land' slice.
 const initialState: RootState["land"] = [];
 
 const landSlice = createSlice({
-  name: "land", // A unique name for this slice, used in the Redux store.
-  initialState, // The initial state of the 'land' slice.
+  name: "land",
+  initialState,
   reducers: {
     addLand: (state, action) => {
-      state.push(action.payload); // Add a new land to the state using the payload.
+      state.push(action.payload);
     },
     updateLand: (state, action) => {
       const { landId } = action.payload;
       const index = state.findIndex((land) => land.landId === landId);
       if (index !== -1) {
-        state[index] = {
-          ...action.payload, // Update an existing land in the state with new data.
-        };
+        state[index] = { ...action.payload };
       }
     },
     deleteLand: (state, action) => {
       const landIdToDelete = action.payload;
-      // Filter out the land to delete based on landId.
       state = state.filter((land) => land.landId !== landIdToDelete);
-      return state;
+    },
+    addLandWithCrop: (state, action) => {
+      const { landData, cropData } = action.payload;
+      state.push({ ...landData, crops: [] }); // Initialize crops as an empty array
+      const landId = landData.landId;
+      const updatedCropData = { ...cropData, landId };
+      // addCrop(state, updatedCropData); // Call addCrop directly
     },
   },
 });

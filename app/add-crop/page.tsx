@@ -25,6 +25,10 @@ import axios from 'axios';
 import { useSelector } from "react-redux";
 import { addLandAndCropSuccess } from "@/redux/landAndCropSlice";
 import i18n from "../config/i18n";
+import store from "@/redux/store";
+// Import the necessary selectors from the respective slices
+import { selectAddLand } from "@/redux/landSlice";
+import { selectAddCrop } from "@/redux/cropSlice";
 
 // Styles for labels
 const styles = {
@@ -50,7 +54,7 @@ export default function AddCrop() {
   
   const landToBeAdded = useSelector((state: any) => state.landAndCrop.landToBeAdded);
   const isLandToBeAdded = useSelector((state: any) => state.landAndCrop.isLandToBeAdded);
-  console.log(landToBeAdded);
+  // console.log(landToBeAdded);
 
   interface FormData {
     cropName: string | null;
@@ -137,14 +141,43 @@ export default function AddCrop() {
   const navigationToAddLand = () => {
     router.push("/add-land");
   };
+
+//Decare variable to append landData +  Crop data 
+    let landCropData;
+
   //Function to navigate to my crops page clicking save button
   const handleOnClickAddCrop = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
   event.preventDefault(); // Prevent the default form submission behavior
+  // Get land data from the Redux store
+  const landData = selectAddLand(store.getState());
+  console.log("----------selectAddLand----------------" + landData);
+  const landDataJSON = JSON.stringify(landData);
+  console.log("----------landDataJSON----------------" + landDataJSON);
+
+  const cropData = { landId, cropDetails: formData };
+  const action = addCrop(cropData);
+  dispatch(action);
+
+
+  const cropDatafromRedux = selectAddCrop(store.getState());
+  console.log("----------selectAddLand----------------" + cropDatafromRedux);
+  const cropDatafromReduxXX = JSON.stringify(cropDatafromRedux);
+  console.log("----------cropDatafromRedux----------------" + cropDatafromReduxXX);
+
+
+  landCropData = {
+    landData,
+    cropData,
+  };
+
+  console.log("------------landCropData-----------" + landCropData);
 
     if (isLandToBeAdded) {
       try {
+
+        console.log("-----------------Executing landAndCRop-------------------")
         const response = await axios.post(
           `http://localhost:5000/api/landAndCrop/add`,{
             landId: landToBeAdded.landId,
@@ -169,7 +202,7 @@ export default function AddCrop() {
           console.log(response);
           setResponseData(response.data);
           router.push("/my-crops"); //Navigate to my crops page
-          dispatch(addLandAndCropSuccess());
+          // dispatch(addLandAndCropSuccess());
         } else if (response && response.status === 400) {
           console.error("Failed to fetch data");
         }
@@ -178,7 +211,7 @@ export default function AddCrop() {
       }
     } else {
       // Simulate add crop action by creating a user data object.
-      const cropData = { landId, cropDetails: formData };
+      // const cropData = { landId, cropDetails: formData };
 
       try {
         const response = await axios.put(
@@ -201,7 +234,7 @@ export default function AddCrop() {
           setResponseData(response.data);
           router.push("/my-crops"); //Navigate to my crops page
           // Dispatch the 'crop' action from the 'cropSlice' with the user data.
-          dispatch(addCrop(cropData));
+          // dispatch(addCrop(cropData));
         } else if (response && response.status === 400) {
           console.error("Failed to fetch data");
         }
