@@ -110,7 +110,6 @@ const landController = {
   addLandAndCrop: async (req, res) => {
     try {
       const {
-        landId,
         landName,
         district,
         dsDivision,
@@ -127,7 +126,7 @@ const landController = {
         isCultivationLoan,
         loanObtained,
       } = req.body;
-
+      console.log("------req from FE-------", req.body);
       const existingLand = await Land.findOne({ landName });
       if (existingLand) {
         return res.status(400).json({
@@ -136,7 +135,6 @@ const landController = {
       }
 
       const newLand = new Land({
-        landId,
         landName,
         district,
         dsDivision,

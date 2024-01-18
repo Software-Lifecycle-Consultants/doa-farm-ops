@@ -47,13 +47,16 @@ export default function AddCrop() {
 
   // State variables for form fields
   const [value, setValue] = React.useState("female");
-  const [landId, setLandId] = useState("");
+  // const [landId, setLandId] = useState("");
 
   const [responseData, setResponseData] = useState(null);
 
-  
-  const landToBeAdded = useSelector((state: any) => state.landAndCrop.landToBeAdded);
-  const isLandToBeAdded = useSelector((state: any) => state.landAndCrop.isLandToBeAdded);
+  const landToBeAdded = useSelector(
+    (state: any) => state.landAndCrop.landToBeAdded
+  );
+  const isLandToBeAdded = useSelector(
+    (state: any) => state.landAndCrop.isLandToBeAdded
+  );
   // console.log(landToBeAdded);
 
   interface FormData {
@@ -83,7 +86,7 @@ export default function AddCrop() {
   });
 
   interface FormLandCrop {
-    landId: string;
+    // landId: string;
     landName: string;
     district: string;
     dsDivision: string;
@@ -102,7 +105,7 @@ export default function AddCrop() {
   }
 
   const [formLandCrop, setFormLandCrop] = useState<FormLandCrop>({
-    landId: landToBeAdded.landId,
+    // landId: landToBeAdded.landId,
     landName: landToBeAdded.landName,
     district: landToBeAdded.district,
     dsDivision: landToBeAdded.dsDivision,
@@ -123,9 +126,9 @@ export default function AddCrop() {
   const dispatch = useDispatch();
 
   // Handle selection change for "Select Land" dropdown
-  const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLandId(event.target.value);
-  };
+  // const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   setLandId(event.target.value);
+  // };
   // Handle selection change for "Cultivation loan obtained?" dropdown
   const handleCultivationLoanChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -142,61 +145,43 @@ export default function AddCrop() {
     router.push("/add-land");
   };
 
-//Decare variable to append landData +  Crop data 
-    let landCropData;
+  //Decare variable to append landData +  Crop data
+  let landCropData;
 
   //Function to navigate to my crops page clicking save button
   const handleOnClickAddCrop = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
-  event.preventDefault(); // Prevent the default form submission behavior
-  // Get land data from the Redux store
-  const landData = selectAddLand(store.getState());
-  console.log("----------selectAddLand----------------" + landData);
-  const landDataJSON = JSON.stringify(landData);
-  console.log("----------landDataJSON----------------" + landDataJSON);
+    event.preventDefault(); // Prevent the default form submission behavior
+    // Get land data from the Redux store
+    const landData = selectAddLand(store.getState());
+    const landDataObject = landData[landData.length - 1];
+    console.log("----------selectAddLand----------------", landDataObject);
 
-  const cropData = { landId, cropDetails: formData };
-  const action = addCrop(cropData);
-  dispatch(action);
+    // const cropData = { cropDetails: formData };
+    const action = addCrop(formData);
+    dispatch(action);
 
+    const cropDatafromRedux = selectAddCrop(store.getState());
+    const cropDataObject = cropDatafromRedux[cropDatafromRedux.length - 1];
+    console.log("----------selectAddCrop----------------", cropDataObject);
 
-  const cropDatafromRedux = selectAddCrop(store.getState());
-  console.log("----------selectAddLand----------------" + cropDatafromRedux);
-  const cropDatafromReduxXX = JSON.stringify(cropDatafromRedux);
-  console.log("----------cropDatafromRedux----------------" + cropDatafromReduxXX);
+    const landCropData = {
+      ...landDataObject,
+      ...cropDataObject,
+    };
 
+    console.log(
+      "------------landCropData-----------" + JSON.stringify(landCropData)
+    );
 
-  landCropData = {
-    landData,
-    cropData,
-  };
-
-  console.log("------------landCropData-----------" + landCropData);
-
-    if (isLandToBeAdded) {
       try {
-
-        console.log("-----------------Executing landAndCRop-------------------")
+        console.log(
+          "-----------------Executing landAndCRop-------------------"
+        );
         const response = await axios.post(
-          `http://localhost:5000/api/landAndCrop/add`,{
-            landId: landToBeAdded.landId,
-            landName: landToBeAdded.landName,
-            district: landToBeAdded.district,
-            dsDivision: landToBeAdded.dsDivision,
-            landRent: landToBeAdded.landRent,
-            irrigationMode: landToBeAdded.irrigationMode,
-            cropName: formData.cropName,
-            season: formData.season,
-            cropType: formData.cropType,
-            totalSoldQty: formData.totalSoldQty,
-            totalIncome: formData.totalIncome,
-            reservedQtyHome: formData.reservedQtyHome,
-            reservedQtySeed: formData.reservedQtySeed,
-            noOfPicks: formData.noOfPicks,
-            isCultivationLoan: formData.isCultivationLoan,
-            loanObtained: formData.loanObtained,
-          }
+          `http://localhost:5000/api/landAndCrop/add`,
+          landCropData
         );
         if (response && response.status === 200) {
           console.log(response);
@@ -209,41 +194,39 @@ export default function AddCrop() {
       } catch (error) {
         console.error("Error fetching data:", error);
       }
-    } else {
-      // Simulate add crop action by creating a user data object.
-      // const cropData = { landId, cropDetails: formData };
-
-      try {
-        const response = await axios.put(
-          `http://localhost:5000/api/land/addCrop/${landId}`,
-          {
-            cropName: formData.cropName,
-            season: formData.season,
-            cropType: formData.cropType,
-            totalSoldQty: formData.totalSoldQty,
-            totalIncome: formData.totalIncome,
-            reservedQtyHome: formData.reservedQtyHome,
-            reservedQtySeed: formData.reservedQtySeed,
-            noOfPicks: formData.noOfPicks,
-            isCultivationLoan: formData.isCultivationLoan,
-            loanObtained: formData.loanObtained,
-          }
-        );
-        if (response && response.status === 200) {
-          console.log(response);
-          setResponseData(response.data);
-          router.push("/my-crops"); //Navigate to my crops page
-          // Dispatch the 'crop' action from the 'cropSlice' with the user data.
-          // dispatch(addCrop(cropData));
-        } else if (response && response.status === 400) {
-          console.error("Failed to fetch data");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    }
   };
 
+  // Simulate add crop action by creating a user data object.
+  // const cropData = { landId, cropDetails: formData };
+
+  // try {
+    // const response = await axios.put(
+    //   `http://localhost:5000/api/land/addCrop/${landId}`,
+    //   {
+    //     cropName: formData.cropName,
+    //     season: formData.season,
+    //     cropType: formData.cropType,
+    //     totalSoldQty: formData.totalSoldQty,
+    //     totalIncome: formData.totalIncome,
+    //     reservedQtyHome: formData.reservedQtyHome,
+    //     reservedQtySeed: formData.reservedQtySeed,
+    //     noOfPicks: formData.noOfPicks,
+    //     isCultivationLoan: formData.isCultivationLoan,
+    //     loanObtained: formData.loanObtained,
+    //   }
+    // );
+    // if (response && response.status === 200) {
+    //   console.log(response);
+    //   setResponseData(response.data);
+    //   router.push("/my-crops"); //Navigate to my crops page
+    //   // Dispatch the 'crop' action from the 'cropSlice' with the user data.
+    //   // dispatch(addCrop(cropData));
+    // } else if (response && response.status === 400) {
+    //   console.error("Failed to fetch data");
+    // }
+  // } catch (error) {
+  //   console.error("Error fetching data:", error);
+  // }
 
   //Function to navigate to my crops page
   const navigationToMyCrops = () => {
@@ -287,8 +270,8 @@ export default function AddCrop() {
                   fullWidth
                   label="Select Land"
                   defaultValue={"land"}
-                  value={landId}
-                  onChange={handleOnChangeLand}
+                  // value={landId}
+                  // onChange={handleOnChangeLand}
                   variant="outlined"
                 >
                   <MenuItem value="">Select an Option</MenuItem>
