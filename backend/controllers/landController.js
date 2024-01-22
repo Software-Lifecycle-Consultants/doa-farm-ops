@@ -48,6 +48,34 @@ const landController = {
     }
   },
 
+  updateLand: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const { landName, district, dsDivision, landRent, irrigationMode } = req.body;
+      console.log("update land name: " + landName);
+      const ExistingLand = await Land.findOne({ landName });
+      if (ExistingLand)
+        return res.status(400).json({
+          message: "Someone has a land with the same land Id.",
+        });
+
+      if (!landName || !district || !dsDivision || !landRent || !irrigationMode)
+        return res.status(400).json({ msg: "Please fill in all fields." });
+
+       await Land.findOneAndUpdate(
+         { _id: id },
+         { landName, district, dsDivision, landRent, irrigationMode }
+      );
+       res.json({
+         message: "Land update success",
+         data: { landName, district, dsDivision, landRent, irrigationMode },
+       });
+      
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
   addCropToLand: async (req, res) => {
     try {
       const id = req.params.id;
@@ -173,6 +201,17 @@ const landController = {
       return res.status(500).json({ message: err.message });
     }
   },
+
+  deleteLand: async (req, res) => {
+    try {
+      const id = req.params.id;
+
+      await Land.findByIdAndDelete({ _id: id });
+      res.json({ message: "Land delete success !" });
+    } catch (error) {
+      return res.status(500).json({ message: error.message });
+    }
+  }
 };
 
 module.exports = landController;
