@@ -65,7 +65,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     event.preventDefault(); // Prevent the default form submission behavior
     // Simulate an update land action by creating a land data object.
     const landData = { landId, ...formData };
-
+    console.log("🚀 ~ UpdateLand ~ landData:", landData);
     dispatch(updateLand(landData));
     router.push("/my-crops");
   };

@@ -24,6 +24,7 @@ import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectFarmer } from "@/redux/farmerSlice";
 import { selectOfficer } from"@/redux/officerSlice";
+import { register } from "@/redux/authSlice";
 
 export default function AdditionalRegistration() {
 
@@ -32,6 +33,7 @@ export default function AdditionalRegistration() {
   const [termsAgreementChecked, setTermsAgreementChecked] = useState(false);
   const router = useRouter();
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   // Interface for the form data
   interface FarmerFormData {
@@ -132,8 +134,9 @@ export default function AdditionalRegistration() {
           }
         }
       );
-      router.push("/login");
       if (response && response.status === 200) {
+        dispatch(register(response.data))
+        router.push("/login");
         console.log(response);
         console.log('Registration successful!');
       } else if (response && response.status === 400) {
@@ -152,96 +155,112 @@ export default function AdditionalRegistration() {
         {/* Additional Registration Form */}
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
-            Add your other details
+            {i18n.t("additionalRegister.txtOtherDetails")}
           </Typography>
           <Typography component="h1" variant="subtitle1" gutterBottom>
-          Fill the details below to create your account
+            {i18n.t("additionalRegister.txtFillDetails")}
           </Typography>
         </Box>
         {/*form fields */}
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             {selectedRole === "farmer" && (
-            <>
-            <Grid item xs={12}>
-              <Typography>Households</Typography>
-              <TextField
-                required
-                fullWidth
-                id="household"
-                placeholder="Enter your householders"
-                name="household"
-                autoComplete="household"
-                value={farmerFormData.household}
-                onChange={(e) => handleChangeUserRegister(e, "household")}
-              />
-            </Grid>
-            </>
+              <>
+                <Grid item xs={12}>
+                  <Typography>
+                    {i18n.t("additionalRegister.lblHouseholds")}
+                  </Typography>
+                  <TextField
+                    required
+                    fullWidth
+                    id="household"
+                    placeholder={i18n.t("additionalRegister.hintTxtHouseholds")}
+                    name="household"
+                    autoComplete="household"
+                    value={farmerFormData.household}
+                    onChange={(e) => handleChangeUserRegister(e, "household")}
+                  />
+                </Grid>
+              </>
             )}
             {selectedRole === "officer" && (
-            <>
-            <Grid item xs={12}>
-              <Typography>University</Typography>
-              <TextField
-                required
-                fullWidth
-                id="university"
-                placeholder="Enter your university"
-                name="university"
-                autoComplete="university"
-                value={officerFormData.university}
-                onChange={(e) => handleChangeUserRegister(e, "university")}
-              />
-            </Grid>
-            </>
+              <>
+                <Grid item xs={12}>
+                  <Typography>
+                    {i18n.t("additionalRegister.lblUniversity")}
+                  </Typography>
+                  <TextField
+                    required
+                    fullWidth
+                    id="university"
+                    placeholder={i18n.t("additionalRegister.hintTxtUniversity")}
+                    name="university"
+                    autoComplete="university"
+                    value={officerFormData.university}
+                    onChange={(e) => handleChangeUserRegister(e, "university")}
+                  />
+                </Grid>
+              </>
             )}
             <Grid item xs={12}>
-              <Typography>Organization Name</Typography>
+              <Typography>
+                {i18n.t("additionalRegister.lblOrganizationName")}
+              </Typography>
               <TextField
                 required
                 fullWidth
                 id="orgName"
-                placeholder="Enter organization name"
+                placeholder={i18n.t("additionalRegister.hintTxtOrg")}
                 name="orgName"
                 autoComplete="orgName"
-                value={selectedRole === 'farmer' ? farmerFormData.orgName : officerFormData.orgName}
+                value={
+                  selectedRole === "farmer"
+                    ? farmerFormData.orgName
+                    : officerFormData.orgName
+                }
                 onChange={(e) => handleChangeUserRegister(e, "orgName")}
               />
             </Grid>
             <Grid item xs={12}>
-              <Typography>Organization Address</Typography>
+              <Typography>
+                {i18n.t("additionalRegister.lblOrganizationAddress")}
+              </Typography>
               <TextField
                 required
                 fullWidth
                 id="orgAddress"
-                placeholder="Enter organization address"
+                placeholder={i18n.t("additionalRegister.hintTxtOrgAddress")}
                 name="orgAddress"
                 autoComplete="orgAddress"
-                value={selectedRole === 'farmer' ? farmerFormData.orgAddress : officerFormData.orgAddress}
+                value={
+                  selectedRole === "farmer"
+                    ? farmerFormData.orgAddress
+                    : officerFormData.orgAddress
+                }
                 onChange={(e) => handleChangeUserRegister(e, "orgAddress")}
               />
             </Grid>
-            
 
             {/* Terms & Conditions Checkbox */}
             <Grid item xs={12}>
               <FormControlLabel
-                control={<Checkbox
-                  value="allowExtraEmails"
-                  color="primary"
-                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                    setTermsAgreementChecked(e.target.checked);
-                    handleChangeUserRegister(
-                      {
-                        target: {
-                          name: "termsAgreement",
-                          value: e.target.checked as any
-                        }
-                      } as React.ChangeEvent<HTMLInputElement>,
-                      "termsAgreement"
-                    );
-                  }}
-                />
+                control={
+                  <Checkbox
+                    value="allowExtraEmails"
+                    color="primary"
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                      setTermsAgreementChecked(e.target.checked);
+                      handleChangeUserRegister(
+                        {
+                          target: {
+                            name: "termsAgreement",
+                            value: e.target.checked as any,
+                          },
+                        } as React.ChangeEvent<HTMLInputElement>,
+                        "termsAgreement"
+                      );
+                    }}
+                  />
                 }
                 label={
                   <>
@@ -257,9 +276,8 @@ export default function AdditionalRegistration() {
                 }
               />
             </Grid>
-
           </Grid>
-          
+
           {/* Register Button */}
           <Button
             type="submit"
@@ -271,7 +289,6 @@ export default function AdditionalRegistration() {
           >
             Register
           </Button>
-
         </Box>
       </CustomBox1>
     </Container>

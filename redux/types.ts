@@ -60,6 +60,44 @@ interface Officer {
   };
 }
 
+export interface UserWithOfficer {
+  user: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    nic: string;
+    role: string;
+    address: string;
+    password: string;
+  };
+  officerDetails: {
+    orgName: string;
+    orgAddress: string;
+    university: string;
+  };
+}
+
+export interface UserWithFarmer {
+  user: {
+    _id: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    nic: string;
+    role: string;
+    address: string;
+    password: string;
+  };
+  farmerDetails: {
+    household: string;
+    orgName: string;
+    orgAddress: string;
+  };
+}
+
   // Define the structure of the Redux store's state using the RootState type.
   export type RootState = {
     crop: Crop[]; // An array of Crop objects, representing the state of crop data.
@@ -68,4 +106,6 @@ interface Officer {
     user: User;
     farmer: Farmer;
     officer: Officer;
+    userWithOfficer: UserWithOfficer;
+    userWithFarmer: UserWithFarmer;
   };

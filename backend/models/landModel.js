@@ -3,10 +3,10 @@ const { Schema, model } = mongoose;
 
 const landSchema = new Schema(
   {
-    landId: {
-      type: String,
-      required: true,
-    },
+    // landId: {
+    //   type: String,
+    //   required: true,
+    // },
     landName: {
       type: String,
       required: true,

@@ -23,6 +23,11 @@ import i18n from "../config/i18n";// Import the i18n instance
 import MapComponent from "../../components/MapComponent";
 import { CustomBox1 } from "@/Theme";
 import axios from "axios";
+import store from "@/redux/store";
+// Import the necessary selectors from the respective slices
+import { selectAddLand } from "@/redux/landSlice";
+
+
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -45,7 +50,7 @@ export default function AddLand() {
 
   // Define the structure of the form data
   interface FormData {
-    landId: string;
+    // landId: string;
     landName: string;
     district: string;
     dsDivision: string;
@@ -54,7 +59,7 @@ export default function AddLand() {
   }
 
   const [formData, setFormData] = useState<FormData>({
-    landId: "",
+    // landId: "",
     landName: "",
     district: "",
     dsDivision: "",
@@ -77,26 +82,25 @@ export default function AddLand() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-
-    const landData = { landDetails: formData };
     try {
+      const action = addLand(formData);
+      dispatch(action);
+      console.log("Dispatching action for add land:", action);
+
+      // Get land data from the Redux store
+      const landData = selectAddLand(store.getState());
+      const landDataObject = landData[landData.length - 1];
+      console.log("----------getAddLandFromRedux----------------" , landDataObject);
+
       const response = await axios.post(
-        "http://localhost:5000/api/land/create",
-        {
-          landId: formData.landId,
-          landName: formData.landName,
-          district: formData.district,
-          dsDivision: formData.dsDivision,
-          landRent: formData.landRent,
-          irrigationMode: formData.irrigationMode,
-        }
+        "http://localhost:5000/api/land/create", landDataObject
       );
       if (response && response.status === 200) {
         console.log(response);
         setResponseData(response.data);
         router.push("/my-crops");
-        // Simulate an add land action by creating a land data object.
-        dispatch(addLand(landData));
+        // // Simulate an add land action by creating a land data object.
+        // dispatch(addLand(landData));
       } else if (response && response.status === 400) {
         console.error("Failed to fetch data");
       }
@@ -112,7 +116,7 @@ export default function AddLand() {
     event.preventDefault();
     try {
       const landData = formData;
-      const action = addLandAndCrop(landData);
+      const action = addLand(landData);
       dispatch(action);
       console.log("Dispatching action for land:", action);
       router.push("/add-crop");
@@ -121,13 +125,6 @@ export default function AddLand() {
     }
   };
 
-  // const navigationToAddCrop = async (
-  //   event: React.MouseEvent<HTMLButtonElement>
-  // ) => {
-  //   event.preventDefault();
-  //   const id = 123;
-  //   router.push(`/add-crop`);
-  // };
 
   // Event handler to add form field data
   const handleChangeAddLand = (
@@ -136,7 +133,7 @@ export default function AddLand() {
   ) => {
     setFormData({
       ...formData,
-      landId: (landDetails.length + 1).toString(),
+      // landId: (landDetails.length + 1).toString(),
       [field]: event.target.value,
     });
   };
