@@ -2,6 +2,7 @@
 const Farmer = require('../models/farmerModel');
 const Officer = require('../models/officerModel');
 const User = require("../models/userModel");
+const Auth = require('../models/authModel');
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
@@ -92,6 +93,27 @@ const userController = {
       // Save the new user
       const savedUser = await newUser.save();
 
+      // Create a new Auth instance
+      const newAuth = new Auth({
+        email,
+        password: hashedPassword,
+        userId: savedUser._id,
+      });
+
+      console.log("newAuth------- : "+ newAuth);
+      // const newAuth = new Auth(authData);
+      
+      // Save the new Auth record
+      await newAuth.save()
+        .then((savedAuth) => {
+          console.log("Saved Auth:", savedAuth);
+        })
+        .catch((authError) => {
+          console.error("Error saving newAuth:", authError);
+          return res.status(500).json({ message: "Error creating Auth record", error: authError.message });
+        });
+
+      // Save the famer/officers details based on user role
       if (userData.user.role === "farmer") {
         // Extract farmer-specific fields
         const { household, orgName, orgAddress } = farmerData.farmer || {};
