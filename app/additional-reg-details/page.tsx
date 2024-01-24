@@ -24,6 +24,7 @@ import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectFarmer } from "@/redux/farmerSlice";
 import { selectOfficer } from"@/redux/officerSlice";
+import { register } from "@/redux/authSlice";
 
 export default function AdditionalRegistration() {
 
@@ -133,8 +134,9 @@ export default function AdditionalRegistration() {
           }
         }
       );
-      router.push("/login");
       if (response && response.status === 200) {
+        dispatch(register(response.data))
+        router.push("/login");
         console.log(response);
         console.log('Registration successful!');
       } else if (response && response.status === 400) {
