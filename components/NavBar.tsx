@@ -53,16 +53,16 @@ const NavBar = () => {
   const router = useRouter(); // Next.js router
   const theme = useTheme(); // Material-UI theme
   const isMatch = useMediaQuery(theme.breakpoints.down("md")); // Media query for responsiveness
-  //const { isAuthenticated, username, password } = useSelector(selectAuth); // Redux state for authentication
   const { t } = useTranslation(); // Translation function
 
   // Fetch the authentication status from Redux store
   const { isAuthenticated } = useSelector(selectAuth);
 
   // Fetch the authentication status from Redux store
-  const { user } = useSelector(selectAuth);
-  JSON.stringify(user);
-  console.log("user role nav bar-----------", user);
+  // const userRole = useSelector((state: any) => state.auth.auth.role);
+  const { auth } = useSelector(selectAuth);
+  JSON.stringify(auth);
+  console.log("user role nav bar-----------", auth);
 
   // Effect to set initial tab state based on authentication status
   useEffect(() => {
@@ -170,13 +170,13 @@ const NavBar = () => {
                   ))}
 
                   {/* Profile tab based on user role */}
-              {user.role === "farmer" && (
+              {auth.role === "farmer" && (
                 <Tab
                   label={t("navBar.tabProfile")}
                   onClick={() => navigationToScreens("/farmer-profile")} // Redirects to farmer profile page
                 />
               )}
-              {user.role === "officer" && (
+              {auth.role === "officer" && (
                 <Tab
                   label={t("navBar.tabProfile")}
                   onClick={() => navigationToScreens("/officer-profile")} // Redirects to officer profile page

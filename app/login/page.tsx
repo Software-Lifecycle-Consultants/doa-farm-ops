@@ -23,13 +23,13 @@ import {
   CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { login} from "@/redux/loginSlice";
+// import { login} from "@/redux/loginSlice";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
 import { useRouter } from "next/navigation";
 import { CustomBox1 } from "@/Theme";
 import { toast } from "react-toastify";
-import { login as authLogin } from "@/redux/authSlice";
+import { login } from "@/redux/authSlice";
 
 // Export the sign-in component
 export default function SignIn() {
@@ -76,10 +76,8 @@ export default function SignIn() {
       if (response && response.status === 200) {
         console.log("response user data------------", response);
         setResponseData(response.data);
-        dispatch(authLogin(response.data));
+        dispatch(login(response.data));
         router.push("./");
-         // Dispatch the 'login' action from the 'loginSlice' with the user data.
-        dispatch(login(userData));
         toast.success("Login Success");
       } else if (response && response.status === 400) {
         console.error('Failed to fetch data');

@@ -11,8 +11,9 @@ const landController = {
         dsDivision,
         landRent,
         irrigationMode,
+        userId
       } = req.body;
-      console.log("land name: " + landName);
+
       const ExistingLand = await Land.findOne({ landName });
       if (ExistingLand)
         return res.status(400).json({
@@ -28,12 +29,14 @@ const landController = {
         dsDivision,
         landRent,
         irrigationMode,
+        userId
       });
 
       const savedLand = await newLand.save();
       if (savedLand) {
         res.status(200).json({
           _id: savedLand.id,
+          userId: savedLand.userId,
           landName: savedLand.landName,
           district: savedLand.district,
           dsDivision: savedLand.dsDivision,

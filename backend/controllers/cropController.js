@@ -17,11 +17,12 @@ const cropController = {
             isCultivationLoan, 
             loanObtained
           );
-    
+          
           if (!cropName || !season || !cropType || !isCultivationLoan)
             return res.status(400).json({ msg: "Please fill mandatory fields." });
     
           const newCrop = new Crop({
+            //landId,  //land Id should be saved
             cropName, 
             season, 
             cropType, 

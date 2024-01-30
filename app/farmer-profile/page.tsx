@@ -28,7 +28,7 @@ export default function FarmerProfile() {
   const { t } = useTranslation();
 
   // Fetch the authentication status from Redux store
-  const { user } = useSelector(selectAuth);
+  const { auth } = useSelector(selectAuth);
 
   // Initialize state for user and farmer details
   const [UserData, setUserData] = React.useState<UserWithFarmer>({
@@ -67,7 +67,7 @@ export default function FarmerProfile() {
   }
 
   React.useEffect(() => {
-    fetchData(user._id);
+    fetchData(auth._id);
   }, []);
 
   return (

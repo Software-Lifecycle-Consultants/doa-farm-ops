@@ -25,7 +25,7 @@ export default function OfficerProfile() {
   const { t } = useTranslation();
 
   // Fetch the authentication status from Redux store
-  const { user } = useSelector(selectAuth);
+  const { auth } = useSelector(selectAuth);
 
   // Initialize state for user and officer details
   const [UserData, setUserData] = React.useState<UserWithOfficer>({
@@ -69,7 +69,7 @@ async function fetchData(_id: any) {
 }
 
 React.useEffect(() => {
-  fetchData(user._id);
+  fetchData(auth._id);
 }, []);
 
   // Return the JSX for rendering

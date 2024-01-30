@@ -4,7 +4,6 @@ import { RootState } from "./types";
 import { addCrop } from "./cropSlice";
 
 interface Land {
-  // landId: string;
   landName: string;
   district: string;
   dsDivision: string;

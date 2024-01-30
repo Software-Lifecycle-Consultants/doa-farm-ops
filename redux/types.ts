@@ -14,7 +14,7 @@ interface Crop {
     _id: string;
   }
 interface Land {
-  landId: string;
+  landId: string; //should remove
   landName: string;
   district: string;
   dsDivision: string;

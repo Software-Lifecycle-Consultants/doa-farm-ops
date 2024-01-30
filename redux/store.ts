@@ -2,7 +2,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 // Import the 'authReducer' from the 'loginSlice' file.
-import loginReducer from './loginSlice';
 import cropReducer from './cropSlice';
 import landReducer from "./landSlice";
 import landAndCropReducer from "./landAndCropSlice";
@@ -15,7 +14,6 @@ import authSlice from './authSlice';
 const store = configureStore({
   reducer: {
     auth: authSlice,
-    login: loginReducer, // Assign the 'loginReducer' to the 'login' key in the Redux store.
     crop: cropReducer, // Assign the 'cropReducer' to the 'crop' key in the Redux store.
     land: landReducer, // Assign the 'landReducer' to the 'land' key in the Redux store.
     landAndCrop: landAndCropReducer,

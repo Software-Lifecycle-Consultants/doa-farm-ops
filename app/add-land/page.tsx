@@ -26,6 +26,7 @@ import axios from "axios";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectAddLand } from "@/redux/landSlice";
+import { selectAuth } from "@/redux/authSlice";
 
 
 
@@ -87,13 +88,24 @@ export default function AddLand() {
       dispatch(action);
       console.log("Dispatching action for add land:", action);
 
+      //Get logged user Id from redux
+      const loggedUser = selectAuth(store.getState());
+      console.log("----------getUserFromRedux----------------", loggedUser);
+      const userId = loggedUser.auth._id;
+      console.log("----------getUserFromRedux----------------", userId);
+
       // Get land data from the Redux store
       const landData = selectAddLand(store.getState());
       const landDataObject = landData[landData.length - 1];
-      console.log("----------getAddLandFromRedux----------------" , landDataObject);
+      // const jsonLandData = JSON.stringify(landDataObject);
+      // console.log("----------jsonFormatAddLandFromRedux----------------", jsonLandData);
+      
+      const landDetails = {...landDataObject, userId};
+      const jsonLandDetails = JSON.stringify(landDetails);
+      console.log("----------jsonLandDetails----------------" + jsonLandDetails);
 
       const response = await axios.post(
-        "http://localhost:5000/api/land/create", landDataObject
+        "http://localhost:5000/api/land/create", landDetails
       );
       if (response && response.status === 200) {
         console.log(response);
@@ -121,10 +133,9 @@ export default function AddLand() {
       console.log("Dispatching action for land:", action);
       router.push("/add-crop");
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
-
 
   // Event handler to add form field data
   const handleChangeAddLand = (
