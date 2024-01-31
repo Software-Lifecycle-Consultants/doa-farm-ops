@@ -10,9 +10,6 @@ import {
   Container,
   Stack,
   MenuItem,
-  FormControl,
-  InputLabel,
-  Select,
   Autocomplete,
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
@@ -225,17 +222,6 @@ export default function AddLand() {
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblDistrict")}</Typography>
-              {/* <TextField
-                required
-                fullWidth
-                id="district"
-                placeholder={i18n.t("addLand.hintTxtDistrict")}
-                name="district"
-                autoComplete="district"
-                value={formData.district}
-                onChange={(e) => handleChangeAddLand(e, "district")}
-              /> */}
-              {/* <Typography>District</Typography> */}
               <Autocomplete
                 options={districtNames}
                 getOptionLabel={(option) => option}
