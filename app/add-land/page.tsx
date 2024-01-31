@@ -10,6 +10,10 @@ import {
   Container,
   Stack,
   MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+  Autocomplete,
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
@@ -21,6 +25,7 @@ import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
 import MapComponent from "../../components/MapComponent";
 import { CustomBox1 } from "@/Theme";
+import { districtList } from "@/data/landsData";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -28,26 +33,34 @@ import { CustomBox1 } from "@/Theme";
 
 export default function AddLand() {
   const router = useRouter();
+
+  const districtNames = districtList.map((district) => district.name);
+
   const landDetails = useSelector((state: RootState) => state.land);
   // State for managing form data and map-related data
-  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(null);
-  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>([]);
-  const [drawType, setDrawType] = useState<'Point' | 'Polygon'>('Point');
+  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(
+    null
+  );
+  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>(
+    []
+  );
+  const [drawType, setDrawType] = useState<"Point" | "Polygon">("Point");
   const { t } = useTranslation();
+
   // Define the structure of the form data
   interface FormData {
     landId: string;
     landName: string;
-    district: string;
+    district: string | null;
     dsDivision: string;
     landRent: string;
     irrigationMode: string;
   }
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     landId: "",
     landName: "",
-    district: "",
+    district: null,
     dsDivision: "",
     landRent: "",
     irrigationMode: "",
@@ -70,6 +83,7 @@ export default function AddLand() {
     event.preventDefault(); // Prevent the default form submission behavior
 
     const landData = { ...formData };
+    console.log("------landData-----", landData);
 
     // Simulate an add land action by creating a land data object.
     dispatch(addLand(landData));
@@ -100,6 +114,14 @@ export default function AddLand() {
     setDrawType(type);
   };
 
+  // Define a function to select district.
+  const selectChangeAddDistrict = (event: any, newValue: string | null) => {
+    setFormData({
+      ...formData,
+      district: newValue,
+    });
+  };
+
   // Styles for the container box
   const boxStyles = {
     display: "flex",
@@ -114,7 +136,7 @@ export default function AddLand() {
 
   return (
     <Container component="main" maxWidth="xl">
-      <CustomBox1 sx={{maxWidth: "500px"}}>
+      <CustomBox1 sx={{ maxWidth: "500px" }}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
             {i18n.t("addLand.txtAddLand")}
@@ -146,33 +168,41 @@ export default function AddLand() {
         {/* Display the map if showMap is true */}
         {showMap && (
           <>
-            <MapComponent setMarkerCoordinates={setMarkerCoordinates} setPolygonCoordinates={setPolygonCoordinates} drawType={drawType}/>
-            <Grid sx={{ width: '100%' }}>
-            <TextField
+            <MapComponent
+              setMarkerCoordinates={setMarkerCoordinates}
+              setPolygonCoordinates={setPolygonCoordinates}
+              drawType={drawType}
+            />
+            <Grid sx={{ width: "100%" }}>
+              <TextField
                 select
                 fullWidth
                 placeholder="Select Map Drawer"
                 defaultValue="Point"
                 variant="outlined"
                 value={drawType}
-                onChange={(e) => handleDrawTypeChange(e.target.value as 'Point' | 'Polygon')}
+                onChange={(e) =>
+                  handleDrawTypeChange(e.target.value as "Point" | "Polygon")
+                }
               >
                 <MenuItem value="Point">Point</MenuItem>
                 <MenuItem value="Polygon">Polygon</MenuItem>
               </TextField>
             </Grid>
             {/* Display marker coordinates if it's a point or polygon */}
-            {markerCoordinates && drawType==='Point' &&(
-                <Grid>
-                    <p>Marker Coordinates: {markerCoordinates.join(', ')}</p>
-                </Grid>
+            {markerCoordinates && drawType === "Point" && (
+              <Grid>
+                <p>Marker Coordinates: {markerCoordinates.join(", ")}</p>
+              </Grid>
             )}
-            {polygonCoordinates && drawType==='Polygon' &&(
-                <Grid>
-                    {polygonCoordinates.map((Coordinates,index) => (
-                        <p key={index}>Marker Coordinates: {Coordinates.join(', ')}</p>
-                    ))}
-                </Grid>
+            {polygonCoordinates && drawType === "Polygon" && (
+              <Grid>
+                {polygonCoordinates.map((Coordinates, index) => (
+                  <p key={index}>
+                    Marker Coordinates: {Coordinates.join(", ")}
+                  </p>
+                ))}
+              </Grid>
             )}
           </>
         )}
@@ -195,7 +225,7 @@ export default function AddLand() {
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblDistrict")}</Typography>
-              <TextField
+              {/* <TextField
                 required
                 fullWidth
                 id="district"
@@ -204,6 +234,23 @@ export default function AddLand() {
                 autoComplete="district"
                 value={formData.district}
                 onChange={(e) => handleChangeAddLand(e, "district")}
+              /> */}
+              {/* <Typography>District</Typography> */}
+              <Autocomplete
+                options={districtNames}
+                getOptionLabel={(option) => option}
+                value={formData.district}
+                onChange={(event, newValue) =>
+                  selectChangeAddDistrict(event, newValue)
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="district"
+                    placeholder="Select District"
+                    variant="outlined"
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
