@@ -156,6 +156,7 @@ const landController = {
         noOfPicks,
         isCultivationLoan,
         loanObtained,
+        userId,
       } = req.body;
       console.log("------req from FE-------", req.body);
       const existingLand = await Land.findOne({ landName });
@@ -166,6 +167,7 @@ const landController = {
       }
 
       const newLand = new Land({
+        userId,
         landName,
         district,
         dsDivision,

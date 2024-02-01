@@ -29,6 +29,7 @@ import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectAddLand } from "@/redux/landSlice";
 import { selectAddCrop } from "@/redux/cropSlice";
+import { selectAuth } from "@/redux/authSlice";
 
 // Styles for labels
 const styles = {
@@ -162,6 +163,12 @@ export default function AddCrop() {
     const action = addCrop(formData);
     dispatch(action);
 
+    //Get logged user Id from redux
+    const loggedUser = selectAuth(store.getState());
+    console.log("----------getUserFromRedux----------------", loggedUser);
+    const userId = loggedUser.auth._id;
+    console.log("----------getUserFromRedux----------------", userId);
+
     const cropDatafromRedux = selectAddCrop(store.getState());
     const cropDataObject = cropDatafromRedux[cropDatafromRedux.length - 1];
     console.log("----------selectAddCrop----------------", cropDataObject);
@@ -169,31 +176,30 @@ export default function AddCrop() {
     const landCropData = {
       ...landDataObject,
       ...cropDataObject,
+      userId
     };
 
     console.log(
       "------------landCropData-----------" + JSON.stringify(landCropData)
     );
 
-      try {
-        console.log(
-          "-----------------Executing landAndCRop-------------------"
-        );
-        const response = await axios.post(
-          `http://localhost:5000/api/landAndCrop/add`,
-          landCropData
-        );
-        if (response && response.status === 200) {
-          console.log(response);
-          setResponseData(response.data);
-          router.push("/my-crops"); //Navigate to my crops page
-          // dispatch(addLandAndCropSuccess());
-        } else if (response && response.status === 400) {
-          console.error("Failed to fetch data");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
+    try {
+      console.log("-----------------Executing landAndCRop-------------------");
+      const response = await axios.post(
+        `http://localhost:5000/api/landAndCrop/add`,
+        landCropData
+      );
+      if (response && response.status === 200) {
+        console.log(response);
+        setResponseData(response.data);
+        router.push("/my-crops"); //Navigate to my crops page
+        // dispatch(addLandAndCropSuccess());
+      } else if (response && response.status === 400) {
+        console.error("Failed to fetch data");
       }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
 
   // Simulate add crop action by creating a user data object.

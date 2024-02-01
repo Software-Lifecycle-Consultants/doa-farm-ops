@@ -10,6 +10,7 @@ import {
   Container,
   Stack,
   MenuItem,
+  Autocomplete,
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
@@ -27,8 +28,7 @@ import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectAddLand } from "@/redux/landSlice";
 import { selectAuth } from "@/redux/authSlice";
-
-
+import { districtList } from "@/data/landsData";
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -36,6 +36,9 @@ import { selectAuth } from "@/redux/authSlice";
 
 export default function AddLand() {
   const router = useRouter();
+
+  const districtNames = districtList.map((district) => district.name);
+
   const landDetails = useSelector((state: RootState) => state.land);
   // State for managing form data and map-related data
   const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(
@@ -53,7 +56,7 @@ export default function AddLand() {
   interface FormData {
     // landId: string;
     landName: string;
-    district: string;
+    district: string | null;
     dsDivision: string;
     landRent: string;
     irrigationMode: string;
@@ -62,7 +65,7 @@ export default function AddLand() {
   const [formData, setFormData] = useState<FormData>({
     // landId: "",
     landName: "",
-    district: "",
+    district: null,
     dsDivision: "",
     landRent: "",
     irrigationMode: "",
@@ -154,6 +157,14 @@ export default function AddLand() {
     setDrawType(type);
   };
 
+  // Define a function to select district.
+  const selectChangeAddDistrict = (event: any, newValue: string | null) => {
+    setFormData({
+      ...formData,
+      district: newValue,
+    });
+  };
+
   // Styles for the container box
   const boxStyles = {
     display: "flex",
@@ -229,8 +240,10 @@ export default function AddLand() {
             )}
             {polygonCoordinates && drawType === "Polygon" && (
               <Grid>
-                {polygonCoordinates.map((Coordinates) => (
-                  <p>Marker Coordinates: {Coordinates.join(", ")}</p>
+                {polygonCoordinates.map((Coordinates, index) => (
+                  <p key={index}>
+                    Marker Coordinates: {Coordinates.join(", ")}
+                  </p>
                 ))}
               </Grid>
             )}
@@ -255,15 +268,21 @@ export default function AddLand() {
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblDistrict")}</Typography>
-              <TextField
-                required
-                fullWidth
-                id="district"
-                placeholder={i18n.t("addLand.hintTxtDistrict")}
-                name="district"
-                autoComplete="district"
+              <Autocomplete
+                options={districtNames}
+                getOptionLabel={(option) => option}
                 value={formData.district}
-                onChange={(e) => handleChangeAddLand(e, "district")}
+                onChange={(event, newValue) =>
+                  selectChangeAddDistrict(event, newValue)
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="district"
+                    placeholder="Select District"
+                    variant="outlined"
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
