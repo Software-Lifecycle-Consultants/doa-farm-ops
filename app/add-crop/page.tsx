@@ -15,15 +15,12 @@ import {
   TextField,
   Autocomplete,
 } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { addCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
 import { CustomBox1 } from "@/Theme";
 import axios from 'axios';
-
-import { useSelector } from "react-redux";
-import { addLandAndCropSuccess } from "@/redux/landAndCropSlice";
 import i18n from "../config/i18n";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
@@ -41,8 +38,13 @@ const styles = {
 /**
  * Add Crop page serves as a form to add details about crop properties.
  */
+
 export default function AddCrop() {
   const router = useRouter();
+
+  // Use the Next.js hook to retrieve search parameters from the URL
+  const searchParams = useSearchParams()
+  const fromAddLand = searchParams.get('fromAddLand')
 
   const cropNames = cropList.map((crop) => crop.name);
 
@@ -51,15 +53,7 @@ export default function AddCrop() {
   // const [landId, setLandId] = useState("");
 
   const [responseData, setResponseData] = useState(null);
-
-  const landToBeAdded = useSelector(
-    (state: any) => state.landAndCrop.landToBeAdded
-  );
-  const isLandToBeAdded = useSelector(
-    (state: any) => state.landAndCrop.isLandToBeAdded
-  );
-  // console.log(landToBeAdded);
-
+  
   interface FormData {
     cropName: string | null;
     season: string;
@@ -86,50 +80,8 @@ export default function AddCrop() {
     loanObtained: 0,
   });
 
-  interface FormLandCrop {
-    // landId: string;
-    landName: string;
-    district: string;
-    dsDivision: string;
-    landRent: string;
-    irrigationMode: string;
-    cropName: string | null;
-    season: string;
-    cropType: string;
-    totalSoldQty: string;
-    totalIncome: string;
-    reservedQtyHome: string;
-    reservedQtySeed: string;
-    noOfPicks: string;
-    isCultivationLoan: string;
-    loanObtained: number;
-  }
-
-  const [formLandCrop, setFormLandCrop] = useState<FormLandCrop>({
-    // landId: landToBeAdded.landId,
-    landName: landToBeAdded.landName,
-    district: landToBeAdded.district,
-    dsDivision: landToBeAdded.dsDivision,
-    landRent: landToBeAdded.landRent,
-    irrigationMode: landToBeAdded.irrigationMode,
-    cropName: formData.cropName,
-    season: formData.season,
-    cropType: formData.cropType,
-    totalSoldQty: formData.totalSoldQty,
-    totalIncome: formData.totalIncome,
-    reservedQtyHome: formData.reservedQtyHome,
-    reservedQtySeed: formData.reservedQtySeed,
-    noOfPicks: formData.noOfPicks,
-    isCultivationLoan: formData.isCultivationLoan,
-    loanObtained: formData.loanObtained,
-  });
-
   const dispatch = useDispatch();
 
-  // Handle selection change for "Select Land" dropdown
-  // const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   setLandId(event.target.value);
-  // };
   // Handle selection change for "Cultivation loan obtained?" dropdown
   const handleCultivationLoanChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -169,8 +121,8 @@ export default function AddCrop() {
     const userId = loggedUser.auth._id;
     console.log("----------getUserFromRedux----------------", userId);
 
-    const cropDatafromRedux = selectAddCrop(store.getState());
-    const cropDataObject = cropDatafromRedux[cropDatafromRedux.length - 1];
+    const cropDataFromRedux = selectAddCrop(store.getState());
+    const cropDataObject = cropDataFromRedux[cropDataFromRedux.length - 1];
     console.log("----------selectAddCrop----------------", cropDataObject);
 
     const landCropData = {
@@ -267,7 +219,7 @@ export default function AddCrop() {
           </Typography>
         </Box>
         <Box sx={{ width: "100%" }}>
-          {!isLandToBeAdded && (
+          {!fromAddLand && (
             <Grid item xs={12} sm={6}>
               <Stack direction="row" spacing={2} paddingTop={2}>
                 <TextField

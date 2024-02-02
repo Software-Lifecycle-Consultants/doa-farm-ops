@@ -17,7 +17,6 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { addLand } from "@/redux/landSlice";
-import { addLandAndCrop } from "@/redux/landAndCropSlice";
 import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
@@ -130,11 +129,12 @@ export default function AddLand() {
   ) => {
     event.preventDefault();
     try {
+      const fromAddLandValue = true; // Set the value you want to pass through url
       const landData = formData;
       const action = addLand(landData);
       dispatch(action);
       console.log("Dispatching action for land:", action);
-      router.push("/add-crop");
+      router.push(`/add-crop?fromAddLand=${fromAddLandValue}`); //Pass the value
     } catch (error) {
       console.error("Error fetching data:", error);
     }
