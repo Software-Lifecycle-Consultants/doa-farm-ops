@@ -6,11 +6,20 @@ import { styled } from "@mui/system";
 // Define your theme
 const theme = createTheme({
   palette: {
+    // primary: {
+    //   main: "#1976D2", // Set your primary color
+    // },
+    // secondary: {
+    //   main: "#C2C2C2", // Set your secondary color
+    // },
     primary: {
-      main: "#1976D2", // Set your primary color
+      main: "#000000", // Blue
     },
     secondary: {
-      main: "#C2C2C2", // Set your secondary color
+      main: "#f44336", // Red
+    },
+    error: {
+      main: "#ff9800", // Orange
     },
   },
   components: {
