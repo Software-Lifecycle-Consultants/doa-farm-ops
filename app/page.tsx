@@ -6,22 +6,16 @@ import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import Box from "@mui/material/Box";
 import Image from "next/image";
-import { primaryAction } from "ol/events/condition";
 
 
-
-
-
-
-
-export default function RowAndColumnSpacing() {
+export default function HomePage() {
   return (
     <Grid container spacing={2}>
       {/* Logo */}
       <Grid item xs={12} sm={12} md={12} marginLeft={6}>
         <Box display="flex" justifyContent="center">
-          <img
-            src="https://logowik.com/content/uploads/images/sri-lanka-government8434.logowik.com.webp"
+          <Image
+            src="/images/home/emblem.webp"
             alt="random"
             width="250"
             height="175"
@@ -54,7 +48,7 @@ export default function RowAndColumnSpacing() {
         </Box>
 
         <Typography
-          fontSize={48}
+          fontSize={32}
           fontFamily="cursive"
           fontStyle={"bold"}
           gutterBottom
@@ -90,11 +84,11 @@ export default function RowAndColumnSpacing() {
 
       <Grid item xs={12} sm={6} md={6}>
         <Box display="flex" justifyContent="center" marginTop={2}>
-          <img
-            src="https://shine365.marshfieldclinic.org/wp-content/uploads/2016/03/Super-Seeds-I_MAC_3857.jpg"
+          <Image
+            src="/images/home/logo_4x.webp"
             alt="Farmer"
             width={550}
-            height={625}
+            height={550}
           />
         </Box>
       </Grid>
