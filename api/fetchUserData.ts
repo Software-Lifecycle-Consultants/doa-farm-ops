@@ -4,14 +4,20 @@
  */
 
 import axios from 'axios';
-import { UserWithFarmer } from "@/redux/types";
+import { User, FarmerDetails } from "@/redux/types";
+
+// Define the structure of the response data
+interface UserDataResponse {
+    user: User;
+    farmerDetails: FarmerDetails;
+  }
 
 /**
  * Function to fetch user data based on user ID from the backend server.
  * @param _id The ID of the user whose data needs to be fetched.
  * @returns A promise that resolves with the user data (including farmer details) if successful, or rejects with an error.
  */
-export async function fetchUserData(_id: any): Promise<UserWithFarmer> {
+export async function fetchUserData(_id: any): Promise<UserDataResponse> {
   try {
     // Make a GET request to the backend server to fetch user data
     const response = await axios.get(`http://localhost:5000/api/get/user/${_id}`);

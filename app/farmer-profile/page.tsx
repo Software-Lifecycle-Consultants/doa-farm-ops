@@ -10,8 +10,6 @@ import ProfileTitle from "../../components/ProfileTitle";
 import LandsTable from "@/components/LandsTable";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import axios from 'axios';
-import { UserWithFarmer } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import { btnBackgroundColor, customGridStyles1, customGridStyles2 } from "@/styles/customStyles";
 import { CustomBox2 } from "@/Theme";
@@ -19,7 +17,8 @@ import { selectAuth } from "@/redux/authSlice";
 import { useSelector } from "react-redux";
 // Importing fetchUserData function
 import { fetchUserData } from "@/api/fetchUserData";
-
+// Importing the User and FarmerDetails types
+import { User, FarmerDetails } from "@/redux/types";
 
 /**
  * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
@@ -33,31 +32,15 @@ export default function FarmerProfile() {
   const { auth } = useSelector(selectAuth);
 
   // Initialize state for user and farmer details
-  const [UserData, setUserData] = React.useState({
-    user: {
-        _id: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        nic: "",
-        role: "",
-        address: "",
-        password: ""
-    },
-    farmerDetails: {
-        household: "",
-        orgName: "",
-        orgAddress: ""
-    }
-});
-
+  const [user, setUser] = React.useState<User | null>(null);
+  const [farmerDetails, setFarmerDetails] = React.useState<FarmerDetails | null>(null);
 
   React.useEffect(() => {
     async function fetchData() {
       try {
         const userData = await fetchUserData(auth._id);
-        setUserData(userData);
+        setUser(userData.user);
+        setFarmerDetails(userData.farmerDetails);
       } catch (error) {
         console.error('Error fetching user data:', error);
       }
@@ -89,8 +72,7 @@ export default function FarmerProfile() {
                   marginBottom: "4px",
                 }}
               >
-                {UserData.user.firstName}{" "}
-                {UserData.user.lastName}
+              {user && user.firstName} {user && user.lastName}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -140,7 +122,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.user.firstName}
+                {user && user.firstName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -152,7 +134,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.user.lastName}
+                {user && user.lastName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -164,7 +146,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.user.email}
+                {user && user.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -176,7 +158,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.user.nic}
+                {user && user.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -188,7 +170,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.user.address}
+                {user && user.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -200,7 +182,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.user.phoneNumber}
+                {user && user.phoneNumber}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -212,7 +194,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.farmerDetails && UserData.farmerDetails.household}
+                {farmerDetails && farmerDetails.household}
               </Typography>
             </Grid>
           </Grid>
@@ -253,7 +235,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.farmerDetails && UserData.farmerDetails.orgName}
+                {farmerDetails && farmerDetails.orgName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
@@ -265,7 +247,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {UserData.farmerDetails && UserData.farmerDetails.orgAddress}
+               {farmerDetails && farmerDetails.orgAddress}
               </Typography>
             </Grid>
           </Grid>

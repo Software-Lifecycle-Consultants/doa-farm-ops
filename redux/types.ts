@@ -31,8 +31,7 @@ interface LandAndCrop {
   irrigationMode: string;
 }
 
-interface User {
-  user: {
+export interface User {
     firstName: string;
     lastName: string;
     email: string;
@@ -41,15 +40,12 @@ interface User {
     role: string;
     address: string;
     password: string;
-  };
 }
 
-interface Farmer {
-  farmer: {
+export interface FarmerDetails {
     household: string;
     orgName: string;
     orgAddress: string;
-  };
 }
 
 interface Officer {
@@ -104,7 +100,7 @@ export interface UserWithFarmer {
     land: Land[];
     landAndCrop: LandAndCrop;
     user: User;
-    farmer: Farmer;
+    farmer: FarmerDetails;
     officer: Officer;
     userWithOfficer: UserWithOfficer;
     userWithFarmer: UserWithFarmer;
