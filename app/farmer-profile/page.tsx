@@ -17,6 +17,8 @@ import { btnBackgroundColor, customGridStyles1, customGridStyles2 } from "@/styl
 import { CustomBox2 } from "@/Theme";
 import { selectAuth } from "@/redux/authSlice";
 import { useSelector } from "react-redux";
+// Importing fetchUserData function
+import { fetchUserData } from "@/api/fetchUserData";
 
 
 /**
@@ -31,7 +33,7 @@ export default function FarmerProfile() {
   const { auth } = useSelector(selectAuth);
 
   // Initialize state for user and farmer details
-  const [UserData, setUserData] = React.useState<UserWithFarmer>({
+  const [UserData, setUserData] = React.useState({
     user: {
         _id: "",
         firstName: "",
@@ -50,25 +52,18 @@ export default function FarmerProfile() {
     }
 });
 
-  // Function to fetch user data based on user ID
-  async function fetchData(_id: any) {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/get/user/${_id}`);
-      console.log('Fetch response-------- ', response);
-      if (response.status === 200) {
-        
-        setUserData(response.data);
-      }
-    } catch (error) {
-      console.log('Error fetching data:', error);
-      return error;
-    }
-    
-  }
 
   React.useEffect(() => {
-    fetchData(auth._id);
-  }, []);
+    async function fetchData() {
+      try {
+        const userData = await fetchUserData(auth._id);
+        setUserData(userData);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
+    fetchData();
+  }, [auth._id]);
 
   return (
     <>
