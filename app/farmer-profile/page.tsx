@@ -33,22 +33,31 @@ export default function FarmerProfile() {
   // Initialize state for user and farmer details
   const [UserData, setUserData] = React.useState<UserWithFarmer>({
     user: {
-        _id: "",
-        firstName: "",
-        lastName: "",
-        email: "",
-        phoneNumber: "",
-        nic: "",
-        role: "",
-        address: "",
-        password: ""
+      _id: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phoneNumber: "",
+      nic: "",
+      role: "",
+      address: "",
+      password: "",
     },
     farmerDetails: {
-        household: "",
-        orgName: "",
-        orgAddress: ""
-    }
-});
+      household: "",
+      orgName: "",
+      orgAddress: "",
+    },
+    lands: {
+      landName: "",
+      district: "",
+      dsDivision: "",
+      landRent: "",
+      irrigationMode: "",
+      userId: "",
+      
+    },
+  });
 
   // Function to fetch user data based on user ID
   async function fetchData(_id: any) {

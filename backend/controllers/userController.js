@@ -1,6 +1,7 @@
 // Import required modules and dependencies
 const Farmer = require('../models/farmerModel');
 const Officer = require('../models/officerModel');
+const Land = require("../models/landModel");
 const User = require("../models/userModel");
 const Auth = require('../models/authModel');
 const bcrypt = require("bcryptjs");
@@ -213,6 +214,7 @@ const userController = {
       // Check user role
       if (user.role === "farmer") {
         const farmer = await Farmer.findOne({ userId });
+        const lands = await Land.find({userId });  
         if (!farmer) {
           return res.status(404).json({ message: "Farmer details not found" });
         }
@@ -223,6 +225,7 @@ const userController = {
             orgName: farmer.orgName,
             orgAddress: farmer.orgAddress,
           },
+          lands,
         };
         console.log("userDetails-----------------", userDetails);
       } else if (user.role === "officer") {
