@@ -5,11 +5,13 @@
 
 import axios from 'axios';
 import { User, FarmerDetails } from "@/redux/types";
+import { lands } from '@/data/cropsData';
 
 // Define the structure of the response data
 interface UserDataResponse {
     user: User;
     farmerDetails: FarmerDetails;
+     // 1. TODO - expandad this to get and details
   }
 
 /**

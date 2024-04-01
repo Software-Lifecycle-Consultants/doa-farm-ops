@@ -99,8 +99,8 @@ export interface UserWithFarmer {
     crop: Crop[]; // An array of Crop objects, representing the state of crop data.
     land: Land[];
     landAndCrop: LandAndCrop;
-    user: User;
-    farmer: FarmerDetails;
+    user: { user: User | null };
+    farmer: { farmerDetails: FarmerDetails | null };
     officer: Officer;
     userWithOfficer: UserWithOfficer;
     userWithFarmer: UserWithFarmer;

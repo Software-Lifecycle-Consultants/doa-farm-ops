@@ -74,6 +74,7 @@ interface TableTitleProps {
 export default function LandsTable({ title }: TableTitleProps) {
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
+  // 3. TODO - check if this is working.
   const dispatch = useDispatch();
 
   const [page, setPage] = React.useState(0);

@@ -112,11 +112,12 @@ const userController = {
           console.error("Error saving newAuth:", authError);
           return res.status(500).json({ message: "Error creating Auth record", error: authError.message });
         });
-
+      
+        
       // Save the famer/officers details based on user role
       if (userData.user.role === "farmer") {
         // Extract farmer-specific fields
-        const { household, orgName, orgAddress } = farmerData.farmer || {};
+        const { household, orgName, orgAddress } = farmerData.farmerDetails || {};
 
         if (!household || !orgName || !orgAddress) {
           return res

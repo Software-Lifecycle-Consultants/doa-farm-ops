@@ -16,13 +16,13 @@ import i18n from "../config/i18n"; // Import the i18n instance
 import { CustomBox1 } from "@/Theme";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-import { farmerRegister } from "@/redux/farmerSlice";
+import { registerFarmer } from "@/redux/farmerSlice";
 import { OfficerRegister } from "@/redux/officerSlice";
 import { useSelector } from 'react-redux';
 import { RootState } from "@/redux/types";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
-import { selectFarmer } from "@/redux/farmerSlice";
+import { selectFarmerDetails } from "@/redux/farmerSlice";
 import { selectOfficer } from"@/redux/officerSlice";
 import { register } from "@/redux/authSlice";
 
@@ -97,11 +97,11 @@ export default function AdditionalRegistration() {
     e.preventDefault(); // Prevent default form submission
     try {
       if (selectedRole === "farmer") {
-        const action = farmerRegister(farmerFormData);
+        const action = registerFarmer(farmerFormData);
         dispatch(action);
         console.log("Dispatching action for farmer:", action);
         // Get farmer data from the Redux store
-        const farmerData = selectFarmer(store.getState());
+        const farmerData = selectFarmerDetails(store.getState());
         console.log("----------farmerData----------------" + farmerData);
         const farmerDataJSON = JSON.stringify(farmerData);
         console.log("----------farmerDataJSON----------------" + farmerDataJSON);
@@ -135,7 +135,7 @@ export default function AdditionalRegistration() {
         }
       );
       if (response && response.status === 200) {
-        dispatch(register(response.data))
+        //dispatch(register(response.data))
         router.push("/login");
         console.log(response);
         console.log('Registration successful!');
