@@ -59,10 +59,7 @@ const NavBar = () => {
   const { isAuthenticated } = useSelector(selectAuth);
 
   // Fetch the authentication status from Redux store
-  // const userRole = useSelector((state: any) => state.auth.auth.role);
   const { auth } = useSelector(selectAuth);
-  JSON.stringify(auth);
-  console.log("user role nav bar-----------", auth);
 
   // Effect to set initial tab state based on authentication status
   useEffect(() => {
