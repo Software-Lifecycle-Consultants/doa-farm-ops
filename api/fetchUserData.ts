@@ -5,7 +5,6 @@
 
 import axios from 'axios';
 import { User, FarmerDetails, Land} from "@/redux/types";
-import { lands } from '@/data/cropsData';
 
 // Define the structure of the response data
 interface UserDataResponse {
@@ -27,7 +26,7 @@ export async function fetchUserData(_id: any): Promise<UserDataResponse> {
         
     // Check if the request was successful`
     if (response.status === 200) {
-      console.log(response.data);
+      console.log("-------------Data coming from BE-----------"+ response.data);
       // Return the user data
       return response.data;
     }

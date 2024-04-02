@@ -24,8 +24,9 @@ import { rows } from "../data/landsData";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/types";
-import { deleteLand } from "@/redux/landSlice";
-
+import { deleteLand,fetchAndRegisterLands,selectLands } from "@/redux/landSlice";
+import { AppDispatch } from '@/redux/store'; 
+import { selectAuth } from "@/redux/authSlice";
 import { useTranslation } from 'react-i18next';
 import theme from "@/Theme";
 
@@ -40,7 +41,7 @@ interface Column {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
+  format?: (value: string) => string;
 }
 
 const columns: readonly Column[] = [
@@ -73,11 +74,22 @@ interface TableTitleProps {
 
 export default function LandsTable({ title }: TableTitleProps) {
   const router = useRouter();
-  const landDetails = useSelector((state: RootState) => state.land);
-  // 3. TODO - check if this is working.
-  console.log("Land details from land table", landDetails);
-  const dispatch = useDispatch();
+ 
+  const dispatch: AppDispatch = useDispatch();
 
+// Fetch the authentication status from Redux store
+const { auth } = useSelector(selectAuth);
+
+ // Fetch land data when the component mounts
+ const landDetails = useSelector((state: RootState) => selectLands(state));
+ const isLoading = useSelector((state: RootState) => state.lands); // Add loading state
+ //const landDetails = useSelector(selectLands);
+ console.log("Land details from land table", landDetails);
+
+React.useEffect(() => {
+  dispatch(fetchAndRegisterLands(auth._id)); // Fetch land data for the authenticated user
+}, [auth._id, dispatch]);
+  
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -126,102 +138,6 @@ export default function LandsTable({ title }: TableTitleProps) {
   };
 
   return (
-    <Paper sx={{ width: "100%", overflow: "hidden" }}>
-      <TableContainer sx={{ maxHeight: 440 }}>
-        <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {columns.map((column) => (
-                <TableCell
-                  key={column.id}
-                  align={column.align}
-                  style={{ minWidth: column.minWidth }}
-                >
-                  {t(column.label)}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {landDetails
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow
-                    key={row.landId}
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                  >
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <>
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        </>
-                      );
-                    })}
-                    <TableCell align={"right"}>
-                      <Stack direction="row" spacing={2}>
-                        <IconButton onClick={() => handleEditClick(row.landId)}>
-                          <EditNoteIcon />
-                        </IconButton>
-                        <IconButton onClick={() => openDeleteConfirmation(row.landId)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Stack>
-                    </TableCell>
-                    <TableCell align={"right"}>
-                      <Button
-                        style={{
-                          backgroundColor: theme.palette.secondary.main,
-                          color: "black",
-                          borderRadius: "16px",
-                          width: "80%",
-                        }}
-                        onClick={navigationToAddCrop}
-                      >
-                        {t('farmerProfile.tblLand.capBtnAddCrop')}
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <TablePagination
-        rowsPerPageOptions={[10, 25, 100]}
-        component="div"
-        count={rows.length}
-        rowsPerPage={rowsPerPage}
-        page={page}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
-      />
-      <Dialog
-        open={deleteConfirmation.open}
-        onClose={closeDeleteConfirmation}
-        aria-labelledby="delete-dialog-title"
-        aria-describedby="delete-dialog-description"
-      >
-        <DialogTitle id="delete-dialog-title">Delete Land</DialogTitle>
-        <DialogContent>
-          <p>Are you sure you want to delete this land?</p>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeDeleteConfirmation} color="primary">
-            Cancel
-          </Button>
-          <Button onClick={() => handleDeleteClick(deleteConfirmation.landId)} color="primary">
-            Delete
-          </Button>
-        </DialogActions>
-      </Dialog>
-    </Paper>
+    <></>
   );
 }
