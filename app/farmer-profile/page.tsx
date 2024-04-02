@@ -20,8 +20,9 @@ import { fetchUserData } from "@/api/fetchUserData";
 // Importing the User and FarmerDetails types
 import { User, FarmerDetails } from "@/redux/types";
 import { useDispatch } from 'react-redux';
-import { register, selectUser } from '@/redux/userSlice';
-import { registerFarmer, selectFarmerDetails } from '@/redux/farmerSlice';
+import { register, selectUser, fetchAndRegisterUser } from '@/redux/userSlice';
+import { fetchAndRegisterFarmer, selectFarmerDetails } from '@/redux/farmerSlice';
+import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 /**
  * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
  * Users can view and edit their profile information, as well as add new land details.
@@ -29,25 +30,18 @@ import { registerFarmer, selectFarmerDetails } from '@/redux/farmerSlice';
 export default function FarmerProfile() {
   const router = useRouter();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch(); // Type the dispatch function with explicitly specifies the type of dispatch as AppDispatch.
 
   // Fetch the authentication status from Redux store
   const { auth } = useSelector(selectAuth);
   const user = useSelector(selectUser);
   const farmerDetails = useSelector(selectFarmerDetails);
 
+  //Funtion to execute the two asynchronous actions to fetch and register farmer details and user details using the current authentication ID. 
   React.useEffect(() => {
-    async function fetchData() {
-      try {
-        const userData = await fetchUserData(auth._id);
-        dispatch(register(userData.user));
-        dispatch(registerFarmer(userData.farmerDetails));
-        // 2. TODO - dispatch land data to redux store (use land slice)
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-      }
-    }
-    fetchData();
+    dispatch(fetchAndRegisterUser(auth._id)); // Fetch user details
+    dispatch(fetchAndRegisterFarmer(auth._id)); // Fetch farmer details
   }, [auth._id, dispatch]);
 
   return (
