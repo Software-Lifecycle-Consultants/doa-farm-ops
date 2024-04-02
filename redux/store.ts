@@ -23,6 +23,7 @@ const store = configureStore({
   },
 });
 
+// Defines a type alias for the dispatch function obtained from the Redux store
 export type AppDispatch = typeof store.dispatch;
 
 // Export the 'store' as the default export.
