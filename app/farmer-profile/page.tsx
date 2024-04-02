@@ -22,6 +22,7 @@ import { User, FarmerDetails } from "@/redux/types";
 import { useDispatch } from 'react-redux';
 import { register, selectUser } from '@/redux/userSlice';
 import { registerFarmer, selectFarmerDetails } from '@/redux/farmerSlice';
+import { addLand } from "@/redux/landSlice";
 /**
  * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
  * Users can view and edit their profile information, as well as add new land details.
@@ -40,8 +41,18 @@ export default function FarmerProfile() {
     async function fetchData() {
       try {
         const userData = await fetchUserData(auth._id);
+        console.log(userData);
         dispatch(register(userData.user));
         dispatch(registerFarmer(userData.farmerDetails));
+        dispatch(addLand(userData.land));
+
+        console.log(farmerDetails.orgName);
+        console.log("User Data: ", JSON.stringify(farmerDetails));
+        console.log(userData.land);
+    
+
+        // const action = addLand(userData.lands)
+        // dispatch(action);
         // 2. TODO - dispatch land data to redux store (use land slice)
       } catch (error) {
         console.error('Error fetching user data:', error);

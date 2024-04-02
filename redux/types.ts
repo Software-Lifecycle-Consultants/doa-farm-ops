@@ -13,7 +13,7 @@ interface Crop {
     landId: string;
     _id: string;
   }
-interface Land {
+export interface Land {
   landId: string; //should remove
   landName: string;
   district: string;

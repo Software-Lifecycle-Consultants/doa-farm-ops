@@ -75,6 +75,7 @@ export default function LandsTable({ title }: TableTitleProps) {
   const router = useRouter();
   const landDetails = useSelector((state: RootState) => state.land);
   // 3. TODO - check if this is working.
+  console.log("Land details from land table", landDetails);
   const dispatch = useDispatch();
 
   const [page, setPage] = React.useState(0);
