@@ -82,7 +82,7 @@ const { auth } = useSelector(selectAuth);
 
  // Fetch land data when the component mounts
  const landDetails = useSelector((state: RootState) => selectLands(state));
- const isLoading = useSelector((state: RootState) => state.lands); // Add loading state
+
  //const landDetails = useSelector(selectLands);
  console.log("Land details from land table", landDetails);
 
@@ -138,6 +138,110 @@ React.useEffect(() => {
   };
 
   return (
-    <></>
+    <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <TableContainer sx={{ maxHeight: 440 }}>
+        <Table stickyHeader aria-label="sticky table">
+          <TableHead>
+            <TableRow>
+              {columns.map((column) => (
+                <TableCell
+                  key={column.id}
+                  align={column.align}
+                  style={{ minWidth: column.minWidth }}
+                >
+                  {t(column.label)}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+  {landDetails?.length ? (
+    landDetails
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((row) => {
+        return (
+          <TableRow
+            key={row._id}
+            hover
+            role="checkbox"
+            tabIndex={-1}
+          >
+            {columns.map((column) => {
+              const value = row[column.id];
+              return (
+                <>
+                  <TableCell key={column.id} align={column.align}>
+                    {column.format && typeof value === "number"
+                      ? column.format(value)
+                      : value}
+                  </TableCell>
+                </>
+              );
+            })}
+            <TableCell align={"right"}>
+              <Stack direction="row" spacing={2}>
+                <IconButton onClick={() => handleEditClick(row._id)}>
+                  <EditNoteIcon />
+                </IconButton>
+                <IconButton onClick={() => openDeleteConfirmation(row._id)}>
+                  <DeleteIcon />
+                </IconButton>
+              </Stack>
+            </TableCell>
+            <TableCell align={"right"}>
+              <Button
+                style={{
+                  backgroundColor: theme.palette.secondary.main,
+                  color: "black",
+                  borderRadius: "16px",
+                  width: "80%",
+                }}
+                onClick={navigationToAddCrop}
+              >
+                {t('farmerProfile.tblLand.capBtnAddCrop')}
+              </Button>
+            </TableCell>
+          </TableRow>
+        );
+      })
+  ) : (
+    <TableRow>
+      <TableCell colSpan={columns.length + 2} align="center">
+        No land data available
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[10, 25, 100]}
+        component="div"
+        count={rows.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onPageChange={handleChangePage}
+        onRowsPerPageChange={handleChangeRowsPerPage}
+      />
+      <Dialog
+        open={deleteConfirmation.open}
+        onClose={closeDeleteConfirmation}
+        aria-labelledby="delete-dialog-title"
+        aria-describedby="delete-dialog-description"
+      >
+        <DialogTitle id="delete-dialog-title">Delete Land</DialogTitle>
+        <DialogContent>
+          <p>Are you sure you want to delete this land?</p>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={closeDeleteConfirmation} color="primary">
+            Cancel
+          </Button>
+          <Button onClick={() => handleDeleteClick(deleteConfirmation.landId)} color="primary">
+            Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </Paper>
   );
 }
