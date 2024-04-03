@@ -4,15 +4,15 @@
  */
 
 import axios from 'axios';
-import { User, FarmerDetails } from "@/redux/types";
-import { lands } from '@/data/cropsData';
+import { User, FarmerDetails, Land} from "@/redux/types";
 
 // Define the structure of the response data
 interface UserDataResponse {
-    user: User;
-    farmerDetails: FarmerDetails;
-     // 1. TODO - expandad this to get and details
-  }
+  user: User;
+  farmerDetails: FarmerDetails;
+  land: Land[];
+  // 1. TODO - expandad this to get and details
+}
 
 /**
  * Function to fetch user data based on user ID from the backend server.
@@ -23,9 +23,10 @@ export async function fetchUserData(_id: any): Promise<UserDataResponse> {
   try {
     // Make a GET request to the backend server to fetch user data
     const response = await axios.get(`http://localhost:5000/api/get/user/${_id}`);
-    
-    // Check if the request was successful
+        
+    // Check if the request was successful`
     if (response.status === 200) {
+      console.log("-------------Data coming from BE-----------"+ response.data);
       // Return the user data
       return response.data;
     }

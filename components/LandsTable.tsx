@@ -24,8 +24,9 @@ import { rows } from "../data/landsData";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/types";
-import { deleteLand } from "@/redux/landSlice";
-
+import { deleteLand,fetchAndRegisterLands,selectLands } from "@/redux/landSlice";
+import { AppDispatch } from '@/redux/store'; 
+import { selectAuth } from "@/redux/authSlice";
 import { useTranslation } from 'react-i18next';
 import theme from "@/Theme";
 
@@ -40,7 +41,7 @@ interface Column {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
+  format?: (value: string) => string;
 }
 
 const columns: readonly Column[] = [
@@ -73,10 +74,22 @@ interface TableTitleProps {
 
 export default function LandsTable({ title }: TableTitleProps) {
   const router = useRouter();
-  const landDetails = useSelector((state: RootState) => state.land);
-  // 3. TODO - check if this is working.
-  const dispatch = useDispatch();
+ 
+  const dispatch: AppDispatch = useDispatch();
 
+// Fetch the authentication status from Redux store
+const { auth } = useSelector(selectAuth);
+
+ // Fetch land data when the component mounts
+ const landDetails = useSelector((state: RootState) => selectLands(state));
+
+ //const landDetails = useSelector(selectLands);
+ console.log("Land details from land table", landDetails);
+
+React.useEffect(() => {
+  dispatch(fetchAndRegisterLands(auth._id)); // Fetch land data for the authenticated user
+}, [auth._id, dispatch]);
+  
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -142,55 +155,63 @@ export default function LandsTable({ title }: TableTitleProps) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {landDetails
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow
-                    key={row.landId}
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                  >
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <>
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        </>
-                      );
-                    })}
-                    <TableCell align={"right"}>
-                      <Stack direction="row" spacing={2}>
-                        <IconButton onClick={() => handleEditClick(row.landId)}>
-                          <EditNoteIcon />
-                        </IconButton>
-                        <IconButton onClick={() => openDeleteConfirmation(row.landId)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Stack>
-                    </TableCell>
-                    <TableCell align={"right"}>
-                      <Button
-                        style={{
-                          backgroundColor: theme.palette.secondary.main,
-                          color: "black",
-                          borderRadius: "16px",
-                          width: "80%",
-                        }}
-                        onClick={navigationToAddCrop}
-                      >
-                        {t('farmerProfile.tblLand.capBtnAddCrop')}
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
+  {landDetails?.length ? (
+    landDetails
+      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+      .map((row) => {
+        return (
+          <TableRow
+            key={row._id}
+            hover
+            role="checkbox"
+            tabIndex={-1}
+          >
+            {columns.map((column) => {
+              const value = row[column.id];
+              return (
+                <>
+                  <TableCell key={column.id} align={column.align}>
+                    {column.format && typeof value === "number"
+                      ? column.format(value)
+                      : value}
+                  </TableCell>
+                </>
+              );
+            })}
+            <TableCell align={"right"}>
+              <Stack direction="row" spacing={2}>
+                <IconButton onClick={() => handleEditClick(row._id)}>
+                  <EditNoteIcon />
+                </IconButton>
+                <IconButton onClick={() => openDeleteConfirmation(row._id)}>
+                  <DeleteIcon />
+                </IconButton>
+              </Stack>
+            </TableCell>
+            <TableCell align={"right"}>
+              <Button
+                style={{
+                  backgroundColor: theme.palette.secondary.main,
+                  color: "black",
+                  borderRadius: "16px",
+                  width: "80%",
+                }}
+                onClick={navigationToAddCrop}
+              >
+                {t('farmerProfile.tblLand.capBtnAddCrop')}
+              </Button>
+            </TableCell>
+          </TableRow>
+        );
+      })
+  ) : (
+    <TableRow>
+      <TableCell colSpan={columns.length + 2} align="center">
+        No land data available
+      </TableCell>
+    </TableRow>
+  )}
+</TableBody>
         </Table>
       </TableContainer>
       <TablePagination

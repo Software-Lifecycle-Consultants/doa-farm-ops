@@ -13,15 +13,19 @@ interface Crop {
     landId: string;
     _id: string;
   }
-interface Land {
-  landId: string; //should remove
-  landName: string;
-  district: string;
-  dsDivision: string;
-  landRent: string;
-  irrigationMode: string;
+  export interface Land {
+    _id: string;
+    landName: string;
+    district: string;
+    dsDivision: string;
+    landRent: string;
+    irrigationMode: string;
+    userId: string;
+    crops: any[]; // You may need to specify the type of this array if it's not always empty
+    // createdAt: string;
+    // updatedAt: string;
+    // __v: number;
 }
-
 interface LandAndCrop {
   landId: string;
   landName: string;
@@ -96,8 +100,10 @@ export interface UserWithFarmer {
 
   // Define the structure of the Redux store's state using the RootState type.
   export type RootState = {
-    crop: Crop[]; // An array of Crop objects, representing the state of crop data.
-    land: Land[];
+    crops: Crop[]; // An array of Crop objects, representing the state of crop data.
+    land: {
+      lands: Land[] | null;
+    };// An array of Land objects, representing the state of land data.
     landAndCrop: LandAndCrop;
     user: { user: User | null };
     farmer: { farmerDetails: FarmerDetails | null };
