@@ -101,7 +101,9 @@ export interface UserWithFarmer {
   // Define the structure of the Redux store's state using the RootState type.
   export type RootState = {
     crops: Crop[]; // An array of Crop objects, representing the state of crop data.
-    lands: Land[];// An array of Land objects, representing the state of land data.
+    land: {
+      lands: Land[] | null;
+    };// An array of Land objects, representing the state of land data.
     landAndCrop: LandAndCrop;
     user: { user: User | null };
     farmer: { farmerDetails: FarmerDetails | null };
