@@ -52,7 +52,7 @@ export interface FarmerDetails {
     orgAddress: string;
 }
 
-interface Officer {
+export interface OfficerDetails {
   officer: {
     orgName: string;
     orgAddress: string;
@@ -107,7 +107,7 @@ export interface UserWithFarmer {
     landAndCrop: LandAndCrop;
     user: { user: User | null };
     farmer: { farmerDetails: FarmerDetails | null };
-    officer: Officer;
+    officer: OfficerDetails | null;
     userWithOfficer: UserWithOfficer;
     userWithFarmer: UserWithFarmer;
   };

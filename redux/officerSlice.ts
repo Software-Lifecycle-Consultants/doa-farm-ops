@@ -1,15 +1,32 @@
 // Import the createSlice function from Redux Toolkit.
-import { createSlice } from "@reduxjs/toolkit";
+import { fetchUserData } from "@/api/fetchUserData";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { OfficerDetails } from "./types";
 
-// Define the initial state of the 'officer' slice.
-const initialState = {
-  officer: {
-    orgName: null,
-    orgAddress: null,
-    university: null,
-  },
+// // Define the initial state of the 'officer' slice.
+// const initialState = {
+//   officer: {
+//     orgName: null,
+//     orgAddress: null,
+//     university: null,
+//   },
+// };
+
+// Define the initial state for the farmer slice
+const initialState: { officerDetails: OfficerDetails | null } = {
+  officerDetails: null,
 };
 
+// Create an asynchronous thunk to fetch and register farmer details
+export const fetchAndRegisterOfficer = createAsyncThunk(
+  'officer/fetchAndRegisterOfficer',
+  async (userId: string) => {
+    const userData = await fetchUserData(userId);
+    return userData.officerDetails;
+  }
+);
+
+// Create the officer slice using createSlice function
 const officerSlice = createSlice({
   name: "officer", // A unique name for this slice, used in the Redux store.
   initialState, // The initial state of the 'officer' slice.
@@ -18,7 +35,7 @@ const officerSlice = createSlice({
     OfficerRegister: (state, action) => {
       console.log("Register Action Payload:", action.payload);
       // state.officer = action.payload; // Set 'officer' to the payload provided in the action.
-      state.officer = { ...state.officer, ...action.payload }; // Merges existing officer data with fields from action.payload.
+      state.officerDetails = { ...state.officerDetails, ...action.payload }; // Merges existing officer data with fields from action.payload.
     },
   },
 });
