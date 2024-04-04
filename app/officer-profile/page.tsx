@@ -73,7 +73,6 @@ export default function OfficerProfile() {
 
 // Fetch user and officer details on component mount
 React.useEffect(() => {
-  debugger;
   dispatch(fetchAndRegisterUser(auth._id)); // Fetch user details
   dispatch(fetchAndRegisterOfficer(auth._id)); // Fetch officer details
 }, [auth._id, dispatch]);
