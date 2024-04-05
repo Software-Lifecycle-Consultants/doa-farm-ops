@@ -23,8 +23,8 @@ import {
 import { rows } from "../data/landsData";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/types";
-import { deleteLand,fetchAndRegisterLands,selectLands } from "@/redux/landSlice";
+import { RootState} from "@/redux/types";
+import { deleteLandAsync, fetchAndRegisterLands, selectLands} from "@/redux/landSlice";
 import { AppDispatch } from '@/redux/store'; 
 import { selectAuth } from "@/redux/authSlice";
 import { useTranslation } from 'react-i18next';
@@ -129,12 +129,14 @@ React.useEffect(() => {
     // Close the delete confirmation dialog
     setDeleteConfirmation({ open: false, landId: null });
   };
-
   //Function for deleting a land
-  const handleDeleteClick = (landId: any) => {
-    // Dispatch the deleteLand action with the landId to delete
-    dispatch(deleteLand(landId));
-    closeDeleteConfirmation(); // Close the delete confirmation dialog
+  const handleDeleteClick = async (landId: any) => {
+    try {
+      await dispatch(deleteLandAsync(landId));
+      closeDeleteConfirmation(); // Close the delete confirmation dialog
+    } catch (error) {
+      console.error('Error deleting land:', error);
+    }
   };
 
   return (
