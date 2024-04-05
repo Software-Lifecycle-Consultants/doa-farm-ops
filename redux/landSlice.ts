@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, Land } from './types';
 import { fetchUserData } from '@/api/fetchUserData';
+import axios from "axios";
 
 // Define the initial state for the land slice
 const initialState: { lands: Land[] | null } = {
@@ -14,6 +15,22 @@ export const fetchAndRegisterLands = createAsyncThunk(
     const userData = await fetchUserData(userId);
     return userData.land;
   }
+);
+
+// Create an asynchronous thunk to Delete land details
+export const deleteLandAsync = createAsyncThunk(
+    'land/deleteLandAsync',
+    async (landId: string) => {
+      const url = `http://localhost:5000/api/land/deleteLand/${landId}`;
+      try {
+        const response = await axios.delete(url);
+        // Handle the response
+        return landId; // Assuming successful deletion, return the deleted land ID
+      } catch (error) {
+        console.error('Error deleting land:', error);
+        throw error; // Re-throw the error for handling in the reducer
+      }
+    }
 );
 
 // Create the land slice using createSlice function
@@ -55,7 +72,19 @@ const landSlice = createSlice({
       // Handle rejection of fetchAndRegisterLands
       .addCase(fetchAndRegisterLands.rejected, (state, action) => {
         console.error('Error fetching land details:', action.error);
-      });
+      })
+        // Handle successful fulfillment of deleteLandAsync
+      .addCase(deleteLandAsync.fulfilled, (state, action: PayloadAction<string>) => {
+        const deletedLandId = action.payload;
+        if (state.lands) {
+          state.lands = state.lands.filter((land) => land._id !== deletedLandId);
+        }
+      })
+        // Handle rejection of deleteLandAsync
+        .addCase(deleteLandAsync.rejected, (state, action) => {
+          console.error('Error deleting land:', action.error);
+        })
+
   },
 });
 

@@ -16,7 +16,7 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { addLand } from "@/redux/landSlice";
+import { addNewLand } from "@/redux/landSlice";
 import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
@@ -25,7 +25,7 @@ import { CustomBox1 } from "@/Theme";
 import axios from "axios";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
-import { selectAddLand } from "@/redux/landSlice";
+import { selectLands } from "@/redux/landSlice";
 import { selectAuth } from "@/redux/authSlice";
 import { districtList } from "@/data/landsData";
 
@@ -33,7 +33,7 @@ import { districtList } from "@/data/landsData";
  * Add Land page serves as a form to add details about land properties.
  */
 
-export default function AddLand() {
+export default function AddNewLand() {
   const router = useRouter();
 
   const districtNames = districtList.map((district) => district.name);
@@ -81,12 +81,12 @@ export default function AddLand() {
   };
 
   //Function to navigate to my crops page clicking save & exit to my crops button
-  const handleOnClickAddLand = async (
+  const handleOnClickAddNewLand = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     try {
-      const action = addLand(formData);
+      const action = addNewLand(formData);
       dispatch(action);
       console.log("Dispatching action for add land:", action);
 
@@ -97,11 +97,9 @@ export default function AddLand() {
       console.log("----------getUserFromRedux----------------", userId);
 
       // Get land data from the Redux store
-      const landData = selectAddLand(store.getState());
+      const landData = selectLands(store.getState());
       const landDataObject = landData[landData.length - 1];
-      // const jsonLandData = JSON.stringify(landDataObject);
-      // console.log("----------jsonFormatAddLandFromRedux----------------", jsonLandData);
-      
+
       const landDetails = {...landDataObject, userId};
       const jsonLandDetails = JSON.stringify(landDetails);
       console.log("----------jsonLandDetails----------------" + jsonLandDetails);
@@ -131,7 +129,7 @@ export default function AddLand() {
     try {
       const fromAddLandValue = true; // Set the value you want to pass through url
       const landData = formData;
-      const action = addLand(landData);
+      const action = addNewLand(landData);
       dispatch(action);
       console.log("Dispatching action for land:", action);
       router.push(`/add-crop?fromAddLand=${fromAddLandValue}`); //Pass the value
@@ -141,7 +139,7 @@ export default function AddLand() {
   };
 
   // Event handler to add form field data
-  const handleChangeAddLand = (
+  const handleChangeAddNewLand = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
@@ -263,7 +261,7 @@ export default function AddLand() {
                 name="landName"
                 autoComplete="landName"
                 value={formData.landName}
-                onChange={(e) => handleChangeAddLand(e, "landName")}
+                onChange={(e) => handleChangeAddNewLand(e, "landName")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -296,7 +294,7 @@ export default function AddLand() {
                 id="division"
                 autoComplete="division"
                 value={formData.dsDivision}
-                onChange={(e) => handleChangeAddLand(e, "dsDivision")}
+                onChange={(e) => handleChangeAddNewLand(e, "dsDivision")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -310,7 +308,7 @@ export default function AddLand() {
                 id="landRent"
                 autoComplete="landRent"
                 value={formData.landRent}
-                onChange={(e) => handleChangeAddLand(e, "landRent")}
+                onChange={(e) => handleChangeAddNewLand(e, "landRent")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -324,7 +322,7 @@ export default function AddLand() {
                 id="modeOfIrrigation"
                 autoComplete="modeOfIrrigation"
                 value={formData.irrigationMode}
-                onChange={(e) => handleChangeAddLand(e, "irrigationMode")}
+                onChange={(e) => handleChangeAddNewLand(e, "irrigationMode")}
               />
             </Grid>
           </Grid>
@@ -336,7 +334,7 @@ export default function AddLand() {
                 variant="outlined"
                 fullWidth
                 sx={{ fontSize: 11, padding: 0, height: "50px" }}
-                onClick={handleOnClickAddLand}
+                onClick={handleOnClickAddNewLand}
               >
                 {i18n.t("addLand.capBtnSave&Exit")}
               </Button>
