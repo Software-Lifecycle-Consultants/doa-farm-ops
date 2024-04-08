@@ -3,16 +3,7 @@ import { fetchUserData } from "@/api/fetchUserData";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { OfficerDetails, RootState } from "./types";
 
-// // Define the initial state of the 'officer' slice.
-// const initialState = {
-//   officer: {
-//     orgName: null,
-//     orgAddress: null,
-//     university: null,
-//   },
-// };
-
-// Define the initial state for the farmer slice
+// Define the initial state for the officer slice
 const initialState: { officerDetails: OfficerDetails | null } = {
   officerDetails: null,
 };

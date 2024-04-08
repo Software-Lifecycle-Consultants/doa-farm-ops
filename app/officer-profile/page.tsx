@@ -30,53 +30,11 @@ export default function OfficerProfile() {
   const user = useSelector(selectUser);
   const officerDetails = useSelector(selectOfficer);
 
-//   // Initialize state for user and officer details
-//   const [UserData, setUserData] = React.useState<UserWithOfficer>({
-//     user: {
-//         _id: "",
-//         firstName: "",
-//         lastName: "",
-//         email: "",
-//         phoneNumber: "",
-//         nic: "",
-//         role: "",
-//         address: "",
-//         password: ""
-//     },
-//     officerDetails: {
-//         orgName: "",
-//         orgAddress: "",
-//         university: ""
-//     }
-// });
-
-// // Function to fetch user data based on user ID
-// async function fetchData(_id: any) {
-//   try {
-//     const response = await axios.get(`http://localhost:5000/api/get/user/${_id}`);
-//     console.log('Fetch response-------- ', response);
-    
-//     if (response.status === 200) {
-//       dispatch(register(response.data.user));
-//       dispatch(OfficerRegister(response.data.officerDetails));
-//       // Get officer data from the Redux store
-//       const officerData = selectOfficer(store.getState());
-//       console.log('officerData-----------:', officerData);
-//       setUserData(response.data);
-//     }
-//   } catch (error) {
-//     console.log('Error fetching data:', error);
-//     return error;
-//   }
-  
-// }
-
-// Fetch user and officer details on component mount
-React.useEffect(() => {
-  dispatch(fetchAndRegisterUser(auth._id)); // Fetch user details
-  dispatch(fetchAndRegisterOfficer(auth._id)); // Fetch officer details
-}, [auth._id, dispatch]);
-
+  // Fetch user and officer details on component mount
+  React.useEffect(() => {
+    dispatch(fetchAndRegisterUser(auth._id)); // Fetch user details
+    dispatch(fetchAndRegisterOfficer(auth._id)); // Fetch officer details
+  }, [auth._id, dispatch]);
 
   // Return the JSX for rendering
   return (
@@ -103,8 +61,7 @@ React.useEffect(() => {
                   marginBottom: "4px",
                 }}
               >
-                {user && user.firstName}{" "}
-                {user && user.lastName}
+                {user && user.firstName} {user && user.lastName}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -146,74 +103,40 @@ React.useEffect(() => {
             </Grid>
             {/* Personal Information Fields */}
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtFirstName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {user && user.firstName}
-              </Typography>
+              <Typography variant="body1">{user && user.firstName}</Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtLastName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {user && user.lastName}
-              </Typography>
+              <Typography variant="body1">{user && user.lastName}</Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtEmail")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {user && user.email}
-              </Typography>
+              <Typography variant="body1">{user && user.email}</Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtNicNumber")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {user && user.nic}
-              </Typography>
+              <Typography variant="body1">{user && user.nic}</Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtAddress")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {user && user.address}
-              </Typography>
+              <Typography variant="body1">{user && user.address}</Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtPhoneNumber")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {user && user.phoneNumber}
               </Typography>
             </Grid>
@@ -247,26 +170,18 @@ React.useEffect(() => {
             </Grid>
 
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtOrgName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {officerDetails && officerDetails.orgName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtOrgAddress")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {officerDetails && officerDetails.orgAddress}
               </Typography>
             </Grid>
@@ -277,14 +192,10 @@ React.useEffect(() => {
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtUniversity")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {officerDetails && officerDetails.university}
               </Typography>
             </Grid>
