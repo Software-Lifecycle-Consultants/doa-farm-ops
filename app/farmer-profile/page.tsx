@@ -155,7 +155,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {user && user.email}
+                {user && user.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
