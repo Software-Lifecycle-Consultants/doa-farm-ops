@@ -29,7 +29,7 @@ import store from '@/redux/store';
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { register } from "@/redux/userSlice";
-// import { toast } from "react-toastify";
+import { User } from "@/redux/types";
 /**
  * SignUp page allows to users to register to the system
  */
@@ -41,21 +41,8 @@ export default function SignUp() {
   const router = useRouter();
   const dispatch = useDispatch();
 
-
-  // Interface for the form data
-  interface FormData {
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    nic: string;
-    role: string;
-    address: string;
-    password: string;
-  }
-
   // State for the form data
-  const [formData, setFormData] = useState<FormData>({
+  const [formData, setFormData] = useState<User>({
     firstName: "",
     lastName: "",
     email: "",

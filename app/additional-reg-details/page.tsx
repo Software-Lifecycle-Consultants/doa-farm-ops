@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 import { registerFarmer } from "@/redux/farmerSlice";
 import { OfficerRegister } from "@/redux/officerSlice";
 import { useSelector } from 'react-redux';
-import { RootState } from "@/redux/types";
+import { FarmerDetails, OfficerDetails, RootState } from "@/redux/types";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectFarmerDetails } from "@/redux/farmerSlice";
@@ -35,26 +35,14 @@ export default function AdditionalRegistration() {
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
-  // Interface for the form data
-  interface FarmerFormData {
-    household: string;
-    orgName: string;
-    orgAddress: string;
-  }
-  interface OfficerFormData {
-    orgName: string;
-    orgAddress: string;
-    university: string;
-  }
-
   // State for the form data
-  const [farmerFormData, setFarmerFormData] = useState<FarmerFormData>({
+  const [farmerFormData, setFarmerFormData] = useState<FarmerDetails>({
     household: "",
     orgName: "",
     orgAddress: ""
   });
   
-  const [officerFormData, setOfficerFormData] = useState<OfficerFormData>({
+  const [officerFormData, setOfficerFormData] = useState<OfficerDetails>({
     orgName: "",
     orgAddress: "",
     university: ""

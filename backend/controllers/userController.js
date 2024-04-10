@@ -118,8 +118,8 @@ const userController = {
       // Save the famer/officers details based on user role
       if (userData.user.role === "farmer") {
         // Extract farmer-specific fields
-        const { household, orgName, orgAddress } = farmerData.farmerDetails || {};
-
+        const { household, orgName, orgAddress } = farmerData || {};
+        console.log("household, orgName, orgAddress", household, orgName, orgAddress);
         if (!household || !orgName || !orgAddress) {
           return res
             .status(400)
@@ -139,8 +139,7 @@ const userController = {
         await newFarmer.save();
       } else if (userData.user.role === "officer") {
         // Extract officer-specific fields
-        const { orgName, orgAddress, university } = officerData.officer || {};
-
+        const { orgName, orgAddress, university } = officerData || {};
         if (!orgName || !orgAddress || !university) {
           return res
             .status(400)
