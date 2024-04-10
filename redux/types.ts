@@ -14,7 +14,7 @@ interface Crop {
     _id: string;
   }
   export interface Land {
-    _id: string;
+    landId: string;
     landName: string;
     district: string;
     dsDivision: string;
