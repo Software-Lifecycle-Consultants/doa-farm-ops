@@ -109,8 +109,16 @@ React.useEffect(() => {
     router.push("/add-crop");
   };
 
-  const handleEditClick = (id: any) => {
-    router.push(`/update-land/${id}`);
+  // const handleEditClick = (id: any) => {
+  //   router.push(`/update-land/${id}`);
+  // };
+
+  const handleEditClick = async (landId: any) => {
+    try {
+       router.push(`/update-land/${landId}`);
+    } catch (error) {
+      console.error('Error updating land:', error);
+    }
   };
 
   const { t } = useTranslation();
