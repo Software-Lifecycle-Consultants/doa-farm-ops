@@ -52,22 +52,26 @@ export default function AddNewLand() {
   const [responseData, setResponseData] = useState(null);
 
   // Define the structure of the form data
-  interface FormData {
-    // landId: string;
+  interface FormData{
+    _id: string;
     landName: string;
     district: string | null;
     dsDivision: string;
     landRent: string;
     irrigationMode: string;
+    userId: string;
+    crops: any[];
   }
 
   const [formData, setFormData] = useState<FormData>({
-    // landId: "",
+    _id: "",
     landName: "",
     district: null,
     dsDivision: "",
     landRent: "",
     irrigationMode: "",
+    userId: "",
+    crops: [],
   });
 
   const dispatch = useDispatch();
