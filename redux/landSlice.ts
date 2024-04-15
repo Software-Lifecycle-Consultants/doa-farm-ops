@@ -106,9 +106,15 @@ const landSlice = createSlice({
         // Handle successful fulfillment of updateLandAsync (assuming optional return)
         .addCase(updateLandAsync.fulfilled, (state, action) => {
           const updatedLandData = action.payload;
-          const landIndex = state.lands.findIndex((land) => land._id === updatedLandData._id);
-          if (landIndex !== -1) {
+          if (state.lands) {
+            const landIndex = state.lands.findIndex((land) => land._id === updatedLandData._id);
+            if (landIndex !== -1) {
               state.lands[landIndex] = updatedLandData; // Update state with actual server data
+            } else {
+              state.lands.push(updatedLandData); // Add the new land data to the state
+            }
+          } else {
+            state.lands = [updatedLandData]; // Initialize the lands array with the updated data
           }
       })
       .addCase(updateLandAsync.rejected, (state, action) => {
