@@ -14,11 +14,15 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from '@/redux/store';
 import { editLand,fetchAndRegisterLands, selectLands, updateLandAsync } from "@/redux/landSlice";
 import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../../config/i18n";// Import the i18n instance
 import { CustomBox1 } from "@/Theme";
+import store from "@/redux/store";
+import { selectAuth } from "@/redux/authSlice";
+import { Land } from '@/redux/types';
 
 /**
  * UpdateLand page is a form to edit or update details about land properties.
@@ -33,24 +37,32 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
   //const landDetails = useSelector((state: RootState) => state.land);
   const landDetails = useSelector((state: any) => selectLands(state));
   
-  // Get the Redux dispatch function
-  const dispatch = useDispatch();
+ 
+  // Get the Redux dispatch function with AppDispatch  type
+  const dispatch: AppDispatch = useDispatch();
 
   const { t } = useTranslation();
 
-  // Initialize form data with the data from the state based on landId
-  const initialFormData = landDetails.find(
-    (land:any) => land.landId === landId
-  ) || {
-    landName: "",
-    district: "",
-    dsDivision: "",
-    landRent: "",
-    irrigationMode: "",
-  };
+  // Fetch the land details when the component mounts
+  React.useEffect(() => {
+    dispatch(fetchAndRegisterLands(landId));
+  }, [dispatch, landId]);
 
-  // Create state to manage form data
-  const [formData, setFormData] = useState(initialFormData);
+  // Initialize form data with the data from the state based on landId
+  // Initialize the form data with the fetched land data
+  const land = landDetails?.find((l) => l._id === landId);
+  const [formData, setFormData] = useState<FormData>({
+    landName: land?.landName || '',
+    district: land?.district || '',
+    dsDivision: land?.dsDivision || '',
+    landRent: land?.landRent || '',
+    irrigationMode: land?.irrigationMode || '',
+    userId: land?.userId || '',
+    crops: land?.crops || [],
+  });
+
+  // // Create state to manage form data
+  // const [formData, setFormData] = useState(initialFormData);
 
   interface FormData {
     landName: string;
@@ -58,19 +70,57 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     dsDivision: string;
     landRent: string;
     irrigationMode: string;
+    userId: string;
+    crops: any[];
   }
+
+  // interface Land {
+  //   _id: string;
+  //   landName: string;
+  //   district: string;
+  //   dsDivision: string;
+  //   landRent: string;
+  //   irrigationMode: string;
+  //   userId: string;
+  //   crops: any[];
+  // }
 
   //Function to navigate to my crops page clicking save & exit to my crops button
   const handleOnClickUpdateLand = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate an update land action by creating a land data object.
-    const landData = { landId, ...formData };
-    console.log("🚀 ~ UpdateLand ~ landData:", landData);
-    dispatch(editLand(landData));
-    router.push("/my-crops");
+    try {
+      //Get logged user Id from redux
+      const loggedUser = selectAuth(store.getState());
+      console.log("----------getUserFromRedux----------------", loggedUser);
+      const userId = loggedUser.auth._id;
+      console.log("----------getUserFromRedux----------------", userId);
+
+      // Create the land data object with the correct structure
+      const landData: Land = {
+        _id: landId,
+        landName: formData.landName,
+        district: formData.district,
+        dsDivision: formData.dsDivision,
+        landRent: formData.landRent,
+        irrigationMode: formData.irrigationMode,
+        userId: userId, // Assuming you have the authenticated user's ID
+        crops: [], // Assuming you don't have any crops associated with this land update
+      };
+  
+      // Dispatch the updateLandAsync thunk
+      console.log("Updated Land Data ------> " + JSON.stringify(landData))
+      await dispatch(updateLandAsync(landData));
+  
+      // Navigate to the "My Crops" page
+      router.push("/my-crops");
+    } catch (error) {
+      console.error("Error updating land:", error);
+      // Handle the error, e.g., display an error message to the user
+    }
   };
+
   //Function to navigate to add crop page
   const navigationToUpdateCrop = async (
     event: React.MouseEvent<HTMLButtonElement>
