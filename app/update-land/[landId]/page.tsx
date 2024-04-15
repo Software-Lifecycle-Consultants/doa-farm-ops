@@ -14,7 +14,7 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { updateLand } from "@/redux/landSlice";
+import { editLand,fetchAndRegisterLands, selectLands, updateLandAsync } from "@/redux/landSlice";
 import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../../config/i18n";// Import the i18n instance
@@ -30,7 +30,9 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
   // Extract the landId from the params object
   const landId = params.landId;
   // Get the land details from the Redux store
-  const landDetails = useSelector((state: RootState) => state.land);
+  //const landDetails = useSelector((state: RootState) => state.land);
+  const landDetails = useSelector((state: any) => selectLands(state));
+  
   // Get the Redux dispatch function
   const dispatch = useDispatch();
 
@@ -38,7 +40,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
 
   // Initialize form data with the data from the state based on landId
   const initialFormData = landDetails.find(
-    (land) => land.landId === landId
+    (land:any) => land.landId === landId
   ) || {
     landName: "",
     district: "",
@@ -66,7 +68,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     // Simulate an update land action by creating a land data object.
     const landData = { landId, ...formData };
     console.log("🚀 ~ UpdateLand ~ landData:", landData);
-    dispatch(updateLand(landData));
+    dispatch(editLand(landData));
     router.push("/my-crops");
   };
   //Function to navigate to add crop page
