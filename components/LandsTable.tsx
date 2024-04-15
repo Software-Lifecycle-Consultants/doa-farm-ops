@@ -156,63 +156,41 @@ React.useEffect(() => {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-  {landDetails?.length ? (
-    landDetails
-      .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-      .map((row) => {
-        return (
-          <TableRow
-            key={row._id}
-            hover
-            role="checkbox"
-            tabIndex={-1}
-          >
-            {columns.map((column) => {
-              const value = row[column.id];
-              return (
-                <>
-                  <TableCell key={column.id} align={column.align}>
-                    {column.format && typeof value === "number"
-                      ? column.format(value)
-                      : value}
-                  </TableCell>
-                </>
-              );
-            })}
-            <TableCell align={"right"}>
-              <Stack direction="row" spacing={2}>
-                <IconButton onClick={() => handleEditClick(row._id)}>
-                  <EditNoteIcon />
-                </IconButton>
-                <IconButton onClick={() => openDeleteConfirmation(row._id)}>
-                  <DeleteIcon />
-                </IconButton>
-              </Stack>
-            </TableCell>
-            <TableCell align={"right"}>
-              <Button
-                style={{
-                  backgroundColor: theme.palette.secondary.main,
-                  color: "black",
-                  borderRadius: "16px",
-                  width: "80%",
-                }}
-                onClick={navigationToAddCrop}
-              >
-                {t('farmerProfile.tblLand.capBtnAddCrop')}
-              </Button>
-            </TableCell>
-          </TableRow>
-        );
-      })
-  ) : (
-    <TableRow>
-      <TableCell colSpan={columns.length + 2} align="center">
-        No land data available
+         <TableBody>
+  {landDetails?.map((row) => (
+    <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
+      {columns.map((column) => (
+        <TableCell key={`${row._id}-${column.id}`} align={column.align}>
+          {column.format && typeof row[column.id] === "number"
+            ? column.format(row[column.id])
+            : row[column.id]}
+        </TableCell>
+      ))}
+      <TableCell align={"right"}>
+        <Stack direction="row" spacing={2}>
+          <IconButton onClick={() => handleEditClick(row._id)}>
+            <EditNoteIcon />
+          </IconButton>
+          <IconButton onClick={() => openDeleteConfirmation(row._id)}>
+            <DeleteIcon />
+          </IconButton>
+        </Stack>
+      </TableCell>
+      <TableCell align={"right"}>
+        <Button
+          style={{
+            backgroundColor: theme.palette.secondary.main,
+            color: "black",
+            borderRadius: "16px",
+            width: "80%",
+          }}
+          onClick={navigationToAddCrop}
+        >
+          {t("farmerProfile.tblLand.capBtnAddCrop")}
+        </Button>
       </TableCell>
     </TableRow>
-  )}
+  ))}
 </TableBody>
         </Table>
       </TableContainer>
