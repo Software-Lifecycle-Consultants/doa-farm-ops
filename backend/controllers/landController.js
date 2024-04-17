@@ -14,11 +14,13 @@ const landController = {
         userId
       } = req.body;
 
+      /* TO be uncommented if this requirement comes in the future
       const ExistingLand = await Land.findOne({ landName });
       if (ExistingLand)
         return res.status(400).json({
           message: "Someone has a land with the same land Id.",
         });
+      */
 
       if (!landName || !district || !dsDivision || !landRent || !irrigationMode)
         return res.status(400).json({ msg: "Please fill in all fields." });
@@ -56,12 +58,7 @@ const landController = {
       const id = req.params.id;
       const { landName, district, dsDivision, landRent, irrigationMode } = req.body;
       console.log("update land name: " + landName);
-      const ExistingLand = await Land.findOne({ landName });
-      if (ExistingLand)
-        return res.status(400).json({
-          message: "Someone has a land with the same land Id.",
-        });
-
+      
       if (!landName || !district || !dsDivision || !landRent || !irrigationMode)
         return res.status(400).json({ msg: "Please fill in all fields." });
 
