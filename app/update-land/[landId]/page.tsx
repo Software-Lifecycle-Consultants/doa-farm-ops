@@ -144,7 +144,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
 
   const handleCloseSuccessDialog = () => {
     setOpenSuccessDialog(false);
-    router.push("/my-crops");
+    router.push("/farmer-profile");
   };
   return (
     <Container component="main" maxWidth="xl">
