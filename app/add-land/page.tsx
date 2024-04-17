@@ -11,6 +11,9 @@ import {
   Stack,
   MenuItem,
   Autocomplete,
+  Dialog,
+  DialogTitle,
+  DialogActions,
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
@@ -114,7 +117,7 @@ export default function AddNewLand() {
       if (response && response.status === 200) {
         console.log(response);
         setResponseData(response.data);
-        router.push("/my-crops");
+        setOpenSuccessDialog(true); // Open success dialog on success
         // // Simulate an add land action by creating a land data object.
         // dispatch(addLand(landData));
       } else if (response && response.status === 400) {
@@ -177,6 +180,13 @@ export default function AddNewLand() {
     padding: "3vh",
     margin: "5vh auto",
     maxWidth: "500px",
+  };
+  //  manage the visibility of the success dialog
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+
+  const handleCloseSuccessDialog = () => {
+    setOpenSuccessDialog(false);
+    router.push("/my-crops");
   };
 
   return (
@@ -355,6 +365,18 @@ export default function AddNewLand() {
             </Stack>
           </Grid>
         </Box>
+        <Dialog
+            open={openSuccessDialog}
+            onClose={handleCloseSuccessDialog}
+            aria-labelledby="success-dialog-title"
+        >
+          <DialogTitle id="success-dialog-title">Record added successfully!</DialogTitle>
+          <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+            <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
+              OK
+            </Button>
+          </DialogActions>
+        </Dialog>
       </CustomBox1>
     </Container>
   );

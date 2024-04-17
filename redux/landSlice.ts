@@ -33,6 +33,25 @@ export const deleteLandAsync = createAsyncThunk(
     }
 );
 
+// Create an asynchronous thunk to update land details
+export const updateLandAsync = createAsyncThunk(
+  "land/updateLandAsync",
+  async (landData: Land) => {
+      const apiEndpoint = `http://localhost:5000/api/land/updateLand/${landData._id}`; // Extract _id specifically
+
+      const response = await fetch(apiEndpoint, {
+          method: "PUT",
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(landData),
+      });
+      const updatedLandData = await response.json(); // Parse the response
+      return updatedLandData; // Return the updated land data
+  }
+);
+
+
 // Create the land slice using createSlice function
 const landSlice = createSlice({
   name: 'land',
@@ -84,6 +103,24 @@ const landSlice = createSlice({
         .addCase(deleteLandAsync.rejected, (state, action) => {
           console.error('Error deleting land:', action.error);
         })
+        // Handle successful fulfillment of updateLandAsync (assuming optional return)
+        .addCase(updateLandAsync.fulfilled, (state, action) => {
+          const updatedLandData = action.payload;
+          if (state.lands) {
+            const landIndex = state.lands.findIndex((land) => land._id === updatedLandData._id);
+            if (landIndex !== -1) {
+              state.lands[landIndex] = updatedLandData; // Update state with actual server data
+            } else {
+              state.lands.push(updatedLandData); // Add the new land data to the state
+            }
+          } else {
+            state.lands = [updatedLandData]; // Initialize the lands array with the updated data
+          }
+      })
+      .addCase(updateLandAsync.rejected, (state, action) => {
+          console.error("Error updating land:", action.error);
+          // Handle errors (e.g., revert UI update, display error message)
+      });
 
   },
 });
