@@ -9,6 +9,9 @@ import {
   Typography,
   Container,
   Stack,
+  DialogTitle,
+  Dialog,
+  DialogActions,
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
@@ -112,9 +115,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
       // Dispatch the updateLandAsync thunk
       console.log("Updated Land Data ------> " + JSON.stringify(landData))
       await dispatch(updateLandAsync(landData));
-  
-      // Navigate to the "My Crops" page
-      router.push("/my-crops");
+      setOpenSuccessDialog(true); // Open success dialog on success
     } catch (error) {
       console.error("Error updating land:", error);
       // Handle the error, e.g., display an error message to the user
@@ -128,7 +129,6 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     event.preventDefault(); // Prevent the default form submission behavior
     router.push("/add-crop");
   };
-
   // Event handler to update form field data
   const handleChangeUpdateLand = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -139,7 +139,13 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
       [field]: event.target.value,
     });
   };
+  // State to manage the visibility of the success dialog
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
 
+  const handleCloseSuccessDialog = () => {
+    setOpenSuccessDialog(false);
+    router.push("/my-crops");
+  };
   return (
     <Container component="main" maxWidth="xl">
       <CustomBox1 sx={{ maxWidth: "500px" }}>
@@ -268,6 +274,18 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
               </Button>
             </Stack>
           </Grid>
+          <Dialog
+              open={openSuccessDialog}
+              onClose={handleCloseSuccessDialog}
+              aria-labelledby="success-dialog-title"
+          >
+            <DialogTitle id="success-dialog-title">Record Updated successfully!</DialogTitle>
+            <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
+                OK
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Box>
       </CustomBox1>
     </Container>

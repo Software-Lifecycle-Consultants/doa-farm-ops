@@ -137,10 +137,13 @@ React.useEffect(() => {
     // Close the delete confirmation dialog
     setDeleteConfirmation({ open: false, landId: null });
   };
+  //  manage the visibility of the success dialog
+  const [openSuccessDialog, setOpenSuccessDialog] = React.useState(false);
   //Function for deleting a land
   const handleDeleteClick = async (landId: any) => {
     try {
       await dispatch(deleteLandAsync(landId));
+      setOpenSuccessDialog(true); // Open success dialog on success
       closeDeleteConfirmation(); // Close the delete confirmation dialog
     } catch (error) {
       console.error('Error deleting land:', error);
@@ -217,16 +220,26 @@ React.useEffect(() => {
         aria-labelledby="delete-dialog-title"
         aria-describedby="delete-dialog-description"
       >
-        <DialogTitle id="delete-dialog-title">Delete Land</DialogTitle>
-        <DialogContent>
-          <p>Are you sure you want to delete this land?</p>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeDeleteConfirmation} color="primary">
+        <DialogTitle id="delete-dialog-title">Are you sure you want to delete this record?</DialogTitle>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button onClick={() => handleDeleteClick(deleteConfirmation.landId)} variant="contained" color="primary" >
+            Yes
+          </Button>
+          <Button onClick={closeDeleteConfirmation} color="primary"  variant="outlined">
             Cancel
           </Button>
-          <Button onClick={() => handleDeleteClick(deleteConfirmation.landId)} color="primary">
-            Delete
+        </DialogActions>
+      </Dialog>
+      {/*Dialog box for delete success message*/}
+      <Dialog
+          open={openSuccessDialog}
+          onClose={() => setOpenSuccessDialog(false)}
+          aria-labelledby="success-dialog-title"
+      >
+        <DialogTitle id="success-dialog-title">Record deleted successfully!</DialogTitle>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button onClick={() => setOpenSuccessDialog(false)} variant="contained" color="primary">
+            OK
           </Button>
         </DialogActions>
       </Dialog>
