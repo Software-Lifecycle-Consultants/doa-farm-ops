@@ -12,6 +12,7 @@ import {
   DialogTitle,
   Dialog,
   DialogActions,
+  Autocomplete,
 } from "@mui/material";
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
@@ -26,7 +27,7 @@ import { CustomBox1 } from "@/Theme";
 import store from "@/redux/store";
 import { selectAuth } from "@/redux/authSlice";
 import { Land } from '@/redux/types';
-
+import { districtList } from "@/data/landsData";
 /**
  * UpdateLand page is a form to edit or update details about land properties.
  */
@@ -39,8 +40,10 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
   // Get the land details from the Redux store
   //const landDetails = useSelector((state: RootState) => state.land);
   const landDetails = useSelector((state: any) => selectLands(state));
-  
- 
+
+// Create a new array named districtNames containing all district names
+  const districtNames = districtList.map((district) => district.name);
+
   // Get the Redux dispatch function with AppDispatch  type
   const dispatch: AppDispatch = useDispatch();
 
@@ -146,6 +149,14 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     setOpenSuccessDialog(false);
     router.push("/farmer-profile");
   };
+  // Define a function to select district.
+  const selectChangeAddDistrict = (event: any, newValue: any | null) => {
+    setFormData({
+      ...formData,
+      district: newValue,
+    });
+  };
+
   return (
     <Container component="main" maxWidth="xl">
       <CustomBox1 sx={{ maxWidth: "500px" }}>
@@ -196,15 +207,21 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblDistrict")}</Typography>
-              <TextField
-                required
-                fullWidth
-                id="district"
-                placeholder={i18n.t("updateLand.hintTxtDistrict")}
-                name="district"
-                autoComplete="district"
-                value={formData.district}
-                onChange={(e) => handleChangeUpdateLand(e, "district")}
+              <Autocomplete
+                  options={districtNames}
+                  getOptionLabel={(option) => option}
+                  value={formData.district}
+                  onChange={(event, newValue) =>
+                      selectChangeAddDistrict(event, newValue)
+                  }
+                  renderInput={(params) => (
+                      <TextField
+                          {...params}
+                          name="district"
+                          placeholder={i18n.t("updateLand.hintTxtDistrict")}
+                          variant="outlined"
+                      />
+                  )}
               />
             </Grid>
             <Grid item xs={12}>
