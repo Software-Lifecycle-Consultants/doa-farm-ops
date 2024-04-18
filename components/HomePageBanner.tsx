@@ -37,7 +37,6 @@ const buttonContainedStyle = {
 const HomePageBanner: React.FC = () => {
   const theme = useTheme();
   const isMobileView = useMediaQuery(theme.breakpoints.down("sm"));
-  
 
   return (
     <Grid container sx={{ padding: 4, backgroundColor: "white" }}>
@@ -55,7 +54,7 @@ const HomePageBanner: React.FC = () => {
           height={185.951}
           style={{
             width: "auto",
-            height: "100%",
+            height: "75%",
             flexShrink: 0,
           }}
         />
@@ -86,7 +85,7 @@ const HomePageBanner: React.FC = () => {
               textAlign: { xs: "center", sm: "center", md: "left" },
             }}
           >
-            How DoA Crop Data platform helps you{" "}
+            How DoA Crop Data platform helps you....{" "}
             <Link href="#" color="#000">
               Reed More
             </Link>
