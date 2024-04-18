@@ -40,14 +40,7 @@ const HomePageBanner: React.FC = () => {
   
 
   return (
-    <Grid
-      container
-      sx={{
-        padding: 4,
-        background:
-          "var(--l-2, linear-gradient(135deg, #ADD49A 10%, #F0F4EE 100%))",
-      }}
-    >
+    <Grid container sx={{ padding: 4, backgroundColor: "white" }}>
       {/* Emblem Image content */}
       <Grid
         item
@@ -87,8 +80,8 @@ const HomePageBanner: React.FC = () => {
             variant="button"
             marginRight={4}
             sx={{
-              fontWeight: "bold",
-              fontFamily: { xs: "inter", md: "inter" },
+              fontWeight: "semi-bold",
+              fontFamily: { xs: "inter", md: "inherit" },
               fontSize: { lg: "1.5rem", xs: "0.75rem", md: "inherit" },
               textAlign: { xs: "center", sm: "center", md: "left" },
             }}
