@@ -87,7 +87,7 @@ export default function AddNewLand() {
     setShowMap(true);
   };
 
-  //Function to navigate to my crops page clicking save & exit to my crops button
+  //Function to navigate to Farmer Profile page clicking save & exit to Farmer Profile button
   const handleOnClickAddNewLand = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -186,7 +186,7 @@ export default function AddNewLand() {
 
   const handleCloseSuccessDialog = () => {
     setOpenSuccessDialog(false);
-    router.push("/my-crops");
+    router.push("/farmer-profile");
   };
 
   return (

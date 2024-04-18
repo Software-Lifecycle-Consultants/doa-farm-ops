@@ -144,7 +144,7 @@
     "hintTxtLandRent": "Enter Land Rent",
     "lblMode": "Mode of Irrigation",
     "hintTxtMode": "Enter Mode of Irrigation",
-    "capBtnSave&Exit": "Save & Exit to My Crops",
+    "capBtnSave&Exit": "Save & Exit to Profile",
     "capBtnSave&Proceed": "Save & Proceed to Add Crop"
   },
   "updateLand": {
@@ -161,7 +161,7 @@
     "hintTxtLandRent": "Enter Land Rent",
     "lblMode": "Mode of Irrigation",
     "hintTxtMode": "Enter Mode of Irrigation",
-    "capBtnSave&Exit": "Save & Exit to My Crops",
+    "capBtnSave&Exit": "Save & Exit to Profile",
     "capBtnSave&Proceed": "Save & Proceed to Add Crop"
   },
   "addCrop": {
