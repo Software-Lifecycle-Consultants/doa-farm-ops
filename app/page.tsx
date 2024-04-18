@@ -1,49 +1,53 @@
+"use client";
+import { Box, Button, Grid, Typography, IconButton, Link } from "@mui/material";
 import React from "react";
-import { Grid, Button, Box, Typography, IconButton, Link } from "@mui/material";
 import Image from "next/image";
 import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { textAlign } from "@mui/system";
 
-const typographyh1Styles = {
+/* Typography style */
+const typography1Styles = {
   color: "#0C111F",
   fontFamily: "Inter",
-  fontSize: { xs: "16px", sm: "22px", md: "24px" },
-  lineHeight: "130%",
-  fontStyle: "normal",
-  letterSpacing: "2px",
-  marginLeft: { xs: "26px", sm: "4px", md: "25px" },
-};
-
-const typographyh2Styles = {
-  color: "#0C111F",
-  fontFamily: "Istok Web",
-  fontSize: { xs: "18px", sm: "22px", md: "48px" },
-  lineHeight: "130%",
-  fontStyle: "bold",
-  letterSpacing: "2px",
-  marginLeft: { xs: "26px", sm: "4px", md: "25px" },
-};
-
-const typographyh3Styles = {
-  color: "#0C111F",
-  fontFamily: "Istok Web",
-  fontSize: { xs: "18px", sm: "22px", md: "24px" },
-  lineHeight: "130%",
-  fontStyle: "normal",
-  letterSpacing: "2px",
-  
-  
-};
-
-const typographyh4Styles = {
-  color: "#0C111F",
-  fontFamily: "Istok Web",
-  fontSize: { xs: "16px", sm: "22px", md: "24px" },
+  fontSize: { xs: "14px", sm: "16px", md: "24px" },
   lineHeight: "130%",
   fontStyle: "inter",
   letterSpacing: "2px",
+  marginLeft: { xs: "26px", sm: "4px", md: "25px" },
+  textAlign: { xs: "center", sm: "center", md: "left" },
 };
 
+const typography2Styles = {
+  color: "#0C111F",
+  fontFamily: "Istok Web",
+  fontSize: { xs: "22px", sm: "42px", md: "48px" },
+  lineHeight: "130%",
+  fontStyle: "bold",
+  letterSpacing: "2px",
+  marginLeft: { xs: "26px", sm: "40px", md: "25px" },
+  textAlign: { xs: "center", sm: "center", md: "left" },
+};
 
+const typography3Styles = {
+  color: "#0C111F",
+  fontFamily: "Istok Web",
+  fontSize: { xs: "16px", sm: "32px", md: "24px" },
+  lineHeight: "130%",
+  fontStyle: "inter",
+  letterSpacing: "2px",
+  textAlign: { xs: "center", sm: "center", md: "left" },
+};
+const typography4Styles = {
+  color: "#0C111F",
+  fontFamily: "Istok Web",
+  fontSize: { xs: "16px", sm: "18px", md: "22px" },
+  lineHeight: "130%",
+  fontStyle: "inter",
+  letterSpacing: "2px",
+  textAlign: "center",
+};
+
+/* Button style for contained variant */
 const buttonContainedStyle = {
   display: "inline-flex",
   justifyContent: "center",
@@ -51,9 +55,9 @@ const buttonContainedStyle = {
   gap: "10px",
   borderRadius: "100px",
   textTransform: "none",
-  fontWeight: "bold",
+  fontWeight: "Bold",
   color: "#0C111F",
-  background: "var(--l-2, linear-gradient(135deg, #FFFDFD 0%, #90EA8E 100%))",
+  background: "var(--l-2, linear-gradient(135deg, #FFFDFD 50%, #90EA8E 0%))",
   // Customize sizes for web and tablet view
   "@media (max-width: 1024px)": {
     padding: "10px 16px",
@@ -63,115 +67,124 @@ const buttonContainedStyle = {
     fontSize: "12px",
     padding: "6px 8px",
     margin: "3px",
-    marginLeft: { xs: "2px", sm: "2px", md: "25px" },
+    marginLeft: { xs: "2px", sm: "2px", md: "25px"},
   },
 };
 
-
+/* Index functional component */
 const Index = () => {
   return (
-    <Grid container spacing={2}>
-      {/* Logo */}
-      <Grid item xs={12} md={12}>
-        <Box
-          ml={{ xs: "40px", sm: "40px", md: "740px" }} // Adjust margin for mobile and desktop
-        >
+    <>
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="center"
+        spacing={2}
+        height="100vh"
+        sx={{
+          background:
+            "var(--l-2, linear-gradient(135deg, #ADD49A 10%, #F0F4EE 100%))",
+        }}
+      >
+        <Grid item xs={12} md={12} container justifyContent="center">
           <Image
-            src="/images/home/emblem.webp"
+            src="/images/home/emblem.png"
             alt="test"
-            width={277}
-            height={185}
+            width={277.758}
+            height={185.951}
             style={{
-              width: "277",
-              height: "185",
+              width: "16%",
+              height: "10%",
               flexShrink: 0,
             }}
           />
-        </Box>
-      </Grid>
+        </Grid>
 
-      <Grid item xs={12} sm={6} md={8}>
-        <Box justifyContent="center" marginTop={12} marginLeft={2}>
-          <Button variant="contained" sx={buttonContainedStyle}>
-            <Typography
-              sx={typographyh1Styles} // Apply h1 styles
-            >
-              How DoA Crop Data platform helps you
-            </Typography>
+        {/* Left side of the home */}
+        <Grid item xs={12} md={6} container>
+          {/* Heading 5 */}
+          <Box justifyContent="center" marginTop={2} marginLeft={2}>
+            <Button variant="contained" sx={buttonContainedStyle}>
+              <Typography
+                sx={typography1Styles} // Apply h1 styles
+              >
+                How DoA Crop Data platform helps you
+              </Typography>
 
-            {/* button */}
+              {/* button */}
+              <Typography marginLeft={4}>
+                <Link href="#" color="#000">
+                  Reed More{" "}
+                </Link>
+              </Typography>
+              <IconButton aria-label="arrow">
+                <ArrowForwardIcon />
+              </IconButton>
+            </Button>
+          </Box>
 
-            <Typography marginLeft={4}>
-              <Link href="#" color="primary">
-                Reed More{" "}
-              </Link>
-            </Typography>
-            <IconButton aria-label="arrow">
-              <ArrowForwardIcon />
-            </IconButton>
-          </Button>
-        </Box>
+          {/* Heading 1 */}
+          <Typography
+            sx={typography2Styles} // Apply h2 styles
+            marginTop={2}
+            margin={4}
+          >
+            Update farmer crop costs to help us manage Agriculture sector
+            development better
+          </Typography>
 
-        <Typography
-          sx={typographyh2Styles} // Apply h2 styles
-          marginTop={2}
-          textAlign="left"
-          margin={4}
-        >
-          Update farmer crop costs to help us manage Agriculture sector
-          development better
-        </Typography>
+          {/* Body text */}
+          <Typography
+            sx={typography3Styles} // Apply h4 styles
+            marginTop={2}
+            margin={4}
+          >
+            The Department of Agriculture (DOA) functions under the Ministry of
+            Agriculture and is one of the largest government departments with a
+            high profile community of agricultural scientists and a network of
+            institutions covering different Argo ecological regions island wide
+          </Typography>
 
-        <Typography
-          sx={typographyh4Styles} // Apply h4 styles
-          marginTop={2}
-          textAlign="left"
-          margin={4}
-        >
-          The Department of Agriculture (DOA) functions under the Ministry of
-          Agriculture and is one of the largest government departments with a
-          high profile community of agricultural scientists and a network of
-          institutions covering different Agro ecological regions island wide
-        </Typography>
+          {/* Button */}
+          <Box justifyContent="center" marginLeft={2} marginTop={4}>
+            <Button variant="contained" sx={buttonContainedStyle}>
+              <Typography sx={typography4Styles}>
+                Department of Agriculture Digitization efforts
+              </Typography>
+            </Button>
+          </Box>
+        </Grid>
 
-        <Box justifyContent="center" marginLeft={4} marginTop={4}>
-          <Button variant="contained" sx={buttonContainedStyle}>
-            <Typography sx={typographyh3Styles}>
-              Department of Agriculture Digitization efforts
-            </Typography>
-          </Button>
-        </Box>
-      </Grid>
-
-      {/* Picture of a farmer */}
-
-      <Grid item xs={8} md={2} marginTop={34}>
-        <Box
-          sx={{
-            
-            width: { xs: "280px", sm: "90px", md: "690px" }, // Adjust size for mobile and desktop
-            height: { xs: "80px", sm: "90px", md: "90px" },
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-          mr={{ xs: "16px", md: "32px" }}
-        >
-          {/* Heart icon */}
+        {/* Right side of the home - image */}
+        <Grid item xs={12} md={6} container justifyContent="center">
           <Image
-            src="/images/home/logo_4x.webp"
-            width={574}
-            height={625}
-            alt="wallet"
+            src="/images/home/Logo-preview.png"
+            alt="test"
+            width={574.758}
+            height={625.951}
             style={{
+              width: "60%",
+              height: "70%",
               flexShrink: 0,
             }}
           />
-        </Box>
-      </Grid>
-      {/* Open source development by Software Consultants */}
-      <Grid item xs={12} sm={12} md={12}>
-        <Box display="flex" justifyContent="center" marginTop={6}>
+        </Grid>
+
+        {/* Open source development by Software Consultants */}
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          marginTop={4}
+          container
+          justifyContent="center"
+          sx={{
+            background:
+              "var(--l-2, linear-gradient(135deg, #ADD49A 10%, #F0F4EE 100%))",
+          }}
+        >
           <Typography
             variant="caption"
             textAlign="center"
@@ -179,14 +192,13 @@ const Index = () => {
             sx={{ opacity: 20 }}
           >
             Open source development by&nbsp;
-            <Link href="#" color="primary">
+            <Link href="#" color="#02A79D">
               Software Consultants
             </Link>
-            .
           </Typography>
-        </Box>
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 
