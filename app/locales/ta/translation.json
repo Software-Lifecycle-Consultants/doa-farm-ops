@@ -256,5 +256,14 @@
     "tabHome": "முகப்புப் பக்கம்",
     "tabProfile": "சுயவிவரம்",
     "tabCrops": "பயிர்கள்"
+  },
+  "dialogBoxes": {
+    "capBtnOk": "சரி",
+    "capBtnYes": "ஆம்",
+    "capBtnCancel": "இல்லை",
+    "txtUpdatedSuccess": "பதிவு வெற்றிகரமாக புதுப்பிக்கப்பட்டது!",
+    "txtDeleteSuccess": "பதிவு வெற்றிகரமாக நீக்கப்பட்டது!",
+    "txtAddedSuccess": "பதிவு வெற்றிகரமாக சேர்க்கப்பட்டது!",
+    "txtDeleteConfirmation":"இந்தப் பதிவை நிச்சயமாக நீக்க விரும்புகிறீர்களா?"
   }
 }

@@ -296,10 +296,11 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
               onClose={handleCloseSuccessDialog}
               aria-labelledby="success-dialog-title"
           >
-            <DialogTitle id="success-dialog-title">Record Updated successfully!</DialogTitle>
+              {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
+              <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtUpdatedSuccess")}</DialogTitle>
             <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
               <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
-                OK
+                {i18n.t("dialogBoxes.capBtnOk")}
               </Button>
             </DialogActions>
           </Dialog>

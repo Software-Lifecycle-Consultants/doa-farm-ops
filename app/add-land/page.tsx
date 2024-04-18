@@ -370,10 +370,11 @@ export default function AddNewLand() {
             onClose={handleCloseSuccessDialog}
             aria-labelledby="success-dialog-title"
         >
-          <DialogTitle id="success-dialog-title">Record added successfully!</DialogTitle>
+            {/* Display a translated 'Record added successfully!' message based on the selected language. */}
+            <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtAddedSuccess")}</DialogTitle>
           <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
-              OK
+              {i18n.t("dialogBoxes.capBtnOk")}
             </Button>
           </DialogActions>
         </Dialog>

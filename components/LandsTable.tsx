@@ -29,6 +29,7 @@ import { AppDispatch } from '@/redux/store';
 import { selectAuth } from "@/redux/authSlice";
 import { useTranslation } from 'react-i18next';
 import theme from "@/Theme";
+import i18n from "i18next";
 
 // Define columns for the table
 interface Column {
@@ -218,15 +219,14 @@ React.useEffect(() => {
         open={deleteConfirmation.open}
         onClose={closeDeleteConfirmation}
         aria-labelledby="delete-dialog-title"
-        aria-describedby="delete-dialog-description"
       >
-        <DialogTitle id="delete-dialog-title">Are you sure you want to delete this record?</DialogTitle>
+        <DialogTitle id="delete-dialog-title"> {i18n.t("dialogBoxes.txtDeleteConfirmation")}</DialogTitle>
         <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button onClick={() => handleDeleteClick(deleteConfirmation.landId)} variant="contained" color="primary" >
-            Yes
+            {i18n.t("dialogBoxes.capBtnYes")}
           </Button>
           <Button onClick={closeDeleteConfirmation} color="primary"  variant="outlined">
-            Cancel
+            {i18n.t("dialogBoxes.capBtnCancel")}
           </Button>
         </DialogActions>
       </Dialog>
@@ -236,10 +236,11 @@ React.useEffect(() => {
           onClose={() => setOpenSuccessDialog(false)}
           aria-labelledby="success-dialog-title"
       >
-        <DialogTitle id="success-dialog-title">Record deleted successfully!</DialogTitle>
+        {/* Display a translated 'Record deleted successfully!' message based on the selected language. */}
+        <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtDeleteSuccess")}</DialogTitle>
         <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button onClick={() => setOpenSuccessDialog(false)} variant="contained" color="primary">
-            OK
+            {i18n.t("dialogBoxes.capBtnOk")}
           </Button>
         </DialogActions>
       </Dialog>
