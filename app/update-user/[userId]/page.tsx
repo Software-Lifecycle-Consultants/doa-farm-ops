@@ -8,53 +8,13 @@ import {
     Box,
     Typography,
     Container,
-    Stack,
   } from "@mui/material";
-import { useState } from 'react';
-import { RootState, User } from "@/redux/types";
-import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 
 
 export default function UpdateUser({ params }: { params: { userId: string } }) {
 
-// Get the Next.js router object
-// const router = useRouter();
-// Extract the userId from the params object
-const userId = params.userId;
-// Get the user details from the Redux store
-const userDetails = useSelector((state: RootState) => state.user);
-// Get the Redux dispatch function
-const dispatch = useDispatch();
-
 const { t } = useTranslation();
-
- // Initialize form data with the data from the state based on landId
-//  const initialFormData = userDetails.find(
-//     (user) => user.userId === userId
-//   ) || {
-//     firstName: "",
-//         lastName: "",
-//         email: "",
-//         phoneNumber: "",
-//         nic: "",
-//         role: "",
-//         address: "",
-//   };
-
-// Create state to manage form data
-// const [formData, setFormData] = useState(initialFormData);
-
-// interface FormData {
-//     firstName: string;
-//     lastName: string;
-//     email: string;
-//     phoneNumber: string;
-//     nic: string;
-//     role: string;
-//     address: string;
-// }
     
     return (
         <Container component="main" maxWidth="xl">
@@ -96,8 +56,6 @@ const { t } = useTranslation();
                     placeholder={i18n.t("updateUser.hintTxtFirstName")}
                     name="firstName"
                     autoComplete="firstName"
-                    // value={formData.firstName}
-                    // onChange={(e) => handleChangeUpdateUser(e, "firstName")}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -109,8 +67,6 @@ const { t } = useTranslation();
                     placeholder={i18n.t("updateUser.hintTxtlastName")}
                     name="lastName"
                     autoComplete="lastName"
-                    // value={formData.lastName}
-                    // onChange={(e) => handleChangeUpdateUser(e, "lastName")}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -123,8 +79,6 @@ const { t } = useTranslation();
                     type="email"
                     id="email"
                     autoComplete="email"
-                    // value={formData.email}
-                    // onChange={(e) => handleChangeUpdateUser(e, "email")}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -136,8 +90,6 @@ const { t } = useTranslation();
                     placeholder={i18n.t("updateUser.hintTxtnicNumber")}
                     id="nicNumber"
                     autoComplete="nicNumber"
-                    // value={formData.nicNumber}
-                    // onChange={(e) => handleChangeUpdateUser(e, "nicNumber")}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -149,8 +101,6 @@ const { t } = useTranslation();
                     placeholder={i18n.t("updateUser.hintTxtAddress")}
                     id="address"
                     autoComplete="address"
-                    // value={formData.address}
-                    // onChange={(e) => handleChangeUpdateUser(e, "address")}
                   />
                 </Grid>
                 <Grid item xs={12}>
@@ -163,8 +113,6 @@ const { t } = useTranslation();
                     type="text"
                     id="phoneNumber"
                     autoComplete="phoneNumber"
-                    // value={formData.phoneNumber}
-                    // onChange={(e) => handleChangeUpdateUser(e, "phoneNumber")}
                   />
                 </Grid>
               </Grid>
@@ -173,7 +121,6 @@ const { t } = useTranslation();
                   <Button
                     variant="outlined"
                     sx={{ fontSize: 11, marginTop: 2, spacing:4,  padding: 2, height: "50px", width: "75%"}}
-                    // onClick={handleOnClickUpdateUser}
                   >
                     {i18n.t("updateUser.capBtnSave&Exit")}
                   </Button>
