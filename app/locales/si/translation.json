@@ -26,6 +26,23 @@
     "capBtnNext": "ඉදිරියට යන්න",
     "txtAlreadyHaveAccount": "දැනටමත් ගිණුමක් තිබේද? පුරනය වන්න"
   },
+  "updateUser": {
+    "txtUpdateUser": "ඔබේ ගිණුම් විස්තර වෙනස් කරන්න",
+    "txtFillDetails": "ඔබේ ගිණුම් විස්තර වෙනස් කිරීමට පහත විස්තර පුරවන්න",
+    "lblFirstName": "මුල් නම",
+    "hintTxtFirstName": "මුල් නම ඇතුලත් කරන්න",
+    "lblLastName": "අවසන් නම",
+    "hintTxtlastName": "අවසාන නම ඇතුලත් කරන්න",
+    "lblEmail": "ඊමේල් ලිපිනය",
+    "hintTxtemail": "ඊමේල් ලිපිනය ඇතුලත් කරන්න",
+    "lblphoneNumber": "දුරකථන අංකය",
+    "hintTxtphoneNumber": "දුරකථන අංකය ඇතුලත් කරන්න",
+    "lblnicNumber": "NIC අංකය",
+    "hintTxtnicNumber": "NIC අංකය ඇතුලත් කරන්න",
+    "lblAddress": "ලිපිනය",
+    "hintTxtAddress": "ලිපිනය ඇතුලත් කරන්න",
+    "capBtnSave&Exit": "සුරකින්න"
+  },
   "additionalRegister": {
     "txtOtherDetails": "ඔබේ අනෙකුත් විස්තර එක් කරන්න",
     "txtFillDetails": "ඔබේ ගිණුම සෑදීමට පහත විස්තර පුරවන්න",

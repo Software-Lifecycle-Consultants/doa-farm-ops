@@ -26,6 +26,24 @@
     "capBtnNext": "Next",
     "txtAlreadyHaveAccount": "Already have an account? Login"
   },
+  "updateUser": {
+    "txtUpdateUser": "Edit Your Account Details",
+    "txtFillDetails": "Fill the details below to Update your account",
+    "lblFirstName": "First Name",
+    "hintTxtFirstName": "Enter First Name",
+    "lblLastName": "Last Name",
+    "hintTxtlastName": "Enter Last Name",
+    "lblEmail": "Email Address",
+    "hintTxtemail": "Enter Email Address",
+    "lblphoneNumber": "Phone Number",
+    "hintTxtphoneNumber": "Enter Phone Number",
+    "lblnicNumber": "NIC Number",
+    "hintTxtnicNumber": "Enter NIC Number",
+    "lblAddress": "Address",
+    "hintTxtAddress": "Enter Address",
+    "capBtnSave&Exit": "Save Details"
+  },
+
   "additionalRegister": {
     "txtOtherDetails": "Add your other details",
     "txtFillDetails": "Fill the details below to create your account",

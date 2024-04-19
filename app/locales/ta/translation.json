@@ -26,6 +26,23 @@
     "capBtnRegister": "உள்நுழை",
     "txtAlreadyHaveAccount": "ஏற்கனவே கணக்கு உள்ளதா? உள்நுழைக"
   },
+  "updateUser": {
+    "txtUpdateUser": "உங்கள் கணக்கு விவரங்களைத் திருத்தவும்",
+    "txtFillDetails": "உங்கள் கணக்கு விவரங்களை மாற்ற கீழே உள்ள விவரங்களை நிரப்பவும்",
+    "lblFirstName": "முதல் பெயர்",
+    "hintTxtFirstName": "முதல் பெயரை உள்ளிடவும்",
+    "lblLastName": "கடைசி பெயர்",
+    "hintTxtlastName": "கடைசிப் பெயரை உள்ளிடவும்",
+    "lblEmail": "மின்னஞ்சல் முகவரி",
+    "hintTxtemail": "மின்னஞ்சல் முகவரியை உள்ளிடவும்",
+    "lblphoneNumber": "தொலைபேசி எண்",
+    "hintTxtphoneNumber": "தொலைபேசி எண்ணை உள்ளிடவும்",
+    "lblnicNumber": "NIC எண்",
+    "hintTxtnicNumber": "NIC எண்ணை உள்ளிடவும்",
+    "lblAddress": "முகவரி",
+    "hintTxtAddress": "முகவரியை உள்ளிடவும்",
+    "capBtnSave&Exit": "சேமிக்க மற்றும் வெளியேறும்"
+  },
   "additionalRegister": {
     "txtOtherDetails": "உங்கள் மற்ற விவரங்களைச் சேர்க்கவும்",
     "txtFillDetails": "உங்கள் கணக்கை உருவாக்க கீழே உள்ள விவரங்களை நிரப்பவும்",
