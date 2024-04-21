@@ -12,7 +12,6 @@ import { selectAuth } from "@/redux/authSlice";
 import { fetchAndRegisterUser, selectUser } from "@/redux/userSlice";
 import { useSelector } from "react-redux";
 import axios from 'axios';
-import { UserWithOfficer } from "@/redux/types";
 import { useDispatch } from "react-redux";
 import { OfficerRegister, fetchAndRegisterOfficer, selectOfficer } from "@/redux/officerSlice";
 import store from "@/redux/store";

@@ -56,45 +56,7 @@ export interface OfficerDetails {
     orgName: string;
     orgAddress: string;
     university: string;
-  
-}
 
-export interface UserWithOfficer {
-  user: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    nic: string;
-    role: string;
-    address: string;
-    password: string;
-  };
-  officerDetails: {
-    orgName: string;
-    orgAddress: string;
-    university: string;
-  };
-}
-
-export interface UserWithFarmer {
-  user: {
-    _id: string;
-    firstName: string;
-    lastName: string;
-    email: string;
-    phoneNumber: string;
-    nic: string;
-    role: string;
-    address: string;
-    password: string;
-  };
-  farmerDetails: {
-    household: string;
-    orgName: string;
-    orgAddress: string;
-  };
 }
 
   // Define the structure of the Redux store's state using the RootState type.
@@ -107,6 +69,4 @@ export interface UserWithFarmer {
     user: { user: User | null };
     farmer: { farmerDetails: FarmerDetails | null };
     officer: { officerDetails: OfficerDetails | null };
-    userWithOfficer: UserWithOfficer;
-    userWithFarmer: UserWithFarmer;
   };
