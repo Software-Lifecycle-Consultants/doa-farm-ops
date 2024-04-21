@@ -256,5 +256,14 @@
     "tabHome": "මුහුණු පිටුව",
     "tabProfile": "විස්තර",
     "tabCrops": "බෝග"
+  },
+  "dialogBoxes": {
+    "capBtnOk": "හරි",
+    "capBtnYes": "ඔව්",
+    "capBtnCancel": "නැහැ",
+    "txtUpdatedSuccess": "තීරුව සාර්ථකව යාවත්කාලීන කරන ලදී!",
+    "txtDeleteSuccess": "තීරුව සාර්ථකව මකා දමන ලදී!",
+    "txtAddedSuccess": "තීරුව සාර්ථකව එක් කළා!",
+    "txtDeleteConfirmation":"ඔබට මෙම තීරුව මැකීමට අවශ්\u200Dය බව විශ්වාසද?"
   }
 }

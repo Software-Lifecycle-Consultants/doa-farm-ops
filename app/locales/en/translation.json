@@ -256,5 +256,14 @@
     "tabHome": "Home",
     "tabProfile": "Profile",
     "tabCrops": "Crops"
+  },
+  "dialogBoxes": {
+    "capBtnOk": "Ok",
+    "capBtnYes": "Yes",
+    "capBtnCancel": "Cancel",
+    "txtUpdatedSuccess": "Record Updated successfully!",
+    "txtDeleteSuccess": "Record deleted successfully!",
+    "txtAddedSuccess": "Record added successfully!",
+    "txtDeleteConfirmation":"Are you sure you want to delete this record?"
   }
 }
