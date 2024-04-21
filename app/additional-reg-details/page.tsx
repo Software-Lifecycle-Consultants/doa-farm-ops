@@ -24,11 +24,8 @@ import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectFarmerDetails } from "@/redux/farmerSlice";
 import { selectOfficer } from"@/redux/officerSlice";
-import { register } from "@/redux/authSlice";
 
 export default function AdditionalRegistration() {
-
-  // const [selectedRole, setSelectedRole] = useState(""); // State to store the selected role
 
   const [termsAgreementChecked, setTermsAgreementChecked] = useState(false);
   const router = useRouter();
@@ -50,7 +47,6 @@ export default function AdditionalRegistration() {
 
   // Get user data from the Redux store
   const userData = useSelector((state: RootState) => state.user);
-  const userX = JSON.stringify(userData);
 
    // Get user role from the userData
   const selectedRole = userData?.user?.role;
