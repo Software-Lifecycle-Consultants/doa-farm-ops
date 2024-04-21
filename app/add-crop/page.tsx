@@ -24,7 +24,7 @@ import axios from 'axios';
 import i18n from "../config/i18n";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
-import { selectAddLand } from "@/redux/landSlice";
+import { selectLands } from "@/redux/landSlice";
 import { selectAddCrop } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
 
