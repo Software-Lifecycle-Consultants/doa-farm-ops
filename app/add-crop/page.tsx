@@ -107,9 +107,9 @@ export default function AddCrop() {
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     // Get land data from the Redux store
-    const landData = selectAddLand(store.getState());
+    const landData = selectLands(store.getState());
     const landDataObject = landData[landData.length - 1];
-    console.log("----------selectAddLand----------------", landDataObject);
+    console.log("----------selectLands----------------", landDataObject);
 
     // const cropData = { cropDetails: formData };
     const action = addCrop(formData);
