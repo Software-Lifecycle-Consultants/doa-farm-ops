@@ -16,11 +16,12 @@ import { useDispatch } from "react-redux";
 import { OfficerRegister, fetchAndRegisterOfficer, selectOfficer } from "@/redux/officerSlice";
 import store from "@/redux/store";
 import { register } from "@/redux/userSlice";
+import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 
 // OfficerProfile component renders a profile page for an officer.
 export default function OfficerProfile() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch:AppDispatch = useDispatch();
 
   const { t } = useTranslation();
 

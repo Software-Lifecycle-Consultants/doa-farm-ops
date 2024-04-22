@@ -31,7 +31,7 @@ export default function FarmerProfile() {
   const router = useRouter();
   const { t } = useTranslation();
   // const dispatch = useDispatch();
-  const dispatch: AppDispatch = useDispatch(); // Type the dispatch function with explicitly specifies the type of dispatch as AppDispatch.
+  const dispatch:AppDispatch = useDispatch(); // Type the dispatch function with explicitly specifies the type of dispatch as AppDispatch.
 
   // Fetch the authentication status from Redux store
   const { auth } = useSelector(selectAuth);
