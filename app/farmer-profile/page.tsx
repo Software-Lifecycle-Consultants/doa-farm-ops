@@ -23,7 +23,6 @@ import { useDispatch } from 'react-redux';
 import { register, selectUser, fetchAndRegisterUser } from '@/redux/userSlice';
 import { fetchAndRegisterFarmer, selectFarmerDetails } from '@/redux/farmerSlice';
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
-import { addNewLand } from "@/redux/landSlice";
 /**
  * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
  * Users can view and edit their profile information, as well as add new land details.
