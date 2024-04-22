@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import HomePageBanner from "@/components/HomePageBanner";
+import HomePage from "@/components/HomePage";
 
 
 /* Index functional component */
 const Index = () => {
   return (
     <>
-     <HomePageBanner/> 
+     <HomePage/> 
     </>
   );
 };

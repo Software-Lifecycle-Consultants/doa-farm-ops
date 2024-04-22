@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import Image from "next/image";
 
+
+
 /* Button style for contained variant */
 const buttonContainedStyle = {
   display: "inline-flex",
@@ -34,7 +36,7 @@ const buttonContainedStyle = {
   },
 };
 
-const HomePageBanner: React.FC = () => {
+const HomePage: React.FC = () => {
   const theme = useTheme();
   const isMobileView = useMediaQuery(theme.breakpoints.down("sm"));
 
@@ -76,18 +78,19 @@ const HomePageBanner: React.FC = () => {
         {/* Reed More button content */}
         <Button variant="contained" sx={buttonContainedStyle}>
           <Typography
-            variant="button"
+            variant="subtitle1"
             marginRight={4}
             sx={{
               fontWeight: "semi-bold",
               fontFamily: { xs: "inter", md: "inherit" },
-              fontSize: { lg: "1.5rem", xs: "0.75rem", md: "inherit" },
+              fontSize: { lg: "1.0rem", xs: "0.75rem", md: "inherit" },
               textAlign: { xs: "center", sm: "center", md: "left" },
+              letterSpacing: "0.5px",
             }}
           >
-            How DoA Crop Data platform helps you....{" "}
+            How DoA Crop Data platform helps you....
             <Link href="#" color="#000">
-              Reed More
+              Read More
             </Link>
           </Typography>
         </Button>
@@ -100,8 +103,9 @@ const HomePageBanner: React.FC = () => {
             fontWeight: "bold",
             mb: 2,
             fontFamily: { xs: "istok web", md: "istok web" },
-            fontSize: { lg: "4rem", xs: "1.5rem", md: "inherit" },
+            fontSize: { lg: "2.5rem", xs: "1.5rem", md: "inherit" },
             textAlign: { xs: "center", sm: "center", md: "left" },
+            letterSpacing: "0.5px",
           }}
         >
           Update farmer crop costs to help us manage Agriculture sector
@@ -114,8 +118,9 @@ const HomePageBanner: React.FC = () => {
           sx={{
             mb: 4,
             fontFamily: { xs: "inter", md: "inter" },
-            fontSize: { lg: "1.5rem", xs: "0.75rem", md: "inherit" },
+            fontSize: { lg: "1.0rem", xs: "0.75rem", md: "inherit" },
             textAlign: { xs: "center", sm: "center", md: "left" },
+            letterSpacing: "1px",
           }}
         >
           The Department of Agriculture (DOA) functions under the Ministry of
@@ -127,12 +132,12 @@ const HomePageBanner: React.FC = () => {
         {/* Department of Agriculture Digitization efforts button content */}
         <Button variant="contained" sx={buttonContainedStyle}>
           <Typography
-            variant="button"
+            variant="subtitle1"
             marginRight={4}
             sx={{
               fontWeight: "bold",
               fontFamily: { xs: "inter", md: "inter" },
-              fontSize: { lg: "1.5rem", xs: "0.75rem", md: "inherit" },
+              fontSize: { lg: "1.0rem", xs: "0.75rem", md: "inherit" },
               textAlign: { xs: "center", sm: "center", md: "left" },
             }}
           >
@@ -152,7 +157,7 @@ const HomePageBanner: React.FC = () => {
           alignItems: "center",
           justifyContent: "center",
           color: "black",
-          paddingLeft: { xs: 0, md: 4 },
+          paddingLeft: { xs: 0 },
         }}
       >
         <Image
@@ -161,7 +166,7 @@ const HomePageBanner: React.FC = () => {
           width={300}
           height={300}
           style={{
-            width: "75%",
+            width: "55%",
             height: "auto",
             marginTop: isMobileView ? theme.spacing(4) : 0,
             borderRadius: 16,
@@ -185,7 +190,7 @@ const HomePageBanner: React.FC = () => {
             fontWeight: "bold",
             mb: 2,
             fontFamily: { xs: "Arial, sans-serif", md: "inherit" },
-            fontSize: { lg: "2rem", xs: "1.0rem", md: "inherit" },
+            fontSize: { lg: "1.0rem", xs: "1.0rem", md: "inherit" },
             textAlign: { xs: "center", sm: "center", md: "left" },
           }}
         >
@@ -199,4 +204,4 @@ const HomePageBanner: React.FC = () => {
   );
 };
 
-export default HomePageBanner;
+export default HomePage;
