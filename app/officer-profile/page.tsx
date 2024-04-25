@@ -4,24 +4,38 @@ import * as React from "react";
 import { Grid, Box, Button, Typography } from "@mui/material";
 import ProfileTitle from "../../components/ProfileTitle";
 import { EditNote as EditNoteIcon, AccountCircle as AccountCircleIcon } from "@mui/icons-material";
-
-// Import the router object to handle routing
 import { useRouter } from "next/navigation";
-
-//Import necessary date from relevent data files
-import {
-  sampleOfficerProfileData,
-} from "../../data/officerProfile";
-
 import { useTranslation } from 'react-i18next';
 import { btnBackgroundColor, customGridStyles1, customGridStyles2 } from "@/styles/customStyles";
 import { CustomBox2 } from "@/Theme";
+import { selectAuth } from "@/redux/authSlice";
+import { fetchAndRegisterUser, selectUser } from "@/redux/userSlice";
+import { useSelector } from "react-redux";
+import axios from 'axios';
+import { useDispatch } from "react-redux";
+import { OfficerRegister, fetchAndRegisterOfficer, selectOfficer } from "@/redux/officerSlice";
+import store from "@/redux/store";
+import { register } from "@/redux/userSlice";
+import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 
 // OfficerProfile component renders a profile page for an officer.
 export default function OfficerProfile() {
   const router = useRouter();
+  const dispatch:AppDispatch = useDispatch();
 
   const { t } = useTranslation();
+
+  // Fetch the authentication status from Redux store
+  const { auth } = useSelector(selectAuth);
+  const user = useSelector(selectUser);
+  const officerDetails = useSelector(selectOfficer);
+
+  // Fetch user and officer details on component mount
+  React.useEffect(() => {
+    dispatch(fetchAndRegisterUser(auth._id)); // Fetch user details
+    dispatch(fetchAndRegisterOfficer(auth._id)); // Fetch officer details
+  }, [auth._id, dispatch]);
+
   // Return the JSX for rendering
   return (
     <>
@@ -47,8 +61,7 @@ export default function OfficerProfile() {
                   marginBottom: "4px",
                 }}
               >
-                {sampleOfficerProfileData.firstname}{" "}
-                {sampleOfficerProfileData.lastname}
+                {user && user.firstName} {user && user.lastName}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -90,75 +103,41 @@ export default function OfficerProfile() {
             </Grid>
             {/* Personal Information Fields */}
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtFirstName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {sampleOfficerProfileData.firstname}
-              </Typography>
+              <Typography variant="body1">{user && user.firstName}</Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtLastName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {sampleOfficerProfileData.lastname}
-              </Typography>
+              <Typography variant="body1">{user && user.lastName}</Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtEmail")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {sampleOfficerProfileData.email}
-              </Typography>
+              <Typography variant="body1">{user && user.email}</Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtNicNumber")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {sampleOfficerProfileData.nic}
-              </Typography>
+              <Typography variant="body1">{user && user.nic}</Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtAddress")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {sampleOfficerProfileData.address}
-              </Typography>
+              <Typography variant="body1">{user && user.address}</Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtPhoneNumber")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {sampleOfficerProfileData.phonenumber}
+              <Typography variant="body1">
+                {user && user.phoneNumber}
               </Typography>
             </Grid>
           </Grid>
@@ -191,27 +170,19 @@ export default function OfficerProfile() {
             </Grid>
 
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtOrgName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {sampleOfficerProfileData.organization.name}
+              <Typography variant="body1">
+                {officerDetails && officerDetails.orgName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtOrgAddress")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {sampleOfficerProfileData.organization.address}
+              <Typography variant="body1">
+                {officerDetails && officerDetails.orgAddress}
               </Typography>
             </Grid>
 
@@ -221,15 +192,11 @@ export default function OfficerProfile() {
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtUniversity")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
-                {sampleOfficerProfileData.education.university}
+              <Typography variant="body1">
+                {officerDetails && officerDetails.university}
               </Typography>
             </Grid>
           </Grid>
