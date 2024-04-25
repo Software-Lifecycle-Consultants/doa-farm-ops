@@ -9,8 +9,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Image from "next/image";
-
-
+import { useTranslation } from 'react-i18next';
+import i18n from "../app/config/i18n";// Import the i18n instance
 
 /* Button style for contained variant */
 const buttonContainedStyle = {
@@ -39,6 +39,8 @@ const buttonContainedStyle = {
 const HomePage: React.FC = () => {
   const theme = useTheme();
   const isMobileView = useMediaQuery(theme.breakpoints.down("sm"));
+  // Initialize the 't' function to access translations within the 'home' namespace.
+  const { t } = useTranslation();
 
   return (
     <Grid container sx={{ padding: 4, backgroundColor: "white" }}>
@@ -88,9 +90,9 @@ const HomePage: React.FC = () => {
               letterSpacing: "0.5px",
             }}
           >
-            How DoA Crop Data platform helps you....
+            {i18n.t("home.txtReadMore")}
             <Link href="#" color="#000">
-              Read More
+              {i18n.t("home.btnReadMore")}
             </Link>
           </Typography>
         </Button>
@@ -108,8 +110,7 @@ const HomePage: React.FC = () => {
             letterSpacing: "0.5px",
           }}
         >
-          Update farmer crop costs to help us manage Agriculture sector
-          development better
+          {i18n.t("home.txtTopic")}
         </Typography>
 
         {/* Description Text content */}
@@ -123,10 +124,7 @@ const HomePage: React.FC = () => {
             letterSpacing: "1px",
           }}
         >
-          The Department of Agriculture (DOA) functions under the Ministry of
-          Agriculture and is one of the largest government departments with a
-          high profile community of agricultural scientists and a network of
-          institutions covering different Argo ecological regions island wide
+          {i18n.t("home.txtDescription")}
         </Typography>
 
         {/* Department of Agriculture Digitization efforts button content */}
@@ -141,7 +139,7 @@ const HomePage: React.FC = () => {
               textAlign: { xs: "center", sm: "center", md: "left" },
             }}
           >
-            Department of Agriculture Digitization efforts
+            {i18n.t("home.btnDOA")}
           </Typography>
         </Button>
       </Grid>
@@ -195,7 +193,7 @@ const HomePage: React.FC = () => {
           }}
         >
           Open source development by&nbsp;
-          <Link href="#" color="#02A79D">
+          <Link href="https://softwareconsultant.org/" color="#02A79D">
             Software Consultants
           </Link>
         </Typography>
