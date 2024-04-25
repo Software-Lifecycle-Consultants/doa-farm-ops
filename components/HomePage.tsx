@@ -105,7 +105,11 @@ const HomePage: React.FC = () => {
             fontWeight: "bold",
             mb: 2,
             fontFamily: { xs: "istok web", md: "istok web" },
-            fontSize: { lg: "2.5rem", xs: "1.5rem", md: "inherit" },
+            fontSize: {
+              lg: i18n.language === "en" ? "2.5rem" : "1.5rem",
+              md: i18n.language === "en" ? "2.0rem" : "1.0rem",
+              xs: i18n.language === "en" ? "1.5rem" : "1.0rem",
+            },
             textAlign: { xs: "center", sm: "center", md: "left" },
             letterSpacing: "0.5px",
           }}
