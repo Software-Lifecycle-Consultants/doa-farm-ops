@@ -4,7 +4,7 @@ const cropController = {
 
     addCrop: async (req, res) => {
         try {
-          const { cropName, season, cropType, totalSoldQty, totalIncome, reservedQtyHome, reservedQtySeed, noOfPicks, isCultivationLoan, loanObtained } = req.body;
+          const { cropName, season, cropType, totalSoldQty, totalIncome, reservedQtyHome, reservedQtySeed, noOfPicks, isCultivationLoan, loanObtained ,  userId, landId } = req.body;
           console.log("addCrop:",
             cropName, 
             season, 
@@ -15,7 +15,9 @@ const cropController = {
             reservedQtySeed, 
             noOfPicks, 
             isCultivationLoan, 
-            loanObtained
+            loanObtained,
+            userId,
+            landId
           );
           
           if (!cropName || !season || !cropType || !isCultivationLoan)
@@ -32,7 +34,9 @@ const cropController = {
             reservedQtySeed, 
             noOfPicks, 
             isCultivationLoan, 
-            loanObtained
+            loanObtained,
+            userId,
+            landId
           });
 
           const account = await newCrop.save();
@@ -48,7 +52,9 @@ const cropController = {
               reservedQtySeed: account.reservedQtySeed,
               noOfPicks: account.noOfPicks,
               isCultivationLoan: account.isCultivationLoan,
-              loanObtained: account.loanObtained
+              loanObtained: account.loanObtained,
+              userId: account.userId,
+              landId:account.landId
             });
           } else {
             return res.status(400).json({ msg: "Invalid crop data" });
@@ -57,8 +63,6 @@ const cropController = {
           return res.status(500).json({ message: err.message });
         }
       },
-      
-      
 }
 
 module.exports = cropController;

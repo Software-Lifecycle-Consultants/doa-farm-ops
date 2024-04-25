@@ -186,13 +186,13 @@ export default function CropsTable({ title }: TableTitleProps) {
                   <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
                     <TableCell>{row.landId}</TableCell>
                     {columns.map((column) => {
-                      const value = row.cropDetails[column.id];
+                      const value = row.cropDetails?.[column.id];
                       return (
                         <>
                           <TableCell key={column.id} align={column.align}>
                             {column.format && typeof value === "number"
                               ? column.format(value)
-                              : value}
+                              : value || "N/A"}
                           </TableCell>
                         </>
                       );

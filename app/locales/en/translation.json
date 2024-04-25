@@ -200,7 +200,8 @@
     "menuItemTxtNo": "No",
     "lblCultivationLoanAmount": "Cultivation loan amount",
     "capBtnCancel": "Cancel",
-    "capBtnSave": "Save"
+    "capBtnSave": "Save",
+    "menuItemTxtSelectLand": "Select a land"
   },
   "updateCrop": {
     "txtUpdateCrop": "Update Crop",
