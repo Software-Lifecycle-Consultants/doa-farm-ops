@@ -29,6 +29,8 @@ export default function RootLayout({
       <body className={dm_sans.className}>
         {/* Wrap the application in the 'ThemeProvider' component to provide access to the theme styles. */}
         <ThemeProvider theme={theme}>
+          {/* Add the CssBaseline component to override the 8px margin */}
+          <CssBaseline />
           {/* Wrap the application in the 'Provider' component to provide access to the Redux store. */}
           <Provider store={store}>
             {/* Wrap the application with I18nextProvider */}
