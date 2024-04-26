@@ -16,7 +16,7 @@ import {
   Autocomplete,
 } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector} from "react-redux";
 import { addCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
 import { CustomBox1 } from "@/Theme";
@@ -24,7 +24,7 @@ import axios from 'axios';
 import i18n from "../config/i18n";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
-import { selectLands } from "@/redux/landSlice";
+import { selectLands,fetchAndRegisterLands } from "@/redux/landSlice";
 import { selectAddCrop } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
 
@@ -41,7 +41,7 @@ const styles = {
 
 export default function AddCrop() {
   const router = useRouter();
-
+  const landData = useSelector(selectLands);
   // Use the Next.js hook to retrieve search parameters from the URL
   const searchParams = useSearchParams()
   const fromAddLand = searchParams.get('fromAddLand')
@@ -50,7 +50,7 @@ export default function AddCrop() {
 
   // State variables for form fields
   const [value, setValue] = React.useState("female");
-  // const [landId, setLandId] = useState("");
+  const [landId, setLandId] = useState("");
 
   const [responseData, setResponseData] = useState(null);
   
@@ -65,6 +65,7 @@ export default function AddCrop() {
     noOfPicks: string;
     isCultivationLoan: string;
     loanObtained: number;
+    landId:string;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -78,9 +79,27 @@ export default function AddCrop() {
     noOfPicks: "",
     isCultivationLoan: "1",
     loanObtained: 0,
+    landId:"",
   });
 
   const dispatch = useDispatch();
+  // Fetch the land details when the component mounts
+
+  React.useEffect(() => {
+    dispatch(fetchAndRegisterLands(landId));
+  }, [dispatch, landId]);
+
+
+  const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setLandId(event.target.value);
+
+    const selectedLand = landData.find((land) => land._id === event.target.value);
+    if (selectedLand) {
+      setFormData({ ...formData, landName: selectedLand.landName });
+    } else {
+      setFormData({ ...formData, landName: "" }); // Reset landName if no match found
+    }
+  };
 
   // Handle selection change for "Cultivation loan obtained?" dropdown
   const handleCultivationLoanChange = (
@@ -226,25 +245,21 @@ export default function AddCrop() {
                   required
                   select
                   fullWidth
-                  label="Select Land"
+                  label={i18n.t("addCrop.menuItemTxtSelectLand")}
                   defaultValue={"land"}
-                  // value={landId}
-                  // onChange={handleOnChangeLand}
+                  value={landId}
+                  onChange={handleOnChangeLand}
                   variant="outlined"
                 >
-                  <MenuItem value="">Select an Option</MenuItem>
-                  <MenuItem
-                    id="f82aa728-3cd1-11ee-be56-0242ac120002"
-                    value="6582c007507344f5dedb0bc9"
-                  >
-                    {i18n.t("addCrop.menuItemTxtLand1")}
+                  <MenuItem>
+                    {/* Display a placeholder option*/}
+                    {i18n.t("addCrop.menuItemTxtSelectLand")}
                   </MenuItem>
-                  <MenuItem
-                    id="cd1-11ee-be56-0242ac120002"
-                    value="6577c2d308858b275eabbc5c"
-                  >
-                    {i18n.t("addCrop.menuItemTxtLand2")}
-                  </MenuItem>
+                  {landData.map((land) => (
+                      <MenuItem key={land._id} value={land._id}>
+                        {land.landName}
+                      </MenuItem>
+                  ))}
                 </TextField>
 
                 <Typography component="h1" variant="subtitle1" gutterBottom>

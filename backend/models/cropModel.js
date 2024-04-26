@@ -53,6 +53,16 @@ const cropSchema = new Schema(
           required: true,
           trim: true,
       },
+      userId: {
+           type: String,
+           required: true,
+           trim: true,
+        },
+      landId:{
+            type: String,
+            required: true,
+            trim: true,
+        },
     },
     {
       timestamps: true,

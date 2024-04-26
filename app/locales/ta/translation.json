@@ -217,7 +217,8 @@
     "menuItemTxtNo": "இல்லை",
     "lblCultivationLoanAmount": "பயிரிடுவதற்கான கடன் தொகை",
     "capBtnCancel": "ரத்துசெய்",
-    "capBtnSave": "சேமி"
+    "capBtnSave": "சேமி",
+    "menuItemTxtSelectLand": "ஒரு நிலத்தைத் தேர்ந்தெடுக்கவும்"
   },
   "updateCrop": {
     "txtUpdateCrop": "பயிரைப் புதுப்பி",
