@@ -200,7 +200,8 @@
     "menuItemTxtNo": "නැහැ",
     "lblCultivationLoanAmount": "වගා ණය මුදල",
     "capBtnCancel": "අවලංගු කරන්න",
-    "capBtnSave": "සුරකින්න"
+    "capBtnSave": "සුරකින්න",
+    "menuItemTxtSelectLand": "ඉඩමක් තෝරන්න"
   },
   "updateCrop": {
     "txtUpdateCrop": "යාවත්කාලීන බෝග",
