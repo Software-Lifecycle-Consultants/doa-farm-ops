@@ -47,7 +47,7 @@ export default function FarmerProfile() {
   return (
     <>
       {/* Main grid container */}
-      <Grid container direction="column" rowGap={2}>
+      <Grid container style={{ padding: "20px" }} direction="column" rowGap={2}>
         {/* Title */}
         <Grid item xs={12}>
           <ProfileTitle title={t("farmerProfile.txtProfileName")} />
