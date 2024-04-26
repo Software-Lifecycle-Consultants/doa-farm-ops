@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
       container
       sx={{
         backgroundImage:
-          "url(https://d3i6fh83elv35t.cloudfront.net/static/2022/04/greenrush-1024x683.jpg)",
+          "url(/images/home/home-bg-image.png)",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
