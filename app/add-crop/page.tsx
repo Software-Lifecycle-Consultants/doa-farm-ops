@@ -41,7 +41,11 @@ const styles = {
 
 export default function AddCrop() {
   const router = useRouter();
-  const landData = useSelector(selectLands);
+  // Get land data from the Redux store
+  const landData = selectLands(store.getState());
+  const landDataObject = landData ? landData[landData.length - 1] : {};
+  console.log("----------selectLands----------------", landDataObject);
+
   // Use the Next.js hook to retrieve search parameters from the URL
   const searchParams = useSearchParams()
   const fromAddLand = searchParams.get('fromAddLand')
@@ -95,7 +99,7 @@ export default function AddCrop() {
 
     const selectedLand = landData.find((land) => land._id === event.target.value);
     if (selectedLand) {
-      setFormData({ ...formData, landName: selectedLand.landName });
+      setFormData({ ...formData,  landId: event.target.value, landName: selectedLand.landName });
     } else {
       setFormData({ ...formData, landName: "" }); // Reset landName if no match found
     }
@@ -125,10 +129,6 @@ export default function AddCrop() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Get land data from the Redux store
-    const landData = selectLands(store.getState());
-    const landDataObject = landData[landData.length - 1];
-    console.log("----------selectLands----------------", landDataObject);
 
     // const cropData = { cropDetails: formData };
     const action = addCrop(formData);
@@ -157,7 +157,7 @@ export default function AddCrop() {
     try {
       console.log("-----------------Executing landAndCRop-------------------");
       const response = await axios.post(
-        `http://localhost:5000/api/landAndCrop/add`,
+        `http://localhost:5000/api/crop/add/`,
         landCropData
       );
       if (response && response.status === 200) {
@@ -255,7 +255,7 @@ export default function AddCrop() {
                     {/* Display a placeholder option*/}
                     {i18n.t("addCrop.menuItemTxtSelectLand")}
                   </MenuItem>
-                  {landData.map((land) => (
+                  {landData?.map((land) => (
                       <MenuItem key={land._id} value={land._id}>
                         {land.landName}
                       </MenuItem>
