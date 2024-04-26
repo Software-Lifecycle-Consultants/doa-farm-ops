@@ -36,6 +36,11 @@ export default function OfficerProfile() {
     dispatch(fetchAndRegisterOfficer(auth._id)); // Fetch officer details
   }, [auth._id, dispatch]);
 
+  // Function to handle edit button click
+  const handleEditClick = (userId: string) => {
+    router.push(`/update-user/${userId}`);
+  };
+
   // Return the JSX for rendering
   return (
     <>
@@ -97,6 +102,7 @@ export default function OfficerProfile() {
                 sx={btnBackgroundColor}
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
+                onClick={() => handleEditClick(user._id)}
               >
                 {t("officerProfile.capBtnEdit")}
               </Button>
