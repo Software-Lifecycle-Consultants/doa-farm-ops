@@ -9,6 +9,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from '@/Theme';
 import { I18nextProvider } from 'react-i18next'; // Import I18nextProvider
 import i18n from '../app/config/i18n'; // Import your i18n instance
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // const inter = Inter({ subsets: ['latin'] })
 
@@ -33,6 +35,7 @@ export default function RootLayout({
             <I18nextProvider i18n={i18n}>
               {/* Add the CssBaseline component to override the 8px margin */}
               <CssBaseline />
+              <ToastContainer />
               {/* Add navigation bar */}
               <Navbar />
               <div className="container" style={{ padding: "20px" }}>

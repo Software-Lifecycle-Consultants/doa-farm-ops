@@ -2,43 +2,46 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { RootState } from './types';
 
+interface Crop {
+  cropDetails: {
+    cropName: string;
+    season: string;
+    cropType: string;
+    totalSoldQty: string;
+    totalIncome: string;
+    reservedQtyHome: string;
+    reservedQtySeed: string;
+    noOfPicks: string;
+    loanObtained: number;
+  };
+  landId: string;
+  _id: string;
+}
+
 // Define the initial state of the 'crop' slice.
 const initialState: RootState["crop"] = [];
+
 // Create a Redux slice for managing crop data
 const cropSlice = createSlice({
-    name: 'crop', // A unique name for this slice, used in the Redux store.
-    initialState,  // The initial state of the 'crop' slice.
-    reducers: {
-      // Reducer to add a new crop to the state
-      addCrop: (state, action) => {
-        const maxId = state.reduce((max, crop) => Math.max(max, Number(crop._id)), 0);
-        const newId = (maxId + 1).toString();
-        const newCrop = { ...action.payload, _id: newId };
-      state.push(newCrop);
-      },
-      // Reducer to update an existing crop in the state
-      updateCrop: (state, action) => {
-        const { landId,_id, cropDetails } = action.payload;
-        const index = state.findIndex((crop) => crop._id === _id);
-        if (index !== -1) {
-          state[index] = {
-            landId,
-            _id,
-            cropDetails: { ...state[index].cropDetails, ...cropDetails },
-          };
-        }
-      },
-      // Reducer to delete a crop from the state
-      deleteCrop: (state, action) => {
-        const { landId, _id } = action.payload;
-        const index = state.findIndex((crop) => crop._id === _id && crop.landId === landId);
-  
-        if (index !== -1) {
-          state.splice(index, 1); // Remove the crop from the state
-        }
-      },
+  name: "crop",
+  initialState,
+  reducers: {
+    addCrop: (state, action) => {
+      state.push(action.payload);
     },
-  });
+    updateCrop: (state, action) => {
+      const { _id } = action.payload;
+      const index = state.findIndex((crop) => crop._id === _id);
+      if (index !== -1) {
+        state[index] = { ...action.payload };
+      }
+    },
+    deleteCrop: (state, action) => {
+      const _idToDelete = action.payload;
+      state = state.filter((crop) => crop._id !== _idToDelete);
+    },
+  },
+});
   
   // Export the action creators for external use.
 export const { addCrop, updateCrop, deleteCrop  } = cropSlice.actions;

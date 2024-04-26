@@ -10,15 +10,19 @@ import ProfileTitle from "../../components/ProfileTitle";
 import LandsTable from "@/components/LandsTable";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-import {
-  sampleFarmerProfileData,
-} from "../../data/farmerProfile";
-
 import { useTranslation } from 'react-i18next';
 import { btnBackgroundColor, customGridStyles1, customGridStyles2 } from "@/styles/customStyles";
 import { CustomBox2 } from "@/Theme";
-
+import { selectAuth } from "@/redux/authSlice";
+import { useSelector } from "react-redux";
+// Importing fetchUserData function
+import { fetchUserData } from "@/api/fetchUserData";
+// Importing the User and FarmerDetails types
+import { User, FarmerDetails } from "@/redux/types";
+import { useDispatch } from 'react-redux';
+import { register, selectUser, fetchAndRegisterUser } from '@/redux/userSlice';
+import { fetchAndRegisterFarmer, selectFarmerDetails } from '@/redux/farmerSlice';
+import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 /**
  * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
  * Users can view and edit their profile information, as well as add new land details.
@@ -26,6 +30,20 @@ import { CustomBox2 } from "@/Theme";
 export default function FarmerProfile() {
   const router = useRouter();
   const { t } = useTranslation();
+  // const dispatch = useDispatch();
+  const dispatch:AppDispatch = useDispatch(); // Type the dispatch function with explicitly specifies the type of dispatch as AppDispatch.
+
+  // Fetch the authentication status from Redux store
+  const { auth } = useSelector(selectAuth);
+  const user = useSelector(selectUser);
+  const farmerDetails = useSelector(selectFarmerDetails);
+
+  //Funtion to execute the two asynchronous actions to fetch and register farmer details and user details using the current authentication ID. 
+  React.useEffect(() => {
+    dispatch(fetchAndRegisterUser(auth._id)); // Fetch user details
+    dispatch(fetchAndRegisterFarmer(auth._id)); // Fetch farmer details
+  }, [auth._id, dispatch]);
+
   return (
     <>
       {/* Main grid container */}
@@ -50,8 +68,7 @@ export default function FarmerProfile() {
                   marginBottom: "4px",
                 }}
               >
-                {sampleFarmerProfileData.firstname}{" "}
-                {sampleFarmerProfileData.lastname}
+              {user && user.firstName} {user && user.lastName}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -101,7 +118,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.firstname}
+                {user && user.firstName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -113,7 +130,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.lastname}
+                {user && user.lastName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -125,7 +142,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.email}
+                {user && user.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -137,7 +154,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.nic}
+                {user && user.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -149,7 +166,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.address}
+                {user && user.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -161,7 +178,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.phonenumber}
+                {user && user.phoneNumber}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -173,7 +190,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.household}
+                {farmerDetails && farmerDetails.household}
               </Typography>
             </Grid>
           </Grid>
@@ -214,7 +231,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.otherdetails.orgname}
+                {farmerDetails && farmerDetails.orgName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
@@ -226,7 +243,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.otherdetails.orgaddress}
+               {farmerDetails && farmerDetails.orgAddress}
               </Typography>
             </Grid>
           </Grid>

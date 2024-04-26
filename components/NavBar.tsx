@@ -26,10 +26,11 @@ import { useTranslation } from 'react-i18next'; // Import useTranslation
 import i18n from '../app/config/i18n';
 import { navBarBtnStyles } from "@/styles/customStyles";
 
+
 //Define the pages and routes for navigation
 const pages = [
   { label: "navBar.tabHome", route: "./" },
-  { label: "navBar.tabProfile", route: "./farmer-profile" },
+  // { label: "navBar.tabProfile", route: "./farmer-profile" },
   { label: "navBar.tabCrops", route: "./my-crops" },
 ];
 
@@ -52,17 +53,19 @@ const NavBar = () => {
   const router = useRouter(); // Next.js router
   const theme = useTheme(); // Material-UI theme
   const isMatch = useMediaQuery(theme.breakpoints.down("md")); // Media query for responsiveness
-  //const { isAuthenticated, username, password } = useSelector(selectAuth); // Redux state for authentication
   const { t } = useTranslation(); // Translation function
 
   // Fetch the authentication status from Redux store
   const { isAuthenticated } = useSelector(selectAuth);
 
+  // Fetch the authentication status from Redux store
+  const { auth } = useSelector(selectAuth);
+
   // Effect to set initial tab state based on authentication status
   useEffect(() => {
     if (isAuthenticated) {
       setValue(0); // If authenticated, show Home tab
-    } else {
+          } else {
       setValue(-1); // If not authenticated, no tab selected
     }
   }, [isAuthenticated]);  
@@ -155,12 +158,28 @@ const NavBar = () => {
                   }}
                 >
                   {pages.map((page, index) => (
+                    
                     <Tab
                       key={index}
                       label={t(page.label)}
                       onClick={() => navigationToScreens(page.route)}
                     />
                   ))}
+
+                  {/* Profile tab based on user role */}
+              {auth.role === "farmer" && (
+                <Tab
+                  label={t("navBar.tabProfile")}
+                  onClick={() => navigationToScreens("/farmer-profile")} // Redirects to farmer profile page
+                />
+              )}
+              {auth.role === "officer" && (
+                <Tab
+                  label={t("navBar.tabProfile")}
+                  onClick={() => navigationToScreens("/officer-profile")} // Redirects to officer profile page
+                />
+              )}
+              
                 </Tabs>
               )}
 

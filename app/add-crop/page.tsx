@@ -15,11 +15,18 @@ import {
   TextField,
   Autocomplete,
 } from "@mui/material";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { addCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
 import { CustomBox1 } from "@/Theme";
+import axios from 'axios';
+import i18n from "../config/i18n";
+import store from "@/redux/store";
+// Import the necessary selectors from the respective slices
+import { selectLands } from "@/redux/landSlice";
+import { selectAddCrop } from "@/redux/cropSlice";
+import { selectAuth } from "@/redux/authSlice";
 
 // Styles for labels
 const styles = {
@@ -31,15 +38,22 @@ const styles = {
 /**
  * Add Crop page serves as a form to add details about crop properties.
  */
+
 export default function AddCrop() {
   const router = useRouter();
+
+  // Use the Next.js hook to retrieve search parameters from the URL
+  const searchParams = useSearchParams()
+  const fromAddLand = searchParams.get('fromAddLand')
 
   const cropNames = cropList.map((crop) => crop.name);
 
   // State variables for form fields
   const [value, setValue] = React.useState("female");
-  const [landId, setLandId] = useState("");
+  // const [landId, setLandId] = useState("");
 
+  const [responseData, setResponseData] = useState(null);
+  
   interface FormData {
     cropName: string | null;
     season: string;
@@ -68,10 +82,6 @@ export default function AddCrop() {
 
   const dispatch = useDispatch();
 
-  // Handle selection change for "Select Land" dropdown
-  const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setLandId(event.target.value);
-  };
   // Handle selection change for "Cultivation loan obtained?" dropdown
   const handleCultivationLoanChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -87,18 +97,94 @@ export default function AddCrop() {
   const navigationToAddLand = () => {
     router.push("/add-land");
   };
+
+  //Decare variable to append landData +  Crop data
+  let landCropData;
+
   //Function to navigate to my crops page clicking save button
   const handleOnClickAddCrop = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate add crop action by creating a user data object.
-    const cropData = { landId, cropDetails: formData };
-    // Dispatch the 'crop' action from the 'cropSlice' with the user data.
-    dispatch(addCrop(cropData));
-    //Navigate to my crops page
-    router.push("/my-crops");
+    // Get land data from the Redux store
+    const landData = selectLands(store.getState());
+    const landDataObject = landData[landData.length - 1];
+    console.log("----------selectLands----------------", landDataObject);
+
+    // const cropData = { cropDetails: formData };
+    const action = addCrop(formData);
+    dispatch(action);
+
+    //Get logged user Id from redux
+    const loggedUser = selectAuth(store.getState());
+    console.log("----------getUserFromRedux----------------", loggedUser);
+    const userId = loggedUser.auth._id;
+    console.log("----------getUserFromRedux----------------", userId);
+
+    const cropDataFromRedux = selectAddCrop(store.getState());
+    const cropDataObject = cropDataFromRedux[cropDataFromRedux.length - 1];
+    console.log("----------selectAddCrop----------------", cropDataObject);
+
+    const landCropData = {
+      ...landDataObject,
+      ...cropDataObject,
+      userId
+    };
+
+    console.log(
+      "------------landCropData-----------" + JSON.stringify(landCropData)
+    );
+
+    try {
+      console.log("-----------------Executing landAndCRop-------------------");
+      const response = await axios.post(
+        `http://localhost:5000/api/landAndCrop/add`,
+        landCropData
+      );
+      if (response && response.status === 200) {
+        console.log(response);
+        setResponseData(response.data);
+        router.push("/my-crops"); //Navigate to my crops page
+        // dispatch(addLandAndCropSuccess());
+      } else if (response && response.status === 400) {
+        console.error("Failed to fetch data");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
   };
+
+  // Simulate add crop action by creating a user data object.
+  // const cropData = { landId, cropDetails: formData };
+
+  // try {
+    // const response = await axios.put(
+    //   `http://localhost:5000/api/land/addCrop/${landId}`,
+    //   {
+    //     cropName: formData.cropName,
+    //     season: formData.season,
+    //     cropType: formData.cropType,
+    //     totalSoldQty: formData.totalSoldQty,
+    //     totalIncome: formData.totalIncome,
+    //     reservedQtyHome: formData.reservedQtyHome,
+    //     reservedQtySeed: formData.reservedQtySeed,
+    //     noOfPicks: formData.noOfPicks,
+    //     isCultivationLoan: formData.isCultivationLoan,
+    //     loanObtained: formData.loanObtained,
+    //   }
+    // );
+    // if (response && response.status === 200) {
+    //   console.log(response);
+    //   setResponseData(response.data);
+    //   router.push("/my-crops"); //Navigate to my crops page
+    //   // Dispatch the 'crop' action from the 'cropSlice' with the user data.
+    //   // dispatch(addCrop(cropData));
+    // } else if (response && response.status === 400) {
+    //   console.error("Failed to fetch data");
+    // }
+  // } catch (error) {
+  //   console.error("Error fetching data:", error);
+  // }
 
   //Function to navigate to my crops page
   const navigationToMyCrops = () => {
@@ -126,50 +212,55 @@ export default function AddCrop() {
 
   return (
     <Container component="main" maxWidth="xl">
-      <CustomBox1 sx={{maxWidth: "600px"}}>
+      <CustomBox1 sx={{ maxWidth: "600px" }}>
         <Box sx={{ width: "100%" }}>
           <Typography component="h1" variant="h5" gutterBottom>
-            Add Crop
+            {i18n.t("addCrop.txtAddCrop")}
           </Typography>
         </Box>
         <Box sx={{ width: "100%" }}>
-          <Grid item xs={12} sm={6}>
-            <Stack direction="row" spacing={2} paddingTop={2}>
-              <TextField
-                required
-                select
-                fullWidth
-                label="Select Land"
-                defaultValue={"land"}
-                value={landId}
-                onChange={handleOnChangeLand}
-                variant="outlined"
-              >
-                <MenuItem value="">Select an Option</MenuItem>
-                <MenuItem
-                  id="f82aa728-3cd1-11ee-be56-0242ac120002"
-                  value="Land 1"
+          {!fromAddLand && (
+            <Grid item xs={12} sm={6}>
+              <Stack direction="row" spacing={2} paddingTop={2}>
+                <TextField
+                  required
+                  select
+                  fullWidth
+                  label="Select Land"
+                  defaultValue={"land"}
+                  // value={landId}
+                  // onChange={handleOnChangeLand}
+                  variant="outlined"
                 >
-                  Land 1
-                </MenuItem>
-                <MenuItem id="cd1-11ee-be56-0242ac120002" value="Land 2">
-                  Land 2
-                </MenuItem>
-              </TextField>
+                  <MenuItem value="">Select an Option</MenuItem>
+                  <MenuItem
+                    id="f82aa728-3cd1-11ee-be56-0242ac120002"
+                    value="6582c007507344f5dedb0bc9"
+                  >
+                    {i18n.t("addCrop.menuItemTxtLand1")}
+                  </MenuItem>
+                  <MenuItem
+                    id="cd1-11ee-be56-0242ac120002"
+                    value="6577c2d308858b275eabbc5c"
+                  >
+                    {i18n.t("addCrop.menuItemTxtLand2")}
+                  </MenuItem>
+                </TextField>
 
-              <Typography component="h1" variant="subtitle1" gutterBottom>
-                or
-              </Typography>
-              <Button
-                type="submit"
-                variant="outlined"
-                fullWidth
-                onClick={navigationToAddLand}
-              >
-                Add a new Land
-              </Button>
-            </Stack>
-          </Grid>
+                <Typography component="h1" variant="subtitle1" gutterBottom>
+                  {i18n.t("addCrop.txtOr")}
+                </Typography>
+                <Button
+                  type="submit"
+                  variant="outlined"
+                  fullWidth
+                  onClick={navigationToAddLand}
+                >
+                  {i18n.t("addCrop.capBtnAddLand")}
+                </Button>
+              </Stack>
+            </Grid>
+          )}
 
           <Typography
             component="h1"
@@ -177,14 +268,14 @@ export default function AddCrop() {
             paddingTop={"15px"}
             gutterBottom
           >
-            Fill the bellow details to add crop
+            {i18n.t("addCrop.txtFillDetails")}
           </Typography>
         </Box>
 
         <Box component="form" noValidate sx={{ mt: 3 }}>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <Typography>Crop Name *</Typography>
+              <Typography>{i18n.t("addCrop.lblCropName")}</Typography>
               <Autocomplete
                 options={cropNames}
                 getOptionLabel={(option) => option}
@@ -204,7 +295,7 @@ export default function AddCrop() {
             </Grid>
 
             <Grid item xs={12} sm={6}>
-              <Typography>Season *</Typography>
+              <Typography>{i18n.t("addCrop.lblSeason")}</Typography>
               <TextField
                 select
                 fullWidth
@@ -214,15 +305,21 @@ export default function AddCrop() {
                 value={formData.season}
                 onChange={(e) => handleChangeAddCrop(e, "season")}
               >
-                <MenuItem value="1">Select an Option</MenuItem>
-                <MenuItem value="Yala">Yala</MenuItem>
-                <MenuItem value="Maha">Maha</MenuItem>
+                <MenuItem value="1">
+                  {i18n.t("addCrop.menuItemTxtSelectOption2")}
+                </MenuItem>
+                <MenuItem value="Yala">
+                  {i18n.t("addCrop.menuItemTxtYala")}
+                </MenuItem>
+                <MenuItem value="Maha">
+                  {i18n.t("addCrop.menuItemTxtMaha")}
+                </MenuItem>
               </TextField>
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl>
                 <Typography id="demo-controlled-radio-buttons-group">
-                  Crop Type *
+                  {i18n.t("addCrop.lblCropType")}
                 </Typography>
                 <RadioGroup
                   style={{ width: "100%" }}
@@ -246,7 +343,7 @@ export default function AddCrop() {
               </FormControl>
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Total sold quantity</Typography>
+              <Typography>{i18n.t("addCrop.lblSoldQuantity")}</Typography>
               <TextField
                 fullWidth
                 id="soldQuantity"
@@ -258,7 +355,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Total income for crop</Typography>
+              <Typography>{i18n.t("addCrop.lblIncome")}</Typography>
               <TextField
                 fullWidth
                 name="income"
@@ -270,7 +367,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Quantity kept for home</Typography>
+              <Typography>{i18n.t("addCrop.lblQuantityHome")}</Typography>
               <TextField
                 fullWidth
                 id="QtyForHome"
@@ -282,7 +379,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Quantity kept for seed</Typography>
+              <Typography>{i18n.t("addCrop.lblQuantitySeed")}</Typography>
               <TextField
                 fullWidth
                 name="qtyForSeed"
@@ -294,7 +391,7 @@ export default function AddCrop() {
               />
             </Grid>
             <Grid item xs={12} sm={6}>
-              <Typography>Number of picks</Typography>
+              <Typography>{i18n.t("addCrop.lblNoOfPicks")}</Typography>
               <TextField
                 fullWidth
                 id="NoOfPicks"
@@ -312,7 +409,7 @@ export default function AddCrop() {
               paddingTop={"16px"}
             >
               <Grid item xs={12} sm={6}>
-                <Typography>Cultivation loan obtained? *</Typography>
+                <Typography>{i18n.t("addCrop.lblCultivationLoan")}</Typography>
                 <TextField
                   select
                   required
@@ -325,13 +422,21 @@ export default function AddCrop() {
                     style: styles.label, // Apply the label color style here
                   }}
                 >
-                  <MenuItem value="1">Select an Option</MenuItem>
-                  <MenuItem value="Yes">Yes</MenuItem>
-                  <MenuItem value="No">No</MenuItem>
+                  <MenuItem value="1">
+                    {i18n.t("addCrop.menuItemTxtSelectOption3")}
+                  </MenuItem>
+                  <MenuItem value="Yes">
+                    {i18n.t("addCrop.menuItemTxtYes")}
+                  </MenuItem>
+                  <MenuItem value="No">
+                    {i18n.t("addCrop.menuItemTxtNo")}
+                  </MenuItem>
                 </TextField>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography>Cultivation loan amount</Typography>
+                <Typography>
+                  {i18n.t("addCrop.lblCultivationLoanAmount")}
+                </Typography>
                 <TextField
                   fullWidth
                   value={formData.loanObtained}
@@ -358,7 +463,7 @@ export default function AddCrop() {
                   sx={{ mt: 3, mb: 2, width: "12vw" }}
                   onClick={navigationToMyCrops}
                 >
-                  Cancel
+                  {i18n.t("addCrop.capBtnCancel")}
                 </Button>
                 {/* Save Button */}
                 <Button
@@ -368,7 +473,7 @@ export default function AddCrop() {
                   sx={{ mt: 3, mb: 2, width: "12vw" }}
                   onClick={handleOnClickAddCrop}
                 >
-                  Save
+                  {i18n.t("addCrop.capBtnSave")}
                 </Button>
               </Stack>
             </Grid>
