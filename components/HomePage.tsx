@@ -9,8 +9,8 @@ import {
   useMediaQuery,
 } from "@mui/material";
 import Image from "next/image";
-import { useTranslation } from 'react-i18next';
-import i18n from "../app/config/i18n";// Import the i18n instance
+import { useTranslation } from "react-i18next";
+import i18n from "../app/config/i18n"; // Import the i18n instance
 
 /* Button style for contained variant */
 const buttonContainedStyle = {
@@ -21,8 +21,8 @@ const buttonContainedStyle = {
   borderRadius: "100px",
   textTransform: "none",
   fontWeight: "Bold",
-  color: "#0C111F",
-  background: "var(--l-2, linear-gradient(135deg, #FFFDFD 50%, #90EA8E 0%))",
+  color: "white",
+  borderColor: "white",
   // Customize sizes for web and tablet view
   "@media (max-width: 1024px)": {
     padding: "10px 16px",
@@ -32,7 +32,7 @@ const buttonContainedStyle = {
     fontSize: "12px",
     padding: "6px 8px",
     margin: "3px",
-    marginLeft: { xs: "2px", sm: "2px", md: "25px"},
+    marginLeft: { xs: "2px", sm: "2px", md: "25px" },
   },
 };
 
@@ -43,11 +43,21 @@ const HomePage: React.FC = () => {
   const { t } = useTranslation();
 
   return (
-    <Grid container sx={{ padding: 4, backgroundColor: "white" }}>
+    <Grid
+      container
+      sx={{
+        backgroundImage: "url(/images/home/home-bg-image3.jpg)",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        backgroundSize: "cover",
+        minHeight: "100vh",
+      }}
+    >
       {/* Emblem Image content */}
       <Grid
         item
         xs={12}
+        sm={12}
         md={12}
         sx={{ display: "flex", justifyContent: "center" }}
       >
@@ -68,30 +78,32 @@ const HomePage: React.FC = () => {
       <Grid
         item
         xs={12}
+        sm={12}
         md={6}
         sx={{
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          color: "black",
-          paddingRight: { xs: 0, md: 4 },
+          color: "white",
+          paddingRight: { xs: 2, md: 0 },
+          marginLeft: { xs: 2, md: 10 },
         }}
       >
-        {/* Reed More button content */}
-        <Button variant="contained" sx={buttonContainedStyle}>
+        {/* Read More button content */}
+        <Button variant="outlined" sx={buttonContainedStyle}>
           <Typography
             variant="subtitle1"
             marginRight={4}
             sx={{
-              fontWeight: "semi-bold",
+              fontWeight: "bold",
               fontFamily: { xs: "inter", md: "inherit" },
               fontSize: { lg: "1.0rem", xs: "0.75rem", md: "inherit" },
               textAlign: { xs: "center", sm: "center", md: "left" },
-              letterSpacing: "0.5px",
+              letterSpacing: "1px",
             }}
           >
             {i18n.t("home.txtReadMore")}
-            <Link href="#" color="#000">
+            <Link href="#" color="#ffff">
               {i18n.t("home.btnReadMore")}
             </Link>
           </Typography>
@@ -111,7 +123,7 @@ const HomePage: React.FC = () => {
               xs: i18n.language === "en" ? "1.5rem" : "1.0rem",
             },
             textAlign: { xs: "center", sm: "center", md: "left" },
-            letterSpacing: "0.5px",
+            letterSpacing: "1px",
           }}
         >
           {i18n.t("home.txtTopic")}
@@ -119,20 +131,20 @@ const HomePage: React.FC = () => {
 
         {/* Description Text content */}
         <Typography
-          variant="body1"
+          variant="h2"
           sx={{
             mb: 4,
             fontFamily: { xs: "inter", md: "inter" },
             fontSize: { lg: "1.0rem", xs: "0.75rem", md: "inherit" },
             textAlign: { xs: "center", sm: "center", md: "left" },
-            letterSpacing: "1px",
+            letterSpacing: "1.5px",
           }}
         >
           {i18n.t("home.txtDescription")}
         </Typography>
 
         {/* Department of Agriculture Digitization efforts button content */}
-        <Button variant="contained" sx={buttonContainedStyle}>
+        <Button variant="outlined" sx={buttonContainedStyle}>
           <Typography
             variant="subtitle1"
             marginRight={4}
@@ -141,39 +153,12 @@ const HomePage: React.FC = () => {
               fontFamily: { xs: "inter", md: "inter" },
               fontSize: { lg: "1.0rem", xs: "0.75rem", md: "inherit" },
               textAlign: { xs: "center", sm: "center", md: "left" },
+              letterSpacing: "1px",
             }}
           >
             {i18n.t("home.btnDOA")}
           </Typography>
         </Button>
-      </Grid>
-
-      {/* Main Image  */}
-      <Grid
-        item
-        xs={12}
-        md={6}
-        sx={{
-          display: "flex",
-          flexDirection: { xs: "column", md: "row" },
-          alignItems: "center",
-          justifyContent: "center",
-          color: "black",
-          paddingLeft: { xs: 0 },
-        }}
-      >
-        <Image
-          src="/images/home/Logo-preview.png"
-          alt="test"
-          width={300}
-          height={300}
-          style={{
-            width: "55%",
-            height: "auto",
-            marginTop: isMobileView ? theme.spacing(4) : 0,
-            borderRadius: 16,
-          }}
-        />
       </Grid>
 
       {/* Open source development by Software Consultants */}
@@ -192,8 +177,9 @@ const HomePage: React.FC = () => {
             fontWeight: "bold",
             mb: 2,
             fontFamily: { xs: "Arial, sans-serif", md: "inherit" },
-            fontSize: { lg: "1.0rem", xs: "1.0rem", md: "inherit" },
+            fontSize: { lg: "1.0rem", xs: "0.75rem", md: "inherit" },
             textAlign: { xs: "center", sm: "center", md: "left" },
+            letterSpacing: "1px",
           }}
         >
           Open source development by&nbsp;
