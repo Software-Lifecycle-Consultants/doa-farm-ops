@@ -29,7 +29,7 @@ export default function FarmerProfile() {
   return (
     <>
       {/* Main grid container */}
-      <Grid container direction="column" rowGap={2}>
+      <Grid container style={{ padding: "20px" }} direction="column" rowGap={2}>
         {/* Title */}
         <Grid item xs={12}>
           <ProfileTitle title={t("farmerProfile.txtProfileName")} />
@@ -93,86 +93,58 @@ export default function FarmerProfile() {
             </Grid>
             {/* Personal Information Fields */}
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtFirstName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleFarmerProfileData.firstname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtLastName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleFarmerProfileData.lastname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtEmail")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleFarmerProfileData.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtNicNumber")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleFarmerProfileData.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtAddress")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleFarmerProfileData.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtPhoneNumber")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleFarmerProfileData.phonenumber}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtHouseholds")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleFarmerProfileData.household}
               </Typography>
             </Grid>
@@ -206,26 +178,18 @@ export default function FarmerProfile() {
             </Grid>
             {/* Other Details Fields */}
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtOrgName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleFarmerProfileData.otherdetails.orgname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtOrgAddress")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleFarmerProfileData.otherdetails.orgaddress}
               </Typography>
             </Grid>

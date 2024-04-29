@@ -35,7 +35,7 @@ export default function RootLayout({
               <CssBaseline />
               {/* Add navigation bar */}
               <Navbar />
-              <div className="container" style={{ padding: "20px" }}>
+              <div className="container">
                 {children}
               </div>
             </I18nextProvider>
