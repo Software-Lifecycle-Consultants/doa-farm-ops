@@ -47,7 +47,7 @@ const HomePage: React.FC = () => {
       container
       sx={{
         backgroundImage:
-          "url(/images/home/home-bg-image.png)",
+          "url(/images/home/home-bg-image3.jpg)",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundSize: "cover",
@@ -69,7 +69,7 @@ const HomePage: React.FC = () => {
           height={185.951}
           style={{
             width: "auto",
-            height: "50%",
+            height: "75%",
             flexShrink: 0,
           }}
         />
@@ -87,7 +87,7 @@ const HomePage: React.FC = () => {
           justifyContent: "center",
           color: "white",
           paddingRight: { xs: 2, md: 0 },
-          paddingLeft: { xs: 2, md: 10 },
+          marginLeft: { xs: 2, md: 10 },
         }}
       >
         {/* Read More button content */}
@@ -178,7 +178,7 @@ const HomePage: React.FC = () => {
             fontWeight: "bold",
             mb: 2,
             fontFamily: { xs: "Arial, sans-serif", md: "inherit" },
-            fontSize: { lg: "1.0rem", xs: "0.75rem", md: "inherit" },
+            fontSize: { lg: "1.0rem", xs: "0.74rem", md: "inherit" },
             textAlign: { xs: "center", sm: "center", md: "left" },
             letterSpacing: "1px",
           }}
