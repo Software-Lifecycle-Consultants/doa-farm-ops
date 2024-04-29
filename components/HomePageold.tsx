@@ -52,7 +52,7 @@ const HomePage: React.FC = () => {
         sx={{ display: "flex", justifyContent: "center" }}
       >
         <Image
-          src="/images/home/emblem.png"
+          src="/images/home/emblem1.png"
           alt="test"
           width={277.758}
           height={185.951}
