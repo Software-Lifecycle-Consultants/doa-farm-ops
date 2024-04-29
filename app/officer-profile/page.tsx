@@ -26,7 +26,7 @@ export default function OfficerProfile() {
   return (
     <>
       {/* Main grid container */}
-      <Grid container direction="column" rowGap={2}>
+      <Grid container direction="column" rowGap={2} style={{ padding: "20px" }}>
         <Grid item xs={12}>
           {/* Page title */}
           <ProfileTitle title={t("officerProfile.txtProfileName")} />
@@ -90,74 +90,50 @@ export default function OfficerProfile() {
             </Grid>
             {/* Personal Information Fields */}
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtFirstName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleOfficerProfileData.firstname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtLastName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleOfficerProfileData.lastname}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtEmail")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleOfficerProfileData.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtNicNumber")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleOfficerProfileData.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtAddress")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleOfficerProfileData.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtPhoneNumber")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleOfficerProfileData.phonenumber}
               </Typography>
             </Grid>
@@ -191,26 +167,18 @@ export default function OfficerProfile() {
             </Grid>
 
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtOrgName")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleOfficerProfileData.organization.name}
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtOrgAddress")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleOfficerProfileData.organization.address}
               </Typography>
             </Grid>
@@ -221,14 +189,10 @@ export default function OfficerProfile() {
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("officerProfile.txtUniversity")}
               </Typography>
-              <Typography
-                variant="body1"
-              >
+              <Typography variant="body1">
                 {sampleOfficerProfileData.education.university}
               </Typography>
             </Grid>
