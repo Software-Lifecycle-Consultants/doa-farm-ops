@@ -178,7 +178,7 @@ const HomePage: React.FC = () => {
             fontWeight: "bold",
             mb: 2,
             fontFamily: { xs: "Arial, sans-serif", md: "inherit" },
-            fontSize: { lg: "1.0rem", xs: "1.0rem", md: "inherit" },
+            fontSize: { lg: "1.0rem", xs: "0.75rem", md: "inherit" },
             textAlign: { xs: "center", sm: "center", md: "left" },
             letterSpacing: "1px",
           }}
