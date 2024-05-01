@@ -27,6 +27,7 @@ import store from "@/redux/store";
 import { selectLands,fetchAndRegisterLands } from "@/redux/landSlice";
 import { selectAddCrop } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
+import {RootState} from "@/redux/types";
 
 // Styles for labels
 const styles = {
@@ -121,8 +122,8 @@ export default function AddCrop() {
     router.push("/add-land");
   };
 
-  //Decare variable to append landData +  Crop data
-  let landCropData;
+  // Retrieve Crop Data from Redux Store (using useSelector hook)
+  const landCropData = useSelector((state: RootState) => state.crops);
 
   //Function to navigate to my crops page clicking save button
   const handleOnClickAddCrop = async (
