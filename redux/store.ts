@@ -1,5 +1,6 @@
 // Import the configureStore function from Redux Toolkit.
-import { configureStore } from '@reduxjs/toolkit';
+// import { configureStore } from '@reduxjs/toolkit';
+import { AnyAction, configureStore, ThunkDispatch } from '@reduxjs/toolkit';
 
 // Import the 'authReducer' from the 'loginSlice' file.
 import cropReducer from './cropSlice';
@@ -9,6 +10,7 @@ import userReducer from "./userSlice";
 import farmerSlice from './farmerSlice';
 import officerSlice from './officerSlice';
 import authSlice from './authSlice';
+import { RootState } from './types';
 
 // Create the Redux store for managing application state.
 const store = configureStore({

@@ -24,7 +24,7 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     // Define a reducer function to register user details
-    register: (state, action: PayloadAction<User | null>) => {
+    register: (state, action) => {
       // Update the user details in the state based on the action payload
       state.user = action.payload;
     },

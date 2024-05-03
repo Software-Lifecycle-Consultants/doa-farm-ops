@@ -25,11 +25,10 @@ import {
 import { useTranslation } from "react-i18next";
 import i18n from "../config/i18n"; // Import the i18n instance
 import { CustomBox1 } from "@/Theme";
-import store from '@/redux/store';
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { register } from "@/redux/userSlice";
-import { User } from "@/redux/types";
+
 /**
  * SignUp page allows to users to register to the system
  */
@@ -37,12 +36,11 @@ import { User } from "@/redux/types";
 export default function SignUp() {
 
   const { t } = useTranslation();
-  const [responseData, setResponseData] = useState(null);
   const router = useRouter();
   const dispatch = useDispatch();
 
   // State for the form data
-  const [formData, setFormData] = useState<User>({
+  const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
     email: "",
@@ -52,6 +50,17 @@ export default function SignUp() {
     address: "",
     password: ""
   });
+
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    nic: string;
+    role: string;
+    address: string;
+    password: string;
+  }
 
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);

@@ -11,11 +11,8 @@ import { CustomBox2 } from "@/Theme";
 import { selectAuth } from "@/redux/authSlice";
 import { fetchAndRegisterUser, selectUser } from "@/redux/userSlice";
 import { useSelector } from "react-redux";
-import axios from 'axios';
 import { useDispatch } from "react-redux";
-import { OfficerRegister, fetchAndRegisterOfficer, selectOfficer } from "@/redux/officerSlice";
-import store from "@/redux/store";
-import { register } from "@/redux/userSlice";
+import { fetchAndRegisterOfficer, selectOfficer } from "@/redux/officerSlice";
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 
 // OfficerProfile component renders a profile page for an officer.
@@ -26,15 +23,15 @@ export default function OfficerProfile() {
   const { t } = useTranslation();
 
   // Fetch the authentication status from Redux store
-  const { auth } = useSelector(selectAuth);
+  const auth = useSelector(selectAuth);
   const user = useSelector(selectUser);
   const officerDetails = useSelector(selectOfficer);
 
   // Fetch user and officer details on component mount
   React.useEffect(() => {
-    dispatch(fetchAndRegisterUser(auth._id)); // Fetch user details
-    dispatch(fetchAndRegisterOfficer(auth._id)); // Fetch officer details
-  }, [auth._id, dispatch]);
+    dispatch(fetchAndRegisterUser(auth.auth._id)); // Fetch user details
+    dispatch(fetchAndRegisterOfficer(auth.auth._id)); // Fetch officer details
+  }, [auth.auth._id, dispatch]);
 
   // Function to handle edit button click
   const handleEditClick = (userId: string) => {
@@ -102,7 +99,7 @@ export default function OfficerProfile() {
                 sx={btnBackgroundColor}
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
-                onClick={() => handleEditClick(user._id)}
+                onClick={() => user && handleEditClick(user._id)}
               >
                 {t("officerProfile.capBtnEdit")}
               </Button>

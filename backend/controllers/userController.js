@@ -37,7 +37,7 @@ const userController = {
         role,
         address,
         password,
-      } = userData.user;
+      } = userData;
 
       console.log(
         "createUserData:",
@@ -116,7 +116,7 @@ const userController = {
       
         
       // Save the famer/officers details based on user role
-      if (userData.user.role === "farmer") {
+      if (userData.role === "farmer") {
         // Extract farmer-specific fields
         const { household, orgName, orgAddress } = farmerData || {};
         console.log("household, orgName, orgAddress", household, orgName, orgAddress);
@@ -137,7 +137,7 @@ const userController = {
         console.log("newFarmer--------------" + newFarmer);
         // Save the new farmer
         await newFarmer.save();
-      } else if (userData.user.role === "officer") {
+      } else if (userData.role === "officer") {
         // Extract officer-specific fields
         const { orgName, orgAddress, university } = officerData || {};
         if (!orgName || !orgAddress || !university) {

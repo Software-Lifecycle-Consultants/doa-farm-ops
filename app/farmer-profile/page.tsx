@@ -31,18 +31,18 @@ export default function FarmerProfile() {
   const router = useRouter();
   const { t } = useTranslation();
   // const dispatch = useDispatch();
-  const dispatch:AppDispatch = useDispatch(); // Type the dispatch function with explicitly specifies the type of dispatch as AppDispatch.
-
+  const dispatch: AppDispatch = useDispatch() // Type the dispatch function with explicitly specifies the type of dispatch as AppDispatch.
   // Fetch the authentication status from Redux store
-  const { auth } = useSelector(selectAuth);
+  const auth = useSelector(selectAuth);
   const user = useSelector(selectUser);
   const farmerDetails = useSelector(selectFarmerDetails);
 
   //Funtion to execute the two asynchronous actions to fetch and register farmer details and user details using the current authentication ID. 
   React.useEffect(() => {
-    dispatch(fetchAndRegisterUser(auth._id)); // Fetch user details
-    dispatch(fetchAndRegisterFarmer(auth._id)); // Fetch farmer details
-  }, [auth._id, dispatch]);
+
+    dispatch(fetchAndRegisterUser(auth.auth._id)); // Fetch user details
+    dispatch(fetchAndRegisterFarmer(auth.auth._id)); // Fetch farmer details
+  }, [auth.auth._id, dispatch]);
 
   return (
     <>
