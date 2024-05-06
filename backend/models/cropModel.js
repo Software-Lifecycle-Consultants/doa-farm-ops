@@ -61,7 +61,7 @@ const cropSchema = new Schema(
       landId:{
             type: String,
             required: true,
-            trim: true,
+            ref: 'Land',  // Assuming land data is stored in a Land model
         },
     },
     {
