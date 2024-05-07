@@ -130,7 +130,7 @@ export default function AddCrop() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-
+    const cropData = { ...formData };
     // const cropData = { cropDetails: formData };
     const action = addCrop(formData);
     dispatch(action);
@@ -156,7 +156,8 @@ export default function AddCrop() {
     );
 
     try {
-      console.log("-----------------Executing landAndCRop-------------------");
+      if (landId) {
+        // If Land Selected from the database
       const response = await axios.post(
         `http://localhost:5000/api/crop/add/`,
         landCropData
@@ -168,6 +169,23 @@ export default function AddCrop() {
         // dispatch(addLandAndCropSuccess());
       } else if (response && response.status === 400) {
         console.error("Failed to fetch data");
+      }
+    } else {
+        // Use existing crop endpoint if no land selected
+        const action = addCrop(cropData);
+        dispatch(action);
+        const response = await axios.post(
+            `http://localhost:5000/api/landAndCrop/add`,
+            landCropData
+        );
+// Handle success response (for Redux action)
+        if (response && response.status === 200) {
+          console.log(response);
+          setResponseData(response.data);
+          router.push("/my-crops"); // Navigate to my crops page
+        } else if (response && response.status === 400) {
+          console.error("Failed to fetch data");
+        }
       }
     } catch (error) {
       console.error("Error fetching data:", error);
