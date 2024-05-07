@@ -185,6 +185,8 @@ const landController = {
         noOfPicks,
         isCultivationLoan,
         loanObtained,
+        landId: savedLand._id, // Add landId and set it to savedLand's ID
+        userId,
       });
 
       const savedCrop = await newCrop.save();
