@@ -33,23 +33,35 @@ export default function AdditionalRegistration() {
   const { t } = useTranslation();
 
   // State for the form data
-  const [farmerFormData, setFarmerFormData] = useState<FarmerDetails>({
+  const [farmerFormData, setFarmerFormData] = useState<FormDataFarmer>({
     household: "",
     orgName: "",
     orgAddress: ""
   });
   
-  const [officerFormData, setOfficerFormData] = useState<OfficerDetails>({
+  const [officerFormData, setOfficerFormData] = useState<FormDataOfficer>({
     orgName: "",
     orgAddress: "",
     university: ""
   });
 
+  interface FormDataFarmer {
+    household: string;
+    orgName: string;
+    orgAddress: string;
+  }
+
+  interface FormDataOfficer {
+    orgName: string;
+    orgAddress: string;
+    university: string;
+  }
+
   // Get user data from the Redux store
-  const userData = useSelector((state: RootState) => state.user);
+  const userData = useSelector((state: RootState) => state.user.user);
 
    // Get user role from the userData
-  const selectedRole = userData?.user?.role;
+  const selectedRole = userData?.role;
 
    // Function to handle changes in form fields
   const handleChangeUserRegister = (
@@ -85,6 +97,7 @@ export default function AdditionalRegistration() {
         dispatch(action);
         console.log("Dispatching action for farmer:", action);
         // Get farmer data from the Redux store
+        
         const farmerData = selectFarmerDetails(store.getState());
         console.log("----------farmerData----------------" + farmerData);
         const farmerDataJSON = JSON.stringify(farmerData);
@@ -98,6 +111,7 @@ export default function AdditionalRegistration() {
         dispatch(action);
         console.log("Dispatching action office:", action);
         // Get officer data from the Redux store
+        
         const officerData = selectOfficer(store.getState());
         console.log("----------officerData----------------" + officerData);
         combinedData = {

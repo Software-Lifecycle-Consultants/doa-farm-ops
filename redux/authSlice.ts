@@ -1,5 +1,6 @@
 // Import the createSlice function from Redux Toolkit.
 import { createSlice } from '@reduxjs/toolkit';
+import { RootState } from './types'; // Import the 'Auth' type from the 'types.ts' file.
 
 // Define the initial state of the 'login' slice.
 const initialState = {
@@ -31,7 +32,7 @@ const authSlice = createSlice({
     // When a 'logout' action is dispatched, update the state.
     logout: (state) => {
       state.isAuthenticated = false;// Set 'isAuthenticated' to 'false'.
-      state.auth = {_id:null, email:null, userName:null, role:null, token:null}; // Set 'user' to 'null'.
+      state.auth = {_id:null, email:null, userName:null, role:null, token:null}; // Set 'auth' to an empty object with the same structure.
     }
   },
 });
@@ -40,7 +41,7 @@ const authSlice = createSlice({
 export const { login, register, logout } = authSlice.actions;
 
 // Define a selector function to extract the 'login' state from the Redux store.
-export const selectAuth = (state: { auth: any; }) => state.auth;
+export const selectAuth = (state: RootState) => state.auth;
 
 // Export the 'authSlice.reducer' as the default export.
 export default authSlice.reducer;

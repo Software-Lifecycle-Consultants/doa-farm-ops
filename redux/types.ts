@@ -1,3 +1,14 @@
+export interface Auth {
+  isAuthenticated:boolean;
+  auth:{
+    _id: string;
+    email: string;
+    userName: string;
+    role: string;
+    token: string;
+  };
+  }
+
 interface Crop {
     cropDetails: {
       cropName: string;
@@ -36,6 +47,7 @@ interface LandAndCrop {
 }
 
 export interface User {
+    _id: string;
     firstName: string;
     lastName: string;
     email: string;
@@ -43,7 +55,6 @@ export interface User {
     nic: string;
     role: string;
     address: string;
-    password: string;
 }
 
 export interface FarmerDetails {
@@ -56,11 +67,11 @@ export interface OfficerDetails {
     orgName: string;
     orgAddress: string;
     university: string;
-
 }
 
   // Define the structure of the Redux store's state using the RootState type.
   export type RootState = {
+    auth: Auth;
     crops: Crop[]; // An array of Crop objects, representing the state of crop data.
     land: {
       lands: Land[] | null;

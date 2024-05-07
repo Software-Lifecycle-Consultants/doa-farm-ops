@@ -42,10 +42,16 @@ export default function SignIn() {
   // Initialize the 't' function to access translations within the 'login' namespace.
   const { t } = useTranslation();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
   });
+
+  interface FormData {
+    email: string;
+    password: string;
+  }
+
   // State to manage email and password validation
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
