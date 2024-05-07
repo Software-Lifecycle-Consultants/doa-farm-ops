@@ -67,13 +67,12 @@ export interface OfficerDetails {
     orgName: string;
     orgAddress: string;
     university: string;
-
 }
 
   // Define the structure of the Redux store's state using the RootState type.
   export type RootState = {
     auth: Auth;
-    // crops: Crop[]; // An array of Crop objects, representing the state of crop data.
+    crops: Crop[]; // An array of Crop objects, representing the state of crop data.
     land: {
       lands: Land[] | null;
     };// An array of Land objects, representing the state of land data.
