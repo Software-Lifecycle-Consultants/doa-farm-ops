@@ -89,6 +89,26 @@ npm install i18next
 npm install ol
 npm install @types/ol
  ```
+  - [React-Toastify](https://www.npmjs.com/package/react-toastifyl) 
+  - A React library for creating toast notifications.
+  - Install the package in your project directory using the following commands.
+ ```bash
+npm install react-toastify
+ ```
+
+ - [Express](https://expressjs.com/en/starter/installing.html) 
+  - A back end web application framework for building RESTful APIs with Node.js.
+  - Install the package in your project directory using the following commands.
+ ```bash
+npm install express
+ ```
+ 
+  - [Axios](https://axios-http.com/docs/intro) - Version 1.6.2
+  - A promise-based HTTP Client for node.js and the browser.
+  - Install the package in your project directory using the following commands.
+ ```bash
+npm install axios
+ ```
 
 4. Set up the environment variables:
   - Create a .env.local file in the root directory of the project.

@@ -1,10 +1,10 @@
 "use client"
 import React, { useState } from "react";
+import axios from 'axios';
 import {
   Button,
   TextField,
   FormControlLabel,
-  Checkbox,
   Link,
   Grid,
   Box,
@@ -13,7 +13,10 @@ import {
   OutlinedInput,
   InputAdornment,
   IconButton,
-  InputLabel
+  InputLabel,
+  FormControl,
+  RadioGroup,
+  Radio
 } from "@mui/material";
 import {
   Visibility as Visibility,
@@ -22,18 +25,75 @@ import {
 import { useTranslation } from "react-i18next";
 import i18n from "../config/i18n"; // Import the i18n instance
 import { CustomBox1 } from "@/Theme";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/navigation";
+import { register } from "@/redux/userSlice";
+
 /**
  * SignUp page allows to users to register to the system
  */
 
 export default function SignUp() {
+
   const { t } = useTranslation();
+  const router = useRouter();
+  const dispatch = useDispatch();
+
+  // State for the form data
+  const [formData, setFormData] = useState<FormData>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phoneNumber: "",
+    nic: "",
+    role: "",
+    address: "",
+    password: ""
+  });
+
+  interface FormData {
+    firstName: string;
+    lastName: string;
+    email: string;
+    phoneNumber: string;
+    nic: string;
+    role: string;
+    address: string;
+    password: string;
+  }
 
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
 
   // Function to toggle password visibility
   const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  // Function to handle changes in form fields
+  const handleChangeUserRegister = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: string
+  ) => {
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      [field]: event.target.value,
+    }));
+  };
+  
+  
+  // Function to handle user registration
+  const handleOnClickNext = async (e:React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault(); // Prevent default form submission
+    try {
+      // Dispatch the register action from userSlice
+      const action = register(formData);
+      console.log('Dispatching action:', action);
+      dispatch(action);
+      router.push("/additional-reg-details");
+
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
 
   // Prevent default event handling for password visibility button
   const handleMouseDownPassword = (
@@ -68,6 +128,8 @@ export default function SignUp() {
                 id="firstName"
                 placeholder={i18n.t("register.hintTxtFirstName")}
                 autoFocus
+                value={formData.firstName}
+                onChange={(e) => handleChangeUserRegister(e, "firstName")}
               />
             </Grid>
             <Grid item xs={12} sm={6}>
@@ -79,6 +141,8 @@ export default function SignUp() {
                 placeholder={i18n.t("register.hintTxtLastName")}
                 name="lastName"
                 autoComplete="family-name"
+                value={formData.lastName}
+                onChange={(e) => handleChangeUserRegister(e, "lastName")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -90,6 +154,8 @@ export default function SignUp() {
                 placeholder={i18n.t("register.hintTxtEmail")}
                 name="email"
                 autoComplete="email"
+                value={formData.email}
+                onChange={(e) => handleChangeUserRegister(e, "email")}
               />
             </Grid>
             <Grid item xs={12}>
@@ -98,16 +164,73 @@ export default function SignUp() {
                 required
                 fullWidth
                 id="phoneNumber"
-                placeholder="Enter phone number"
+                placeholder={i18n.t("register.hintTxtPhoneNo")}
                 name="phoneNumber"
-                autoComplete={i18n.t("register.hintTxtPhoneNo")}
+                autoComplete="phoneNumber"
+                value={formData.phoneNumber}
+                onChange={(e) => handleChangeUserRegister(e, "phoneNumber")}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>{i18n.t("register.lblNIC")}</Typography>
+              <TextField
+                required
+                fullWidth
+                id="nic"
+                placeholder={i18n.t("register.hintTxtNIC")}
+                name="nic"
+                autoComplete="nic"
+                value={formData.nic}
+                onChange={(e) => handleChangeUserRegister(e, "nic")}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <Typography>{i18n.t("register.lblAddress")}</Typography>
+              <TextField
+                required
+                fullWidth
+                id="address"
+                placeholder={i18n.t("register.hintTxtAddress")}
+                name="address"
+                autoComplete="address"
+                value={formData.address}
+                onChange={(e) => handleChangeUserRegister(e, "address")}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <FormControl>
+                <Typography id="demo-controlled-radio-buttons-group">
+                  {i18n.t("register.lblRole")}
+                </Typography>
+                <RadioGroup
+                  style={{ width: "100%" }}
+                  aria-labelledby="demo-controlled-radio-buttons-group"
+                  name="controlled-radio-buttons-group"
+                  defaultValue="farmer"
+                  value={formData.role}
+                  onChange={(e) => handleChangeUserRegister(e, "role")}
+                  row
+                >
+                  <FormControlLabel
+                    value="farmer"
+                    control={<Radio />}
+                    label={i18n.t("register.lblFarmer")}
+                  />
+                  <FormControlLabel
+                    value="officer"
+                    control={<Radio />}
+                    label={i18n.t("register.lblOfficer")}
+                  />
+                </RadioGroup>
+              </FormControl>
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("register.lblPassword")}</Typography>
               <OutlinedInput
                 fullWidth
                 id="outlined-adornment-password"
+                value={formData.password}
+                onChange={(e) => handleChangeUserRegister(e, "password")}
                 placeholder={i18n.t("register.hintTxtPassword")}
                 type={showPassword ? "text" : "password"}
                 endAdornment={
@@ -125,38 +248,21 @@ export default function SignUp() {
                 label={<InputLabel disabled={true} />}
               />
             </Grid>
-            {/* Terms & Conditions Checkbox */}
-            <Grid item xs={12}>
-              <FormControlLabel
-                control={<Checkbox value="allowExtraEmails" color="primary" />}
-                label={
-                  <>
-                    {i18n.t("register.txtAgree")}{" "}
-                    <a href="/terms-and-conditions">
-                      {i18n.t("register.txtTerms&Conditions")}
-                    </a>{" "}
-                    {i18n.t("register.txtAnd")}{" "}
-                    <a href="/privacy-policy">
-                      {i18n.t("register.txtPrivacyPolicy")}
-                    </a>
-                  </>
-                }
-              />
-            </Grid>
           </Grid>
-          {/* Register Button */}
+          {/* Next Button for Registration */}
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
+            onClick={handleOnClickNext}
           >
-            {i18n.t("register.capBtnRegister")}
+            Next
           </Button>
           {/* Link to Sign In */}
           <Grid container justifyContent="center">
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="login" variant="body2">
                 {i18n.t("register.txtAlreadyHaveAccount")}
               </Link>
             </Grid>

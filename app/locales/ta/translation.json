@@ -10,6 +10,13 @@
     "hintTxtEmail": "மின்னஞ்சல் முகவரியை உள்ளிடவும்",
     "lblPhoneNo": "தொலைபேசி எண்",
     "hintTxtPhoneNo": "தொலைபேசி எண்ணை உள்ளிடவும்",
+    "lblNIC": "NIC எண்",
+    "hintTxtNIC": "NIC எண்ணை உள்ளிடவும்",
+    "lblRole": "Role",
+    "lblFarmer": "உழவர்",
+    "lblOfficer": "அதிகாரி",
+    "lblAddress": "முகவரி",
+    "hintTxtAddress": "முகவரியை உள்ளிடவும்",
     "lblPassword": "கடவுச்சொல்",
     "hintTxtPassword": "கடவுச்சொல்லை உள்ளிடவும்",
     "txtAgree": "பதிவு செய்வதன் மூலம் நீங்கள் எங்களுடையதை ஒப்புக்கொள்கிறீர்கள்",
@@ -18,6 +25,35 @@
     "txtPrivacyPolicy": "தனியுரிமைக் கொள்கை",
     "capBtnRegister": "உள்நுழை",
     "txtAlreadyHaveAccount": "ஏற்கனவே கணக்கு உள்ளதா? உள்நுழைக"
+  },
+  "updateUser": {
+    "txtUpdateUser": "உங்கள் கணக்கு விவரங்களைத் திருத்தவும்",
+    "txtFillDetails": "உங்கள் கணக்கு விவரங்களை மாற்ற கீழே உள்ள விவரங்களை நிரப்பவும்",
+    "lblFirstName": "முதல் பெயர்",
+    "hintTxtFirstName": "முதல் பெயரை உள்ளிடவும்",
+    "lblLastName": "கடைசி பெயர்",
+    "hintTxtlastName": "கடைசிப் பெயரை உள்ளிடவும்",
+    "lblEmail": "மின்னஞ்சல் முகவரி",
+    "hintTxtemail": "மின்னஞ்சல் முகவரியை உள்ளிடவும்",
+    "lblphoneNumber": "தொலைபேசி எண்",
+    "hintTxtphoneNumber": "தொலைபேசி எண்ணை உள்ளிடவும்",
+    "lblnicNumber": "NIC எண்",
+    "hintTxtnicNumber": "NIC எண்ணை உள்ளிடவும்",
+    "lblAddress": "முகவரி",
+    "hintTxtAddress": "முகவரியை உள்ளிடவும்",
+    "capBtnSave&Exit": "சேமிக்க மற்றும் வெளியேறும்"
+  },
+  "additionalRegister": {
+    "txtOtherDetails": "உங்கள் மற்ற விவரங்களைச் சேர்க்கவும்",
+    "txtFillDetails": "உங்கள் கணக்கை உருவாக்க கீழே உள்ள விவரங்களை நிரப்பவும்",
+    "lblHouseholds": "குடும்பங்கள்",
+    "hintTxtHouseholds": "உங்கள் வீட்டுக்காரர்களை உள்ளிடவும்",
+    "lblUniversity": "பல்கலைக்கழகம்",
+    "hintTxtUniversity": "உங்கள் பல்கலைக்கழகத்தில் நுழையவும்",
+    "lblOrganizationName": "நிறுவனத்தின் பெயர்",
+    "hintTxtOrg": "நிறுவனத்தின் பெயரை உள்ளிடவும்",
+    "lblOrganizationAddress": "நிறுவன முகவரி",
+    "hintTxtOrgAddress": "நிறுவன முகவரியை உள்ளிடவும்"
   },
   "login": {
     "txtWelcome": "வரவேற்கிறோம் DOA இயங்குதளம்",
@@ -125,7 +161,7 @@
     "hintTxtLandRent": "நில வாடகையை உள்ளிடவும்",
     "lblMode": "பாசன முறை",
     "hintTxtMode": "நீர்ப்பாசன முறையை உள்ளிடவும்",
-    "capBtnSave&Exit": "சேமி & என் பயிர்களுக்கு வெளியேறு",
+    "capBtnSave&Exit": "சேமி & என் எனது சுயவிவரத்திற்கு வெளியேறு",
     "capBtnSave&Proceed": "சேமித்து பயிர் சேர்க்க தொடரவும்"
   },
   "updateLand": {
@@ -142,7 +178,7 @@
     "hintTxtLandRent": "நில வாடகையை உள்ளிடவும்",
     "lblMode": "பாசன முறை",
     "hintTxtMode": "நீர்ப்பாசன முறையை உள்ளிடவும்",
-    "capBtnSave&Exit": "சேமி & என் பயிர்களுக்கு வெளியேறு",
+    "capBtnSave&Exit": "சேமி & என் எனது சுயவிவரத்திற்கு வெளியேறு",
     "capBtnSave&Proceed": "சேமித்து பயிர் சேர்க்க தொடரவும்"
   },
   "addCrop": {
@@ -181,7 +217,8 @@
     "menuItemTxtNo": "இல்லை",
     "lblCultivationLoanAmount": "பயிரிடுவதற்கான கடன் தொகை",
     "capBtnCancel": "ரத்துசெய்",
-    "capBtnSave": "சேமி"
+    "capBtnSave": "சேமி",
+    "menuItemTxtSelectLand": "ஒரு நிலத்தைத் தேர்ந்தெடுக்கவும்"
   },
   "updateCrop": {
     "txtUpdateCrop": "பயிரைப் புதுப்பி",
@@ -244,5 +281,14 @@
     "txtTopic": "விவசாயத் துறை வளர்ச்சியை சிறப்பாக நிர்வகிக்க எங்களுக்கு உதவ விவசாயிகளின் பயிர்ச் செலவுகளைப் புதுப்பிக்கவும்",
     "txtDescription": "வேளாண்மைத் துறை (DOA) விவசாய அமைச்சகத்தின் கீழ் இயங்குகிறது மற்றும் இது ஒரு உயர்மட்ட விவசாய விஞ்ஞானிகளின் சமூகம் மற்றும் நாடு முழுவதும் உள்ள பல்வேறு ஆர்கோ சுற்றுச்சூழல் பகுதிகளை உள்ளடக்கிய நிறுவனங்களின் வலையமைப்பைக் கொண்ட மிகப்பெரிய அரசாங்கத் துறைகளில் ஒன்றாகும்.",
     "btnDOA": "வேளாண் துறை டிஜிட்டல்மயமாக்கல் முயற்சிகள்" 
+  },
+  "dialogBoxes": {
+    "capBtnOk": "சரி",
+    "capBtnYes": "ஆம்",
+    "capBtnCancel": "இல்லை",
+    "txtUpdatedSuccess": "பதிவு வெற்றிகரமாக புதுப்பிக்கப்பட்டது!",
+    "txtDeleteSuccess": "பதிவு வெற்றிகரமாக நீக்கப்பட்டது!",
+    "txtAddedSuccess": "பதிவு வெற்றிகரமாக சேர்க்கப்பட்டது!",
+    "txtDeleteConfirmation":"இந்தப் பதிவை நிச்சயமாக நீக்க விரும்புகிறீர்களா?"
   }
 }
