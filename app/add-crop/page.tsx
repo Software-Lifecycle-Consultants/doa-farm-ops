@@ -142,7 +142,7 @@ export default function AddCrop() {
     console.log("----------getUserFromRedux----------------", userId);
 
     const cropDataFromRedux = selectAddCrop(store.getState());
-    const cropDataObject = cropDataFromRedux[cropDataFromRedux.length - 1];
+    const cropDataObject = cropDataFromRedux ? cropDataFromRedux[cropDataFromRedux.length - 1] : null;
     console.log("----------selectAddCrop----------------", cropDataObject);
 
     const landCropData = {
