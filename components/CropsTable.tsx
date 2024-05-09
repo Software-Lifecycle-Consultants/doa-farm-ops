@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   IconButton,
   Stack,
@@ -29,8 +29,11 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import i18n from "@/app/config/i18n";// Import the i18n instance
 import { useDispatch } from "react-redux";
-import { deleteCrop } from "@/redux/cropSlice"; // Import the Redux action for updating crops
+import { deleteCrop, fetchCrops, selectCrops } from "@/redux/cropSlice"; // Import the Redux action for updating crops
 import theme from '@/Theme';
+import { selectUser } from '@/redux/userSlice';
+import { AppDispatch } from '@/redux/store';
+import { selectLands } from '@/redux/landSlice';
 
 
 // Define the table columns
@@ -98,8 +101,17 @@ interface TableTitleProps {
 export default function CropsTable({ title }: TableTitleProps) {
   const router = useRouter();
   const { t } = useTranslation();
-  const cropDetails = useSelector((state: RootState) => state.crop);
-  const dispatch = useDispatch();
+  const user = useSelector(selectUser);
+  const dispatch: AppDispatch = useDispatch()
+  const cropsData = useSelector(selectCrops);
+  const land = useSelector(selectLands);
+
+  useEffect(() => {
+    // Fetch the crop data when the component mounts
+    if (user) {
+    dispatch(fetchCrops(user._id));
+    }
+  }, []);
 
   // State for handling pagination
   const [page, setPage] = React.useState(0);
@@ -109,6 +121,12 @@ export default function CropsTable({ title }: TableTitleProps) {
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deletedCropId, setDeletedCropId] = useState('');
   const [deletedLandId, setDeletedLandId] = useState('');
+
+  // Function to handle land name
+  const handleLandName = (landId: string) => {
+    const landName = land?.find((land) => land._id === landId);
+    return landName?.landName;
+  }
 
   // Function to handle changing the page
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -133,10 +151,10 @@ export default function CropsTable({ title }: TableTitleProps) {
   };
 
   // Function to delete crop when the Delete icon is clicked
-  const handleDeleteClick = (landId: string, cropId: string) => {
+  const handleDeleteClick = (cropId: string) => {
     // Open the confirmation dialog and set the deletedCropId
     setDeletedCropId(cropId);
-    setDeletedLandId(landId);
+    // setDeletedLandId(landId);
     setDeleteConfirmationOpen(true);
   };
 
@@ -144,7 +162,7 @@ export default function CropsTable({ title }: TableTitleProps) {
   const confirmDelete = () => {
     if (deletedCropId && deletedLandId) {
       // Call the deleteCrop action to delete the crop
-      dispatch(deleteCrop({ landId: deletedLandId, _id: deletedCropId }));
+      dispatch(deleteCrop({_id: deletedCropId }));
       // Close the confirmation dialog
       setDeleteConfirmationOpen(false);
     }
@@ -179,14 +197,14 @@ export default function CropsTable({ title }: TableTitleProps) {
           </TableHead>
           {/* Table body */}
           <TableBody>
-            {cropDetails
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            {cropsData
+              ?.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map((row) => {
                 return (
                   <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
-                    <TableCell>{row.landId}</TableCell>
+                    <TableCell>{handleLandName(row.landId)}</TableCell>
                     {columns.map((column) => {
-                      const value = row.cropDetails?.[column.id];
+                      const value = row?.[column.id];
                       return (
                         <>
                           <TableCell key={column.id} align={column.align}>
@@ -203,7 +221,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                           <EditNoteIcon />
                         </IconButton>
                         <IconButton
-                          onClick={() => handleDeleteClick(row.landId, row._id)}
+                          onClick={() => handleDeleteClick(row._id)}
                         >
                           <DeleteIcon />
                         </IconButton>
@@ -233,7 +251,7 @@ export default function CropsTable({ title }: TableTitleProps) {
       <TablePagination
         rowsPerPageOptions={[10, 25, 100]}
         component="div"
-        count={cropDetails.length}
+        count={cropsData?.length || 0}
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={handleChangePage}

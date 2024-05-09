@@ -4,6 +4,7 @@ const Officer = require('../models/officerModel');
 const User = require("../models/userModel");
 const Land = require("../models/landModel");
 const Auth = require('../models/authModel');
+const Crop = require("../models/cropModel");
 const bcrypt = require("bcryptjs");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
@@ -215,6 +216,7 @@ const userController = {
       if (user.role === "farmer") {
         const farmer = await Farmer.findOne({ userId });
         const land = await Land.find({ userId });
+        const crops = await Crop.find({ userId });
         if (!farmer) {
           return res.status(404).json({ message: "Farmer details not found" });
         }
@@ -226,6 +228,7 @@ const userController = {
             orgAddress: farmer.orgAddress,
           },
           land,
+          crops,
         };
         console.log("userDetails-----------------", userDetails);
       } else if (user.role === "officer") {
