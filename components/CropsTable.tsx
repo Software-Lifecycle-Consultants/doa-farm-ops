@@ -33,6 +33,7 @@ import { deleteCrop, fetchCrops, selectCrops } from "@/redux/cropSlice"; // Impo
 import theme from '@/Theme';
 import { selectUser } from '@/redux/userSlice';
 import { AppDispatch } from '@/redux/store';
+import { selectLands } from '@/redux/landSlice';
 
 
 // Define the table columns
@@ -103,13 +104,13 @@ export default function CropsTable({ title }: TableTitleProps) {
   const user = useSelector(selectUser);
   const dispatch: AppDispatch = useDispatch()
   const cropsData = useSelector(selectCrops);
+  const land = useSelector(selectLands);
 
   useEffect(() => {
     // Fetch the crop data when the component mounts
     if (user) {
     dispatch(fetchCrops(user._id));
     }
-    console.log("Crop details from crop table", cropsData);
   }, []);
 
   // State for handling pagination
@@ -120,6 +121,12 @@ export default function CropsTable({ title }: TableTitleProps) {
   const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
   const [deletedCropId, setDeletedCropId] = useState('');
   const [deletedLandId, setDeletedLandId] = useState('');
+
+  // Function to handle land name
+  const handleLandName = (landId: string) => {
+    const landName = land?.find((land) => land._id === landId);
+    return landName?.landName;
+  }
 
   // Function to handle changing the page
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -195,7 +202,7 @@ export default function CropsTable({ title }: TableTitleProps) {
               .map((row) => {
                 return (
                   <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
-                    <TableCell>{row.landId}</TableCell>
+                    <TableCell>{handleLandName(row.landId)}</TableCell>
                     {columns.map((column) => {
                       const value = row?.[column.id];
                       return (
