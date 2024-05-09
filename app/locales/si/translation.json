@@ -10,14 +10,50 @@
     "hintTxtEmail": "ඊමේල් ලිපිනය ඇතුලත් කරන්න",
     "lblPhoneNo": "දුරකථන අංකය",
     "hintTxtPhoneNo": "දුරකථන අංකය ඇතුලත් කරන්න",
+    "lblNIC": "NIC අංකය",
+    "hintTxtNIC": "NIC අංකය ඇතුලත් කරන්න",
+    "lblRole": "භූමිකාව",
+    "lblFarmer": "ගොවියා",
+    "lblOfficer": "නිලධාරියා",
+    "lblAddress": "ලිපිනය",
+    "hintTxtAddress": "ලිපිනය ඇතුලත් කරන්න",
     "lblPassword": "මුරපදය",
     "hintTxtPassword": "මුරපදය ඇතුලත් කරන්න",
     "txtAgree": "ලියාපදිංචි වීමෙන් ඔබ අපගේ වෙත එකඟ වේ",
     "txtTerms&Conditions": "නියම සහ කොන්දේසි",
     "txtAnd": "සහ",
     "txtPrivacyPolicy": "රහස්‍යතා ප්‍රතිපත්තිය",
-    "capBtnRegister": "පිවිසීම",
+    "capBtnNext": "ඉදිරියට යන්න",
     "txtAlreadyHaveAccount": "දැනටමත් ගිණුමක් තිබේද? පුරනය වන්න"
+  },
+  "updateUser": {
+    "txtUpdateUser": "ඔබේ ගිණුම් විස්තර වෙනස් කරන්න",
+    "txtFillDetails": "ඔබේ ගිණුම් විස්තර වෙනස් කිරීමට පහත විස්තර පුරවන්න",
+    "lblFirstName": "මුල් නම",
+    "hintTxtFirstName": "මුල් නම ඇතුලත් කරන්න",
+    "lblLastName": "අවසන් නම",
+    "hintTxtlastName": "අවසාන නම ඇතුලත් කරන්න",
+    "lblEmail": "ඊමේල් ලිපිනය",
+    "hintTxtemail": "ඊමේල් ලිපිනය ඇතුලත් කරන්න",
+    "lblphoneNumber": "දුරකථන අංකය",
+    "hintTxtphoneNumber": "දුරකථන අංකය ඇතුලත් කරන්න",
+    "lblnicNumber": "NIC අංකය",
+    "hintTxtnicNumber": "NIC අංකය ඇතුලත් කරන්න",
+    "lblAddress": "ලිපිනය",
+    "hintTxtAddress": "ලිපිනය ඇතුලත් කරන්න",
+    "capBtnSave&Exit": "සුරකින්න"
+  },
+  "additionalRegister": {
+    "txtOtherDetails": "ඔබේ අනෙකුත් විස්තර එක් කරන්න",
+    "txtFillDetails": "ඔබේ ගිණුම සෑදීමට පහත විස්තර පුරවන්න",
+    "lblHouseholds": "ගෘහ",
+    "hintTxtHouseholds": "ඔබේ නිවැසියන් ඇතුලත් කරන්න",
+    "lblUniversity": "සරසවිය",
+    "hintTxtUniversity": "ඔබේ විශ්වවිද්‍යාලයට ඇතුලත් කරන්න",
+    "lblOrganizationName": "සංවිධානයේ නම",
+    "hintTxtOrg": "සංවිධානයේ නම ඇතුලත් කරන්න",
+    "lblOrganizationAddress": "සංවිධාන ලිපිනය",
+    "hintTxtOrgAddress": "සංවිධාන ලිපිනය ඇතුලත් කරන්න"
   },
   "login": {
     "txtWelcome": "ආයුබෝවන් DOA",
@@ -125,7 +161,7 @@
     "hintTxtLandRent": "ඉඩම් කුලිය ඇතුල් කරන්න",
     "lblMode": "වාරිමාර්ග ආකාරය",
     "hintTxtMode": "වාරිමාර්ග ආකාරය ඇතුලත් කරන්න",
-    "capBtnSave&Exit": "මගේ බෝග වලට සුරකින්න සහ පිටවෙන්න",
+    "capBtnSave&Exit": "මගේ විස්තර වලට සුරකින්න සහ පිටවෙන්න",
     "capBtnSave&Proceed": "සුරකින්න සහ බෝග එකතු කිරීමට ඉදිරියට යන්න"
   },
   "updateLand": {
@@ -142,7 +178,7 @@
     "hintTxtLandRent": "ඉඩම් කුලිය ඇතුල් කරන්න",
     "lblMode": "වාරිමාර්ග ආකාරය",
     "hintTxtMode": "වාරිමාර්ග ආකාරය ඇතුලත් කරන්න",
-    "capBtnSave&Exit": "මගේ බෝග වලට සුරකින්න සහ පිටවෙන්න",
+    "capBtnSave&Exit": "මගේ විස්තර වලට සුරකින්න සහ පිටවෙන්න",
     "capBtnSave&Proceed": "සුරකින්න සහ බෝග එකතු කිරීමට ඉදිරියට යන්න"
   },
   "addCrop": {
@@ -181,7 +217,8 @@
     "menuItemTxtNo": "නැහැ",
     "lblCultivationLoanAmount": "වගා ණය මුදල",
     "capBtnCancel": "අවලංගු කරන්න",
-    "capBtnSave": "සුරකින්න"
+    "capBtnSave": "සුරකින්න",
+    "menuItemTxtSelectLand": "ඉඩමක් තෝරන්න"
   },
   "updateCrop": {
     "txtUpdateCrop": "යාවත්කාලීන බෝග",
@@ -244,5 +281,14 @@
     "txtTopic": "කෘෂිකාර්මික අංශයේ දියුණුව වඩා හොඳින් කළමනාකරණය කිරීමට අපට උපකාර කිරීම සඳහා ගොවිපල බෝග පිරිවැය යාවත්කාලීන කරයි",
     "txtDescription": "කෘෂිකර්ම දෙපාර්තමේන්තුව (DOA) කෘෂිකර්ම අමාත්‍යාංශය යටතේ ක්‍රියාත්මක වන අතර එය දිවයින පුරා විවිධ Argo පාරිසරික ප්‍රදේශ ආවරණය වන පරිදි ඉහළ මට්ටමේ කෘෂිකාර්මික විද්‍යාඥයින්ගේ ප්‍රජාවක් සහ ආයතන ජාලයක් සහිත විශාලතම රාජ්‍ය දෙපාර්තමේන්තු වලින් එකකි.",
     "btnDOA": "කෘෂිකර්ම දෙපාර්තමේන්තුව ඩිජිටල්කරණ උත්සාහයන්" 
+  },
+  "dialogBoxes": {
+    "capBtnOk": "හරි",
+    "capBtnYes": "ඔව්",
+    "capBtnCancel": "නැහැ",
+    "txtUpdatedSuccess": "තීරුව සාර්ථකව යාවත්කාලීන කරන ලදී!",
+    "txtDeleteSuccess": "තීරුව සාර්ථකව මකා දමන ලදී!",
+    "txtAddedSuccess": "තීරුව සාර්ථකව එක් කළා!",
+    "txtDeleteConfirmation":"ඔබට මෙම තීරුව මැකීමට අවශ්\u200Dය බව විශ්වාසද?"
   }
 }
