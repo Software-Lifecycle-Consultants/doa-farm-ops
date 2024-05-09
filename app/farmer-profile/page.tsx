@@ -47,7 +47,7 @@ export default function FarmerProfile() {
   return (
     <>
       {/* Main grid container */}
-      <Grid container direction="column" rowGap={2}>
+      <Grid container style={{ padding: "20px" }} direction="column" rowGap={2}>
         {/* Title */}
         <Grid item xs={12}>
           <ProfileTitle title={t("farmerProfile.txtProfileName")} />
@@ -110,9 +110,7 @@ export default function FarmerProfile() {
             </Grid>
             {/* Personal Information Fields */}
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtFirstName")}
               </Typography>
               <Typography
@@ -122,9 +120,7 @@ export default function FarmerProfile() {
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtLastName")}
               </Typography>
               <Typography
@@ -134,9 +130,7 @@ export default function FarmerProfile() {
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtEmail")}
               </Typography>
               <Typography
@@ -146,9 +140,7 @@ export default function FarmerProfile() {
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtNicNumber")}
               </Typography>
               <Typography
@@ -158,9 +150,7 @@ export default function FarmerProfile() {
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtAddress")}
               </Typography>
               <Typography
@@ -170,9 +160,7 @@ export default function FarmerProfile() {
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtPhoneNumber")}
               </Typography>
               <Typography
@@ -182,9 +170,7 @@ export default function FarmerProfile() {
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtHouseholds")}
               </Typography>
               <Typography
@@ -223,9 +209,7 @@ export default function FarmerProfile() {
             </Grid>
             {/* Other Details Fields */}
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtOrgName")}
               </Typography>
               <Typography
@@ -235,9 +219,7 @@ export default function FarmerProfile() {
               </Typography>
             </Grid>
             <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtOrgAddress")}
               </Typography>
               <Typography

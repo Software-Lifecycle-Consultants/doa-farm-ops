@@ -38,7 +38,7 @@ export default function RootLayout({
               <ToastContainer />
               {/* Add navigation bar */}
               <Navbar />
-              <div className="container" style={{ padding: "20px" }}>
+              <div className="container">
                 {children}
               </div>
             </I18nextProvider>

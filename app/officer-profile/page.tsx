@@ -42,7 +42,7 @@ export default function OfficerProfile() {
   return (
     <>
       {/* Main grid container */}
-      <Grid container direction="column" rowGap={2}>
+      <Grid container direction="column" rowGap={2} style={{ padding: "20px" }}>
         <Grid item xs={12}>
           {/* Page title */}
           <ProfileTitle title={t("officerProfile.txtProfileName")} />

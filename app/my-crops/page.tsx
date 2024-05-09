@@ -46,7 +46,7 @@ export default function MyCrops() {
 
   // Return the JSX for rendering
   return (
-    <Grid container direction="column" rowGap={2}>
+    <Grid container direction="column" rowGap={2} style={{ padding: "20px" }}>
       {/* Page title */}
       <Grid item xs={12}>
         <ProfileTitle title={t("myCrops.txtMyCrops")} />
