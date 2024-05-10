@@ -1,7 +1,7 @@
 // Import the createSlice function from Redux Toolkit.
 import { PayloadAction, createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { Crop, RootState } from './types';
-import { fetchUserData } from '@/api/fetchUserData';
+import { fetchCropData } from '@/api/fetchCropData';
 import axios from 'axios';
 
 
@@ -11,16 +11,14 @@ const initialState: { crops: Crop[] | null } = {
 };
 
 export const fetchCrops = createAsyncThunk(
-  'user/fetchCrops',
+  'crop/fetchCrops',
   async (userId: string) => {
     // Fetch user data using the provided userId
-    const userData = await fetchUserData(userId);
+    const cropData = await fetchCropData(userId);
     // Return the user data fetched from the API
-    return userData.crops;
+    return cropData.crops;
   }
 );
-
-
 
 // Create a Redux slice for managing crop data
 const cropSlice = createSlice({
