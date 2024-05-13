@@ -235,7 +235,11 @@ const userController = {
           return res.status(404).json({ message: "Officer details not found" });
         }
         userDetails = {
-          user
+          user,
+          officerDetails: {
+            orgName: officer.orgName,
+            orgAddress: officer.orgAddress,
+            university: officer.university,
           },
         };
       }
@@ -244,6 +248,6 @@ const userController = {
       return res.status(500).json({ message: err.message });
     }
   },
-};
+}
 
 module.exports = userController;

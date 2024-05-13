@@ -65,7 +65,7 @@ const cropController = {
         }
       },
       
-  // Get user details by ID
+  // Get crop details by ID
   getCropByUserId: async (req, res) => {
     try {
       const userId = req.params.id;
