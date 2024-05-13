@@ -18,6 +18,10 @@ import { useRouter } from "next/navigation";
 import { seasons, lands } from "../../data/cropsData";
 import { useTranslation } from 'react-i18next';
 import { customGridStyles2 } from "@/styles/customStyles";
+import { fetchCrops } from "@/redux/cropSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAuth } from "@/redux/authSlice";
+import { fetchAndRegisterLands } from "@/redux/landSlice";
 // import i18n from "../config/i18n";// Import the i18n instance
 
 /**
@@ -28,6 +32,9 @@ export default function MyCrops() {
 
   const router = useRouter();
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+  const auth = useSelector(selectAuth);
+
   // State variables to store filter values
   const [seasonFilter, setSeasonFilter] = React.useState("");
   const [landFilter, setLandFilter] = React.useState("");
@@ -43,6 +50,14 @@ export default function MyCrops() {
   const navigationToAddCrop = () => {
     router.push("/add-crop");
   };
+
+  // Fetch crops and lands data on component mount
+  React.useEffect(() => {
+    if (auth.auth._id) {
+      dispatch(fetchCrops(auth.auth._id));
+      dispatch(fetchAndRegisterLands(auth.auth._id));
+    }
+  }, [auth.auth._id, dispatch]);
 
   // Return the JSX for rendering
   return (

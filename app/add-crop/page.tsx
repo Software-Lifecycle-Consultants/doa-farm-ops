@@ -123,7 +123,7 @@ export default function AddCrop() {
   };
 
   // Retrieve Crop Data from Redux Store (using useSelector hook)
-  const landCropData = useSelector((state: RootState) => state.crops);
+  const landCropData = useSelector((state: RootState) => state.crop);
 
   //Function to navigate to my crops page clicking save button
   const handleOnClickAddCrop = async (
