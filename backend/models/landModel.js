@@ -31,12 +31,12 @@ const landSchema = new Schema(
       type: String,
       required: true,
     },
-    crops: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: "Crop",
-      },
-    ],
+    // crops: [
+    //   {
+    //     type: Schema.Types.ObjectId,
+    //     ref: "Crop",
+    //   },
+    // ],
   },
   {
     timestamps: true,
