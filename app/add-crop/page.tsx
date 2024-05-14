@@ -131,24 +131,18 @@ export default function AddCrop() {
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     const cropData = { ...formData };
-    // const cropData = { cropDetails: formData };
-    const action = addCrop(formData);
-    dispatch(action);
 
     //Get logged user Id from redux
     const loggedUser = selectAuth(store.getState());
-    console.log("----------getUserFromRedux----------------", loggedUser);
     const userId = loggedUser.auth._id;
     console.log("----------getUserFromRedux----------------", userId);
 
-    const cropDataFromRedux = selectAddCrop(store.getState());
-    const cropDataObject = cropDataFromRedux ? cropDataFromRedux[cropDataFromRedux.length - 1] : null;
-    console.log("----------selectAddCrop----------------", cropDataObject);
-
+    // Prepare landCropData object (assuming landId exists)
+    const landDataObject = landData ? landData[landData.length - 1] : {};
     const landCropData = {
       ...landDataObject,
-      ...cropDataObject,
-      userId
+      ...cropData,
+      userId,
     };
 
     console.log(
@@ -172,8 +166,6 @@ export default function AddCrop() {
       }
     } else {
         // Use existing crop endpoint if no land selected
-        const action = addCrop(cropData);
-        dispatch(action);
         const response = await axios.post(
             `http://localhost:5000/api/landAndCrop/add`,
             landCropData
@@ -192,37 +184,6 @@ export default function AddCrop() {
     }
   };
 
-  // Simulate add crop action by creating a user data object.
-  // const cropData = { landId, cropDetails: formData };
-
-  // try {
-    // const response = await axios.put(
-    //   `http://localhost:5000/api/land/addCrop/${landId}`,
-    //   {
-    //     cropName: formData.cropName,
-    //     season: formData.season,
-    //     cropType: formData.cropType,
-    //     totalSoldQty: formData.totalSoldQty,
-    //     totalIncome: formData.totalIncome,
-    //     reservedQtyHome: formData.reservedQtyHome,
-    //     reservedQtySeed: formData.reservedQtySeed,
-    //     noOfPicks: formData.noOfPicks,
-    //     isCultivationLoan: formData.isCultivationLoan,
-    //     loanObtained: formData.loanObtained,
-    //   }
-    // );
-    // if (response && response.status === 200) {
-    //   console.log(response);
-    //   setResponseData(response.data);
-    //   router.push("/my-crops"); //Navigate to my crops page
-    //   // Dispatch the 'crop' action from the 'cropSlice' with the user data.
-    //   // dispatch(addCrop(cropData));
-    // } else if (response && response.status === 400) {
-    //   console.error("Failed to fetch data");
-    // }
-  // } catch (error) {
-  //   console.error("Error fetching data:", error);
-  // }
 
   //Function to navigate to my crops page
   const navigationToMyCrops = () => {

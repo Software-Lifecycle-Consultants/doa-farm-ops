@@ -53,15 +53,12 @@ const cropSlice = createSlice({
       })
   },
 });
-  
   // Export the action creators for external use.
 export const { addCrop, updateCrop, deleteCrop  } = cropSlice.actions;
 
 // Define a selector function to extract the 'crop' state from the Redux store.
 export const selectCrops = (state: RootState) => state.crop.crops;
 export const selectAddCrop = (state: RootState) => state.crop.crops;
-export const selectUpdateCrop = (state: RootState) => state.crop.crops;
-export const selectDeleteCrop = (state: RootState) => state.crop.crops;
 
 // Export the 'cropSlice.reducer' as the default export.
 export default cropSlice.reducer;
