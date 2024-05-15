@@ -169,16 +169,6 @@ export default function FarmerProfile() {
                 {user && user.phoneNumber}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="caption">
-                {t("farmerProfile.txtHouseholds")}
-              </Typography>
-              <Typography
-                variant="body1"
-              >
-                {farmerDetails && farmerDetails.household}
-              </Typography>
-            </Grid>
           </Grid>
         </Grid>
         {/* Other Details Section*/}
@@ -210,6 +200,16 @@ export default function FarmerProfile() {
             {/* Other Details Fields */}
             <Grid item xs={12} md={12}>
               <Typography variant="caption">
+                {t("farmerProfile.txtHouseholds")}
+              </Typography>
+              <Typography
+                variant="body1"
+              >
+                {farmerDetails && farmerDetails.household}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="caption">
                 {t("farmerProfile.txtOrgName")}
               </Typography>
               <Typography
@@ -218,7 +218,7 @@ export default function FarmerProfile() {
                 {farmerDetails && farmerDetails.orgName}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={6}>
               <Typography variant="caption">
                 {t("farmerProfile.txtOrgAddress")}
               </Typography>
