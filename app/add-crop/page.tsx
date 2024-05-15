@@ -179,6 +179,8 @@ export default function AddCrop() {
           console.error("Failed to fetch data");
         }
       }
+      await dispatch(addCrop(cropData)); // Dispatch the addCrop action
+      router.push("/my-crops"); // Navigate to My Crops page
     } catch (error) {
       console.error("Error fetching data:", error);
     }
