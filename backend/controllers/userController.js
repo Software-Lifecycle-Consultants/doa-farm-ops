@@ -248,6 +248,31 @@ const userController = {
       return res.status(500).json({ message: err.message });
     }
   },
+
+  // Update user details
+  updateUser: async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const { firstName, lastName, email, phoneNumber, address } = req.body;
+      console.log("update user id: " + userId);
+      console.log("update user name: " + firstName);
+
+      if (!firstName || !lastName || !email || !phoneNumber || !address) {
+        return res.status(400).json({ msg: "Please fill in all fields." });
+      }
+
+      await User.findOneAndUpdate(
+        { _id: userId },
+        { firstName, lastName, email, phoneNumber, address }
+      );
+      res.json({
+        message: "User update success",
+        data: { firstName, lastName, email, phoneNumber, address },
+      });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
 }
 
 module.exports = userController;
