@@ -132,6 +132,7 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
         router.push("/farmer-profile");
       } else if(userDetails?.role === "officer"){
         router.push("/officer-profile");
+      }
     };
 
   return (
@@ -289,5 +290,4 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
       </CustomBox1>
     </Container>
   );
-}
 }
