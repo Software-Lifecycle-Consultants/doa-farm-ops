@@ -17,11 +17,9 @@ import {
     DialogActions,
   } from "@mui/material";
 import { Stack } from "@mui/system";
-import { stat } from "fs";
 import { useRouter } from "next/navigation";
-import React, { use, useState } from "react";
+import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { select } from "react-i18next/icu.macro";
 import { useDispatch, useSelector } from "react-redux";
 
 
@@ -40,14 +38,7 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
   // const userDetails = useSelector((state: any) => selectUser(state))
   const userDetails = useSelector(selectUser);
 
-  // Fetch the land details when the component mounts
-  React.useEffect(() => {
-    dispatch(fetchAndRegisterUser(userId));
-  }, [dispatch, userId]);
-
-
   // Initialize the form data with the fetched land data
-  // const user = userDetails?.find((l) => l._id === userId);
   const [formData, setFormData] = useState<FormData>({
     firstName: userDetails?.firstName || "",
     lastName: userDetails?.lastName || "",
@@ -74,9 +65,7 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
     try {
       // Get the logged user ID from Redux
       const loggedUser = selectAuth(store.getState());
-      console.log("----------getUserFromRedux----------------", loggedUser);
       const userId = loggedUser.auth._id;
-      console.log("----------getUserFromRedux----------------", userId);
 
       // Create the user data object with the correct structure
       const userData: User = {
@@ -91,7 +80,6 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
       };
 
       // Dispatch the updateUserAsync thunk
-      console.log("Updated User Data ------> " + JSON.stringify(userData));
       await dispatch(updateUserAsync(userData));
       setOpenSuccessDialog(true); // Open success dialog on success
     } catch (error) {
