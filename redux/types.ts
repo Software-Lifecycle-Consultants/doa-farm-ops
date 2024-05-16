@@ -26,15 +26,12 @@ export interface Crop {
 export interface Land {
   _id: string;
   landName: string;
-    district: string |null;
+  district: string |null;
   dsDivision: string;
   landRent: string;
   irrigationMode: string;
   userId: string;
-  crops: any[]; // You may need to specify the type of this array if it's not always empty
-  // createdAt: string;
-  // updatedAt: string;
-  // __v: number;
+  crops: any[];
 }
 interface LandAndCrop {
   landId: string;
