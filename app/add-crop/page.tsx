@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector} from "react-redux";
-import { addCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
 import { CustomBox1 } from "@/Theme";
 import axios from 'axios';
@@ -25,7 +24,7 @@ import i18n from "../config/i18n";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectLands,fetchAndRegisterLands } from "@/redux/landSlice";
-import { selectAddCrop } from "@/redux/cropSlice";
+import { addCrop, addCropAsync, addLandAndCropAsync } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
 import {RootState} from "@/redux/types";
 
@@ -131,7 +130,8 @@ export default function AddCrop() {
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     const cropData = { ...formData };
-
+    const action = addCrop(cropData);
+    dispatch(action);
     //Get logged user Id from redux
     const loggedUser = selectAuth(store.getState());
     const userId = loggedUser.auth._id;
@@ -151,38 +151,16 @@ export default function AddCrop() {
 
     try {
       if (landId) {
-        // If Land Selected from the database
-      const response = await axios.post(
-        `http://localhost:5000/api/crop/add/`,
-        landCropData
-      );
-      if (response && response.status === 200) {
-        console.log(response);
-        setResponseData(response.data);
-        router.push("/my-crops"); //Navigate to my crops page
-        // dispatch(addLandAndCropSuccess());
-      } else if (response && response.status === 400) {
-        console.error("Failed to fetch data");
-      }
+        // If Land Selected
+        await dispatch(addLandAndCropAsync(landCropData)); // Dispatch thunk for combined data
     } else {
-        // Use existing crop endpoint if no land selected
-        const response = await axios.post(
-            `http://localhost:5000/api/landAndCrop/add`,
-            landCropData
-        );
-// Handle success response (for Redux action)
-        if (response && response.status === 200) {
-          console.log(response);
-          setResponseData(response.data);
-          router.push("/my-crops"); // Navigate to my crops page
-        } else if (response && response.status === 400) {
-          console.error("Failed to fetch data");
-        }
+        // If no Land Selected
+        await dispatch(addCropAsync(landCropData)); // Dispatch thunk for individual crop data
       }
-      await dispatch(addCrop(cropData)); // Dispatch the addCrop action
-      router.push("/my-crops"); // Navigate to My Crops page
+      setResponseData(null); // Reset response data state after successful dispatch
+      router.push("/my-crops"); // Navigate to my crops page
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error adding crop or land and crop data:", error);
     }
   };
 
