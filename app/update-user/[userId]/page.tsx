@@ -290,3 +290,4 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
     </Container>
   );
 }
+}
