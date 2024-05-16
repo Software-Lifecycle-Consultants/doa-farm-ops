@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, User } from './types';
 import { fetchUserData } from '@/api/fetchUserData';
+import { updateUserData } from '@/api/updateUserData';
 
 // Define the initial state for the user slice
 const initialState: { user: User | null } = {
@@ -18,6 +19,17 @@ export const fetchAndRegisterUser = createAsyncThunk(
   }
 );
 
+// Create an asynchronous thunk to update user details
+export const updateUserAsync = createAsyncThunk(
+  "user/updateUserAsync",
+  async (userData: User) => {
+    // Call the updateUserData function with the provided user data
+    const user = await updateUserData(userData);
+    // Return the updated user data
+    return user;
+  }
+);
+
 // Create a slice for managing user state
 const userSlice = createSlice({
   name: 'user',
@@ -28,6 +40,13 @@ const userSlice = createSlice({
       // Update the user details in the state based on the action payload
       state.user = action.payload;
     },
+    // Edit user details
+    editUser: (state, action: PayloadAction<User>) => {
+      if (state.user) {
+      const updatedUser = action.payload;
+      state.user = { ...state.user, ...updatedUser };
+      }
+    },
   },
   // Handle extra reducers for async actions
   extraReducers: (builder) => {
@@ -36,6 +55,25 @@ const userSlice = createSlice({
       // Update the user details in the state based on the action payload
       state.user = action.payload;
     });
+
+    // Handle successful fulfillment of updateUserAsync (assuming optional return)
+    builder.addCase(updateUserAsync.fulfilled, (state, action) => {
+  const updatedUserData = action.payload;
+  if (Array.isArray(updatedUserData) && updatedUserData.length > 0) {
+    // Select the first UserDataResponse object from the array
+    const firstUserDataResponse = updatedUserData[0];
+    if (state.user) {
+      state.user = { ...state.user, ...firstUserDataResponse }; // Update state with actual server data
+    } else {
+      state.user = firstUserDataResponse; // Initialize the user with the updated data
+    }
+  }
+})
+    .addCase(updateUserAsync.rejected, (state, action) => {
+      console.error("Error updating user:", action.error);
+      // Handle errors (e.g., revert UI update, display error message)
+    });
+
   },
 });
 
