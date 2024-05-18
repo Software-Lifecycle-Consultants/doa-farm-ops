@@ -274,6 +274,28 @@ const userController = {
     }
   },
 
+  updateOfficer: async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const { orgName, orgAddress, university } = req.body;
+
+      if (!orgName || !orgAddress || !university) {
+        return res.status(400).json({ msg: "Please fill in all fields." });
+      }
+
+      await Farmer.findOneAndUpdate(
+        { userId },
+        { orgName, orgAddress, university }
+      );
+      res.json({
+        message: "Officer update success",
+        data: { orgName, orgAddress, university },
+      });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
   updateFarmer: async (req, res) => {
     try {
       const userId = req.params.id;
@@ -294,7 +316,7 @@ const userController = {
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
-  }
+  },
 
 }
 
