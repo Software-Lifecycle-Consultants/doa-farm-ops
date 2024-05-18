@@ -273,6 +273,29 @@ const userController = {
       return res.status(500).json({ message: err.message });
     }
   },
+
+  updateFarmer: async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const { orgName, orgAddress, household } = req.body;
+
+      if (!orgName || !orgAddress || !household) {
+        return res.status(400).json({ msg: "Please fill in all fields." });
+      }
+
+      await Farmer.findOneAndUpdate(
+        { userId },
+        { orgName, orgAddress, household }
+      );
+      res.json({
+        message: "Farmer update success",
+        data: { orgName, orgAddress, household },
+      });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  }
+
 }
 
 module.exports = userController;

@@ -2,6 +2,7 @@
 import { fetchUserData } from "@/api/fetchUserData";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { OfficerDetails, RootState } from "./types";
+import { UpdateAdditionalUserData } from "@/api/updateOfficerData";
 
 // Define the initial state for the officer slice
 const initialState: { officerDetails: OfficerDetails | null } = {
@@ -28,6 +29,9 @@ const officerSlice = createSlice({
       // state.officer = action.payload; // Set 'officer' to the payload provided in the action.
       state.officerDetails = { ...state.officerDetails, ...action.payload }; // Merges existing officer data with fields from action.payload.
     },
+    OfficerUpdate: (state, action) => {
+      state.officerDetails = { ...state.officerDetails, ...action.payload };
+    }
   },
     // Define extra reducers for handling asynchronous actions
     extraReducers: (builder) => {
@@ -44,7 +48,7 @@ const officerSlice = createSlice({
 });
 
 // Export the OfficerRegister action creators for external use.
-export const { OfficerRegister } = officerSlice.actions;
+export const { OfficerRegister, OfficerUpdate } = officerSlice.actions;
 
 // Define a selector function to extract the 'officer' state from the Redux store.
 export const selectOfficer = (state: RootState) => state.officer.officerDetails;

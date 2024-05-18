@@ -52,6 +52,14 @@ export default function FarmerProfile() {
     }
   };
 
+  const handleEditOtherDetailsClick = async () => {
+    try {
+      router.push(`/update-additional-details/${user?._id}`);
+    } catch (error) {
+      console.error("Error updating details:", error);
+    }
+  };
+
   return (
     <>
       {/* Main grid container */}
@@ -202,6 +210,7 @@ export default function FarmerProfile() {
                 sx={btnBackgroundColor}
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
+                onClick={() => handleEditOtherDetailsClick()}
               >
                 {t("farmerProfile.capBtnEdit")}
               </Button>

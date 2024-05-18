@@ -28,6 +28,10 @@ const farmerSlice = createSlice({
     registerFarmer: (state, action: PayloadAction<FarmerDetails | null>) => {
       state.farmerDetails = action.payload;
     },
+
+    updateFarmer: (state, action: PayloadAction<FarmerDetails>) => {
+      state.farmerDetails = action.payload;
+    }
   },
   // Define extra reducers for handling asynchronous actions
   extraReducers: (builder) => {
@@ -44,7 +48,7 @@ const farmerSlice = createSlice({
 });
 
 // Export the reducer and actions from the farmer slice
-export const { registerFarmer } = farmerSlice.actions;
+export const { registerFarmer, updateFarmer } = farmerSlice.actions;
 
 // Selectors to retrieve farmer details from the state
 export const selectFarmerDetails = (state: RootState) => state.farmer.farmerDetails;

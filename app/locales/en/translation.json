@@ -57,6 +57,20 @@
     "lblOrganizationAddress": "Organization Address",
     "hintTxtOrgAddress": "Enter organization address"
   },
+  "additionalUpdate": {
+    "txtOtherDetails": "Update your other details",
+    "txtUpdateDetails": "Update the details below",
+    "lblHouseholds": "Households",
+    "hintTxtHouseholds": "Enter your householders",
+    "lblUniversity": "University",
+    "hintTxtUniversity": "Enter your university",
+    "lblOrganizationName": "Organization Name",
+    "hintTxtOrg": "Enter organization name",
+    "lblOrganizationAddress": "Organization Address",
+    "hintTxtOrgAddress": "Enter organization address",
+    "capBtnSave&Exit": "Update Details",
+    "capBtnExit": "Cancel"
+  },
   "login": {
     "txtWelcome": "Welcome DOA Platform",
     "lblEmail": "Email",
