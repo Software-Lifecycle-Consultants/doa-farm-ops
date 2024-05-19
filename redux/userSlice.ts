@@ -40,34 +40,31 @@ const userSlice = createSlice({
       // Update the user details in the state based on the action payload
       state.user = action.payload;
     },
-    // Edit user details
-    editUser: (state, action: PayloadAction<User>) => {
-      if (state.user) {
-      const updatedUser = action.payload;
-      state.user = { ...state.user, ...updatedUser };
-      }
-    },
   },
+  
   // Handle extra reducers for async actions
   extraReducers: (builder) => {
     // Handle the fulfilled action of fetchAndRegisterUser
-    builder.addCase(fetchAndRegisterUser.fulfilled, (state, action: PayloadAction<User>) => {
-      // Update the user details in the state based on the action payload
-      state.user = action.payload;
-    });
+    builder.addCase(
+      fetchAndRegisterUser.fulfilled,
+      (state, action: PayloadAction<User>) => {
+        // Update the user details in the state based on the action payload
+        state.user = action.payload;
+      }
+    );
 
     // Handle successful fulfillment of updateUserAsync (assuming optional return)
-    builder.addCase(updateUserAsync.fulfilled, (state, action) => {
-  const updatedUserData = action.payload.user;
-  if (state.user) {
-    state.user = { ...state.user, ...updatedUserData };
-  }
-})
-    .addCase(updateUserAsync.rejected, (state, action) => {
-      console.error("Error updating user:", action.error);
-      // Handle errors (e.g., revert UI update, display error message)
-    });
-
+    builder
+      .addCase(updateUserAsync.fulfilled, (state, action) => {
+        const updatedUserData = action.payload.user;
+        if (state.user) {
+          state.user = { ...state.user, ...updatedUserData };
+        }
+      })
+      .addCase(updateUserAsync.rejected, (state, action) => {
+        console.error("Error updating user:", action.error);
+        // Handle errors (e.g., revert UI update, display error message)
+      });
   },
 });
 
