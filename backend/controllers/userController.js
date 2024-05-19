@@ -264,8 +264,7 @@ const userController = {
         { firstName, lastName, email, nic , phoneNumber, address }
       );
       res.json({
-        message: "User update success",
-        data: { firstName, lastName, email, nic, phoneNumber, address },
+         user: { firstName, lastName, email, nic, phoneNumber, address },
       });
     } catch (err) {
       return res.status(500).json({ message: err.message });

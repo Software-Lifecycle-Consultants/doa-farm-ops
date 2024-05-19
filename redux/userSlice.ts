@@ -58,15 +58,9 @@ const userSlice = createSlice({
 
     // Handle successful fulfillment of updateUserAsync (assuming optional return)
     builder.addCase(updateUserAsync.fulfilled, (state, action) => {
-  const updatedUserData = action.payload;
-  if (Array.isArray(updatedUserData) && updatedUserData.length > 0) {
-    // Select the first UserDataResponse object from the array
-    const firstUserDataResponse = updatedUserData[0];
-    if (state.user) {
-      state.user = { ...state.user, ...firstUserDataResponse }; // Update state with actual server data
-    } else {
-      state.user = firstUserDataResponse; // Initialize the user with the updated data
-    }
+  const updatedUserData = action.payload.user;
+  if (state.user) {
+    state.user = { ...state.user, ...updatedUserData };
   }
 })
     .addCase(updateUserAsync.rejected, (state, action) => {
