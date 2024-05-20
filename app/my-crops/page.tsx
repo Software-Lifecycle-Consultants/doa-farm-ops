@@ -22,6 +22,7 @@ import { fetchCrops } from "@/redux/cropSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { selectAuth } from "@/redux/authSlice";
 import { fetchAndRegisterLands } from "@/redux/landSlice";
+import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 // import i18n from "../config/i18n";// Import the i18n instance
 
 /**
@@ -32,7 +33,7 @@ export default function MyCrops() {
 
   const router = useRouter();
   const { t } = useTranslation();
-  const dispatch = useDispatch();
+  const dispatch:AppDispatch = useDispatch();
   const auth = useSelector(selectAuth);
 
   // State variables to store filter values
