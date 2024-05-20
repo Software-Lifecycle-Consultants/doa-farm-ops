@@ -8,24 +8,24 @@ import { OfficerDetails } from "@/redux/types";
 
 // Define the structure of the response data
 interface UpdateResponse {
-  officerDetails: OfficerDetails;
+  officer: OfficerDetails;
 }
 
 /**
  * Function to update officer data on the backend server.
  * @param officerData The updated officer data.
- * @param _id The ID of the officer whose data needs to be updated.
  * @returns A promise that resolves with the updated officer data if successful, or rejects with an error.
  */
 export async function UpdateOfficerData(
-  officerData: OfficerDetails,
-  _id: string
+  officerData: any,
 ): Promise<UpdateResponse> {
   try {
+    const officerDetails = officerData.officerData;
+    const userId = officerData.userId;
     // Make a PUT request to the backend server to update officer data
     const response = await axios.put(
-      `http://localhost:5000/api/user/updateofficer/${_id}`,
-      officerData
+      `http://localhost:5000/api/user/updateofficer/${userId}`,
+      officerDetails
     );
 
     // Check if the request was successful

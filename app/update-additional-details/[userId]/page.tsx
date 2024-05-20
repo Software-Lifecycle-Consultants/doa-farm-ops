@@ -20,12 +20,10 @@ import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
-import { selectFarmerDetails, updateFarmer } from "@/redux/farmerSlice";
-import { OfficerUpdate, selectOfficer } from "@/redux/officerSlice";
+import { selectFarmerDetails, updateandfetchfarmer } from "@/redux/farmerSlice";
+import { selectOfficer, updateAndFetchOfficer } from "@/redux/officerSlice";
 import { selectUser } from "@/redux/userSlice";
 import { Stack } from "@mui/system";
-import { UpdateFarmerData } from "@/api/updateFarmerData";
-import { UpdateOfficerData } from "@/api/updateOfficerData";
 
 export default function UpdateAdditionalDetails() {
   const router = useRouter();
@@ -121,24 +119,25 @@ export default function UpdateAdditionalDetails() {
     e.preventDefault(); // Prevent default form submission
     try {
       if (selectedRole === "farmer") {
-        const action = updateFarmer(farmerFormData);
-        dispatch(action);
-        const farmerData = selectFarmerDetails(store.getState());
+        const farmerDataupdate = {
+          farmerData: farmerFormData,
+          userId: userData?._id,
+        };
         if (userData && farmerData) {
-          const data = await UpdateFarmerData(farmerData, userData._id);
-          if (data) {
-            setOpenSuccessDialog(true); // Open success dialog on success
+          const data = await dispatch(updateandfetchfarmer(farmerDataupdate));
+          if (data.type === "farmer/updateandfetchfarmer/fulfilled") {
+          setOpenSuccessDialog(true); // Open success dialog on success
           }
         }
       } else {
-        const action = OfficerUpdate(officerFormData);
-        dispatch(action);
-        const officerData = selectOfficer(store.getState());
-        console.log("officerData", officerData);
+        const officerDataupdate = {
+          officerData: officerFormData,
+          userId: userData?._id,
+        };
         if (userData && officerData) {
-          const data = await UpdateOfficerData(officerData, userData._id);
-          if (data) {
-            setOpenSuccessDialog(true);
+          const data = await dispatch(updateAndFetchOfficer(officerDataupdate));
+          if (data.type === "officer/updateAndFetchOfficer/fulfilled") {
+          setOpenSuccessDialog(true);
           }
         }
       }

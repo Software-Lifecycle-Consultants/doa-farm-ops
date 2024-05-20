@@ -280,13 +280,12 @@ const userController = {
         return res.status(400).json({ msg: "Please fill in all fields." });
       }
 
-      await Farmer.findOneAndUpdate(
+      await Officer.findOneAndUpdate(
         { userId },
         { orgName, orgAddress, university }
       );
       res.json({
-        message: "Officer update success",
-        data: { orgName, orgAddress, university },
+        officer: { orgName, orgAddress, university },
       });
     } catch (err) {
       return res.status(500).json({ message: err.message });
@@ -307,8 +306,7 @@ const userController = {
         { orgName, orgAddress, household }
       );
       res.json({
-        message: "Farmer update success",
-        data: { orgName, orgAddress, household },
+        farmer: { household, orgName, orgAddress },
       });
     } catch (err) {
       return res.status(500).json({ message: err.message });

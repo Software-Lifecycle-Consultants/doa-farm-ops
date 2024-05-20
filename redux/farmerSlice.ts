@@ -4,6 +4,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, FarmerDetails } from './types';
 import { fetchUserData } from '@/api/fetchUserData';
+import { UpdateFarmerData } from '@/api/updateFarmerData';
 
 // Define the initial state for the farmer slice
 const initialState: { farmerDetails: FarmerDetails | null } = {
@@ -19,6 +20,14 @@ export const fetchAndRegisterFarmer = createAsyncThunk(
   }
 );
 
+export const updateandfetchfarmer = createAsyncThunk(
+  'farmer/updateanfetchfarmer',
+  async (farmerData: any) => {
+    const farmer = await UpdateFarmerData(farmerData);
+    return farmer;
+  }
+);
+
 // Create the farmer slice using createSlice function
 const farmerSlice = createSlice({
   name: 'farmer',
@@ -28,10 +37,6 @@ const farmerSlice = createSlice({
     registerFarmer: (state, action: PayloadAction<FarmerDetails | null>) => {
       state.farmerDetails = action.payload;
     },
-
-    updateFarmer: (state, action: PayloadAction<FarmerDetails>) => {
-      state.farmerDetails = action.payload;
-    }
   },
   // Define extra reducers for handling asynchronous actions
   extraReducers: (builder) => {
@@ -44,11 +49,21 @@ const farmerSlice = createSlice({
       .addCase(fetchAndRegisterFarmer.rejected, (state, action) => {
         console.error('Error fetching farmer details:', action.error);
       });
+
+    builder
+      // Handle successful fulfillment of updateandfetchfarmer
+      .addCase(updateandfetchfarmer.fulfilled, (state, action) => {
+        state.farmerDetails = action.payload.farmer;
+      })
+      // Handle rejection of updateandfetchfarmer
+      .addCase(updateandfetchfarmer.rejected, (state, action) => {
+        console.error('Error updating farmer details:', action.error);
+      });
   },
 });
 
 // Export the reducer and actions from the farmer slice
-export const { registerFarmer, updateFarmer } = farmerSlice.actions;
+export const { registerFarmer } = farmerSlice.actions;
 
 // Selectors to retrieve farmer details from the state
 export const selectFarmerDetails = (state: RootState) => state.farmer.farmerDetails;
