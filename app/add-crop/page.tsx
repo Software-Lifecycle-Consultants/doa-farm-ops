@@ -27,6 +27,8 @@ import { selectLands,fetchAndRegisterLands } from "@/redux/landSlice";
 import { addCrop, addCropAsync, addLandAndCropAsync } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
 import {RootState} from "@/redux/types";
+import { AppDispatch } from '@/redux/store'; 
+import { Land } from "@/redux/types";
 
 // Styles for labels
 const styles = {
@@ -70,6 +72,7 @@ export default function AddCrop() {
     isCultivationLoan: string;
     loanObtained: number;
     landId:string;
+    landName:string;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -84,9 +87,10 @@ export default function AddCrop() {
     isCultivationLoan: "1",
     loanObtained: 0,
     landId:"",
+    landName:""
   });
 
-  const dispatch = useDispatch();
+  const dispatch:AppDispatch = useDispatch();
   // Fetch the land details when the component mounts
 
   React.useEffect(() => {
@@ -97,7 +101,7 @@ export default function AddCrop() {
   const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLandId(event.target.value);
 
-    const selectedLand = landData.find((land) => land._id === event.target.value);
+    const selectedLand = landData.find((land:Land) => land._id === event.target.value);
     if (selectedLand) {
       setFormData({ ...formData,  landId: event.target.value, landName: selectedLand.landName });
     } else {
@@ -215,7 +219,7 @@ export default function AddCrop() {
                     {/* Display a placeholder option*/}
                     {i18n.t("addCrop.menuItemTxtSelectLand")}
                   </MenuItem>
-                  {landData?.map((land) => (
+                  {landData?.map((land:Land) => (
                       <MenuItem key={land._id} value={land._id}>
                         {land.landName}
                       </MenuItem>
