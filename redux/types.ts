@@ -1,8 +1,8 @@
 export interface Auth {
   isAuthenticated:boolean;
   auth:{
-    _id: string 
-    email: string 
+    _id: string;
+    email: string;
     userName: string;
     role: string;
     token: string;
