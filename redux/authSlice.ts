@@ -6,11 +6,11 @@ import { RootState } from './types'; // Import the 'Auth' type from the 'types.t
 const initialState = {
   isAuthenticated: false,
   auth: {
-    _id: null,
-    email: null,
-    userName: null,
-    role: null,
-    token: null,
+    _id: "",
+    email: "",
+    userName: "",   
+    role: "",
+    token: "",
   }, // Represents the authenticated user (null if not logged in).
 };
 
@@ -30,9 +30,9 @@ const authSlice = createSlice({
       state.auth = action.payload; // Set 'auth' to the payload provided in the action.
     },
     // When a 'logout' action is dispatched, update the state.
-    logout: (state) => {
+    logout: (state,action) => {
       state.isAuthenticated = false;// Set 'isAuthenticated' to 'false'.
-      state.auth = {_id:null, email:null, userName:null, role:null, token:null}; // Set 'auth' to an empty object with the same structure.
+      state.auth = {_id:"", email:"", userName:"", role:"", token:""}; // Set 'auth' to an empty object with the same structure.
     }
   },
 });
