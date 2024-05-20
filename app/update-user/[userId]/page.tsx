@@ -80,8 +80,10 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
       };
 
       // Dispatch the updateUserAsync thunk
-      await dispatch(updateUserAsync(userData));
-      setOpenSuccessDialog(true); // Open success dialog on success
+      const data = await dispatch(updateUserAsync(userData));
+      if(data.type === "user/updateUserAsync/fulfilled"){
+        setOpenSuccessDialog(true); // Open success dialog on success
+      }
     } catch (error) {
       console.error("Error updating user:", error);
       // Handle the error, e.g., display an error message to the user
