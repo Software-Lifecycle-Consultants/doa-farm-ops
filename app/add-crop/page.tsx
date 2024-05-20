@@ -27,6 +27,7 @@ import { selectLands,fetchAndRegisterLands } from "@/redux/landSlice";
 import { addCrop, addCropAsync, addLandAndCropAsync } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
 import {RootState,Land} from "@/redux/types";
+import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 
 // Styles for labels
 const styles = {
@@ -86,7 +87,7 @@ export default function AddCrop() {
     landId:"",
   });
 
-  const dispatch = useDispatch();
+  const dispatch:AppDispatch = useDispatch();
   // Fetch the land details when the component mounts
 
   React.useEffect(() => {
