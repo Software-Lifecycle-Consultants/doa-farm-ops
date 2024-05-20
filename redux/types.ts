@@ -1,8 +1,8 @@
 export interface Auth {
   isAuthenticated:boolean;
   auth:{
-    _id: string;
-    email: string;
+    _id: string 
+    email: string 
     userName: string;
     role: string;
     token: string;
@@ -33,15 +33,6 @@ export interface Land {
   userId: string;
   crops: any[];
 }
-interface LandAndCrop {
-  landId: string;
-  landName: string;
-  district: string;
-  dsDivision: string;
-  landRent: string;
-  irrigationMode: string;
-}
-
 export interface User {
   _id: string;
   firstName: string;
@@ -74,7 +65,6 @@ export type RootState = {
   land: {
     lands: Land[] | null;
     };// An array of Land objects, representing the state of land data.
-  landAndCrop: LandAndCrop;
   user: { user: User | null };
   farmer: { farmerDetails: FarmerDetails | null };
   officer: { officerDetails: OfficerDetails | null };
