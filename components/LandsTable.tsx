@@ -30,6 +30,8 @@ import { selectAuth } from "@/redux/authSlice";
 import { useTranslation } from 'react-i18next';
 import theme from "@/Theme";
 import i18n from "i18next";
+import { Land } from "@/redux/types";
+
 
 // Define columns for the table
 interface Column {
@@ -169,13 +171,14 @@ React.useEffect(() => {
             </TableRow>
           </TableHead>
          <TableBody>
-  {landDetails?.map((row) => (
+  {landDetails?.map((row:Land) => (
     <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
       {columns.map((column) => (
         <TableCell key={`${row._id}-${column.id}`} align={column.align}>
-          {column.format && typeof row[column.id] === "number"
-            ? column.format(row[column.id])
-            : row[column.id]}
+          {/* Apply column format if defined, otherwise return the column value or an empty string if undefined */}
+          {column.format
+            ? column.format(row[column.id] || '')
+            : row[column.id] || ''} 
         </TableCell>
       ))}
       <TableCell align={"right"}>

@@ -17,7 +17,6 @@ import {
 } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector} from "react-redux";
-import { addCrop } from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
 import { CustomBox1 } from "@/Theme";
 import axios from 'axios';
@@ -25,9 +24,10 @@ import i18n from "../config/i18n";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectLands,fetchAndRegisterLands } from "@/redux/landSlice";
-import { selectAddCrop } from "@/redux/cropSlice";
+import { addCrop, addCropAsync, addLandAndCropAsync } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
-import {RootState} from "@/redux/types";
+import {RootState,Land} from "@/redux/types";
+import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 
 // Styles for labels
 const styles = {
@@ -44,21 +44,17 @@ export default function AddCrop() {
   const router = useRouter();
   // Get land data from the Redux store
   const landData = selectLands(store.getState());
-  const landDataObject = landData ? landData[landData.length - 1] : {};
-  console.log("----------selectLands----------------", landDataObject);
-
+  
   // Use the Next.js hook to retrieve search parameters from the URL
   const searchParams = useSearchParams()
-  const fromAddLand = searchParams.get('fromAddLand')
-
+  const fromAddLand = searchParams.get('fromAddLand');
   const cropNames = cropList.map((crop) => crop.name);
 
   // State variables for form fields
-  const [value, setValue] = React.useState("female");
   const [landId, setLandId] = useState("");
-
   const [responseData, setResponseData] = useState(null);
-  
+
+  //Interface FormData to save inputs from Add Crop screen
   interface FormData {
     cropName: string | null;
     season: string;
@@ -87,22 +83,23 @@ export default function AddCrop() {
     landId:"",
   });
 
-  const dispatch = useDispatch();
-  // Fetch the land details when the component mounts
+  const dispatch:AppDispatch = useDispatch();
 
+  // Fetch the land details when the component mounts
   React.useEffect(() => {
     dispatch(fetchAndRegisterLands(landId));
   }, [dispatch, landId]);
 
 
+  //Function that handles select Land dropdown value change
   const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLandId(event.target.value);
 
-    const selectedLand = landData.find((land) => land._id === event.target.value);
+    const selectedLand = landData.find((land:Land) => land._id === event.target.value);
     if (selectedLand) {
-      setFormData({ ...formData,  landId: event.target.value, landName: selectedLand.landName });
+      setFormData({ ...formData, landId: event.target.value});
     } else {
-      setFormData({ ...formData, landName: "" }); // Reset landName if no match found
+      setFormData({ ...formData}); // Reset landName if no match found
     }
   };
 
@@ -122,107 +119,50 @@ export default function AddCrop() {
     router.push("/add-land");
   };
 
-  // Retrieve Crop Data from Redux Store (using useSelector hook)
-  const landCropData = useSelector((state: RootState) => state.crops);
-
   //Function to navigate to my crops page clicking save button
   const handleOnClickAddCrop = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     const cropData = { ...formData };
-    // const cropData = { cropDetails: formData };
-    const action = addCrop(formData);
-    dispatch(action);
 
     //Get logged user Id from redux
     const loggedUser = selectAuth(store.getState());
-    console.log("----------getUserFromRedux----------------", loggedUser);
     const userId = loggedUser.auth._id;
-    console.log("----------getUserFromRedux----------------", userId);
 
-    const cropDataFromRedux = selectAddCrop(store.getState());
-    const cropDataObject = cropDataFromRedux[cropDataFromRedux.length - 1];
-    console.log("----------selectAddCrop----------------", cropDataObject);
-
+    // Prepare landCropData object (For Add Land with Crop instance)
+    const landDataObject = landData ? landData[landData.length - 1] : {};
     const landCropData = {
       ...landDataObject,
-      ...cropDataObject,
-      userId
+      ...cropData,
+      userId,
     };
 
-    console.log(
-      "------------landCropData-----------" + JSON.stringify(landCropData)
-    );
+    // Prepare cropData object (For Add Crop Data instance)
+    const CropDataObj = {
+      ...cropData,
+      userId,
+    };
 
+    //Update redux store with newly added crop data
+    dispatch(addCrop(CropDataObj));
+
+    // Call the relevent thunk (function) in add crop slice based avaliabilty of land data
     try {
       if (landId) {
-        // If Land Selected from the database
-      const response = await axios.post(
-        `http://localhost:5000/api/crop/add/`,
-        landCropData
-      );
-      if (response && response.status === 200) {
-        console.log(response);
-        setResponseData(response.data);
-        router.push("/my-crops"); //Navigate to my crops page
-        // dispatch(addLandAndCropSuccess());
-      } else if (response && response.status === 400) {
-        console.error("Failed to fetch data");
-      }
+        // If land Id exists/selected there is a land already
+         await dispatch(addCropAsync(CropDataObj)); // Dispatch thunk for individual crop data
     } else {
-        // Use existing crop endpoint if no land selected
-        const action = addCrop(cropData);
-        dispatch(action);
-        const response = await axios.post(
-            `http://localhost:5000/api/landAndCrop/add`,
-            landCropData
-        );
-// Handle success response (for Redux action)
-        if (response && response.status === 200) {
-          console.log(response);
-          setResponseData(response.data);
-          router.push("/my-crops"); // Navigate to my crops page
-        } else if (response && response.status === 400) {
-          console.error("Failed to fetch data");
-        }
+          // If land Id does not exist i.e crop data to be adde with a land
+          await dispatch(addLandAndCropAsync(landCropData)); // Dispatch thunk for combined data
       }
+      setResponseData(null); // Reset response data state after successful dispatch
+      router.push("/my-crops"); // Navigate to my crops page
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error adding crop or land and crop data:", error);
     }
   };
 
-  // Simulate add crop action by creating a user data object.
-  // const cropData = { landId, cropDetails: formData };
-
-  // try {
-    // const response = await axios.put(
-    //   `http://localhost:5000/api/land/addCrop/${landId}`,
-    //   {
-    //     cropName: formData.cropName,
-    //     season: formData.season,
-    //     cropType: formData.cropType,
-    //     totalSoldQty: formData.totalSoldQty,
-    //     totalIncome: formData.totalIncome,
-    //     reservedQtyHome: formData.reservedQtyHome,
-    //     reservedQtySeed: formData.reservedQtySeed,
-    //     noOfPicks: formData.noOfPicks,
-    //     isCultivationLoan: formData.isCultivationLoan,
-    //     loanObtained: formData.loanObtained,
-    //   }
-    // );
-    // if (response && response.status === 200) {
-    //   console.log(response);
-    //   setResponseData(response.data);
-    //   router.push("/my-crops"); //Navigate to my crops page
-    //   // Dispatch the 'crop' action from the 'cropSlice' with the user data.
-    //   // dispatch(addCrop(cropData));
-    // } else if (response && response.status === 400) {
-    //   console.error("Failed to fetch data");
-    // }
-  // } catch (error) {
-  //   console.error("Error fetching data:", error);
-  // }
 
   //Function to navigate to my crops page
   const navigationToMyCrops = () => {
@@ -274,7 +214,7 @@ export default function AddCrop() {
                     {/* Display a placeholder option*/}
                     {i18n.t("addCrop.menuItemTxtSelectLand")}
                   </MenuItem>
-                  {landData?.map((land) => (
+                  {landData?.map((land:Land) => (
                       <MenuItem key={land._id} value={land._id}>
                         {land.landName}
                       </MenuItem>

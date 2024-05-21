@@ -1,3 +1,4 @@
+const Land = require("../models/landModel");
 const Crop = require("../models/cropModel");
 
 const cropController = {
@@ -64,7 +65,23 @@ const cropController = {
         }
       },
       
-      
+  // Get crop details by ID
+  getCropByUserId: async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const crops = await Crop.find({ userId });
+      if (!crops) {
+        return res.status(404).json({ message: "Crop not found" });
+      }
+        cropDetails = {
+          crops,
+        };
+        console.log("cropDetails-----------------", cropDetails); 
+      res.status(200).json(cropDetails);
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
 }
 
 module.exports = cropController;

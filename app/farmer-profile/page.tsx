@@ -44,6 +44,14 @@ export default function FarmerProfile() {
     dispatch(fetchAndRegisterFarmer(auth.auth._id)); // Fetch farmer details
   }, [auth.auth._id, dispatch]);
 
+  const handleEditClick = async (userId: any) => {
+    try {
+       router.push(`/update-user/${userId}`);
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
+  };
+
   return (
     <>
       {/* Main grid container */}
@@ -104,6 +112,7 @@ export default function FarmerProfile() {
                 sx={btnBackgroundColor}
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
+                onClick={() => handleEditClick(user?._id)}
               >
                 {t("farmerProfile.capBtnEdit")}
               </Button>
@@ -169,16 +178,6 @@ export default function FarmerProfile() {
                 {user && user.phoneNumber}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography variant="caption">
-                {t("farmerProfile.txtHouseholds")}
-              </Typography>
-              <Typography
-                variant="body1"
-              >
-                {farmerDetails && farmerDetails.household}
-              </Typography>
-            </Grid>
           </Grid>
         </Grid>
         {/* Other Details Section*/}
@@ -210,6 +209,16 @@ export default function FarmerProfile() {
             {/* Other Details Fields */}
             <Grid item xs={12} md={12}>
               <Typography variant="caption">
+                {t("farmerProfile.txtHouseholds")}
+              </Typography>
+              <Typography
+                variant="body1"
+              >
+                {farmerDetails && farmerDetails.household}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="caption">
                 {t("farmerProfile.txtOrgName")}
               </Typography>
               <Typography
@@ -218,7 +227,7 @@ export default function FarmerProfile() {
                 {farmerDetails && farmerDetails.orgName}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={12}>
+            <Grid item xs={12} md={6}>
               <Typography variant="caption">
                 {t("farmerProfile.txtOrgAddress")}
               </Typography>

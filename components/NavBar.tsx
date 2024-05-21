@@ -111,7 +111,7 @@ const NavBar = () => {
 
   // Define a function to handle user login.
   const handleLogin = () => {
-    router.push('./login');
+    router.push('/login'); // Redirect to login page
   };
 
   return (

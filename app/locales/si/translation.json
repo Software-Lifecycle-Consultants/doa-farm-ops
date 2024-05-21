@@ -41,7 +41,8 @@
     "hintTxtnicNumber": "NIC අංකය ඇතුලත් කරන්න",
     "lblAddress": "ලිපිනය",
     "hintTxtAddress": "ලිපිනය ඇතුලත් කරන්න",
-    "capBtnSave&Exit": "සුරකින්න"
+    "capBtnSave&Exit": "සුරකින්න",
+    "capBtnExitWithoutSave": "අවලංගු කරන්න"
   },
   "additionalRegister": {
     "txtOtherDetails": "ඔබේ අනෙකුත් විස්තර එක් කරන්න",

@@ -41,7 +41,8 @@
     "hintTxtnicNumber": "Enter NIC Number",
     "lblAddress": "Address",
     "hintTxtAddress": "Enter Address",
-    "capBtnSave&Exit": "Save Details"
+    "capBtnSave&Exit": "Save Details",
+    "capBtnExitWithoutSave": "Exit"
   },
 
   "additionalRegister": {

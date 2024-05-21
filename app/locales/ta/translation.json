@@ -41,7 +41,8 @@
     "hintTxtnicNumber": "NIC எண்ணை உள்ளிடவும்",
     "lblAddress": "முகவரி",
     "hintTxtAddress": "முகவரியை உள்ளிடவும்",
-    "capBtnSave&Exit": "சேமிக்க மற்றும் வெளியேறும்"
+    "capBtnSave&Exit": "சேமிக்க மற்றும் வெளியேறும்",
+    "capBtnExitWithoutSave": "சேமி"
   },
   "additionalRegister": {
     "txtOtherDetails": "உங்கள் மற்ற விவரங்களைச் சேர்க்கவும்",

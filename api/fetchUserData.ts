@@ -4,7 +4,7 @@
  */
 
 import axios from 'axios';
-import { User, FarmerDetails, Land, OfficerDetails} from "@/redux/types";
+import { User, FarmerDetails, Land, OfficerDetails, Crop} from "@/redux/types";
 
 // Define the structure of the response data
 interface UserDataResponse {
@@ -12,6 +12,7 @@ interface UserDataResponse {
   farmerDetails: FarmerDetails;
   land: Land[];
   officerDetails: OfficerDetails;
+  crops: Crop[];
   // 1. TODO - expandad this to get and details
 }
 
