@@ -55,7 +55,13 @@ cd  doa-farm-ops
 npm install
  ```
  
-3. Install the other NPM packages that are used in this project:
+3. Instal Node modules and dependencies : 
+
+```bash
+npm install
+ ```
+Note : When you run npm install, it automatically installs all the dependencies listed in the package.json.
+Below are the NPM packages (dependencies) used in this project. If any of the dependencies are not installed automatically, you can install them separately by executing the provided `npm install` commands.
 
 - [@mui/material](https://mui.com/material-ui/getting-started/installation/) - Version 5.14.5
   - Material UI is a comprehensive library of components that features our implementation of Google's Material Design system.
