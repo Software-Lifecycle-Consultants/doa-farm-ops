@@ -135,6 +135,7 @@ const landController = {
     }
   },
 
+  //The service that executes when a crop is added with a land
   addLandAndCrop: async (req, res) => {
     try {
       const {
