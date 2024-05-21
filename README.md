@@ -1,6 +1,6 @@
 # DOA Cost of Cultivation Reporting System (Next.js)
 
-![DOA Cost of Cultivation Reporting System](https://softwareconsultant.info/wp-content/themes/slcc/assets/images/logo.png)
+![DOA Cost of Cultivation Reporting System](public/cover-doa.png)
 
 The "DOA Cost of Cultivation Reporting System" is a remarkable volunteer-driven project, born out of a strong commitment to our nation's agricultural advancement. At its core, this project represents a collective effort to contribute to the growth and sustainability of Sri Lanka's agricultural landscape.
 
