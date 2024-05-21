@@ -44,21 +44,17 @@ export default function AddCrop() {
   const router = useRouter();
   // Get land data from the Redux store
   const landData = selectLands(store.getState());
-  const landDataObject = landData ? landData[landData.length - 1] : {};
-  console.log("----------selectLands----------------", landDataObject);
-
+  
   // Use the Next.js hook to retrieve search parameters from the URL
   const searchParams = useSearchParams()
-  const fromAddLand = searchParams.get('fromAddLand')
-
+  const fromAddLand = searchParams.get('fromAddLand');
   const cropNames = cropList.map((crop) => crop.name);
 
   // State variables for form fields
-  const [value, setValue] = React.useState("female");
   const [landId, setLandId] = useState("");
-
   const [responseData, setResponseData] = useState(null);
-  
+
+  //Interface FormData to save inputs from Add Crop screen
   interface FormData {
     cropName: string | null;
     season: string;
@@ -88,21 +84,22 @@ export default function AddCrop() {
   });
 
   const dispatch:AppDispatch = useDispatch();
-  // Fetch the land details when the component mounts
 
+  // Fetch the land details when the component mounts
   React.useEffect(() => {
     dispatch(fetchAndRegisterLands(landId));
   }, [dispatch, landId]);
 
 
+  //Function that handles select Land dropdown value change
   const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLandId(event.target.value);
 
     const selectedLand = landData.find((land:Land) => land._id === event.target.value);
     if (selectedLand) {
-      setFormData({ ...formData,  landId: event.target.value, landName: selectedLand.landName });
+      setFormData({ ...formData, landId: event.target.value});
     } else {
-      setFormData({ ...formData, landName: "" }); // Reset landName if no match found
+      setFormData({ ...formData}); // Reset landName if no match found
     }
   };
 
@@ -122,23 +119,18 @@ export default function AddCrop() {
     router.push("/add-land");
   };
 
-  // Retrieve Crop Data from Redux Store (using useSelector hook)
-  const landCropData = useSelector((state: RootState) => state.crop);
-
   //Function to navigate to my crops page clicking save button
   const handleOnClickAddCrop = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     const cropData = { ...formData };
-    const action = addCrop(cropData);
-    dispatch(action);
+
     //Get logged user Id from redux
     const loggedUser = selectAuth(store.getState());
     const userId = loggedUser.auth._id;
-    console.log("----------getUserFromRedux----------------", userId);
 
-    // Prepare landCropData object (assuming landId exists)
+    // Prepare landCropData object (For Add Land with Crop instance)
     const landDataObject = landData ? landData[landData.length - 1] : {};
     const landCropData = {
       ...landDataObject,
@@ -146,17 +138,23 @@ export default function AddCrop() {
       userId,
     };
 
-    console.log(
-      "------------landCropData-----------" + JSON.stringify(landCropData)
-    );
+    // Prepare cropData object (For Add Crop Data instance)
+    const CropDataObj = {
+      ...cropData,
+      userId,
+    };
 
+    //Update redux store with newly added crop data
+    dispatch(addCrop(CropDataObj));
+
+    // Call the relevent thunk (function) in add crop slice based avaliabilty of land data
     try {
       if (landId) {
-        // If Land Selected
-        await dispatch(addLandAndCropAsync(landCropData)); // Dispatch thunk for combined data
+        // If land Id exists/selected there is a land already
+         await dispatch(addCropAsync(CropDataObj)); // Dispatch thunk for individual crop data
     } else {
-        // If no Land Selected
-        await dispatch(addCropAsync(landCropData)); // Dispatch thunk for individual crop data
+          // If land Id does not exist i.e crop data to be adde with a land
+          await dispatch(addLandAndCropAsync(landCropData)); // Dispatch thunk for combined data
       }
       setResponseData(null); // Reset response data state after successful dispatch
       router.push("/my-crops"); // Navigate to my crops page
