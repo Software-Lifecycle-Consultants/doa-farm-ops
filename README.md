@@ -1,6 +1,6 @@
 # DOA Cost of Cultivation Reporting System (Next.js)
 
-![DOA Cost of Cultivation Reporting System](https://softwareconsultant.info/wp-content/themes/slcc/assets/images/logo.png)
+![DOA Cost of Cultivation Reporting System](public/cover-doa.png)
 
 The "DOA Cost of Cultivation Reporting System" is a remarkable volunteer-driven project, born out of a strong commitment to our nation's agricultural advancement. At its core, this project represents a collective effort to contribute to the growth and sustainability of Sri Lanka's agricultural landscape.
 
@@ -55,7 +55,14 @@ cd  doa-farm-ops
 npm install
  ```
  
-3. Install the other NPM packages that are used in this project:
+3. Instal Node modules and dependencies for Front-End: 
+
+```bash
+cd  doa-farm-ops
+npm install
+ ```
+Note : When you run npm install, it automatically installs all the dependencies listed in the package.json.
+Below are the NPM packages (dependencies) used in this project. If any of the dependencies are not installed automatically, you can install them separately by executing the provided `npm install` commands.
 
 - [@mui/material](https://mui.com/material-ui/getting-started/installation/) - Version 5.14.5
   - Material UI is a comprehensive library of components that features our implementation of Google's Material Design system.
@@ -82,39 +89,48 @@ npm install @reduxjs/toolkit react-redux
  ```bash
 npm install i18next
  ```
- - [OpenLayers](https://openlayers.org/doc/quickstart.html) - Version 8.1.0
+- [OpenLayers](https://openlayers.org/doc/quickstart.html) - Version 8.1.0
   - A high-performance, feature-packed library for creating interactive maps
   - Install the package in your project directory using the following commands.
  ```bash
 npm install ol
 npm install @types/ol
  ```
-  - [React-Toastify](https://www.npmjs.com/package/react-toastifyl) 
+- [React-Toastify](https://www.npmjs.com/package/react-toastifyl) 
   - A React library for creating toast notifications.
   - Install the package in your project directory using the following commands.
  ```bash
 npm install react-toastify
  ```
 
- - [Express](https://expressjs.com/en/starter/installing.html) 
+4. Instal dependencies for Back-End: 
+
+```bash
+cd  doa-farm-ops\backend
+npm install
+ ```
+Note : When you run npm install, it automatically installs all the dependencies listed in the package.json.
+Below are the NPM packages (dependencies) used in this project. If any of the dependencies are not installed automatically, you can install them separately by executing the provided `npm install` commands.
+
+- [Express](https://expressjs.com/en/starter/installing.html) 
   - A back end web application framework for building RESTful APIs with Node.js.
   - Install the package in your project directory using the following commands.
  ```bash
 npm install express
  ```
  
-  - [Axios](https://axios-http.com/docs/intro) - Version 1.6.2
+- [Axios](https://axios-http.com/docs/intro) - Version 1.6.2
   - A promise-based HTTP Client for node.js and the browser.
   - Install the package in your project directory using the following commands.
  ```bash
 npm install axios
  ```
 
-4. Set up the environment variables:
+5. Set up the environment variables:
   - Create a .env.local file in the root directory of the project.
   - Add the required environment variables, such as database connection strings, API keys, etc.
     
-5. Run the development server:
+6. Run the development server:
  ```bash
 npm run dev
 # or
@@ -122,7 +138,7 @@ yarn dev
 # or
 pnpm dev
  ```
-6. Open your browser and navigate to http://localhost:3000 to see the Hotel Management System in action.
+7. Open your browser and navigate to http://localhost:3000 to see the Hotel Management System in action.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt) file for details.
