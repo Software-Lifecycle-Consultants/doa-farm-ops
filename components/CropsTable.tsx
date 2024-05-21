@@ -117,11 +117,6 @@ export default function CropsTable({ title }: TableTitleProps) {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  // Add confirmation state and deletedCropId
-  const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [deletedCropId, setDeletedCropId] = useState('');
-  const [deletedLandId, setDeletedLandId] = useState('');
-
   // Function to handle land name
   const handleLandName = (landId: string) => {
     const landName = land?.find((land) => land._id === landId);
@@ -150,23 +145,32 @@ export default function CropsTable({ title }: TableTitleProps) {
     router.push(`/update-crop/${id}`);
   };
 
-  // Function to delete crop when the Delete icon is clicked
-  const handleDeleteClick = (cropId: string) => {
-    // Open the confirmation dialog and set the deletedCropId
-    setDeletedCropId(cropId);
-    // setDeletedLandId(landId);
-    setDeleteConfirmationOpen(true);
+  const [deleteConfirmation, setDeleteConfirmation] = React.useState<{
+    open: boolean;
+    cropId: any;
+  }>({ open: false, cropId: null });
+
+  const openDeleteConfirmation = (cropId: any) => {
+    // Open the delete confirmation dialog and set the cropId
+    setDeleteConfirmation({ open: true, cropId });
   };
 
-  // Function to confirm and delete the crop
-  const confirmDelete = () => {
-    if (deletedCropId && deletedLandId) {
-      // Call the deleteCrop action to delete the crop
-      dispatch(deleteCrop({_id: deletedCropId }));
-      // Close the confirmation dialog
-      setDeleteConfirmationOpen(false);
+  const closeDeleteConfirmation = () => {
+    // Close the delete confirmation dialog
+    setDeleteConfirmation({ open: false, cropId: null });
+  };
+  //  manage the visibility of the success dialog
+  const [openSuccessDialog, setOpenSuccessDialog] = React.useState(false);
+  //Function for deleting a land
+  const handleDeleteClick = async (cropId: any) => {
+    try {
+      await dispatch(deleteCrop(cropId));
+      setOpenSuccessDialog(true); // Open success dialog on success
+      closeDeleteConfirmation(); // Close the delete confirmation dialog
+    } catch (error) {
+      console.error('Error deleting land:', error);
     }
-  }
+  };;
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -221,7 +225,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                           <EditNoteIcon />
                         </IconButton>
                         <IconButton
-                          onClick={() => handleDeleteClick(row._id)}
+                          onClick={() => openDeleteConfirmation(row._id)}
                         >
                           <DeleteIcon />
                         </IconButton>
@@ -259,21 +263,31 @@ export default function CropsTable({ title }: TableTitleProps) {
       />
       {/* Confirmation Dialog */}
       <Dialog
-        open={isDeleteConfirmationOpen}
-        onClose={() => setDeleteConfirmationOpen(false)}
+          open={deleteConfirmation.open}
+          onClose={closeDeleteConfirmation}
+          aria-labelledby="delete-dialog-title"
       >
-        <DialogTitle>Confirm Deletion</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this crop permanently?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDeleteConfirmationOpen(false)} color="primary">
-            Cancel
+        <DialogTitle id="delete-dialog-title"> {i18n.t("dialogBoxes.txtDeleteConfirmation")}</DialogTitle>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button onClick={() => handleDeleteClick(deleteConfirmation.cropId)} variant="contained" color="primary" >
+            {i18n.t("dialogBoxes.capBtnYes")}
           </Button>
-          <Button onClick={confirmDelete} color="primary">
-            Delete
+          <Button onClick={closeDeleteConfirmation} color="primary"  variant="outlined">
+            {i18n.t("dialogBoxes.capBtnCancel")}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/*Dialog box for delete success message*/}
+      <Dialog
+          open={openSuccessDialog}
+          onClose={() => setOpenSuccessDialog(false)}
+          aria-labelledby="success-dialog-title"
+      >
+        {/* Display a translated 'Record deleted successfully!' message based on the selected language. */}
+        <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtDeleteSuccess")}</DialogTitle>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button onClick={() => setOpenSuccessDialog(false)} variant="contained" color="primary">
+            {i18n.t("dialogBoxes.capBtnOk")}
           </Button>
         </DialogActions>
       </Dialog>
