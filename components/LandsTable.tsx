@@ -23,11 +23,15 @@ import {
 import { rows } from "../data/landsData";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/types";
-import { deleteLand } from "@/redux/landSlice";
-
+import { RootState} from "@/redux/types";
+import { deleteLandAsync, fetchAndRegisterLands, selectLands} from "@/redux/landSlice";
+import { AppDispatch } from '@/redux/store'; 
+import { selectAuth } from "@/redux/authSlice";
 import { useTranslation } from 'react-i18next';
 import theme from "@/Theme";
+import i18n from "i18next";
+import { Land } from "@/redux/types";
+
 
 // Define columns for the table
 interface Column {
@@ -40,7 +44,7 @@ interface Column {
   label: string;
   minWidth?: number;
   align?: "right";
-  format?: (value: number) => string;
+  format?: (value: string) => string;
 }
 
 const columns: readonly Column[] = [
@@ -73,9 +77,22 @@ interface TableTitleProps {
 
 export default function LandsTable({ title }: TableTitleProps) {
   const router = useRouter();
-  const landDetails = useSelector((state: RootState) => state.land);
-  const dispatch = useDispatch();
+ 
+  const dispatch: AppDispatch = useDispatch();
 
+// Fetch the authentication status from Redux store
+const { auth } = useSelector(selectAuth);
+
+ // Fetch land data when the component mounts
+ const landDetails = useSelector((state: RootState) => selectLands(state));
+
+ //const landDetails = useSelector(selectLands);
+ console.log("Land details from land table", landDetails);
+
+React.useEffect(() => {
+  dispatch(fetchAndRegisterLands(auth._id)); // Fetch land data for the authenticated user
+}, [auth._id, dispatch]);
+  
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -95,8 +112,16 @@ export default function LandsTable({ title }: TableTitleProps) {
     router.push("/add-crop");
   };
 
-  const handleEditClick = (id: any) => {
-    router.push(`/update-land/${id}`);
+  // const handleEditClick = (id: any) => {
+  //   router.push(`/update-land/${id}`);
+  // };
+
+  const handleEditClick = async (landId: any) => {
+    try {
+       router.push(`/update-land/${landId}`);
+    } catch (error) {
+      console.error('Error updating land:', error);
+    }
   };
 
   const { t } = useTranslation();
@@ -115,12 +140,17 @@ export default function LandsTable({ title }: TableTitleProps) {
     // Close the delete confirmation dialog
     setDeleteConfirmation({ open: false, landId: null });
   };
-
+  //  manage the visibility of the success dialog
+  const [openSuccessDialog, setOpenSuccessDialog] = React.useState(false);
   //Function for deleting a land
-  const handleDeleteClick = (landId: any) => {
-    // Dispatch the deleteLand action with the landId to delete
-    dispatch(deleteLand(landId));
-    closeDeleteConfirmation(); // Close the delete confirmation dialog
+  const handleDeleteClick = async (landId: any) => {
+    try {
+      await dispatch(deleteLandAsync(landId));
+      setOpenSuccessDialog(true); // Open success dialog on success
+      closeDeleteConfirmation(); // Close the delete confirmation dialog
+    } catch (error) {
+      console.error('Error deleting land:', error);
+    }
   };
 
   return (
@@ -140,56 +170,43 @@ export default function LandsTable({ title }: TableTitleProps) {
               ))}
             </TableRow>
           </TableHead>
-          <TableBody>
-            {landDetails
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .map((row) => {
-                return (
-                  <TableRow
-                    key={row.landId}
-                    hover
-                    role="checkbox"
-                    tabIndex={-1}
-                  >
-                    {columns.map((column) => {
-                      const value = row[column.id];
-                      return (
-                        <>
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        </>
-                      );
-                    })}
-                    <TableCell align={"right"}>
-                      <Stack direction="row" spacing={2}>
-                        <IconButton onClick={() => handleEditClick(row.landId)}>
-                          <EditNoteIcon />
-                        </IconButton>
-                        <IconButton onClick={() => openDeleteConfirmation(row.landId)}>
-                          <DeleteIcon />
-                        </IconButton>
-                      </Stack>
-                    </TableCell>
-                    <TableCell align={"right"}>
-                      <Button
-                        style={{
-                          backgroundColor: theme.palette.secondary.main,
-                          color: "black",
-                          borderRadius: "16px",
-                          width: "80%",
-                        }}
-                        onClick={navigationToAddCrop}
-                      >
-                        {t('farmerProfile.tblLand.capBtnAddCrop')}
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
-          </TableBody>
+         <TableBody>
+  {landDetails?.map((row:Land) => (
+    <TableRow key={row._id} hover role="checkbox" tabIndex={-1}>
+      {columns.map((column) => (
+        <TableCell key={`${row._id}-${column.id}`} align={column.align}>
+          {/* Apply column format if defined, otherwise return the column value or an empty string if undefined */}
+          {column.format
+            ? column.format(row[column.id] || '')
+            : row[column.id] || ''} 
+        </TableCell>
+      ))}
+      <TableCell align={"right"}>
+        <Stack direction="row" spacing={2}>
+          <IconButton onClick={() => handleEditClick(row._id)}>
+            <EditNoteIcon />
+          </IconButton>
+          <IconButton onClick={() => openDeleteConfirmation(row._id)}>
+            <DeleteIcon />
+          </IconButton>
+        </Stack>
+      </TableCell>
+      <TableCell align={"right"}>
+        <Button
+          style={{
+            backgroundColor: theme.palette.secondary.main,
+            color: "black",
+            borderRadius: "16px",
+            width: "80%",
+          }}
+          onClick={navigationToAddCrop}
+        >
+          {t("farmerProfile.tblLand.capBtnAddCrop")}
+        </Button>
+      </TableCell>
+    </TableRow>
+  ))}
+</TableBody>
         </Table>
       </TableContainer>
       <TablePagination
@@ -205,18 +222,28 @@ export default function LandsTable({ title }: TableTitleProps) {
         open={deleteConfirmation.open}
         onClose={closeDeleteConfirmation}
         aria-labelledby="delete-dialog-title"
-        aria-describedby="delete-dialog-description"
       >
-        <DialogTitle id="delete-dialog-title">Delete Land</DialogTitle>
-        <DialogContent>
-          <p>Are you sure you want to delete this land?</p>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={closeDeleteConfirmation} color="primary">
-            Cancel
+        <DialogTitle id="delete-dialog-title"> {i18n.t("dialogBoxes.txtDeleteConfirmation")}</DialogTitle>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button onClick={() => handleDeleteClick(deleteConfirmation.landId)} variant="contained" color="primary" >
+            {i18n.t("dialogBoxes.capBtnYes")}
           </Button>
-          <Button onClick={() => handleDeleteClick(deleteConfirmation.landId)} color="primary">
-            Delete
+          <Button onClick={closeDeleteConfirmation} color="primary"  variant="outlined">
+            {i18n.t("dialogBoxes.capBtnCancel")}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/*Dialog box for delete success message*/}
+      <Dialog
+          open={openSuccessDialog}
+          onClose={() => setOpenSuccessDialog(false)}
+          aria-labelledby="success-dialog-title"
+      >
+        {/* Display a translated 'Record deleted successfully!' message based on the selected language. */}
+        <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtDeleteSuccess")}</DialogTitle>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button onClick={() => setOpenSuccessDialog(false)} variant="contained" color="primary">
+            {i18n.t("dialogBoxes.capBtnOk")}
           </Button>
         </DialogActions>
       </Dialog>

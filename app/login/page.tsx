@@ -1,6 +1,7 @@
 // Import necessary modules and components
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from 'axios';
 import {
   Button,
   FormControlLabel,
@@ -22,24 +23,35 @@ import {
   CheckBoxOutlineBlank as CheckBoxOutlineBlankIcon,
 } from "@mui/icons-material";
 import { useDispatch } from "react-redux";
-import { login, setPassword, setUsername } from "@/redux/authSlice";
+// import { login} from "@/redux/loginSlice";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
 import { useRouter } from "next/navigation";
 import { CustomBox1 } from "@/Theme";
+import { toast } from "react-toastify";
+import { login } from "@/redux/authSlice";
 
 // Export the sign-in component
 export default function SignIn() {
+
+  const [responseData, setResponseData] = useState(null);
+
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
 
   // Initialize the 't' function to access translations within the 'login' namespace.
   const { t } = useTranslation();
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     email: "",
     password: "",
   });
+
+  interface FormData {
+    email: string;
+    password: string;
+  }
+
   // State to manage email and password validation
   const [emailValid, setEmailValid] = useState(true);
   const [passwordValid, setPasswordValid] = useState(true);
@@ -58,12 +70,31 @@ export default function SignIn() {
   };
 
   // Define a function to handle user login.
-  const handleLogin = () => {
+  const handleLogin = async () => {
     // Simulate a login action by creating a user data object.
     const userData = { username: formData.email, password: formData.password }; // Use email as username for simplicity
-    router.push("./");
-    // Dispatch the 'login' action from the 'authSlice' with the user data.
-    dispatch(login(userData));
+    try {
+      const response = await axios.post('http://localhost:5000/api/user/login', 
+      {
+        email: formData.email,
+        password: formData.password
+      });
+      if (response && response.status === 200) {
+        console.log("response user data------------", response);
+        setResponseData(response.data);
+        dispatch(login(response.data));
+        router.push("./");
+        toast.success("Login Success");
+      } else if (response && response.status === 400) {
+        console.error('Failed to fetch data');
+        toast.error("Login Failed");
+      }
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      toast.error("Login Failed");
+    }
+    
+   
   };
 
   // Function to handle email input change and validation
@@ -218,7 +249,7 @@ export default function SignIn() {
             alignItems="center"
             container
           >
-            <Link href="#" variant="body2">
+            <Link href="register" variant="body2">
               {i18n.t("login.txtNoAccount")}
             </Link>
           </Grid>

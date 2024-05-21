@@ -1,0 +1,157 @@
+{
+	"info": {
+		"_postman_id": "9437d947-a833-40c3-8e7e-bc77d98ade04",
+		"name": "DOA Crop Management APIs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "29079947"
+	},
+	"item": [
+		{
+			"name": "User Registration as  Officer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": {\r\n    \"firstName\": \"jehan\",\r\n    \"lastName\": \"silva\",\r\n    \"email\": \"jehan@email.com\",\r\n    \"phoneNumber\": \"1234567890\",\r\n    \"nic\": \"1234567890\",\r\n    \"role\": \"officer\",\r\n    \"address\": \"123 Main St, City\",\r\n    \"password\": \"securePassword\"\r\n  },\r\n  \"officer\": {\r\n    \"orgName\": \"Farmers United\",\r\n    \"orgAddress\": \"456 Farm Rd\",\r\n    \"university\": \"Colombo\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/api/user/register"
+			},
+			"response": []
+		},
+		{
+			"name": "User Registration as  Farmer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"user\": {\r\n    \"firstName\": \"jehan\",\r\n    \"lastName\": \"silva\",\r\n    \"email\": \"jehan@email.com\",\r\n    \"phoneNumber\": \"1234567890\",\r\n    \"nic\": \"1234567890\",\r\n    \"role\": \"officer\",\r\n    \"address\": \"123 Main St, City\",\r\n    \"password\": \"securePassword\"\r\n  },\r\n  \"farmer\": {\r\n    \"orgName\": \"Farmers United\",\r\n    \"orgAddress\": \"456 Farm Rd\",\r\n    \"university\": \"Colombo\"\r\n  }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/api/user/register"
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"email\": \"user@gmail.com\",\r\n  \"password\": \"111222\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/api/user/login"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Crop",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"cropName\": \"Crop3\",\r\n  \"season\": \"Yala\",\r\n  \"cropType\": \"Paddy\",\r\n  \"totalSoldQty\": \"100\",\r\n  \"totalIncome\": \"100\",\r\n  \"reservedQtyHome\": \"100\",\r\n  \"reservedQtySeed\": \"100\",\r\n  \"noOfPicks\": \"100\",\r\n  \"isCultivationLoan\": \"Yes\",\r\n  \"loanObtained\": \"100\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/api/crop/add"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Land",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"userId\": \"6572c0d83696c46468cb8052\",\r\n  \"landId\": \"11\",\r\n  \"landName\": \"land11 \",\r\n  \"district\": \"District11\",\r\n  \"dsDivision\": \"Division11\",\r\n  \"landRent\": \"10000\",\r\n  \"irrigationMode\": \"Well\",\r\n  \"crops\": \"\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/api/land/create"
+			},
+			"response": []
+		},
+		{
+			"name": "Add a Crop to a Land",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"cropName\": \"Crop9\",\r\n  \"season\": \"Yala\",\r\n  \"cropType\": \"Paddy\",\r\n  \"totalSoldQty\": \"2000\",\r\n  \"totalIncome\": \"2000\",\r\n  \"reservedQtyHome\": \"2000\",\r\n  \"reservedQtySeed\": \"2000\",\r\n  \"noOfPicks\": \"2000\",\r\n  \"isCultivationLoan\": \"Yes\",\r\n  \"loanObtained\": \"2000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/api/land/addCrop/6576a388b39f65c72454b777"
+			},
+			"response": []
+		},
+		{
+			"name": "Add Land & Crop",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"landId\": \"123\",\r\n  \"landName\": \"Land3\",\r\n  \"district\": \"District3\",\r\n  \"dsDivision\": \"Division\",\r\n  \"landRent\": \"500\",\r\n  \"irrigationMode\": \"Well\",\r\n    \"cropName\": \"Crop1\",\r\n    \"season\": \"Yala\",\r\n    \"cropType\": \"Paddy\",\r\n    \"totalSoldQty\": \"2000\",\r\n    \"totalIncome\": \"2000\",\r\n    \"reservedQtyHome\": \"2000\",\r\n    \"reservedQtySeed\": \"2000\",\r\n    \"noOfPicks\": \"2000\",\r\n    \"isCultivationLoan\": \"Yes\",\r\n    \"loanObtained\": \"2000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/api/landAndCrop/add"
+			},
+			"response": []
+		},
+		{
+			"name": "Get User",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "http://localhost:5000/api/get/user/6597c52c1d85fb2f7c7336ca"
+			},
+			"response": []
+		}
+	]
+}

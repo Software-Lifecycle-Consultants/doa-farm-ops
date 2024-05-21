@@ -10,15 +10,19 @@ import ProfileTitle from "../../components/ProfileTitle";
 import LandsTable from "@/components/LandsTable";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
-import {
-  sampleFarmerProfileData,
-} from "../../data/farmerProfile";
-
 import { useTranslation } from 'react-i18next';
 import { btnBackgroundColor, customGridStyles1, customGridStyles2 } from "@/styles/customStyles";
 import { CustomBox2 } from "@/Theme";
-
+import { selectAuth } from "@/redux/authSlice";
+import { useSelector } from "react-redux";
+// Importing fetchUserData function
+import { fetchUserData } from "@/api/fetchUserData";
+// Importing the User and FarmerDetails types
+import { User, FarmerDetails } from "@/redux/types";
+import { useDispatch } from 'react-redux';
+import { register, selectUser, fetchAndRegisterUser } from '@/redux/userSlice';
+import { fetchAndRegisterFarmer, selectFarmerDetails } from '@/redux/farmerSlice';
+import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 /**
  * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
  * Users can view and edit their profile information, as well as add new land details.
@@ -26,10 +30,32 @@ import { CustomBox2 } from "@/Theme";
 export default function FarmerProfile() {
   const router = useRouter();
   const { t } = useTranslation();
+  // const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch() // Type the dispatch function with explicitly specifies the type of dispatch as AppDispatch.
+  // Fetch the authentication status from Redux store
+  const auth = useSelector(selectAuth);
+  const user = useSelector(selectUser);
+  const farmerDetails = useSelector(selectFarmerDetails);
+
+  //Funtion to execute the two asynchronous actions to fetch and register farmer details and user details using the current authentication ID. 
+  React.useEffect(() => {
+
+    dispatch(fetchAndRegisterUser(auth.auth._id)); // Fetch user details
+    dispatch(fetchAndRegisterFarmer(auth.auth._id)); // Fetch farmer details
+  }, [auth.auth._id, dispatch]);
+
+  const handleEditClick = async (userId: any) => {
+    try {
+       router.push(`/update-user/${userId}`);
+    } catch (error) {
+      console.error('Error updating user:', error);
+    }
+  };
+
   return (
     <>
       {/* Main grid container */}
-      <Grid container direction="column" rowGap={2}>
+      <Grid container style={{ padding: "20px" }} direction="column" rowGap={2}>
         {/* Title */}
         <Grid item xs={12}>
           <ProfileTitle title={t("farmerProfile.txtProfileName")} />
@@ -50,8 +76,7 @@ export default function FarmerProfile() {
                   marginBottom: "4px",
                 }}
               >
-                {sampleFarmerProfileData.firstname}{" "}
-                {sampleFarmerProfileData.lastname}
+              {user && user.firstName} {user && user.lastName}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -87,93 +112,70 @@ export default function FarmerProfile() {
                 sx={btnBackgroundColor}
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
+                onClick={() => handleEditClick(user?._id)}
               >
                 {t("farmerProfile.capBtnEdit")}
               </Button>
             </Grid>
             {/* Personal Information Fields */}
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtFirstName")}
               </Typography>
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.firstname}
+                {user && user.firstName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtLastName")}
               </Typography>
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.lastname}
+                {user && user.lastName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtEmail")}
               </Typography>
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.email}
+                {user && user.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtNicNumber")}
               </Typography>
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.nic}
+                {user && user.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtAddress")}
               </Typography>
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.address}
+                {user && user.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
+              <Typography variant="caption">
                 {t("farmerProfile.txtPhoneNumber")}
               </Typography>
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.phonenumber}
-              </Typography>
-            </Grid>
-            <Grid item xs={12} md={6}>
-              <Typography
-                variant="caption"
-              >
-                {t("farmerProfile.txtHouseholds")}
-              </Typography>
-              <Typography
-                variant="body1"
-              >
-                {sampleFarmerProfileData.household}
+                {user && user.phoneNumber}
               </Typography>
             </Grid>
           </Grid>
@@ -206,27 +208,33 @@ export default function FarmerProfile() {
             </Grid>
             {/* Other Details Fields */}
             <Grid item xs={12} md={12}>
+              <Typography variant="caption">
+                {t("farmerProfile.txtHouseholds")}
+              </Typography>
               <Typography
-                variant="caption"
+                variant="body1"
               >
+                {farmerDetails && farmerDetails.household}
+              </Typography>
+            </Grid>
+            <Grid item xs={12} md={6}>
+              <Typography variant="caption">
                 {t("farmerProfile.txtOrgName")}
               </Typography>
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.otherdetails.orgname}
+                {farmerDetails && farmerDetails.orgName}
               </Typography>
             </Grid>
-            <Grid item xs={12} md={12}>
-              <Typography
-                variant="caption"
-              >
+            <Grid item xs={12} md={6}>
+              <Typography variant="caption">
                 {t("farmerProfile.txtOrgAddress")}
               </Typography>
               <Typography
                 variant="body1"
               >
-                {sampleFarmerProfileData.otherdetails.orgaddress}
+               {farmerDetails && farmerDetails.orgAddress}
               </Typography>
             </Grid>
           </Grid>

@@ -1,10 +1,14 @@
-import { Grid } from '@mui/material'
-import React from 'react'
+"use client";
+import React from "react";
+import HomePage from "@/components/HomePage";
 
+/* Index functional component */
 const Index = () => {
   return (
-    <div>Index</div>
-  )
-}
+    <>
+     <HomePage/> 
+    </>
+  );
+};
 
-export default Index
+export default Index;

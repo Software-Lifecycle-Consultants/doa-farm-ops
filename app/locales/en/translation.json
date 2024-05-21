@@ -10,14 +10,52 @@
     "hintTxtEmail": "Enter Email Address",
     "lblPhoneNo": "Phone Number",
     "hintTxtPhoneNo": "Enter Phone Number",
+    "lblNIC": "NIC Number",
+    "hintTxtNIC": "Enter NIC Number",
+    "lblRole": "Role",
+    "lblFarmer": "Farmer",
+    "lblOfficer": "Officer",
+    "lblAddress": "Address",
+    "hintTxtAddress": "Enter Address",
     "lblPassword": "Password",
     "hintTxtPassword": "Enter Password",
     "txtAgree": "By signing up you agree to our",
     "txtTerms&Conditions": "Terms & Conditions",
     "txtAnd": "and",
     "txtPrivacyPolicy": "Privacy Policy",
-    "capBtnRegister": "Login",
+    "capBtnNext": "Next",
     "txtAlreadyHaveAccount": "Already have an account? Login"
+  },
+  "updateUser": {
+    "txtUpdateUser": "Edit Your Account Details",
+    "txtFillDetails": "Fill the details below to Update your account",
+    "lblFirstName": "First Name",
+    "hintTxtFirstName": "Enter First Name",
+    "lblLastName": "Last Name",
+    "hintTxtlastName": "Enter Last Name",
+    "lblEmail": "Email Address",
+    "hintTxtemail": "Enter Email Address",
+    "lblphoneNumber": "Phone Number",
+    "hintTxtphoneNumber": "Enter Phone Number",
+    "lblnicNumber": "NIC Number",
+    "hintTxtnicNumber": "Enter NIC Number",
+    "lblAddress": "Address",
+    "hintTxtAddress": "Enter Address",
+    "capBtnSave&Exit": "Save Details",
+    "capBtnExitWithoutSave": "Exit"
+  },
+
+  "additionalRegister": {
+    "txtOtherDetails": "Add your other details",
+    "txtFillDetails": "Fill the details below to create your account",
+    "lblHouseholds": "Households",
+    "hintTxtHouseholds": "Enter your householders",
+    "lblUniversity": "University",
+    "hintTxtUniversity": "Enter your university",
+    "lblOrganizationName": "Organization Name",
+    "hintTxtOrg": "Enter organization name",
+    "lblOrganizationAddress": "Organization Address",
+    "hintTxtOrgAddress": "Enter organization address"
   },
   "login": {
     "txtWelcome": "Welcome DOA Platform",
@@ -125,7 +163,7 @@
     "hintTxtLandRent": "Enter Land Rent",
     "lblMode": "Mode of Irrigation",
     "hintTxtMode": "Enter Mode of Irrigation",
-    "capBtnSave&Exit": "Save & Exit to My Crops",
+    "capBtnSave&Exit": "Save & Exit to Profile",
     "capBtnSave&Proceed": "Save & Proceed to Add Crop"
   },
   "updateLand": {
@@ -142,7 +180,7 @@
     "hintTxtLandRent": "Enter Land Rent",
     "lblMode": "Mode of Irrigation",
     "hintTxtMode": "Enter Mode of Irrigation",
-    "capBtnSave&Exit": "Save & Exit to My Crops",
+    "capBtnSave&Exit": "Save & Exit to Profile",
     "capBtnSave&Proceed": "Save & Proceed to Add Crop"
   },
   "addCrop": {
@@ -181,7 +219,8 @@
     "menuItemTxtNo": "No",
     "lblCultivationLoanAmount": "Cultivation loan amount",
     "capBtnCancel": "Cancel",
-    "capBtnSave": "Save"
+    "capBtnSave": "Save",
+    "menuItemTxtSelectLand": "Select a land"
   },
   "updateCrop": {
     "txtUpdateCrop": "Update Crop",
@@ -237,5 +276,21 @@
     "tabHome": "Home",
     "tabProfile": "Profile",
     "tabCrops": "Crops"
+  },
+  "home": {
+    "txtReadMore": "How DoA Crop Data platform helps you... ",
+    "btnReadMore": "Read More",
+    "txtTopic": "Update farmer crop costs to help us manage Agriculture sector development better",
+    "txtDescription": "The Department of Agriculture (DOA) operates under the Ministry of Agriculture and is one of the largest government departments with a high-level community of agricultural scientists and a network of institutions covering various Argo Eco Regions across the country.",
+    "btnDOA": "Department of Agriculture Digitization efforts" 
+ },
+  "dialogBoxes": {
+    "capBtnOk": "Ok",
+    "capBtnYes": "Yes",
+    "capBtnCancel": "Cancel",
+    "txtUpdatedSuccess": "Record Updated successfully!",
+    "txtDeleteSuccess": "Record deleted successfully!",
+    "txtAddedSuccess": "Record added successfully!",
+    "txtDeleteConfirmation":"Are you sure you want to delete this record?"
   }
 }
