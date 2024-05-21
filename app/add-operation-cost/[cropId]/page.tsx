@@ -1,24 +1,21 @@
 "use client";
 import * as React from "react";
-import ProfileTitle from "../../components/ProfileTitle";
+import ProfileTitle from "../../../components/ProfileTitle";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useRouter } from "next/navigation";
 import {
-  machineryCostData,
   laborCostData,
   materialCostData,
-  cropName,
-  cropType,
   majorOps,
   subOps,
   fertilizerApps,
   fertilizers,
   machinery,
-  material
-} from "../../data/operationCostData";
+  material,
+} from "../../../data/operationCostData";
 
 import {
   IconButton,
@@ -36,25 +33,52 @@ import {
   Paper,
   TableContainer,
   Stack,
+  Alert,
 } from "@mui/material";
 
-import { useTranslation } from 'react-i18next';
-import i18n from "../config/i18n";
+import { useTranslation } from "react-i18next";
+import i18n from "../../config/i18n";
 import { customGridStyles1 } from "@/styles/customStyles";
+import { selectCrops } from "@/redux/cropSlice";
+import { useSelector } from "react-redux";
 
 /**
  * Add Operation Cost page represents a page where users can add operation costs for a specific crop.(Machinery Cost, Labor Cost, Material Cost)
  */
 
-export default function AddOperationCost() {
-
+export default function AddOperationCost({
+  params,
+}: {
+  params: { cropId: string };
+}) {
   const router = useRouter();
   // State to manage filters
+
+  interface MachineryMethod {
+    method: string;
+    ownedOrHired: string;
+    noOfTimes: string;
+    days: string;
+    cost: string;
+  }
+
   const [majorOperations, setMajorOperations] = React.useState("");
   const [subOperations, setSubOperations] = React.useState("");
   const [fertilizerApplication, setFertilizerApplication] = React.useState("");
   const [selectFertilizer, setSelectFertilizer] = React.useState("");
-  const [machineryMethod, setMachineryMethod] = React.useState("");
+
+  const [machineryMethod, setMachineryMethod] = React.useState<MachineryMethod>(
+    {
+      method: "",
+      ownedOrHired: "",
+      noOfTimes: "",
+      days: "",
+      cost: "",
+    }
+  );
+
+  const [addMachinery, setaddMachinery] = React.useState<MachineryMethod[]>([]);
+
   const [materialCost, setMaterialCost] = React.useState("");
 
   // Event handler for major operations filter change
@@ -73,23 +97,66 @@ export default function AddOperationCost() {
   const handleChange4 = (event: SelectChangeEvent) => {
     setSelectFertilizer(event.target.value);
   };
+
   // Event handler for select machinery cost method filter change in machinery cost table
-  const handleChange5 = (event: SelectChangeEvent) => {
-    setMachineryMethod(event.target.value);
+  const handleChangeMachineryCost = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    field: string
+  ) => {
+    setMachineryMethod({
+      ...machineryMethod,
+      [field]: event.target.value,
+    });
   };
+
+  const handleChangeMachineryCostDropdown = (
+    event: SelectChangeEvent,
+    field: string
+  ) => {
+    setMachineryMethod({
+      ...machineryMethod,
+      [field]: event.target.value,
+    });
+  };
+
   // Event handler for select material cost filter change in material cost table
-  const handleChange6 = (event: SelectChangeEvent) => {
-    setMaterialCost(event.target.value);
+  const handleAddMachineCost = async () => {
+    if (
+      !machineryMethod.method ||
+      !machineryMethod.ownedOrHired ||
+      !machineryMethod.noOfTimes ||
+      !machineryMethod.days ||
+      !machineryMethod.cost
+    ) {
+      <Alert severity="error">This is an error Alert.</Alert>;
+    } else {
+      setaddMachinery((prevArray) => [...prevArray, machineryMethod]);
+      setMachineryMethod({
+        method: "",
+        ownedOrHired: "",
+        noOfTimes: "",
+        days: "",
+        cost: "",
+      });
+    }
   };
   //Function to navigate to my crops page
   const navigationToMyCrops = () => {
     router.push("/my-crops");
   };
 
+  // Extract the cropId from the parameters
+  const cropId = params.cropId;
+
   const { t } = useTranslation();
+  const cropdetails = useSelector(selectCrops);
+  const crop = cropdetails?.find((c) => c._id === cropId);
 
   // Define the title based on the selected language
-  const title = i18n.language === 'si' ? ` ${cropName} ${t('operationCost.txtTitle')}` : `Add Operation Cost for ${cropName}`;
+  const title =
+    i18n.language === "si"
+      ? ` ${crop?.cropName} ${t("operationCost.txtTitle")}`
+      : `Add Operation Cost for ${crop?.cropName}`;
 
   return (
     <>
@@ -106,7 +173,7 @@ export default function AddOperationCost() {
         >
           <ProfileTitle title={title} />
           <Typography>
-            {t("operationCost.txtCropType")} {t("operationCost.paddy")}
+            {t("operationCost.txtCropType")} {crop?.cropType}
           </Typography>
         </Stack>
 
@@ -247,8 +314,8 @@ export default function AddOperationCost() {
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                value={machineryMethod}
-                onChange={handleChange5}
+                value={machineryMethod.method}
+                onChange={(e) => handleChangeMachineryCostDropdown(e, "method")}
               >
                 {machinery.map((select) => (
                   <MenuItem key={select.value} value={select.value}>
@@ -267,8 +334,10 @@ export default function AddOperationCost() {
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                // value={seasonFilter}
-                // onChange={handleChange1}
+                value={machineryMethod.ownedOrHired}
+                onChange={(e) =>
+                  handleChangeMachineryCostDropdown(e, "ownedOrHired")
+                }
               >
                 <MenuItem value="">
                   <em>None</em>
@@ -284,7 +353,11 @@ export default function AddOperationCost() {
               <InputLabel>
                 {t("operationCost.tblMachineryCost.colNumberOfTimes")}
               </InputLabel>
-              <Input type={"text"} />
+              <Input
+                required
+                value={machineryMethod.noOfTimes}
+                onChange={(e) => handleChangeMachineryCost(e, "noOfTimes")}
+              />
             </FormControl>
             <FormControl
               variant="standard"
@@ -293,7 +366,11 @@ export default function AddOperationCost() {
               <InputLabel>
                 {t("operationCost.tblMachineryCost.colDays")}
               </InputLabel>
-              <Input type={"text"} />
+              <Input
+                required
+                value={machineryMethod.days}
+                onChange={(e) => handleChangeMachineryCost(e, "days")}
+              />
             </FormControl>
             <FormControl
               variant="standard"
@@ -302,7 +379,11 @@ export default function AddOperationCost() {
               <InputLabel>
                 {t("operationCost.tblMachineryCost.colCost")}
               </InputLabel>
-              <Input type={"text"} />
+              <Input
+                required
+                value={machineryMethod.cost}
+                onChange={(e) => handleChangeMachineryCost(e, "cost")}
+              />
             </FormControl>
             <FormControl
               variant="standard"
@@ -338,8 +419,10 @@ export default function AddOperationCost() {
                           <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
-                            value={machineryMethod}
-                            onChange={handleChange5}
+                            value={machineryMethod.method}
+                            onChange={(e) =>
+                              handleChangeMachineryCostDropdown(e, "method")
+                            }
                           >
                             {machinery.map((select) => (
                               <MenuItem key={select.value} value={select.value}>
@@ -369,8 +452,13 @@ export default function AddOperationCost() {
                           <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
-                            // value={seasonFilter}
-                            // onChange={handleChange1}
+                            value={machineryMethod.ownedOrHired}
+                            onChange={(e) =>
+                              handleChangeMachineryCostDropdown(
+                                e,
+                                "ownedOrHired"
+                              )
+                            }
                           >
                             <MenuItem value="">
                               <em>None</em>
@@ -397,7 +485,13 @@ export default function AddOperationCost() {
                               "operationCost.tblMachineryCost.colNumberOfTimes"
                             )}
                           </InputLabel>
-                          <Input type={"text"} />
+                          <Input
+                            required
+                            value={machineryMethod.noOfTimes}
+                            onChange={(e) =>
+                              handleChangeMachineryCost(e, "noOfTimes")
+                            }
+                          />
                         </FormControl>
                       </TableCell>
                       <TableCell>
@@ -415,7 +509,13 @@ export default function AddOperationCost() {
                           <InputLabel>
                             {t("operationCost.tblMachineryCost.colDays")}
                           </InputLabel>
-                          <Input type={"text"} />
+                          <Input
+                            required
+                            value={machineryMethod.days}
+                            onChange={(e) =>
+                              handleChangeMachineryCost(e, "days")
+                            }
+                          />
                         </FormControl>
                       </TableCell>
                       <TableCell>
@@ -433,7 +533,13 @@ export default function AddOperationCost() {
                           <InputLabel>
                             {t("operationCost.tblMachineryCost.colCost")}
                           </InputLabel>
-                          <Input type={"text"} />
+                          <Input
+                            required
+                            value={machineryMethod.cost}
+                            onChange={(e) =>
+                              handleChangeMachineryCost(e, "cost")
+                            }
+                          />
                         </FormControl>
                       </TableCell>
                       <TableCell>
@@ -445,7 +551,10 @@ export default function AddOperationCost() {
                             display: { xs: "none", sm: "flex" },
                           }}
                         >
-                          <Button variant="outlined">
+                          <Button
+                            variant="outlined"
+                            onClick={handleAddMachineCost}
+                          >
                             {t("operationCost.tblMachineryCost.capBtnAdd")}
                           </Button>
                         </FormControl>
@@ -453,8 +562,8 @@ export default function AddOperationCost() {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {machineryCostData.map((data) => (
-                      <TableRow key={data._id}>
+                    {addMachinery.map((data, index) => (
+                      <TableRow key={index}>
                         <TableCell>{data.method}</TableCell>
                         <TableCell>{data.ownedOrHired}</TableCell>
                         <TableCell>{data.noOfTimes}</TableCell>
@@ -763,8 +872,8 @@ export default function AddOperationCost() {
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                value={materialCost}
-                onChange={handleChange6}
+                // value={materialCost}
+                // onChange={handleChange6}
               >
                 {material.map((season) => (
                   <MenuItem key={season.value} value={season.value}>
@@ -825,8 +934,8 @@ export default function AddOperationCost() {
                           <Select
                             labelId="demo-simple-select-filled-label"
                             id="demo-simple-select-filled"
-                            value={materialCost}
-                            onChange={handleChange6}
+                            // value={materialCost}
+                            // onChange={handleChange6}
                           >
                             {material.map((season) => (
                               <MenuItem key={season.value} value={season.value}>
