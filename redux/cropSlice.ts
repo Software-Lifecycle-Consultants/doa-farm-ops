@@ -22,8 +22,8 @@ export const fetchCrops = createAsyncThunk(
 // Thunk for adding crop data (individual endpoint)
 export const addCropAsync = createAsyncThunk(
     'crop/addCrop',
-    async (landCropData: any) => {
-        const response = await axios.post(`http://localhost:5000/api/landAndCrop/add`, landCropData);
+    async (cropData: any) => {
+        const response = await axios.post(`http://localhost:5000/api/crop/add/`, cropData);
         return response.data;
     }
 );
@@ -31,8 +31,8 @@ export const addCropAsync = createAsyncThunk(
 // Thunk for adding land and crop data (combined endpoint)
 export const addLandAndCropAsync = createAsyncThunk(
     'crop/addLandAndCrop',
-    async (landCropData: any) => {
-        const response = await axios.post(`http://localhost:5000/api/crop/add/`, landCropData);
+    async (landwithCropData: any) => {
+        const response = await axios.post(`http://localhost:5000/api/landAndCrop/add`, landwithCropData);
         return response.data;
     }
 );
