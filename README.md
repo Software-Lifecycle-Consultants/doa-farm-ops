@@ -89,14 +89,14 @@ npm install @reduxjs/toolkit react-redux
  ```bash
 npm install i18next
  ```
- - [OpenLayers](https://openlayers.org/doc/quickstart.html) - Version 8.1.0
+- [OpenLayers](https://openlayers.org/doc/quickstart.html) - Version 8.1.0
   - A high-performance, feature-packed library for creating interactive maps
   - Install the package in your project directory using the following commands.
  ```bash
 npm install ol
 npm install @types/ol
  ```
-  - [React-Toastify](https://www.npmjs.com/package/react-toastifyl) 
+- [React-Toastify](https://www.npmjs.com/package/react-toastifyl) 
   - A React library for creating toast notifications.
   - Install the package in your project directory using the following commands.
  ```bash
@@ -112,14 +112,14 @@ npm install
 Note : When you run npm install, it automatically installs all the dependencies listed in the package.json.
 Below are the NPM packages (dependencies) used in this project. If any of the dependencies are not installed automatically, you can install them separately by executing the provided `npm install` commands.
 
- - [Express](https://expressjs.com/en/starter/installing.html) 
+- [Express](https://expressjs.com/en/starter/installing.html) 
   - A back end web application framework for building RESTful APIs with Node.js.
   - Install the package in your project directory using the following commands.
  ```bash
 npm install express
  ```
  
-  - [Axios](https://axios-http.com/docs/intro) - Version 1.6.2
+- [Axios](https://axios-http.com/docs/intro) - Version 1.6.2
   - A promise-based HTTP Client for node.js and the browser.
   - Install the package in your project directory using the following commands.
  ```bash
