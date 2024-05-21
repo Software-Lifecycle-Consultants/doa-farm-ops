@@ -99,10 +99,11 @@ export default function AddCrop() {
     setLandId(event.target.value);
 
     const selectedLand = landData.find((land:Land) => land._id === event.target.value);
+    console.log("---------------------selectedLand------------+"+ selectedLand);
     if (selectedLand) {
-      setFormData({ ...formData,  landId: event.target.value, landName: selectedLand.landName });
+      setFormData({ ...formData, landId: event.target.value});
     } else {
-      setFormData({ ...formData, landName: "" }); // Reset landName if no match found
+      setFormData({ ...formData}); // Reset landName if no match found
     }
   };
 
@@ -131,8 +132,7 @@ export default function AddCrop() {
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     const cropData = { ...formData };
-    const action = addCrop(cropData);
-    dispatch(action);
+
     //Get logged user Id from redux
     const loggedUser = selectAuth(store.getState());
     const userId = loggedUser.auth._id;
@@ -146,6 +146,13 @@ export default function AddCrop() {
       userId,
     };
 
+    const CropDataOnly = {
+      ...cropData,
+      userId,
+    };
+
+    dispatch(addCrop(CropDataOnly));
+
     console.log(
       "------------landCropData-----------" + JSON.stringify(landCropData)
     );
@@ -153,10 +160,10 @@ export default function AddCrop() {
     try {
       if (landId) {
         // If Land Selected
-        await dispatch(addLandAndCropAsync(landCropData)); // Dispatch thunk for combined data
+         await dispatch(addCropAsync(CropDataOnly)); // Dispatch thunk for individual crop data
     } else {
-        // If no Land Selected
-        await dispatch(addCropAsync(landCropData)); // Dispatch thunk for individual crop data
+          // If no Land Selected  
+          await dispatch(addLandAndCropAsync(landCropData)); // Dispatch thunk for combined data
       }
       setResponseData(null); // Reset response data state after successful dispatch
       router.push("/my-crops"); // Navigate to my crops page
