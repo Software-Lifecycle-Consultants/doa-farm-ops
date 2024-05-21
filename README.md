@@ -55,9 +55,10 @@ cd  doa-farm-ops
 npm install
  ```
  
-3. Instal Node modules and dependencies : 
+3. Instal Node modules and dependencies for Front-End: 
 
 ```bash
+cd  doa-farm-ops
 npm install
  ```
 Note : When you run npm install, it automatically installs all the dependencies listed in the package.json.
@@ -102,6 +103,15 @@ npm install @types/ol
 npm install react-toastify
  ```
 
+4. Instal dependencies for Back-End: 
+
+```bash
+cd  doa-farm-ops\backend
+npm install
+
+Note : When you run npm install, it automatically installs all the dependencies listed in the package.json.
+Below are the NPM packages (dependencies) used in this project. If any of the dependencies are not installed automatically, you can install them separately by executing the provided `npm install` commands.
+
  - [Express](https://expressjs.com/en/starter/installing.html) 
   - A back end web application framework for building RESTful APIs with Node.js.
   - Install the package in your project directory using the following commands.
@@ -116,11 +126,11 @@ npm install express
 npm install axios
  ```
 
-4. Set up the environment variables:
+5. Set up the environment variables:
   - Create a .env.local file in the root directory of the project.
   - Add the required environment variables, such as database connection strings, API keys, etc.
     
-5. Run the development server:
+6. Run the development server:
  ```bash
 npm run dev
 # or
@@ -128,7 +138,7 @@ yarn dev
 # or
 pnpm dev
  ```
-6. Open your browser and navigate to http://localhost:3000 to see the Hotel Management System in action.
+7. Open your browser and navigate to http://localhost:3000 to see the Hotel Management System in action.
 
 ## License
 This project is licensed under the MIT License - see the [LICENSE](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt) file for details.
