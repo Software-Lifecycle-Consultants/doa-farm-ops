@@ -108,7 +108,7 @@ npm install react-toastify
 ```bash
 cd  doa-farm-ops\backend
 npm install
-
+ ```
 Note : When you run npm install, it automatically installs all the dependencies listed in the package.json.
 Below are the NPM packages (dependencies) used in this project. If any of the dependencies are not installed automatically, you can install them separately by executing the provided `npm install` commands.
 
