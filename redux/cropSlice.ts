@@ -41,9 +41,12 @@ export const addLandAndCropAsync = createAsyncThunk(
 export const deleteCropAsync = createAsyncThunk(
     'crop/deleteCrop',
     async (cropId: string) => {
+        try {
         const response = await axios.delete(`http://localhost:5000/api/crop/delete/${cropId}`);
         return response.data; // Assuming the response contains a success message
-    }
+    } catch (error) {
+            return Promise.reject(error);
+        } }
 );
 
 // Create a Redux slice for managing crop data
