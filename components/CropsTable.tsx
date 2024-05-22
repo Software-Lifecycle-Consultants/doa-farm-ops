@@ -29,11 +29,11 @@ import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import i18n from "@/app/config/i18n";// Import the i18n instance
 import { useDispatch } from "react-redux";
-import { deleteCrop, fetchCrops, selectCrops } from "@/redux/cropSlice"; // Import the Redux action for updating crops
+import {deleteCrop, deleteCropAsync, fetchCrops, selectCrops} from "@/redux/cropSlice"; // Import the Redux action for updating crops
 import theme from '@/Theme';
 import { selectUser } from '@/redux/userSlice';
 import { AppDispatch } from '@/redux/store';
-import { selectLands } from '@/redux/landSlice';
+import { selectLands} from '@/redux/landSlice';
 
 
 // Define the table columns
@@ -122,6 +122,11 @@ export default function CropsTable({ title }: TableTitleProps) {
     const landName = land?.find((land) => land._id === landId);
     return landName?.landName;
   }
+  const handleDeleteSuccess = async () => {
+    await dispatch(fetchCrops(user._id)); // Manual refetch after deletion (optional)
+    setOpenSuccessDialog(false);
+  }
+
 
   // Function to handle changing the page
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -164,7 +169,8 @@ export default function CropsTable({ title }: TableTitleProps) {
   //Function for deleting a land
   const handleDeleteClick = async (cropId: any) => {
     try {
-      await dispatch(deleteCrop(cropId));
+      await dispatch(deleteCropAsync(cropId));
+      dispatch(deleteCrop(cropId));
       setOpenSuccessDialog(true); // Open success dialog on success
       closeDeleteConfirmation(); // Close the delete confirmation dialog
     } catch (error) {
@@ -280,7 +286,7 @@ export default function CropsTable({ title }: TableTitleProps) {
       {/*Dialog box for delete success message*/}
       <Dialog
           open={openSuccessDialog}
-          onClose={() => setOpenSuccessDialog(false)}
+          onClose= {handleDeleteSuccess}
           aria-labelledby="success-dialog-title"
       >
         {/* Display a translated 'Record deleted successfully!' message based on the selected language. */}
