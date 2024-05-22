@@ -2,6 +2,7 @@
 import { fetchUserData } from "@/api/fetchUserData";
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { OfficerDetails, RootState } from "./types";
+import {  UpdateOfficerData } from "@/api/updateOfficerData";
 
 // Define the initial state for the officer slice
 const initialState: { officerDetails: OfficerDetails | null } = {
@@ -14,6 +15,14 @@ export const fetchAndRegisterOfficer = createAsyncThunk(
   async (userId: string) => {
     const userData = await fetchUserData(userId);
     return userData.officerDetails;
+  }
+);
+
+export const updateAndFetchOfficer = createAsyncThunk(
+  'officer/updateAndFetchOfficer',
+  async (officerData: any) => {
+    const officer = await UpdateOfficerData(officerData);
+    return officer;
   }
 );
 
@@ -40,11 +49,21 @@ const officerSlice = createSlice({
         .addCase(fetchAndRegisterOfficer.rejected, (state, action) => {
           console.error('Error fetching farmer details:', action.error);
         });
+
+      builder
+        // Handle successful fulfillment of updateandfetchfarmer
+        .addCase(updateAndFetchOfficer.fulfilled, (state, action) => {
+          state.officerDetails = action.payload.officer;
+        })
+        // Handle rejection of updateandfetchfarmer
+        .addCase(updateAndFetchOfficer.rejected, (state, action) => {
+          console.error('Error updating farmer details:', action.error);
+        });
     },
 });
 
 // Export the OfficerRegister action creators for external use.
-export const { OfficerRegister } = officerSlice.actions;
+export const { OfficerRegister} = officerSlice.actions;
 
 // Define a selector function to extract the 'officer' state from the Redux store.
 export const selectOfficer = (state: RootState) => state.officer.officerDetails;
