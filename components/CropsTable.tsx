@@ -136,8 +136,8 @@ export default function CropsTable({ title }: TableTitleProps) {
   };
 
   //Function to navigate to add operation cost page
-  const navigationToAddOperationCost = () => {
-    router.push("/add-operation-cost");
+  const navigationToAddOperationCost = (id: string) => {
+    router.push(`/add-operation-cost/${id}`);
   };
 
   // Function to handle navigation when the Edit icon is clicked
@@ -240,7 +240,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                           borderRadius: "16px",
                           width: "100%",
                         }}
-                        onClick={navigationToAddOperationCost}
+                        onClick={()=> navigationToAddOperationCost(row._id)}
                       >
                         Add Cost
                       </Button>
