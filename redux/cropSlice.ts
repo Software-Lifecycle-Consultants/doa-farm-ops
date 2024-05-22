@@ -37,6 +37,15 @@ export const addLandAndCropAsync = createAsyncThunk(
     }
 );
 
+// Thunk for deleting a crop
+export const deleteCropAsync = createAsyncThunk(
+    'crop/deleteCrop',
+    async (cropId: string) => {
+        const response = await axios.delete(`http://localhost:5000/api/crop/delete/${cropId}`);
+        return response.data; // Assuming the response contains a success message
+    }
+);
+
 // Create a Redux slice for managing crop data
 const cropSlice = createSlice({
   name: "crops",
@@ -52,10 +61,10 @@ const cropSlice = createSlice({
         state[index] = { ...action.payload };
       }
     },
-    deleteCrop: (state, action) => {
-      const _idToDelete = action.payload;
-      state.crops =
-        state.crops?.filter((crop) => crop._id !== _idToDelete) || null;
+    deleteCrop: (state, action: PayloadAction<string>) => {
+        if (state.crops) {
+            state.crops = state.crops.filter((crop) => crop._id !== action.payload);
+        }
     },
   },
   extraReducers: (builder) => {
@@ -88,6 +97,16 @@ const cropSlice = createSlice({
         )
         .addCase(addLandAndCropAsync.rejected, (state, action) => {
             console.error("Error adding land and crop data (combined):", action.error);
+        })
+      // Handle successful fulfillment of deleteCropAsync
+        .addCase(deleteCropAsync.fulfilled, (state, action: PayloadAction<string>) => {
+            const deletedCropId = action.payload;
+            if (state.crops) {
+                state.crops = state.crops.filter((crop) => crop._id !== deletedCropId);
+            }
+        })
+        .addCase(deleteCropAsync.rejected, (state, action) => {
+            console.error("Error deleting crop:", action.error);
         });
   },
 });

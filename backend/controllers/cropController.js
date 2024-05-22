@@ -82,6 +82,21 @@ const cropController = {
       return res.status(500).json({ message: err.message });
     }
   },
+// Delete crop details by ID
+  deleteCrop: async (req, res) => {
+    try {
+      const id = req.params.id;
+      // Find the crop by ID and remove it
+      const deletedCrop = await Crop.findByIdAndDelete({ _id: id });
+
+      if (!deletedCrop) {
+        return res.status(404).json({ message: "Crop not found" });
+      }
+      res.status(200).json({ message: "Crop deleted successfully" });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
 }
 
 module.exports = cropController;
