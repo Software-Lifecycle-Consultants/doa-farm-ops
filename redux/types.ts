@@ -1,3 +1,7 @@
+/*
+types.ts where the RootState type is defined. 
+The RootState type defines the structure of the Redux store's state. 
+*/
 export interface Auth {
   isAuthenticated:boolean;
   auth:{
@@ -69,3 +73,7 @@ export type RootState = {
   farmer: { farmerDetails: FarmerDetails | null };
   officer: { officerDetails: OfficerDetails | null };
 };
+
+
+/* NOTE :  Use the RootState type in components and selectors to ensure type safety when accessing the Redux state. 
+*/
