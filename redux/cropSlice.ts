@@ -36,7 +36,28 @@ export const addLandAndCropAsync = createAsyncThunk(
         return response.data;
     }
 );
+export const updateCropAsync = createAsyncThunk(
+    'crops/updateCrop',
+    async (cropData: Crop) => {
+        const apiEndpoint = `http://localhost:5000/api/crop/update/${cropData._id}`;
 
+            const response = await fetch(apiEndpoint, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(cropData),
+            });
+
+            // Check for successful response
+            if (!response.ok) {
+                throw new Error('Failed to update crop');
+            }
+
+            const updatedCropData = await response.json();
+            return updatedCropData;
+        }
+);
 // Thunk for deleting a crop
 export const deleteCropAsync = createAsyncThunk(
     'crop/deleteCrop',
@@ -57,13 +78,16 @@ const cropSlice = createSlice({
     addCrop: (state, action) => {
       state.crops?.push(action.payload);
     },
-    updateCrop: (state, action) => {
-      const { _id } = action.payload;
-      const index = state.crops?.findIndex((crop) => crop._id === _id);
-      if (index !== -1) {
-        state[index] = { ...action.payload };
-      }
-    },
+    updateCrop: (state, action: PayloadAction<Crop>) => {
+          if (state.crops) {
+              const cropIndex = state.crops.findIndex(crop => crop._id === action.payload._id);
+              if (cropIndex !== -1) {
+                  state.crops[cropIndex] = action.payload; // Update existing crop
+              } else {
+                  state.crops.push(action.payload); // Add new crop
+              }
+          }
+      },
     deleteCrop: (state, action: PayloadAction<string>) => {
         if (state.crops) {
             state.crops = state.crops.filter((crop) => crop._id !== action.payload);
@@ -110,7 +134,22 @@ const cropSlice = createSlice({
         })
         .addCase(deleteCropAsync.rejected, (state, action) => {
             console.error("Error deleting crop:", action.error);
-        });
+        })
+
+        .addCase(updateCropAsync.fulfilled, (state, action: PayloadAction<Crop>) => {
+            const updatedCrop = action.payload;
+            const cropIndex = state.crops?.findIndex(crop => crop._id === updatedCrop._id);
+
+            if (cropIndex !== -1) {
+                state.crops![cropIndex] = updatedCrop; // Update existing crop
+            } else {
+                state.crops?.push(updatedCrop); // Add new crop (assuming state.crops is not null)
+            }
+        })
+          .addCase(updateCropAsync.rejected, (state, action) => {
+              console.error("Error updating crop:", action.error);
+              // Handle errors (e.g., revert UI update, display error message)
+          });
   },
 });
   // Export the action creators for external use.
