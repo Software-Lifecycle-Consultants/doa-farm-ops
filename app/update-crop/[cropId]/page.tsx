@@ -13,16 +13,21 @@ import {
   Grid,
   FormControlLabel,
   TextField,
-  Autocomplete
+  Autocomplete,
+  Dialog,
+  DialogTitle,
+  DialogActions
 } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
-import { updateCrop } from "@/redux/cropSlice";
+import {fetchCrops, selectCrops, updateCropAsync} from "@/redux/cropSlice";
 import { cropList } from "@/data/cropsData";
-import { RootState } from "@/redux/types";
+import {Crop, RootState} from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../../config/i18n";// Import the i18n instance
 import { CustomBox1} from "@/Theme";
+import store, {AppDispatch} from "@/redux/store";
+import {selectAuth} from "@/redux/authSlice";
 
 // Styles for labels
 const styles = {
@@ -41,18 +46,24 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
   // Extract the cropId from the parameters
   const cropId = params.cropId;
   // Get crop details from the Redux store
-  const cropDetails = useSelector((state: RootState) => state.crop);
+  const cropDetails = useSelector((state: any) => selectCrops(state));
+  console.log("cropDetails type:", typeof cropDetails);
   // Find the specific crop detail by matching cropId
-  const cropDetail = cropDetails.find((crop) => crop._id === cropId);
+  const cropDetail = cropDetails?.length > 0 ? cropDetails.find((crop) => crop._id === cropId) : null;
   const cropNames = cropList.map(crop => crop.name);
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  const dispatch : AppDispatch  = useDispatch();
+  // Fetch the land details when the component mounts
+  React.useEffect(() => {
+    dispatch(fetchCrops(cropId));
+  }, [dispatch, cropId]);
 
   // Initialize states
   const [isCultivationLoan, setIsCultivationLoan] = useState("");
-  const [landId, setLandId] = useState(cropDetail?.landId || "");
 
   // Define a TypeScript interface to represent the form data
   interface FormData {
-    cropName: string | null;
+    cropName: string;
     season: string;
     cropType: string;
     totalSoldQty: string;
@@ -60,22 +71,29 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
     reservedQtyHome: string;
     reservedQtySeed: string;
     noOfPicks: string;
+    isCultivationLoan:string;
     loanObtained: number;
+    userId: string;
+    landId: string;
+
   }
   // Initialize form data state with values
+  const crop = cropDetails?.find((c) => c._id === cropId);
   const [formData, setFormData] = useState<FormData>(cropDetail?.cropDetails || {
-    cropName: null, // Specify the type as string | null
-    season: "1",
-    cropType: "",
-    totalSoldQty: "",
-    totalIncome: "",
-    reservedQtyHome: "",
-    reservedQtySeed: "",
-    noOfPicks: "",
-    loanObtained: 0,
+    cropName: crop?.cropName || '',
+    season: crop?.season || '',
+    cropType: crop?.cropType || '',
+    totalSoldQty: crop?.totalSoldQty || '',
+    totalIncome: crop?.totalIncome || '',
+    reservedQtyHome: crop?.reservedQtyHome || '',
+    reservedQtySeed: crop?.reservedQtySeed || '',
+    noOfPicks: crop?.noOfPicks || '',
+    isCultivationLoan : crop?.isCultivationLoan  || '',
+    loanObtained: crop?.loanObtained || '',
+    userId: crop?.userId || '',
+    landId: crop?.landId || '',
   });
 
-  const dispatch = useDispatch();
 
   // Handle selection change for "Cultivation loan obtained?" dropdown
   const handleCultivationLoanChange = (
@@ -90,13 +108,39 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
 
   //Function to navigate to my crops page clicking save button
   const handleOnClickUpdateCrop = async (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-    // Simulate update crop action by updating user data object.
-    const cropData = { landId, _id: cropDetail?._id, cropDetails: formData };
-    // Dispatch the 'update' action from the 'cropSlice' with the user data.
-    dispatch(updateCrop(cropData));
-    //Navigate to my crops page
-    router.push("/my-crops");
+    event.preventDefault();
+    const loggedUser = selectAuth(store.getState());
+    const userId = loggedUser.auth._id;
+    try {// Prevent the default form submission behavior
+      // Simulate update crop action by updating user data object.
+      const cropData:Crop ={
+        _id: cropId,
+        cropName: formData.cropName,
+        season: formData.season,
+        cropType: formData.cropType,
+        totalSoldQty: formData.totalSoldQty,
+        totalIncome: formData.totalIncome,
+        reservedQtyHome: formData.reservedQtyHome,
+        reservedQtySeed: formData.reservedQtySeed,
+        noOfPicks: formData.noOfPicks,
+        isCultivationLoan:formData.isCultivationLoan,
+        loanObtained: formData.loanObtained,
+        userId:userId,
+        landId:formData.landId,
+
+      };
+
+
+      // Dispatch the updateLandAsync thunk
+      console.log("Updated Crop Data ------> " + JSON.stringify(cropData))
+      // Dispatch the 'update' action from the 'cropSlice' with the user data.
+      await dispatch(updateCropAsync(cropData));
+      setOpenSuccessDialog(true);
+      //Navigate to my crops page
+    }catch (error) {
+      console.error("Error updating crop:", error);
+      // Handle the error, e.g., display an error message to the user
+    }
   };
 
   //Function to navigate to my crops page clicking cancel button
@@ -104,6 +148,11 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
     router.push("/my-crops");
   };
 
+  //Function to navigate to my crops page after updating successful
+  const handleCloseSuccessDialog = () => {
+    setOpenSuccessDialog(false);
+    router.push("/my-crops");
+  };
   // Define a function to handle update crop.
   const handleChangeUpdateCrop = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -115,15 +164,6 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
     });
   };
 
-  // Define a function to select crop name.
-  const selectChangeUpdateCropName = (
-    event: any, newValue: string | null
-  ) => {
-    setFormData({
-      ...formData,
-      cropName: newValue,
-    });
-  };
 
   return (
     <Container component="main" maxWidth="xl">
@@ -152,9 +192,9 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                 options={cropNames}
                 getOptionLabel={(option) => option}
                 value={formData.cropName}
-                onChange={(event, newValue) =>
-                  selectChangeUpdateCropName(event, newValue)
-                }
+                freeSolo // Allow entering new crop names
+               onChange={(e) => handleChangeUpdateCrop(e, "cropName")}
+
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -348,6 +388,19 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                 </Button>
               </Stack>
             </Grid>
+            <Dialog
+                open={openSuccessDialog}
+                onClose={handleCloseSuccessDialog}
+                aria-labelledby="success-dialog-title"
+            >
+              {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
+              <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtUpdatedSuccess")}</DialogTitle>
+              <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
+                  {i18n.t("dialogBoxes.capBtnOk")}
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Grid>
         </Box>
       </CustomBox1>

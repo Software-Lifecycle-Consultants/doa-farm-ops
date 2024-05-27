@@ -146,8 +146,12 @@ export default function CropsTable({ title }: TableTitleProps) {
   };
 
   // Function to handle navigation when the Edit icon is clicked
-  const handleEditClick = (id: string) => {
-    router.push(`/update-crop/${id}`);
+  const handleEditClick = async (cropId: any) => {
+    try {
+    router.push(`/update-crop/${cropId}`);
+    } catch (error) {
+      console.error('Error updating crop:', error);
+    }
   };
 
   const [deleteConfirmation, setDeleteConfirmation] = React.useState<{
