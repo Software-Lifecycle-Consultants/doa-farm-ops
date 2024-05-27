@@ -95,7 +95,7 @@ export default function AddCrop() {
   const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLandId(event.target.value);
 
-    const selectedLand = landData.find((land:Land) => land._id === event.target.value);
+    const selectedLand = landData?.find((land:Land) => land._id === event.target.value);
     if (selectedLand) {
       setFormData({ ...formData, landId: event.target.value});
     } else {
