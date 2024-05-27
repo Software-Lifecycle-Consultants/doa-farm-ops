@@ -46,7 +46,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
   // Extract the cropId from the parameters
   const cropId = params.cropId;
   // Get crop details from the Redux store
-  const cropDetails = useSelector((state: any) => selectCrops(state));
+  const cropDetails = useSelector((state: RootState) => selectCrops(state));
   console.log("cropDetails type:", typeof cropDetails);
   // Find the specific crop detail by matching cropId
   const cropDetail = cropDetails?.length > 0 ? cropDetails.find((crop) => crop._id === cropId) : null;
