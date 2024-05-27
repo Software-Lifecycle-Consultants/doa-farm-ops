@@ -79,19 +79,19 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
   }
   // Initialize form data state with values
   const crop = cropDetails?.find((c) => c._id === cropId);
-  const [formData, setFormData] = useState<FormData>(cropDetail?.cropDetails || {
-    cropName: crop?.cropName || '',
-    season: crop?.season || '',
-    cropType: crop?.cropType || '',
-    totalSoldQty: crop?.totalSoldQty || '',
-    totalIncome: crop?.totalIncome || '',
-    reservedQtyHome: crop?.reservedQtyHome || '',
-    reservedQtySeed: crop?.reservedQtySeed || '',
-    noOfPicks: crop?.noOfPicks || '',
-    isCultivationLoan : crop?.isCultivationLoan  || '',
-    loanObtained: crop?.loanObtained || '',
-    userId: crop?.userId || '',
-    landId: crop?.landId || '',
+  const [formData, setFormData] = useState<FormData>({
+    cropName: cropDetail?.cropName || '',
+    season: cropDetail?.season || '',
+    cropType: cropDetail?.cropType || '',
+    totalSoldQty: cropDetail?.totalSoldQty || '',
+    totalIncome: cropDetail?.totalIncome || '',
+    reservedQtyHome: cropDetail?.reservedQtyHome || '',
+    reservedQtySeed: cropDetail?.reservedQtySeed || '',
+    noOfPicks: cropDetail?.noOfPicks || '',
+    isCultivationLoan : cropDetail?.isCultivationLoan  || '',
+    loanObtained: cropDetail?.loanObtained ?? 0,
+    userId: cropDetail?.userId || '',
+    landId: cropDetail?.landId || '',
   });
 
 
