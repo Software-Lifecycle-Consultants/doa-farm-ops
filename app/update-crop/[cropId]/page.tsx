@@ -164,6 +164,18 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
     });
   };
 
+    // Define a function to handle changes for Autocomplete
+    const handleAutocompleteChange = (
+      event: React.SyntheticEvent<Element, Event>,
+      value: string | null
+    ) => {
+      setFormData({
+        ...formData,
+        cropName: value || '',
+      });
+    };
+  
+
 
   return (
     <Container component="main" maxWidth="xl">
@@ -193,7 +205,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                 getOptionLabel={(option) => option}
                 value={formData.cropName}
                 freeSolo // Allow entering new crop names
-               onChange={(e) => handleChangeUpdateCrop(e, "cropName")}
+               onChange={(e,value) => handleAutocompleteChange(e, value)}
 
                 renderInput={(params) => (
                   <TextField
