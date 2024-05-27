@@ -24,10 +24,11 @@ import { selectFarmerDetails, updateandfetchfarmer } from "@/redux/farmerSlice";
 import { selectOfficer, updateAndFetchOfficer } from "@/redux/officerSlice";
 import { selectUser } from "@/redux/userSlice";
 import { Stack } from "@mui/system";
+import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 
 export default function UpdateAdditionalDetails() {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch:AppDispatch = useDispatch();
   const { t } = useTranslation();
 
   // Get user data from the Redux store
