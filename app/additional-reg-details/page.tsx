@@ -24,12 +24,13 @@ import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectFarmerDetails } from "@/redux/farmerSlice";
 import { selectOfficer } from"@/redux/officerSlice";
+import { AppDispatch } from '@/redux/store'; 
 
 export default function AdditionalRegistration() {
 
   const [termsAgreementChecked, setTermsAgreementChecked] = useState(false);
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch:AppDispatch = useDispatch();
   const { t } = useTranslation();
 
   // State for the form data
