@@ -10,6 +10,7 @@ export interface Auth {
 }
 
 export interface Crop {
+  _id: string;
   cropName: string;
   season: string;
   cropType: string;
@@ -18,10 +19,12 @@ export interface Crop {
   reservedQtyHome: string;
   reservedQtySeed: string;
   noOfPicks: string;
+  isCultivationLoan:string;
   loanObtained: number;
   userId: string;
   landId: string;
-  _id: string;
+
+
 }
 export interface Land {
   _id: string;
