@@ -49,7 +49,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
   const cropDetails = useSelector((state: RootState) => selectCrops(state));
   console.log("cropDetails type:", typeof cropDetails);
   // Find the specific crop detail by matching cropId
-  const cropDetail = cropDetails?.length > 0 ? cropDetails.find((crop) => crop._id === cropId) : null;
+  const cropDetail = cropDetails && cropDetails?.length > 0 ? cropDetails.find((crop) => crop._id === cropId) : null;
   const cropNames = cropList.map(crop => crop.name);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const dispatch : AppDispatch  = useDispatch();
