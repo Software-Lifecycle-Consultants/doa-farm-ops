@@ -34,7 +34,7 @@ export interface Land {
   landRent: string;
   irrigationMode: string;
   userId: string;
-  crops: any[];
+
 }
 interface LandAndCrop {
   landId: string;
