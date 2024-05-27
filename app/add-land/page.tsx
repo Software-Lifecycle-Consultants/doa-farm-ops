@@ -105,7 +105,7 @@ export default function AddNewLand() {
 
       // Get land data from the Redux store
       const landData = selectLands(store.getState());
-      const landDataObject = landData[landData.length - 1];
+      const landDataObject = landData?.[landData.length - 1];
 
       const landDetails = {...landDataObject, userId};
       const jsonLandDetails = JSON.stringify(landDetails);
