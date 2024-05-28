@@ -140,7 +140,7 @@ const cropSlice = createSlice({
             const updatedCrop = action.payload;
             const cropIndex = state.crops?.findIndex(crop => crop._id === updatedCrop._id);
 
-            if (cropIndex !== -1) {
+            if (cropIndex && cropIndex !== -1) {
                 state.crops![cropIndex] = updatedCrop; // Update existing crop
             } else {
                 state.crops?.push(updatedCrop); // Add new crop (assuming state.crops is not null)
