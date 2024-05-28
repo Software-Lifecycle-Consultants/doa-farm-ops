@@ -111,7 +111,7 @@ export default function CropsTable({ title }: TableTitleProps) {
     if (user) {
     dispatch(fetchCrops(user._id));
     }
-  }, []);
+  }, [user,dispatch]);
 
   // State for handling pagination
   const [page, setPage] = React.useState(0);
