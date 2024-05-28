@@ -123,8 +123,10 @@ export default function CropsTable({ title }: TableTitleProps) {
     return landName?.landName;
   }
   const handleDeleteSuccess = async () => {
+    if (user) {
     await dispatch(fetchCrops(user._id)); // Manual refetch after deletion (optional)
     setOpenSuccessDialog(false);
+    }
   }
 
 
