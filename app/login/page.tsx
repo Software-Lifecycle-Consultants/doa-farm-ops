@@ -80,7 +80,6 @@ export default function SignIn() {
         password: formData.password
       });
       if (response && response.status === 200) {
-        console.log("response user data------------", response);
         setResponseData(response.data);
         dispatch(login(response.data));
         router.push("./");
@@ -93,8 +92,6 @@ export default function SignIn() {
       console.error('Error fetching data:', error);
       toast.error("Login Failed");
     }
-    
-   
   };
 
   // Function to handle email input change and validation

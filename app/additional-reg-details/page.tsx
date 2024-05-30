@@ -133,8 +133,6 @@ export default function AdditionalRegistration() {
       );
       if (response && response.status === 200) {
         router.push("/login");
-        console.log(response);
-        console.log('Registration successful!');
       } else if (response && response.status === 400) {
         console.error('Registration Failed');
       }
