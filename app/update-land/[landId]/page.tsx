@@ -100,7 +100,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
       //Get logged user Id from redux
       const loggedUser = selectAuth(store.getState());
       const userId = loggedUser.auth._id;
-      
+
       // Create the land data object with the correct structure
       const landData: Land = {
         _id: landId,
@@ -114,7 +114,6 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
       };
   
       // Dispatch the updateLandAsync thunk
-      console.log("Updated Land Data ------> " + JSON.stringify(landData))
       await dispatch(updateLandAsync(landData));
       setOpenSuccessDialog(true); // Open success dialog on success
     } catch (error) {
