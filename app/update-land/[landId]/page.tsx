@@ -63,7 +63,6 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     landRent: land?.landRent || '',
     irrigationMode: land?.irrigationMode || '',
     userId: land?.userId || '',
-    crops: land?.crops || [],
   });
 
   interface FormData {
@@ -73,7 +72,6 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     landRent: string;
     irrigationMode: string;
     userId: string;
-    crops: any[];
   }
 
 
@@ -96,7 +94,6 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
         landRent: formData.landRent,
         irrigationMode: formData.irrigationMode,
         userId: userId, // Assuming you have the authenticated user's ID
-        crops: [], // Assuming you don't have any crops associated with this land update
       };
 
       // Dispatch the updateLandAsync thunk
