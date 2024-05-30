@@ -19,8 +19,7 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from '@/redux/store';
-import { editLand,fetchAndRegisterLands, selectLands, updateLandAsync } from "@/redux/landSlice";
-import { RootState } from "@/redux/types";
+import { fetchAndRegisterLands, selectLands, updateLandAsync } from "@/redux/landSlice";
 import { useTranslation } from 'react-i18next';
 import i18n from "../../config/i18n";// Import the i18n instance
 import { CustomBox1 } from "@/Theme";
@@ -67,9 +66,6 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     crops: land?.crops || [],
   });
 
-  // // Create state to manage form data
-  // const [formData, setFormData] = useState(initialFormData);
-
   interface FormData {
     landName: string;
     district: string;
@@ -80,16 +76,6 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     crops: any[];
   }
 
-  // interface Land {
-  //   _id: string;
-  //   landName: string;
-  //   district: string;
-  //   dsDivision: string;
-  //   landRent: string;
-  //   irrigationMode: string;
-  //   userId: string;
-  //   crops: any[];
-  // }
 
   //Function to navigate to my crops page clicking save & exit to my crops button
   const handleOnClickUpdateLand = async (
