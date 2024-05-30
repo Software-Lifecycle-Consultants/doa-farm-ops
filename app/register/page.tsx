@@ -86,7 +86,6 @@ export default function SignUp() {
     try {
       // Dispatch the register action from userSlice
       const action = register(formData);
-      console.log('Dispatching action:', action);
       dispatch(action);
       router.push("/additional-reg-details");
 

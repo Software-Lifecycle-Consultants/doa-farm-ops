@@ -43,16 +43,19 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
 
   const router = useRouter();
   const { t } = useTranslation();
+
   // Extract the cropId from the parameters
   const cropId = params.cropId;
+
   // Get crop details from the Redux store
   const cropDetails = useSelector((state: RootState) => selectCrops(state));
-  console.log("cropDetails type:", typeof cropDetails);
+
   // Find the specific crop detail by matching cropId
   const cropDetail = cropDetails && cropDetails?.length > 0 ? cropDetails.find((crop) => crop._id === cropId) : null;
   const cropNames = cropList.map(crop => crop.name);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const dispatch : AppDispatch  = useDispatch();
+
   // Fetch the land details when the component mounts
   React.useEffect(() => {
     dispatch(fetchCrops(cropId));
@@ -129,10 +132,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
         landId:formData.landId,
 
       };
-
-
-      // Dispatch the updateLandAsync thunk
-      console.log("Updated Crop Data ------> " + JSON.stringify(cropData))
+      
       // Dispatch the 'update' action from the 'cropSlice' with the user data.
       await dispatch(updateCropAsync(cropData));
       setOpenSuccessDialog(true);

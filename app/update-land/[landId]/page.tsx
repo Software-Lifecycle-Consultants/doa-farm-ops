@@ -99,10 +99,8 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     try {
       //Get logged user Id from redux
       const loggedUser = selectAuth(store.getState());
-      console.log("----------getUserFromRedux----------------", loggedUser);
       const userId = loggedUser.auth._id;
-      console.log("----------getUserFromRedux----------------", userId);
-
+      
       // Create the land data object with the correct structure
       const landData: Land = {
         _id: landId,
