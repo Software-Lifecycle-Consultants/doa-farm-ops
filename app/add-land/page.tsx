@@ -63,7 +63,7 @@ export default function AddNewLand() {
     landRent: string;
     irrigationMode: string;
     userId: string;
-    crops: any[];
+
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -74,7 +74,7 @@ export default function AddNewLand() {
     landRent: "",
     irrigationMode: "",
     userId: "",
-    crops: [],
+
   });
 
   const dispatch = useDispatch();
