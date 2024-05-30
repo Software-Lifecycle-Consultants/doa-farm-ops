@@ -18,9 +18,8 @@ import {
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { addNewLand } from "@/redux/landSlice";
-import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
 import MapComponent from "../../components/MapComponent";
@@ -41,7 +40,8 @@ export default function AddNewLand() {
 
   const districtNames = districtList.map((district) => district.name);
 
-  const landDetails = useSelector((state: RootState) => state.land);
+  //const landDetails = useSelector((state: RootState) => state.land);
+
   // State for managing form data and map-related data
   const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(
     null
@@ -55,7 +55,7 @@ export default function AddNewLand() {
   const [responseData, setResponseData] = useState(null);
 
   // Define the structure of the form data
-  interface FormData{
+  interface FormData {
     _id: string;
     landName: string;
     district: string | null;
@@ -103,7 +103,7 @@ export default function AddNewLand() {
       // Get land data from the Redux store
       const landData = selectLands(store.getState());
       const landDataObject = landData?.[landData.length - 1];
-      const landDetails = {...landDataObject, userId};
+      const landDetails = { ...landDataObject, userId };
 
       const response = await axios.post(
         "http://localhost:5000/api/land/create", landDetails
@@ -356,12 +356,12 @@ export default function AddNewLand() {
           </Grid>
         </Box>
         <Dialog
-            open={openSuccessDialog}
-            onClose={handleCloseSuccessDialog}
-            aria-labelledby="success-dialog-title"
+          open={openSuccessDialog}
+          onClose={handleCloseSuccessDialog}
+          aria-labelledby="success-dialog-title"
         >
-            {/* Display a translated 'Record added successfully!' message based on the selected language. */}
-            <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtAddedSuccess")}</DialogTitle>
+          {/* Display a translated 'Record added successfully!' message based on the selected language. */}
+          <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtAddedSuccess")}</DialogTitle>
           <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
               {i18n.t("dialogBoxes.capBtnOk")}
