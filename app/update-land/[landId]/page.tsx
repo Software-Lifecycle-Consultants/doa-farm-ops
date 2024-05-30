@@ -40,7 +40,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
   //const landDetails = useSelector((state: RootState) => state.land);
   const landDetails = useSelector((state: any) => selectLands(state));
 
-// Create a new array named districtNames containing all district names
+  // Create a new array named districtNames containing all district names
   const districtNames = districtList.map((district) => district.name);
 
   // Get the Redux dispatch function with AppDispatch  type
@@ -98,7 +98,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
         userId: userId, // Assuming you have the authenticated user's ID
         crops: [], // Assuming you don't have any crops associated with this land update
       };
-  
+
       // Dispatch the updateLandAsync thunk
       await dispatch(updateLandAsync(landData));
       setOpenSuccessDialog(true); // Open success dialog on success
@@ -191,20 +191,20 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblDistrict")}</Typography>
               <Autocomplete
-                  options={districtNames}
-                  getOptionLabel={(option) => option}
-                  value={formData.district}
-                  onChange={(event, newValue) =>
-                      selectChangeAddDistrict(event, newValue)
-                  }
-                  renderInput={(params) => (
-                      <TextField
-                          {...params}
-                          name="district"
-                          placeholder={i18n.t("updateLand.hintTxtDistrict")}
-                          variant="outlined"
-                      />
-                  )}
+                options={districtNames}
+                getOptionLabel={(option) => option}
+                value={formData.district}
+                onChange={(event, newValue) =>
+                  selectChangeAddDistrict(event, newValue)
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="district"
+                    placeholder={i18n.t("updateLand.hintTxtDistrict")}
+                    variant="outlined"
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
@@ -275,12 +275,12 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
             </Stack>
           </Grid>
           <Dialog
-              open={openSuccessDialog}
-              onClose={handleCloseSuccessDialog}
-              aria-labelledby="success-dialog-title"
+            open={openSuccessDialog}
+            onClose={handleCloseSuccessDialog}
+            aria-labelledby="success-dialog-title"
           >
-              {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
-              <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtUpdatedSuccess")}</DialogTitle>
+            {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
+            <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtUpdatedSuccess")}</DialogTitle>
             <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
               <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
                 {i18n.t("dialogBoxes.capBtnOk")}
