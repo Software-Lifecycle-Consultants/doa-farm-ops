@@ -95,31 +95,22 @@ export default function AddNewLand() {
     try {
       const action = addNewLand(formData);
       dispatch(action);
-      console.log("Dispatching action for add land:", action);
 
       //Get logged user Id from redux
       const loggedUser = selectAuth(store.getState());
-      console.log("----------getUserFromRedux----------------", loggedUser);
       const userId = loggedUser.auth._id;
-      console.log("----------getUserFromRedux----------------", userId);
 
       // Get land data from the Redux store
       const landData = selectLands(store.getState());
       const landDataObject = landData?.[landData.length - 1];
-
       const landDetails = {...landDataObject, userId};
-      const jsonLandDetails = JSON.stringify(landDetails);
-      console.log("----------jsonLandDetails----------------" + jsonLandDetails);
 
       const response = await axios.post(
         "http://localhost:5000/api/land/create", landDetails
       );
       if (response && response.status === 200) {
-        console.log(response);
         setResponseData(response.data);
         setOpenSuccessDialog(true); // Open success dialog on success
-        // // Simulate an add land action by creating a land data object.
-        // dispatch(addLand(landData));
       } else if (response && response.status === 400) {
         console.error("Failed to fetch data");
       }
@@ -138,7 +129,6 @@ export default function AddNewLand() {
       const landData = formData;
       const action = addNewLand(landData);
       dispatch(action);
-      console.log("Dispatching action for land:", action);
       router.push(`/add-crop?fromAddLand=${fromAddLandValue}`); //Pass the value
     } catch (error) {
       console.error("Error fetching data:", error);
