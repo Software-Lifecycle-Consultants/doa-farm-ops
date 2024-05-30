@@ -94,34 +94,32 @@ export default function AdditionalRegistration() {
     e.preventDefault(); // Prevent default form submission
     try {
       if (selectedRole === "farmer") {
+        //Dispatch farmer data to redux store
         const action = registerFarmer(farmerFormData);
         dispatch(action);
-        console.log("Dispatching action for farmer:", action);
-        // Get farmer data from the Redux store
-        
+     
+        //Get farmer data from the Redux store
         const farmerData = selectFarmerDetails(store.getState());
-        console.log("----------farmerData----------------" + farmerData);
-        const farmerDataJSON = JSON.stringify(farmerData);
-        console.log("----------farmerDataJSON----------------" + farmerDataJSON);
+      
+       //Create a data object combining user data and farmer data
         combinedData = {
           userData,
           farmerData,
         };
       } else {
+        //Dispatch farmer data to redux store
         const action = OfficerRegister(officerFormData);
         dispatch(action);
-        console.log("Dispatching action office:", action);
+    
         // Get officer data from the Redux store
-        
         const officerData = selectOfficer(store.getState());
-        console.log("----------officerData----------------" + officerData);
+        
+        //Create a data object combining user data and officer data
         combinedData = {
           userData,
           officerData,
         };
       }
-
-      console.log("--- JSON combinedData----" + JSON.stringify(combinedData));
 
       // Make the API call using combinedData from the Redux store
       const response = await axios.post(
@@ -134,7 +132,6 @@ export default function AdditionalRegistration() {
         }
       );
       if (response && response.status === 200) {
-        //dispatch(register(response.data))
         router.push("/login");
         console.log(response);
         console.log('Registration successful!');
