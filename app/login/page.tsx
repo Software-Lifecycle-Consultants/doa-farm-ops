@@ -74,11 +74,11 @@ export default function SignIn() {
     // Simulate a login action by creating a user data object.
     const userData = { username: formData.email, password: formData.password }; // Use email as username for simplicity
     try {
-      const response = await axios.post('http://localhost:5000/api/user/login', 
-      {
-        email: formData.email,
-        password: formData.password
-      });
+      const response = await axios.post('http://localhost:5000/api/user/login',
+        {
+          email: formData.email,
+          password: formData.password
+        });
       if (response && response.status === 200) {
         setResponseData(response.data);
         dispatch(login(response.data));
