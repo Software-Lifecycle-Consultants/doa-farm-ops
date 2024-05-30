@@ -24,16 +24,14 @@ import {
 } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/types";
-import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import i18n from "@/app/config/i18n";// Import the i18n instance
 import { useDispatch } from "react-redux";
-import {deleteCrop, deleteCropAsync, fetchCrops, selectCrops} from "@/redux/cropSlice"; // Import the Redux action for updating crops
+import { deleteCrop, deleteCropAsync, fetchCrops, selectCrops } from "@/redux/cropSlice"; // Import the Redux action for updating crops
 import theme from '@/Theme';
 import { selectUser } from '@/redux/userSlice';
 import { AppDispatch } from '@/redux/store';
-import { selectLands} from '@/redux/landSlice';
+import { selectLands } from '@/redux/landSlice';
 
 
 // Define the table columns
@@ -109,9 +107,9 @@ export default function CropsTable({ title }: TableTitleProps) {
   useEffect(() => {
     // Fetch the crop data when the component mounts
     if (user) {
-    dispatch(fetchCrops(user._id));
+      dispatch(fetchCrops(user._id));
     }
-  }, [user,dispatch]);
+  }, [user, dispatch]);
 
   // State for handling pagination
   const [page, setPage] = React.useState(0);
@@ -124,11 +122,10 @@ export default function CropsTable({ title }: TableTitleProps) {
   }
   const handleDeleteSuccess = async () => {
     if (user) {
-    await dispatch(fetchCrops(user._id)); // Manual refetch after deletion (optional)
-    setOpenSuccessDialog(false);
+      await dispatch(fetchCrops(user._id)); // Manual refetch after deletion (optional)
+      setOpenSuccessDialog(false);
     }
   }
-
 
   // Function to handle changing the page
   const handleChangePage = (event: unknown, newPage: number) => {
@@ -150,7 +147,7 @@ export default function CropsTable({ title }: TableTitleProps) {
   // Function to handle navigation when the Edit icon is clicked
   const handleEditClick = async (cropId: any) => {
     try {
-    router.push(`/update-crop/${cropId}`);
+      router.push(`/update-crop/${cropId}`);
     } catch (error) {
       console.error('Error updating crop:', error);
     }
@@ -226,7 +223,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                           <TableCell key={column.id} align={column.align}>
                             {column.format && typeof value === "number"
                               ? column.format(value)
-                              : value  || "N/A"}
+                              : value || "N/A"}
                           </TableCell>
                         </>
                       );
@@ -252,7 +249,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                           borderRadius: "16px",
                           width: "100%",
                         }}
-                        onClick={()=> navigationToAddOperationCost(row._id)}
+                        onClick={() => navigationToAddOperationCost(row._id)}
                       >
                         Add Cost
                       </Button>
@@ -275,25 +272,25 @@ export default function CropsTable({ title }: TableTitleProps) {
       />
       {/* Confirmation Dialog */}
       <Dialog
-          open={deleteConfirmation.open}
-          onClose={closeDeleteConfirmation}
-          aria-labelledby="delete-dialog-title"
+        open={deleteConfirmation.open}
+        onClose={closeDeleteConfirmation}
+        aria-labelledby="delete-dialog-title"
       >
         <DialogTitle id="delete-dialog-title"> {i18n.t("dialogBoxes.txtDeleteConfirmation")}</DialogTitle>
         <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
           <Button onClick={() => handleDeleteClick(deleteConfirmation.cropId)} variant="contained" color="primary" >
             {i18n.t("dialogBoxes.capBtnYes")}
           </Button>
-          <Button onClick={closeDeleteConfirmation} color="primary"  variant="outlined">
+          <Button onClick={closeDeleteConfirmation} color="primary" variant="outlined">
             {i18n.t("dialogBoxes.capBtnCancel")}
           </Button>
         </DialogActions>
       </Dialog>
       {/*Dialog box for delete success message*/}
       <Dialog
-          open={openSuccessDialog}
-          onClose= {handleDeleteSuccess}
-          aria-labelledby="success-dialog-title"
+        open={openSuccessDialog}
+        onClose={handleDeleteSuccess}
+        aria-labelledby="success-dialog-title"
       >
         {/* Display a translated 'Record deleted successfully!' message based on the selected language. */}
         <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtDeleteSuccess")}</DialogTitle>
