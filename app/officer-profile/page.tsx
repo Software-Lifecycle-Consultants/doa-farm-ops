@@ -18,7 +18,7 @@ import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 // OfficerProfile component renders a profile page for an officer.
 export default function OfficerProfile() {
   const router = useRouter();
-  const dispatch:AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const { t } = useTranslation();
 
