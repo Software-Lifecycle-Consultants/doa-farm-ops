@@ -16,17 +16,16 @@ import {
   Autocomplete,
 } from "@mui/material";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useDispatch, useSelector} from "react-redux";
+import { useDispatch} from "react-redux";
 import { cropList } from "@/data/cropsData";
 import { CustomBox1 } from "@/Theme";
-import axios from 'axios';
 import i18n from "../config/i18n";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
-import { selectLands,fetchAndRegisterLands } from "@/redux/landSlice";
+import { selectLands, fetchAndRegisterLands } from "@/redux/landSlice";
 import { addCrop, addCropAsync, addLandAndCropAsync } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
-import {RootState,Land} from "@/redux/types";
+import { Land } from "@/redux/types";
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 
 // Styles for labels
@@ -44,7 +43,7 @@ export default function AddCrop() {
   const router = useRouter();
   // Get land data from the Redux store
   const landData = selectLands(store.getState());
-  
+
   // Use the Next.js hook to retrieve search parameters from the URL
   const searchParams = useSearchParams()
   const fromAddLand = searchParams.get('fromAddLand');
@@ -66,7 +65,7 @@ export default function AddCrop() {
     noOfPicks: string;
     isCultivationLoan: string;
     loanObtained: number;
-    landId:string;
+    landId: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -80,10 +79,10 @@ export default function AddCrop() {
     noOfPicks: "",
     isCultivationLoan: "1",
     loanObtained: 0,
-    landId:"",
+    landId: "",
   });
 
-  const dispatch:AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   // Fetch the land details when the component mounts
   React.useEffect(() => {
@@ -95,11 +94,11 @@ export default function AddCrop() {
   const handleOnChangeLand = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLandId(event.target.value);
 
-    const selectedLand = landData?.find((land:Land) => land._id === event.target.value);
+    const selectedLand = landData?.find((land: Land) => land._id === event.target.value);
     if (selectedLand) {
-      setFormData({ ...formData, landId: event.target.value});
+      setFormData({ ...formData, landId: event.target.value });
     } else {
-      setFormData({ ...formData}); // Reset landName if no match found
+      setFormData({ ...formData }); // Reset landName if no match found
     }
   };
 
@@ -151,10 +150,10 @@ export default function AddCrop() {
     try {
       if (landId) {
         // If land Id exists/selected there is a land already
-         await dispatch(addCropAsync(CropDataObj)); // Dispatch thunk for individual crop data
-    } else {
-          // If land Id does not exist i.e crop data to be adde with a land
-          await dispatch(addLandAndCropAsync(landCropData)); // Dispatch thunk for combined data
+        await dispatch(addCropAsync(CropDataObj)); // Dispatch thunk for individual crop data
+      } else {
+        // If land Id does not exist i.e crop data to be adde with a land
+        await dispatch(addLandAndCropAsync(landCropData)); // Dispatch thunk for combined data
       }
       setResponseData(null); // Reset response data state after successful dispatch
       router.push("/my-crops"); // Navigate to my crops page
@@ -214,10 +213,10 @@ export default function AddCrop() {
                     {/* Display a placeholder option*/}
                     {i18n.t("addCrop.menuItemTxtSelectLand")}
                   </MenuItem>
-                  {landData?.map((land:Land) => (
-                      <MenuItem key={land._id} value={land._id}>
-                        {land.landName}
-                      </MenuItem>
+                  {landData?.map((land: Land) => (
+                    <MenuItem key={land._id} value={land._id}>
+                      {land.landName}
+                    </MenuItem>
                   ))}
                 </TextField>
 
