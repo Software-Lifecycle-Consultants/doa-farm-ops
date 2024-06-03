@@ -30,7 +30,18 @@ import store from "@/redux/store";
 import { selectLands } from "@/redux/landSlice";
 import { selectAuth } from "@/redux/authSlice";
 import { districtList } from "@/data/landsData";
+import { z } from "zod";
+import { ZodErrors } from "@/app/ZodErrors";;
 
+// Define Zod schema for form validation
+const landSchema = z.object({
+  landName: z.string().min(1, "Land name is required"),
+  district: z.string().min(1, "District is required"),
+  dsDivision: z.string().min(1, "Division is required"),
+  landRent: z.string().min(1, "Land rent is required"),
+  irrigationMode: z.string().min(1, "Irrigation mode is required"),
+
+});
 /**
  * Add Land page serves as a form to add details about land properties.
  */
@@ -77,6 +88,7 @@ export default function AddNewLand() {
 
   });
 
+  const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
   const dispatch = useDispatch();
 
   // Managing state for displaying the map
@@ -92,7 +104,19 @@ export default function AddNewLand() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    try {
+     try {
+      const validation = landSchema.safeParse(formData);
+      if (!validation.success) {
+        const flattenedErrors = validation.error.flatten().fieldErrors;
+        setValidationErrors({
+          landName: flattenedErrors.landName?.[0],
+          district: flattenedErrors.district?.[0],
+          dsDivision: flattenedErrors.dsDivision?.[0],
+          landRent: flattenedErrors.landRent?.[0],
+          irrigationMode: flattenedErrors.irrigationMode?.[0],
+        });
+        return;
+      }
       const action = addNewLand(formData);
       dispatch(action);
 
@@ -267,6 +291,9 @@ export default function AddNewLand() {
                 value={formData.landName}
                 onChange={(e) => handleChangeAddNewLand(e, "landName")}
               />
+                {validationErrors.landName && (
+                <ZodErrors error={[validationErrors.landName]} />)}
+                
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblDistrict")}</Typography>
@@ -286,6 +313,7 @@ export default function AddNewLand() {
                   />
                 )}
               />
+           
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblDivision")}</Typography>
@@ -300,6 +328,8 @@ export default function AddNewLand() {
                 value={formData.dsDivision}
                 onChange={(e) => handleChangeAddNewLand(e, "dsDivision")}
               />
+              {validationErrors.dsDivision && (
+              <ZodErrors error={[validationErrors.dsDivision]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblLandRent")}</Typography>
@@ -314,6 +344,8 @@ export default function AddNewLand() {
                 value={formData.landRent}
                 onChange={(e) => handleChangeAddNewLand(e, "landRent")}
               />
+               {validationErrors.landRent && (
+              <ZodErrors error={[validationErrors.landRent]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblMode")}</Typography>
@@ -328,6 +360,9 @@ export default function AddNewLand() {
                 value={formData.irrigationMode}
                 onChange={(e) => handleChangeAddNewLand(e, "irrigationMode")}
               />
+              {validationErrors.irrigationMode && (
+              <ZodErrors error={[validationErrors.irrigationMode]} />)}
+
             </Grid>
           </Grid>
           {/* Buttons for saving and proceeding */}

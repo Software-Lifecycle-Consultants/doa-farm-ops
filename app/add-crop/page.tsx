@@ -27,6 +27,21 @@ import { addCrop, addCropAsync, addLandAndCropAsync } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
 import { Land } from "@/redux/types";
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
+import { z } from "zod";
+import { ZodErrors } from "@/app/ZodErrors";
+
+// zod validation Schema
+const schemaAddCrop = z.object({
+  cropName: z.string().min(1, "Crop name is required"),
+  season: z.string().min(1, "season is required"),
+  cropType: z.string().min(1, "Crop type is required"),
+  totalSoldQty: z.string().min(1, "Total sold quantity is required"),
+  totalIncome: z.string().min(1, "Total income is required"),
+  reservedQtyHome: z.string().min(1, "Quantity kept for home is required"),
+  reservedQtySeed: z.string().min(1, "Quantity kept for seed is required"),
+  noOfPicks: z.string().min(1, "Number of picks is required"),
+  isCultivationLoan: z.string().min(1, "Cultivation loan status is required"),
+});
 
 // Styles for labels
 const styles = {
@@ -52,7 +67,7 @@ export default function AddCrop() {
   // State variables for form fields
   const [landId, setLandId] = useState("");
   const [responseData, setResponseData] = useState(null);
-
+  const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
   //Interface FormData to save inputs from Add Crop screen
   interface FormData {
     cropName: string | null;
@@ -123,7 +138,27 @@ export default function AddCrop() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
+
+    const validation = schemaAddCrop.safeParse(formData);
+    if (!validation.success) {
+       const flattenedErrors = validation.error.flatten().fieldErrors;
+       setValidationErrors({
+         cropName: flattenedErrors.cropName?.[0],
+         season: flattenedErrors.season?.[0],
+         cropType: flattenedErrors.cropType?.[0],
+         totalSoldQty: flattenedErrors.totalSoldQty?.[0],
+         totalIncome: flattenedErrors.totalIncome?.[0],
+         reservedQtyHome: flattenedErrors.reservedQtyHome?.[0],
+         reservedQtySeed: flattenedErrors.reservedQtySeed?.[0],
+         noOfPicks: flattenedErrors.noOfPicks?.[0],
+         isCultivationLoan: flattenedErrors.isCultivationLoan?.[0],
+       });
+    return;
+      }
+   
+    // Prevent the default form submission behavior
     const cropData = { ...formData };
+
 
     //Get logged user Id from redux
     const loggedUser = selectAuth(store.getState());
@@ -265,6 +300,8 @@ export default function AddCrop() {
                   />
                 )}
               />
+               {validationErrors?.cropName && (
+              <ZodErrors error={[validationErrors.cropName]} />)}
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -278,6 +315,9 @@ export default function AddCrop() {
                 value={formData.season}
                 onChange={(e) => handleChangeAddCrop(e, "season")}
               >
+               {validationErrors?.season && (
+              <ZodErrors error={[validationErrors.season]} />)}
+
                 <MenuItem value="1">
                   {i18n.t("addCrop.menuItemTxtSelectOption2")}
                 </MenuItem>
@@ -288,6 +328,7 @@ export default function AddCrop() {
                   {i18n.t("addCrop.menuItemTxtMaha")}
                 </MenuItem>
               </TextField>
+        
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl>
@@ -314,6 +355,8 @@ export default function AddCrop() {
                   />
                 </RadioGroup>
               </FormControl>
+                  {validationErrors?.cropType && (
+                  <ZodErrors error={[validationErrors.cropType]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("addCrop.lblSoldQuantity")}</Typography>
@@ -326,6 +369,8 @@ export default function AddCrop() {
                 value={formData.totalSoldQty}
                 onChange={(e) => handleChangeAddCrop(e, "totalSoldQty")}
               />
+                {validationErrors?.totalSoldQty && (
+                <ZodErrors error={[validationErrors.totalSoldQty]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("addCrop.lblIncome")}</Typography>
@@ -338,6 +383,8 @@ export default function AddCrop() {
                 value={formData.totalIncome}
                 onChange={(e) => handleChangeAddCrop(e, "totalIncome")}
               />
+               {validationErrors?.totalIncome && (
+                <ZodErrors error={[validationErrors.totalIncome]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("addCrop.lblQuantityHome")}</Typography>
@@ -348,8 +395,10 @@ export default function AddCrop() {
                 name="QtyForHome"
                 autoComplete="QtyForHome"
                 value={formData.reservedQtyHome}
-                onChange={(e) => handleChangeAddCrop(e, "reservedQtyHome")}
+                onChange={(e) => handleChangeAddCrop(e, "totalIncome")}
               />
+                 {validationErrors?.reservedQtyHome && (
+                <ZodErrors error={[validationErrors.reservedQtyHome]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("addCrop.lblQuantitySeed")}</Typography>
@@ -362,6 +411,8 @@ export default function AddCrop() {
                 value={formData.reservedQtySeed}
                 onChange={(e) => handleChangeAddCrop(e, "reservedQtySeed")}
               />
+                {validationErrors?.reservedQtySeed && (
+                <ZodErrors error={[validationErrors.reservedQtySeed]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("addCrop.lblNoOfPicks")}</Typography>
@@ -374,6 +425,8 @@ export default function AddCrop() {
                 value={formData.noOfPicks}
                 onChange={(e) => handleChangeAddCrop(e, "noOfPicks")}
               />
+                {validationErrors?.noOfPicks && (
+                <ZodErrors error={[validationErrors.noOfPicks]} />)}
             </Grid>
             <Grid
               container
@@ -421,6 +474,7 @@ export default function AddCrop() {
                     formData.isCultivationLoan === "1"
                   }
                 />
+      
               </Grid>
             </Grid>
           </Grid>
