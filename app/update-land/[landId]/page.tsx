@@ -27,6 +27,21 @@ import store from "@/redux/store";
 import { selectAuth } from "@/redux/authSlice";
 import { Land } from '@/redux/types';
 import { districtList } from "@/data/landsData";
+import { z } from "zod";
+import { ZodErrors } from "@/app/ZodErrors";;
+
+// Define Zod schema for form validation
+const landSchema = z.object({
+  landName: z.string().min(1, "Land name is required"),
+  district: z.string().min(1, "District is required"),
+  dsDivision: z.string().min(1, "Division is required"),
+  landRent: z.string().min(1, "Land rent is required"),
+  irrigationMode: z.string().min(1, "Irrigation mode is required"),
+
+});
+
+
+
 /**
  * UpdateLand page is a form to edit or update details about land properties.
  */
@@ -73,13 +88,28 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     irrigationMode: string;
     userId: string;
   }
-
+  // State to manage validation errors with type safety
+  const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
 
   //Function to navigate to my crops page clicking save & exit to my crops button
   const handleOnClickUpdateLand = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
+      // Transform the error format using flatten() method
+      const validation = landSchema.safeParse(formData);
+      if (!validation.success) {
+        const flattenedErrors = validation.error.flatten().fieldErrors;
+        setValidationErrors({
+          landName: flattenedErrors.landName?.[0],
+          district: flattenedErrors.district?.[0],
+          dsDivision: flattenedErrors.dsDivision?.[0],
+          landRent: flattenedErrors.landRent?.[0],
+          irrigationMode: flattenedErrors.irrigationMode?.[0],
+        });
+        return;
+      }
+
     try {
       //Get logged user Id from redux
       const loggedUser = selectAuth(store.getState());
@@ -184,6 +214,9 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 value={formData.landName}
                 onChange={(e) => handleChangeUpdateLand(e, "landName")}
               />
+               {validationErrors.landName && (
+              <ZodErrors error={[validationErrors.landName]} />)}
+                
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblDistrict")}</Typography>
@@ -202,7 +235,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                     variant="outlined"
                   />
                 )}
-              />
+              />  
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblDivision")}</Typography>
@@ -217,6 +250,8 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 value={formData.dsDivision}
                 onChange={(e) => handleChangeUpdateLand(e, "dsDivision")}
               />
+                {validationErrors.dsDivision && (
+                <ZodErrors error={[validationErrors.dsDivision]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblLandRent")}</Typography>
@@ -231,6 +266,9 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 value={formData.landRent}
                 onChange={(e) => handleChangeUpdateLand(e, "landRent")}
               />
+               {validationErrors.landRent && (
+                <ZodErrors error={[validationErrors.landRent]} />)}
+                
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblMode")}</Typography>
@@ -245,6 +283,9 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 value={formData.irrigationMode}
                 onChange={(e) => handleChangeUpdateLand(e, "irrigationMode")}
               />
+               {validationErrors.irrigationMode && (
+               <ZodErrors error={[validationErrors.irrigationMode]} />)}
+                
             </Grid>
           </Grid>
           {/* Buttons for saving and proceeding */}
