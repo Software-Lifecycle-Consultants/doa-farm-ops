@@ -29,6 +29,7 @@ import { Land } from "@/redux/types";
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 import { ZodErrors } from "@/components/ZodErrors";
 import { schemaAddCrop } from '@/schemas/add.crop.schema';
+import { validateFormData } from '@/utils/validation';
 
 // Styles for labels
 const styles = {
@@ -126,19 +127,20 @@ export default function AddCrop() {
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
 
-    const validation = schemaAddCrop.safeParse(formData);
-    if (!validation.success) {
-       const flattenedErrors = validation.error.flatten().fieldErrors;
+    // const validation = schemaAddCrop.safeParse(formData);
+    const { valid, errors } = validateFormData(schemaAddCrop, formData);
+    if (!valid) {
+      //  const flattenedErrors = validation.error.flatten().fieldErrors;
        setValidationErrors({
-         cropName: flattenedErrors.cropName?.[0],
-         season: flattenedErrors.season?.[0],
-         cropType: flattenedErrors.cropType?.[0],
-         totalSoldQty: flattenedErrors.totalSoldQty?.[0],
-         totalIncome: flattenedErrors.totalIncome?.[0],
-         reservedQtyHome: flattenedErrors.reservedQtyHome?.[0],
-         reservedQtySeed: flattenedErrors.reservedQtySeed?.[0],
-         noOfPicks: flattenedErrors.noOfPicks?.[0],
-         isCultivationLoan: flattenedErrors.isCultivationLoan?.[0],
+         cropName: errors?.cropName?.[0],
+         season: errors?.season?.[0],
+         cropType: errors?.cropType?.[0],
+         totalSoldQty: errors?.totalSoldQty?.[0],
+         totalIncome: errors?.totalIncome?.[0],
+         reservedQtyHome: errors?.reservedQtyHome?.[0],
+         reservedQtySeed: errors?.reservedQtySeed?.[0],
+         noOfPicks: errors?.noOfPicks?.[0],
+         isCultivationLoan: errors?.isCultivationLoan?.[0],
        });
     return;
       }
