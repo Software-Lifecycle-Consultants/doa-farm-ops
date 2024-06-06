@@ -33,6 +33,7 @@ import { login } from "@/redux/authSlice";
 import { AppDispatch} from "@/redux/store";
 import { ZodErrors } from "@/components/ZodErrors";
 import { schemaLogin } from '@/schemas/login.schema';
+import { validateFormData } from '@/utils/validation';
 
 // Export the sign-in component
 export default function SignIn() {
@@ -71,10 +72,12 @@ export default function SignIn() {
 
   // Define a function to handle user login.
   const handleLogin = async () => {
-    const validation = schemaLogin.safeParse(formData);
-    if (!validation.success) {
-      setValidationErrors(validation.error.flatten().fieldErrors);
-      toast.error("Validation failed. Please check your inputs.");
+    // const validation = schemaLogin.safeParse(formData);
+    const { validatedData, errors }= validateFormData(schemaLogin,formData);
+
+    if (!validatedData) {
+      // setValidationErrors(validation.error.flatten().fieldErrors);
+      // toast.error("Validation failed. Please check your inputs.");
       return;
     }
 
