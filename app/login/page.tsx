@@ -73,11 +73,10 @@ export default function SignIn() {
   // Define a function to handle user login.
   const handleLogin = async () => {
     // const validation = schemaLogin.safeParse(formData);
-    const { validatedData, errors }= validateFormData(schemaLogin,formData);
+    const { valid, errors }= validateFormData(schemaLogin,formData);
 
-    if (!validatedData) {
-      // setValidationErrors(validation.error.flatten().fieldErrors);
-      // toast.error("Validation failed. Please check your inputs.");
+    if (!valid) {  
+      setValidationErrors(errors);
       return;
     }
 

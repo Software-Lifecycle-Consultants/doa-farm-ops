@@ -12,8 +12,9 @@ export const validateFormData = <T extends z.ZodTypeAny>(
 ) => {
   const validation = schema.safeParse(formData);
   if (!validation.success) {
+    const errors = validation.error.flatten().fieldErrors;
     toast.error('Validation failed. Please check your inputs.');
-    return { validatedData: false, errors: validation.error.flatten().fieldErrors };
+    return { valid: false, errors: validation.error.flatten().fieldErrors };
   }
-  return { validatedData: true, data: validation.data };
+  return { valid: true, data: validation.data };
 };
