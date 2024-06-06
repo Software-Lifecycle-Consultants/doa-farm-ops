@@ -7,10 +7,10 @@ const labourcostschema = new Schema(
       type: String,
       required: true,
     },
-    // operationCostId: {
-    //   type: String,
-    //   required: true,
-    // },
+    operationCostId: {
+      type: String,
+      required: true,
+    },
     gender: {
       type: String,
       required: true,

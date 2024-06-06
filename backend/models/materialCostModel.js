@@ -7,10 +7,10 @@ const materialcostSchema = new Schema(
       type: String,
       required: true,
     },
-    // operationCostId: {
-    //   type: String,
-    //   required: true,
-    // },
+    operationCostId: {
+      type: String,
+      required: true,
+    },
     material: {
       type: String,
       required: true,

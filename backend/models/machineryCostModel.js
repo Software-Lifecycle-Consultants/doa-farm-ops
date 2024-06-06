@@ -7,10 +7,10 @@ const machinerycostSchema = new Schema(
       type: String,
       required: true,
     },
-    // operationCostId: {
-    //   type: String,
-    //   required: true,
-    // },
+    operationCostId: {
+      type: String,
+      required: true,
+    },
     method: {
       type: String,
       required: true,
