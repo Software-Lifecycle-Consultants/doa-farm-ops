@@ -6,15 +6,16 @@ import { z } from 'zod';
 Note : <T extends z.ZodTypeAny> is a TypeScript generic type parameter. 
 It allows the validateFormData function to work with any Zod schema type that extends the z.ZodTypeAny type.*/
 
-export const validateFormData = <T extends z.ZodTypeAny>(
-  schema: T,
-  formData: z.infer<T>
-) => {
-  const validation = schema.safeParse(formData);
-  if (!validation.success) {
-    const errors = validation.error.flatten().fieldErrors;
-    toast.error('Validation failed. Please check your inputs.');
-    return { valid: false, errors: validation.error.flatten().fieldErrors };
+import { ZodError } from "zod";
+
+export const validateFormData = (schema: z.ZodSchema<any>, data: any) => {
+  try {
+    schema.parse(data);
+    return { valid: true, errors: {} };
+  } catch (e) {
+    if (e instanceof ZodError) {
+      return { valid: false, errors: e.flatten().fieldErrors };
+    }
+    return { valid: false, errors: {} };
   }
-  return { valid: true, data: validation.data };
 };

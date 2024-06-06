@@ -2,7 +2,7 @@ import { z } from "zod";
 
 // zod validation Schema
 export const schemaAddCrop = z.object({
-    cropName: z.string().min(1, "Crop name is required"),
+    cropName: z.string().nonempty({ message: "Please select a crop name." }),
     season: z.string().min(1, "season is required"),
     cropType: z.string().min(1, "Crop type is required"),
     totalSoldQty: z.string().min(1, "Total sold quantity is required"),
