@@ -253,26 +253,66 @@ const userController = {
   updateUser: async (req, res) => {
     try {
       const userId = req.params.id;
-      const { firstName, lastName, email, phoneNumber, address } = req.body;
-      console.log("update user id: " + userId);
-      console.log("update user name: " + firstName);
+      const { firstName, lastName, email, nic, phoneNumber, address } = req.body;
 
-      if (!firstName || !lastName || !email || !phoneNumber || !address) {
+      if (!firstName || !lastName || !email || !nic || !phoneNumber || !address) {
         return res.status(400).json({ msg: "Please fill in all fields." });
       }
 
       await User.findOneAndUpdate(
         { _id: userId },
-        { firstName, lastName, email, phoneNumber, address }
+        { firstName, lastName, email, nic , phoneNumber, address }
       );
       res.json({
-        message: "User update success",
-        data: { firstName, lastName, email, phoneNumber, address },
+         user: { firstName, lastName, email, nic, phoneNumber, address },
       });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
   },
+
+  updateOfficer: async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const { orgName, orgAddress, university } = req.body;
+
+      if (!orgName || !orgAddress || !university) {
+        return res.status(400).json({ msg: "Please fill in all fields." });
+      }
+
+      await Officer.findOneAndUpdate(
+        { userId },
+        { orgName, orgAddress, university }
+      );
+      res.json({
+        officer: { orgName, orgAddress, university },
+      });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
+  updateFarmer: async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const { orgName, orgAddress, household } = req.body;
+
+      if (!orgName || !orgAddress || !household) {
+        return res.status(400).json({ msg: "Please fill in all fields." });
+      }
+
+      await Farmer.findOneAndUpdate(
+        { userId },
+        { orgName, orgAddress, household }
+      );
+      res.json({
+        farmer: { household, orgName, orgAddress },
+      });
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
 }
 
 module.exports = userController;

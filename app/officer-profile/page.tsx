@@ -18,7 +18,7 @@ import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 // OfficerProfile component renders a profile page for an officer.
 export default function OfficerProfile() {
   const router = useRouter();
-  const dispatch:AppDispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
 
   const { t } = useTranslation();
 
@@ -36,6 +36,14 @@ export default function OfficerProfile() {
   // Function to handle edit button click
   const handleEditClick = (userId: string) => {
     router.push(`/update-user/${userId}`);
+  };
+
+  const handleEditOtherDetailsClick = async () => {
+    try {
+      router.push(`/update-additional-details/${user?._id}`);
+    } catch (error) {
+      console.error("Error updating details:", error);
+    }
   };
 
   // Return the JSX for rendering
@@ -167,6 +175,7 @@ export default function OfficerProfile() {
                 sx={btnBackgroundColor}
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
+                onClick={() => handleEditOtherDetailsClick()}
               >
                 {t("officerProfile.capBtnEditOrganization")}
               </Button>

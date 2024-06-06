@@ -4,18 +4,18 @@ import i18n from "@/app/config/i18n";
 import { selectAuth } from "@/redux/authSlice";
 import store, { AppDispatch } from "@/redux/store";
 import { User } from "@/redux/types";
-import { fetchAndRegisterUser, selectUser, updateUserAsync } from "@/redux/userSlice";
+import { selectUser, updateUserAsync } from "@/redux/userSlice";
 import {
-    Button,
-    TextField,
-    Grid,
-    Box,
-    Typography,
-    Container,
-    Dialog,
-    DialogTitle,
-    DialogActions,
-  } from "@mui/material";
+  Button,
+  TextField,
+  Grid,
+  Box,
+  Typography,
+  Container,
+  Dialog,
+  DialogTitle,
+  DialogActions,
+} from "@mui/material";
 import { Stack } from "@mui/system";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
@@ -29,8 +29,8 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
   // Get the userId from the params
   const userId = params.userId;
 
-   // Get the Next.js router object
-   const router = useRouter();
+  // Get the Next.js router object
+  const router = useRouter();
 
   // Get the Redux dispatch function with AppDispatch  type
   const dispatch: AppDispatch = useDispatch();
@@ -80,8 +80,10 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
       };
 
       // Dispatch the updateUserAsync thunk
-      await dispatch(updateUserAsync(userData));
-      setOpenSuccessDialog(true); // Open success dialog on success
+      const data = await dispatch(updateUserAsync(userData));
+      if (data.type === "user/updateUserAsync/fulfilled") {
+        setOpenSuccessDialog(true); // Open success dialog on success
+      }
     } catch (error) {
       console.error("Error updating user:", error);
       // Handle the error, e.g., display an error message to the user
@@ -100,28 +102,28 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
   };
 
   // Function to navigate to profile page
-   const navigationToprofile = async (
+  const navigationToprofile = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    if(userDetails?.role === "farmer"){
+    if (userDetails?.role === "farmer") {
       router.push("/farmer-profile");
-    } else if(userDetails?.role === "officer"){
+    } else if (userDetails?.role === "officer") {
       router.push("/officer-profile");
     }
   };
 
-    // State to manage the visibility of the success dialog
-    const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  // State to manage the visibility of the success dialog
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
 
-    const handleCloseSuccessDialog = () => {
-      setOpenSuccessDialog(false);
-      if(userDetails?.role === "farmer"){
-        router.push("/farmer-profile");
-      } else if(userDetails?.role === "officer"){
-        router.push("/officer-profile");
-      }
-    };
+  const handleCloseSuccessDialog = () => {
+    setOpenSuccessDialog(false);
+    if (userDetails?.role === "farmer") {
+      router.push("/farmer-profile");
+    } else if (userDetails?.role === "officer") {
+      router.push("/officer-profile");
+    }
+  };
 
   return (
     <Container component="main" maxWidth="xl">
@@ -236,8 +238,8 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
           </Grid>
           {/* Buttons for saving and proceeding */}
           <Grid>
-          <Stack direction="row" spacing={4} paddingTop={4}>
-            <Button
+            <Stack direction="row" spacing={4} paddingTop={4}>
+              <Button
                 type="submit"
                 variant="outlined"
                 fullWidth
@@ -247,27 +249,27 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
                 {i18n.t("updateUser.capBtnExitWithoutSave")}
               </Button>
               <Button
-              type="submit"
-              variant="contained"
-              fullWidth
-              sx={{
-                fontSize: 11,
-                padding: 0,
-                height: "50px",
-              }}
-              onClick={handleUpdateUser}
-            >
-              {i18n.t("updateUser.capBtnSave&Exit")}
-            </Button>
-          </Stack>
+                type="submit"
+                variant="contained"
+                fullWidth
+                sx={{
+                  fontSize: 11,
+                  padding: 0,
+                  height: "50px",
+                }}
+                onClick={handleUpdateUser}
+              >
+                {i18n.t("updateUser.capBtnSave&Exit")}
+              </Button>
+            </Stack>
           </Grid>
           <Dialog
-              open={openSuccessDialog}
-              onClose={handleCloseSuccessDialog}
-              aria-labelledby="success-dialog-title"
+            open={openSuccessDialog}
+            onClose={handleCloseSuccessDialog}
+            aria-labelledby="success-dialog-title"
           >
-              {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
-              <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtUpdatedSuccess")}</DialogTitle>
+            {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
+            <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtUpdatedSuccess")}</DialogTitle>
             <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
               <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
                 {i18n.t("dialogBoxes.capBtnOk")}

@@ -16,11 +16,8 @@ import { CustomBox2 } from "@/Theme";
 import { selectAuth } from "@/redux/authSlice";
 import { useSelector } from "react-redux";
 // Importing fetchUserData function
-import { fetchUserData } from "@/api/fetchUserData";
-// Importing the User and FarmerDetails types
-import { User, FarmerDetails } from "@/redux/types";
 import { useDispatch } from 'react-redux';
-import { register, selectUser, fetchAndRegisterUser } from '@/redux/userSlice';
+import { selectUser, fetchAndRegisterUser } from '@/redux/userSlice';
 import { fetchAndRegisterFarmer, selectFarmerDetails } from '@/redux/farmerSlice';
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 /**
@@ -39,16 +36,23 @@ export default function FarmerProfile() {
 
   //Funtion to execute the two asynchronous actions to fetch and register farmer details and user details using the current authentication ID. 
   React.useEffect(() => {
-
     dispatch(fetchAndRegisterUser(auth.auth._id)); // Fetch user details
     dispatch(fetchAndRegisterFarmer(auth.auth._id)); // Fetch farmer details
   }, [auth.auth._id, dispatch]);
 
   const handleEditClick = async (userId: any) => {
     try {
-       router.push(`/update-user/${userId}`);
+      router.push(`/update-user/${userId}`);
     } catch (error) {
       console.error('Error updating user:', error);
+    }
+  };
+
+  const handleEditOtherDetailsClick = async () => {
+    try {
+      router.push(`/update-additional-details/${user?._id}`);
+    } catch (error) {
+      console.error("Error updating details:", error);
     }
   };
 
@@ -76,7 +80,7 @@ export default function FarmerProfile() {
                   marginBottom: "4px",
                 }}
               >
-              {user && user.firstName} {user && user.lastName}
+                {user && user.firstName} {user && user.lastName}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -202,6 +206,7 @@ export default function FarmerProfile() {
                 sx={btnBackgroundColor}
                 variant="outlined"
                 endIcon={<EditNoteIcon />}
+                onClick={() => handleEditOtherDetailsClick()}
               >
                 {t("farmerProfile.capBtnEdit")}
               </Button>
@@ -234,7 +239,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-               {farmerDetails && farmerDetails.orgAddress}
+                {farmerDetails && farmerDetails.orgAddress}
               </Typography>
             </Grid>
           </Grid>

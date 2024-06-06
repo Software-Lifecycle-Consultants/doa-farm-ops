@@ -78,15 +78,14 @@ export default function SignUp() {
       [field]: event.target.value,
     }));
   };
-  
-  
+
+
   // Function to handle user registration
-  const handleOnClickNext = async (e:React.MouseEvent<HTMLButtonElement>) => {
+  const handleOnClickNext = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default form submission
     try {
       // Dispatch the register action from userSlice
       const action = register(formData);
-      console.log('Dispatching action:', action);
       dispatch(action);
       router.push("/additional-reg-details");
 

@@ -30,7 +30,7 @@ const authSlice = createSlice({
       state.auth = action.payload; // Set 'auth' to the payload provided in the action.
     },
     // When a 'logout' action is dispatched, update the state.
-    logout: (state,action) => {
+    logout: (state) => {
       state.isAuthenticated = false;// Set 'isAuthenticated' to 'false'.
       state.auth = {_id:"", email:"", userName:"", role:"", token:""}; // Set 'auth' to an empty object with the same structure.
     }

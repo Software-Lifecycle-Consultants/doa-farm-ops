@@ -28,7 +28,6 @@ export async function fetchUserData(_id: any): Promise<UserDataResponse> {
         
     // Check if the request was successful`
     if (response.status === 200) {
-      console.log("-------------Data coming from BE-----------"+ response.data);
       // Return the user data
       return response.data;
     }

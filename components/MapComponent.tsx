@@ -120,7 +120,6 @@ const MapComponent: React.FC<MarkerCoordinates> = ({setMarkerCoordinates,setPoly
         drawPolygonInteraction.on('drawend', (event: any) => {
             const coordinates = event.feature.getGeometry().getCoordinates();
             setPolygonCoordinates(coordinates);
-            console.log('coordinates', coordinates)
 
             // Display the drawn polygon on the map
             const polygonStyle = new Style({
