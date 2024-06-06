@@ -19,17 +19,18 @@ import { useRouter } from "next/navigation";
 import { registerFarmer } from "@/redux/farmerSlice";
 import { OfficerRegister } from "@/redux/officerSlice";
 import { useSelector } from 'react-redux';
-import { FarmerDetails, OfficerDetails, RootState } from "@/redux/types";
+import { RootState } from "@/redux/types";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
 import { selectFarmerDetails } from "@/redux/farmerSlice";
-import { selectOfficer } from"@/redux/officerSlice";
+import { selectOfficer } from "@/redux/officerSlice";
+import { AppDispatch } from '@/redux/store';
 
 export default function AdditionalRegistration() {
 
   const [termsAgreementChecked, setTermsAgreementChecked] = useState(false);
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const { t } = useTranslation();
 
   // State for the form data
@@ -38,7 +39,7 @@ export default function AdditionalRegistration() {
     orgName: "",
     orgAddress: ""
   });
-  
+
   const [officerFormData, setOfficerFormData] = useState<FormDataOfficer>({
     orgName: "",
     orgAddress: "",
@@ -60,10 +61,10 @@ export default function AdditionalRegistration() {
   // Get user data from the Redux store
   const userData = useSelector((state: RootState) => state.user.user);
 
-   // Get user role from the userData
+  // Get user role from the userData
   const selectedRole = userData?.role;
 
-   // Function to handle changes in form fields
+  // Function to handle changes in form fields
   const handleChangeUserRegister = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
@@ -93,34 +94,32 @@ export default function AdditionalRegistration() {
     e.preventDefault(); // Prevent default form submission
     try {
       if (selectedRole === "farmer") {
+        //Dispatch farmer data to redux store
         const action = registerFarmer(farmerFormData);
         dispatch(action);
-        console.log("Dispatching action for farmer:", action);
-        // Get farmer data from the Redux store
-        
+
+        //Get farmer data from the Redux store
         const farmerData = selectFarmerDetails(store.getState());
-        console.log("----------farmerData----------------" + farmerData);
-        const farmerDataJSON = JSON.stringify(farmerData);
-        console.log("----------farmerDataJSON----------------" + farmerDataJSON);
+
+        //Create a data object combining user data and farmer data
         combinedData = {
           userData,
           farmerData,
         };
       } else {
+        //Dispatch farmer data to redux store
         const action = OfficerRegister(officerFormData);
         dispatch(action);
-        console.log("Dispatching action office:", action);
+
         // Get officer data from the Redux store
-        
         const officerData = selectOfficer(store.getState());
-        console.log("----------officerData----------------" + officerData);
+
+        //Create a data object combining user data and officer data
         combinedData = {
           userData,
           officerData,
         };
       }
-
-      console.log("--- JSON combinedData----" + JSON.stringify(combinedData));
 
       // Make the API call using combinedData from the Redux store
       const response = await axios.post(
@@ -133,10 +132,7 @@ export default function AdditionalRegistration() {
         }
       );
       if (response && response.status === 200) {
-        //dispatch(register(response.data))
         router.push("/login");
-        console.log(response);
-        console.log('Registration successful!');
       } else if (response && response.status === 400) {
         console.error('Registration Failed');
       }

@@ -24,12 +24,10 @@ import {
 } from "@mui/icons-material";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
-import { RootState } from "@/redux/types";
-import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import i18n from "@/app/config/i18n";// Import the i18n instance
 import { useDispatch } from "react-redux";
-import { deleteCrop, fetchCrops, selectCrops } from "@/redux/cropSlice"; // Import the Redux action for updating crops
+import { deleteCrop, deleteCropAsync, fetchCrops, selectCrops } from "@/redux/cropSlice"; // Import the Redux action for updating crops
 import theme from '@/Theme';
 import { selectUser } from '@/redux/userSlice';
 import { AppDispatch } from '@/redux/store';
@@ -109,23 +107,24 @@ export default function CropsTable({ title }: TableTitleProps) {
   useEffect(() => {
     // Fetch the crop data when the component mounts
     if (user) {
-    dispatch(fetchCrops(user._id));
+      dispatch(fetchCrops(user._id));
     }
-  }, []);
+  }, [user, dispatch]);
 
   // State for handling pagination
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-  // Add confirmation state and deletedCropId
-  const [isDeleteConfirmationOpen, setDeleteConfirmationOpen] = useState(false);
-  const [deletedCropId, setDeletedCropId] = useState('');
-  const [deletedLandId, setDeletedLandId] = useState('');
-
   // Function to handle land name
   const handleLandName = (landId: string) => {
     const landName = land?.find((land) => land._id === landId);
     return landName?.landName;
+  }
+  const handleDeleteSuccess = async () => {
+    if (user) {
+      await dispatch(fetchCrops(user._id)); // Manual refetch after deletion (optional)
+      setOpenSuccessDialog(false);
+    }
   }
 
   // Function to handle changing the page
@@ -141,32 +140,46 @@ export default function CropsTable({ title }: TableTitleProps) {
   };
 
   //Function to navigate to add operation cost page
-  const navigationToAddOperationCost = () => {
-    router.push("/add-operation-cost");
+  const navigationToAddOperationCost = (id: string) => {
+    router.push(`/add-operation-cost/${id}`);
   };
 
   // Function to handle navigation when the Edit icon is clicked
-  const handleEditClick = (id: string) => {
-    router.push(`/update-crop/${id}`);
-  };
-
-  // Function to delete crop when the Delete icon is clicked
-  const handleDeleteClick = (cropId: string) => {
-    // Open the confirmation dialog and set the deletedCropId
-    setDeletedCropId(cropId);
-    // setDeletedLandId(landId);
-    setDeleteConfirmationOpen(true);
-  };
-
-  // Function to confirm and delete the crop
-  const confirmDelete = () => {
-    if (deletedCropId && deletedLandId) {
-      // Call the deleteCrop action to delete the crop
-      dispatch(deleteCrop({_id: deletedCropId }));
-      // Close the confirmation dialog
-      setDeleteConfirmationOpen(false);
+  const handleEditClick = async (cropId: any) => {
+    try {
+      router.push(`/update-crop/${cropId}`);
+    } catch (error) {
+      console.error('Error updating crop:', error);
     }
-  }
+  };
+
+  const [deleteConfirmation, setDeleteConfirmation] = React.useState<{
+    open: boolean;
+    cropId: any;
+  }>({ open: false, cropId: null });
+
+  const openDeleteConfirmation = (cropId: any) => {
+    // Open the delete confirmation dialog and set the cropId
+    setDeleteConfirmation({ open: true, cropId });
+  };
+
+  const closeDeleteConfirmation = () => {
+    // Close the delete confirmation dialog
+    setDeleteConfirmation({ open: false, cropId: null });
+  };
+  //  manage the visibility of the success dialog
+  const [openSuccessDialog, setOpenSuccessDialog] = React.useState(false);
+  //Function for deleting a land
+  const handleDeleteClick = async (cropId: any) => {
+    try {
+      await dispatch(deleteCropAsync(cropId));
+      dispatch(deleteCrop(cropId));
+      setOpenSuccessDialog(true); // Open success dialog on success
+      closeDeleteConfirmation(); // Close the delete confirmation dialog
+    } catch (error) {
+      console.error('Error deleting land:', error);
+    }
+  };;
 
   return (
     <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -210,7 +223,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                           <TableCell key={column.id} align={column.align}>
                             {column.format && typeof value === "number"
                               ? column.format(value)
-                              : value  || "N/A"}
+                              : value || "N/A"}
                           </TableCell>
                         </>
                       );
@@ -221,7 +234,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                           <EditNoteIcon />
                         </IconButton>
                         <IconButton
-                          onClick={() => handleDeleteClick(row._id)}
+                          onClick={() => openDeleteConfirmation(row._id)}
                         >
                           <DeleteIcon />
                         </IconButton>
@@ -236,7 +249,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                           borderRadius: "16px",
                           width: "100%",
                         }}
-                        onClick={navigationToAddOperationCost}
+                        onClick={() => navigationToAddOperationCost(row._id)}
                       >
                         Add Cost
                       </Button>
@@ -259,21 +272,31 @@ export default function CropsTable({ title }: TableTitleProps) {
       />
       {/* Confirmation Dialog */}
       <Dialog
-        open={isDeleteConfirmationOpen}
-        onClose={() => setDeleteConfirmationOpen(false)}
+        open={deleteConfirmation.open}
+        onClose={closeDeleteConfirmation}
+        aria-labelledby="delete-dialog-title"
       >
-        <DialogTitle>Confirm Deletion</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            Are you sure you want to delete this crop permanently?
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={() => setDeleteConfirmationOpen(false)} color="primary">
-            Cancel
+        <DialogTitle id="delete-dialog-title"> {i18n.t("dialogBoxes.txtDeleteConfirmation")}</DialogTitle>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button onClick={() => handleDeleteClick(deleteConfirmation.cropId)} variant="contained" color="primary" >
+            {i18n.t("dialogBoxes.capBtnYes")}
           </Button>
-          <Button onClick={confirmDelete} color="primary">
-            Delete
+          <Button onClick={closeDeleteConfirmation} color="primary" variant="outlined">
+            {i18n.t("dialogBoxes.capBtnCancel")}
+          </Button>
+        </DialogActions>
+      </Dialog>
+      {/*Dialog box for delete success message*/}
+      <Dialog
+        open={openSuccessDialog}
+        onClose={handleDeleteSuccess}
+        aria-labelledby="success-dialog-title"
+      >
+        {/* Display a translated 'Record deleted successfully!' message based on the selected language. */}
+        <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtDeleteSuccess")}</DialogTitle>
+        <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+          <Button onClick={() => setOpenSuccessDialog(false)} variant="contained" color="primary">
+            {i18n.t("dialogBoxes.capBtnOk")}
           </Button>
         </DialogActions>
       </Dialog>

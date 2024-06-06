@@ -19,8 +19,7 @@ import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 import { useRouter } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from '@/redux/store';
-import { editLand,fetchAndRegisterLands, selectLands, updateLandAsync } from "@/redux/landSlice";
-import { RootState } from "@/redux/types";
+import { fetchAndRegisterLands, selectLands, updateLandAsync } from "@/redux/landSlice";
 import { useTranslation } from 'react-i18next';
 import i18n from "../../config/i18n";// Import the i18n instance
 import { CustomBox1 } from "@/Theme";
@@ -41,7 +40,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
   //const landDetails = useSelector((state: RootState) => state.land);
   const landDetails = useSelector((state: any) => selectLands(state));
 
-// Create a new array named districtNames containing all district names
+  // Create a new array named districtNames containing all district names
   const districtNames = districtList.map((district) => district.name);
 
   // Get the Redux dispatch function with AppDispatch  type
@@ -64,11 +63,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     landRent: land?.landRent || '',
     irrigationMode: land?.irrigationMode || '',
     userId: land?.userId || '',
-    crops: land?.crops || [],
   });
-
-  // // Create state to manage form data
-  // const [formData, setFormData] = useState(initialFormData);
 
   interface FormData {
     landName: string;
@@ -77,19 +72,8 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     landRent: string;
     irrigationMode: string;
     userId: string;
-    crops: any[];
   }
 
-  // interface Land {
-  //   _id: string;
-  //   landName: string;
-  //   district: string;
-  //   dsDivision: string;
-  //   landRent: string;
-  //   irrigationMode: string;
-  //   userId: string;
-  //   crops: any[];
-  // }
 
   //Function to navigate to my crops page clicking save & exit to my crops button
   const handleOnClickUpdateLand = async (
@@ -99,9 +83,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     try {
       //Get logged user Id from redux
       const loggedUser = selectAuth(store.getState());
-      console.log("----------getUserFromRedux----------------", loggedUser);
       const userId = loggedUser.auth._id;
-      console.log("----------getUserFromRedux----------------", userId);
 
       // Create the land data object with the correct structure
       const landData: Land = {
@@ -112,11 +94,9 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
         landRent: formData.landRent,
         irrigationMode: formData.irrigationMode,
         userId: userId, // Assuming you have the authenticated user's ID
-        crops: [], // Assuming you don't have any crops associated with this land update
       };
-  
+
       // Dispatch the updateLandAsync thunk
-      console.log("Updated Land Data ------> " + JSON.stringify(landData))
       await dispatch(updateLandAsync(landData));
       setOpenSuccessDialog(true); // Open success dialog on success
     } catch (error) {
@@ -208,20 +188,20 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblDistrict")}</Typography>
               <Autocomplete
-                  options={districtNames}
-                  getOptionLabel={(option) => option}
-                  value={formData.district}
-                  onChange={(event, newValue) =>
-                      selectChangeAddDistrict(event, newValue)
-                  }
-                  renderInput={(params) => (
-                      <TextField
-                          {...params}
-                          name="district"
-                          placeholder={i18n.t("updateLand.hintTxtDistrict")}
-                          variant="outlined"
-                      />
-                  )}
+                options={districtNames}
+                getOptionLabel={(option) => option}
+                value={formData.district}
+                onChange={(event, newValue) =>
+                  selectChangeAddDistrict(event, newValue)
+                }
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    name="district"
+                    placeholder={i18n.t("updateLand.hintTxtDistrict")}
+                    variant="outlined"
+                  />
+                )}
               />
             </Grid>
             <Grid item xs={12}>
@@ -292,12 +272,12 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
             </Stack>
           </Grid>
           <Dialog
-              open={openSuccessDialog}
-              onClose={handleCloseSuccessDialog}
-              aria-labelledby="success-dialog-title"
+            open={openSuccessDialog}
+            onClose={handleCloseSuccessDialog}
+            aria-labelledby="success-dialog-title"
           >
-              {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
-              <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtUpdatedSuccess")}</DialogTitle>
+            {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
+            <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtUpdatedSuccess")}</DialogTitle>
             <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
               <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
                 {i18n.t("dialogBoxes.capBtnOk")}

@@ -4,6 +4,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, FarmerDetails } from './types';
 import { fetchUserData } from '@/api/fetchUserData';
+import { UpdateFarmerData } from '@/api/updateFarmerData';
 
 // Define the initial state for the farmer slice
 const initialState: { farmerDetails: FarmerDetails | null } = {
@@ -16,6 +17,14 @@ export const fetchAndRegisterFarmer = createAsyncThunk(
   async (userId: string) => {
     const userData = await fetchUserData(userId);
     return userData.farmerDetails;
+  }
+);
+
+export const updateandfetchfarmer = createAsyncThunk(
+  'farmer/updateanfetchfarmer',
+  async (farmerData: any) => {
+    const farmer = await UpdateFarmerData(farmerData);
+    return farmer;
   }
 );
 
@@ -39,6 +48,16 @@ const farmerSlice = createSlice({
       // Handle rejection of fetchAndRegisterFarmer
       .addCase(fetchAndRegisterFarmer.rejected, (state, action) => {
         console.error('Error fetching farmer details:', action.error);
+      });
+
+    builder
+      // Handle successful fulfillment of updateandfetchfarmer
+      .addCase(updateandfetchfarmer.fulfilled, (state, action) => {
+        state.farmerDetails = action.payload.farmer;
+      })
+      // Handle rejection of updateandfetchfarmer
+      .addCase(updateandfetchfarmer.rejected, (state, action) => {
+        console.error('Error updating farmer details:', action.error);
       });
   },
 });

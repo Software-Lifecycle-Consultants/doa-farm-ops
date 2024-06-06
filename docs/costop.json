@@ -1,0 +1,154 @@
+//Json Structure | DB Scema
+
+{
+    "_id": ObjectId("..."), 
+    "cropId": ObjectId("..."), 
+    "majorOp": "Land preparation",
+    "subOp": "Pre weedicide application",
+    "machineryCosts": {
+      "totalMachineryCosts": 4500, 
+      "details": [
+        {
+          "method": "weedicide machine",
+          "isOwned": true,
+          "noUsed": 2,
+          "hoursPDay": 6,
+          "machineryCost": 1500
+        },
+        {
+          "method": "tractor",
+          "isOwned": false,
+          "noUsed": 1,
+          "hoursPDay": 8,
+          "machineryCost": 3000
+        }
+      ]
+    },
+    "materialCosts": {
+      "totalMaterialCosts": 7000, 
+      "details": [
+        {
+          "material": "weedicide",
+          "qtyUsed": 10,
+          "materialCost": 5000
+        },
+        {
+          "material": "fertilizer",
+          "qtyUsed": 5,
+          "materialCost": 2000
+        }
+      ]
+    },
+    "labourCosts": {
+      "totalLabourCosts": 26800, 
+      "details": [
+        {
+          "gender": "male",
+          "isHired": true,
+          "qty": 6,
+          "dailyWage": 2000,
+          "foodCost": 1000
+        },
+        {
+          "gender": "female",
+          "isHired": true,
+          "qty": 4,
+          "dailyWage": 1800,
+          "foodCost": 800
+        }
+      ]
+    },
+    "totalOperationCost": 38300 
+  
+
+
+
+
+// Collection: operationCosts
+
+{
+    "_id": ObjectId("..."), 
+    "cropId": ObjectId("..."), 
+    "majorOp": "Land preparation",
+    "subOp": "Pre weedicide application",
+    "totalMachineryCosts": 4500, 
+    "totalMaterialCosts": 7000,
+    "totalLabourCosts": 26800, 
+    "totalOperationCost": 38300 
+  }
+
+  
+//   Collection: machineryCosts
+
+{
+    "_id": ObjectId("..."), 
+    "cropId": ObjectId("..."), 
+    "operationCostId": ObjectId("..."), 
+    "method": "weedicide machine",
+    "isOwned": true,
+    "noUsed": 2,
+    "hoursPDay": 6,
+    "machineryCost": 1500
+  }
+
+  {
+    "_id": ObjectId("..."), 
+    "cropId": ObjectId("..."), 
+    "operationCostId": ObjectId("..."), 
+    "method": "weedicide machine",
+    "isOwned": true,
+    "noUsed": 2,
+    "hoursPDay": 6,
+    "machineryCost": 1500
+  }
+
+
+  
+//   Collection: materialCosts
+
+{
+    "_id": ObjectId("..."), 
+    "cropId": ObjectId("..."), 
+    "operationCostId": ObjectId("..."), 
+    "material": "weedicide",
+    "qtyUsed": 10,
+    "materialCost": 5000
+  }
+
+//   Collection: labourCosts
+  
+  
+{
+    "_id": ObjectId("..."), 
+    "cropId": ObjectId("..."), 
+    "operationCostId": ObjectId("..."), 
+    "gender": "male",
+    "isHired": true,
+    "qty": 6,
+    "dailyWage": 2000,
+    "foodCost": 1000
+  }
+  
+
+
+  //If we require references for each costs
+  {
+    "_id": ObjectId("60d5f9f8c2a5f00b8c6a7b8d"), 
+    "cropId": ObjectId("60d5f9f8c2a5f00b8c6a7b9f"), 
+    "operationCostId": ObjectId("60d5f9f8c2a5f00b8c6a7ba0"), 
+    "material": "weedicide",
+    "qtyUsed": 10,
+    "materialCost": 5000,
+    "relatedMachineryCosts": [
+        ObjectId("60d5f9f8c2a5f00b8c6a7ba1"), 
+        ObjectId("60d5f9f8c2a5f00b8c6a7ba2")
+    ],
+    "relatedLabourCosts": [
+        ObjectId("60d5f9f8c2a5f00b8c6a7ba3"), 
+        ObjectId("60d5f9f8c2a5f00b8c6a7ba4")
+    ],
+    "relatedMaterialCosts": [
+        ObjectId("60d5f9f8c2a5f00b8c6a7ba5"), 
+        ObjectId("60d5f9f8c2a5f00b8c6a7ba6")
+    ]
+}

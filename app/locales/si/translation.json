@@ -46,7 +46,7 @@
   },
   "additionalRegister": {
     "txtOtherDetails": "ඔබේ අනෙකුත් විස්තර එක් කරන්න",
-    "txtFillDetails": "ඔබේ ගිණුම සෑදීමට පහත විස්තර පුරවන්න",
+    "txtFillDetails": "ඔබේ ගිණුම් සෑදීමට පහත විස්තර පුරවන්න",
     "lblHouseholds": "ගෘහ",
     "hintTxtHouseholds": "ඔබේ නිවැසියන් ඇතුලත් කරන්න",
     "lblUniversity": "සරසවිය",
@@ -55,6 +55,20 @@
     "hintTxtOrg": "සංවිධානයේ නම ඇතුලත් කරන්න",
     "lblOrganizationAddress": "සංවිධාන ලිපිනය",
     "hintTxtOrgAddress": "සංවිධාන ලිපිනය ඇතුලත් කරන්න"
+  },
+  "additionalUpdate": {
+    "txtOtherDetails": "ඔබේ අනෙකුත් විස්තර වෙනස් කරන්න",
+    "txtUpdateDetails": "ඔබේ ගිණුම් විස්තර වෙනස් කිරීමට පහත විස්තර පුරවන්න",
+    "lblHouseholds": "ගෘහ",
+    "hintTxtHouseholds": "ඔබේ නිවැසියන් ඇතුලත් කරන්න",
+    "lblUniversity": "සරසවිය",
+    "hintTxtUniversity": "ඔබේ විශ්වවිද්‍යාලයට ඇතුලත් කරන්න",
+    "lblOrganizationName": "සංවිධානයේ නම",
+    "hintTxtOrg": "සංවිධානයේ නම ඇතුලත් කරන්න",
+    "lblOrganizationAddress": "සංවිධාන ලිපිනය",
+    "hintTxtOrgAddress": "සංවිධාන ලිපිනය ඇතුලත් කරන්න",
+    "capBtnSave&Exit": "සුරකින්න",
+    "capBtnExit": "අවලංගු කරන්න"
   },
   "login": {
     "txtWelcome": "ආයුබෝවන් DOA",

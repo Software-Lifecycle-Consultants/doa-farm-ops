@@ -86,9 +86,6 @@ const { auth } = useSelector(selectAuth);
  // Fetch land data when the component mounts
  const landDetails = useSelector((state: RootState) => selectLands(state));
 
- //const landDetails = useSelector(selectLands);
- console.log("Land details from land table", landDetails);
-
 React.useEffect(() => {
   dispatch(fetchAndRegisterLands(auth._id)); // Fetch land data for the authenticated user
 }, [auth._id, dispatch]);
@@ -112,9 +109,6 @@ React.useEffect(() => {
     router.push("/add-crop");
   };
 
-  // const handleEditClick = (id: any) => {
-  //   router.push(`/update-land/${id}`);
-  // };
 
   const handleEditClick = async (landId: any) => {
     try {

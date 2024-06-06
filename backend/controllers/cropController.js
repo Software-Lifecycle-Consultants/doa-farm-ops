@@ -64,7 +64,7 @@ const cropController = {
           return res.status(500).json({ message: err.message });
         }
       },
-      
+
   // Get crop details by ID
   getCropByUserId: async (req, res) => {
     try {
@@ -78,6 +78,48 @@ const cropController = {
         };
         console.log("cropDetails-----------------", cropDetails); 
       res.status(200).json(cropDetails);
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
+//Update crop by ID
+  updateCrop: async (req, res) => {
+    try {
+      const id = req.params.id;
+      const { cropName, season, cropType, totalSoldQty, totalIncome, reservedQtyHome, reservedQtySeed, noOfPicks, isCultivationLoan, loanObtained } = req.body;
+
+      await Crop.findOneAndUpdate(
+          { _id: id },
+          { cropName, season, cropType, totalSoldQty, totalIncome, reservedQtyHome, reservedQtySeed, noOfPicks, isCultivationLoan, loanObtained }
+      );
+
+      const updatedCrop = await Crop.findById(id);
+
+      if (!updatedCrop) {
+        return res.status(404).json({ message: "Crop not found" });
+      }
+
+      // Send a single response with the updated data
+      res.status(200).json({ message: "Crop details updated successfully.", data: updatedCrop });
+      return;  // Added return statement to prevent further execution
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
+
+// Delete crop details by ID
+  deleteCrop: async (req, res) => {
+    try {
+      const id = req.params.id;
+      // Find the crop by ID and remove it
+      const deletedCrop = await Crop.findByIdAndDelete({ _id: id });
+
+      if (!deletedCrop) {
+        return res.status(404).json({ message: "Crop not found" });
+      }
+      res.status(200).json({ message: "Crop deleted successfully" });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
