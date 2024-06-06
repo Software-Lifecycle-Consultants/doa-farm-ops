@@ -28,7 +28,7 @@ import { selectAuth } from "@/redux/authSlice";
 import { Land } from "@/redux/types";
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 import { z } from "zod";
-import { ZodErrors } from "@/app/ZodErrors";
+import { ZodErrors } from "@/components/ZodErrors";
 
 // zod validation Schema
 const schemaAddCrop = z.object({

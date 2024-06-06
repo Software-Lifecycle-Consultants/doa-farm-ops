@@ -31,7 +31,7 @@ import { selectLands } from "@/redux/landSlice";
 import { selectAuth } from "@/redux/authSlice";
 import { districtList } from "@/data/landsData";
 import { z } from "zod";
-import { ZodErrors } from "@/app/ZodErrors";;
+import { ZodErrors } from "@/components/ZodErrors";;
 
 // Define Zod schema for form validation
 const landSchema = z.object({
