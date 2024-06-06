@@ -2,9 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const dotenv = require('dotenv');
 const app = express();
-require("dotenv").config();
 
 const PORT = process.env.PORT || 5000;
 
@@ -12,19 +10,18 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(bodyParser.json());
 
-const URL = process.env.MONGODB_URL;
+// Hardcoded MongoDB connection string
+const MONGODB_URL = 'mongodb://127.0.0.1:27017/doa';
 
-mongoose.connect(URL, {
-    // useCreateIndex: true,
+mongoose.connect(MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    // useFindAndModify: false
 });
 
 const connection = mongoose.connection;
-connection.once("open", () =>{
-    console.log("MongoDB Connection Success!")
-})
+connection.once("open", () => {
+    console.log("MongoDB Connection Success!");
+});
 
 // Middleware to parse JSON body
 app.use(express.json());
@@ -35,11 +32,12 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-//route imports
+// Route imports
 const userRoute = require("./routes/userRoute");
 const cropRoute = require("./routes/cropRoute");
 const landRoute = require("./routes/landRoute");
-//routes
+
+// Routes
 app.use(userRoute);
 app.use(cropRoute);
 app.use(landRoute);

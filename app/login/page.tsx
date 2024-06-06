@@ -31,16 +31,8 @@ import { CustomBox1 } from "@/Theme";
 import { toast } from "react-toastify";
 import { login } from "@/redux/authSlice";
 import { AppDispatch} from "@/redux/store";
-import { ZodErrors } from "@/app/ZodErrors";
-import { z } from "zod";
-
-
-//zod validation Schema
-const schemaLogin = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Please Enter Correct Password").max(100),
-});
-
+import { ZodErrors } from "@/components/ZodErrors";
+import { schemaLogin } from '@/schemas/login.schema';
 
 // Export the sign-in component
 export default function SignIn() {
