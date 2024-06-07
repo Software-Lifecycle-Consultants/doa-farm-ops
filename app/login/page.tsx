@@ -30,11 +30,16 @@ import { useRouter } from "next/navigation";
 import { CustomBox1 } from "@/Theme";
 import { toast } from "react-toastify";
 import { login } from "@/redux/authSlice";
+import { AppDispatch} from "@/redux/store";
+import { ZodErrors } from "@/components/ZodErrors";
+import { schemaLogin } from '@/schemas/login.schema';
+import { validateFormData } from '@/utils/validation';
 
 // Export the sign-in component
 export default function SignIn() {
 
   const [responseData, setResponseData] = useState(null);
+  const [validationErrors, setValidationErrors] = useState<any>(null);
 
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
@@ -52,12 +57,8 @@ export default function SignIn() {
     password: string;
   }
 
-  // State to manage email and password validation
-  const [emailValid, setEmailValid] = useState(true);
-  const [passwordValid, setPasswordValid] = useState(true);
-
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch:AppDispatch = useDispatch();
 
   // Function to toggle password visibility
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -71,14 +72,16 @@ export default function SignIn() {
 
   // Define a function to handle user login.
   const handleLogin = async () => {
-    // Simulate a login action by creating a user data object.
-    const userData = { username: formData.email, password: formData.password }; // Use email as username for simplicity
+    // const validation = schemaLogin.safeParse(formData);
+    const { valid, errors }= validateFormData(schemaLogin,formData);
+
+    if (!valid) {  
+      setValidationErrors(errors);
+      return;
+    }
+
     try {
-      const response = await axios.post('http://localhost:5000/api/user/login', 
-      {
-        email: formData.email,
-        password: formData.password
-      });
+      const response = await axios.post('http://localhost:5000/api/user/login', formData);
       if (response && response.status === 200) {
         console.log("response user data------------", response);
         setResponseData(response.data);
@@ -93,45 +96,26 @@ export default function SignIn() {
       console.error('Error fetching data:', error);
       toast.error("Login Failed");
     }
-    
-   
+
   };
 
   // Function to handle email input change and validation
   const handleChangeEmail = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: string
-  ) => {
-    const email = event.target.value;
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      [field]: event.target.value,
+      email: event.target.value
     });
-    setEmailValid(isEmailValid(email));
+    setValidationErrors(null);
   };
 
   // Function to handle password input change and validation
   const handleChangePassword = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    field: string
-  ) => {
-    const password = event.target.value;
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
-      [field]: event.target.value,
-    });
-    setPasswordValid(isPasswordValid(password));
-  };
-
-  // Function to validate email format
-  const isEmailValid = (email: string) => {
-    const emailRegex = /^[A-Za-z0-9._%-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
-    return emailRegex.test(email);
-  };
-
-  // Function to validate password length
-  const isPasswordValid = (password: string | any[]) => {
-    return password.length >= 6; // Set a minimum password length requirement
+      password: event.target.value });
+    setValidationErrors(null);
   };
 
   return (
@@ -157,23 +141,18 @@ export default function SignIn() {
               autoComplete="email"
               placeholder={i18n.t("login.hintTxtEmail")}
               value={formData.email}
-              onChange={(e) => handleChangeEmail(e, "email")}
+              onChange={handleChangeEmail}
               required
             />
-            {!emailValid && (
-              <Typography variant="caption" color="error">
-                Invalid email address
-              </Typography>
-            )}
+              <ZodErrors error={validationErrors?.email || []} />
           </FormControl>
 
           <Typography>{i18n.t("login.lblPassword")}</Typography>
-          {/* Password input field with visibility toggle */}
           <FormControl variant="outlined" fullWidth sx={{ marginBottom: 2 }}>
             <OutlinedInput
               id="outlined-adornment-password"
               value={formData.password}
-              onChange={(e) => handleChangePassword(e, "password")}
+              onChange={handleChangePassword}
               type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
@@ -189,14 +168,9 @@ export default function SignIn() {
               }
               placeholder={i18n.t("login.hintTxtPassword")}
             />
-            {!passwordValid && (
-              <Typography variant="caption" color="error">
-                Password must be at least 6 characters long
-              </Typography>
-            )}
+              <ZodErrors error={validationErrors?.password || []} />
           </FormControl>
 
-          {/* Remember me and Forgot password options */}
           <Grid container>
             <Grid item xs={6} alignItems="center" justifyContent="flex-end">
               <FormControlLabel
@@ -236,7 +210,6 @@ export default function SignIn() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
             onClick={handleLogin}
-            disabled={!emailValid || !passwordValid}
           >
             {i18n.t("login.capBtnLogin")}
           </Button>

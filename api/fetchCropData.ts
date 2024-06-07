@@ -23,7 +23,6 @@ export async function fetchCropData(_id: any): Promise<CropDataResponse> {
         
     // Check if the request was successful`
     if (response.status === 200) {
-      console.log("-------------Crop Data coming from BE-----------"+ response.data);
       // Return the crop data
       return response.data;
     }

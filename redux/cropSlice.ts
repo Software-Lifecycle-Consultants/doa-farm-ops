@@ -106,9 +106,6 @@ const cropSlice = createSlice({
       })
         // Handle successful fulfillment of addCropAsync (individual endpoint)
         .addCase(addCropAsync.fulfilled, (state, action: PayloadAction<any>) => {
-            // Update state with newly added crop (optional, consider using immer)
-            console.log("Crop data after adding (individual):", action.payload);
-            // You can update state here if needed (e.g., prepend to crops array)
         })
         .addCase(addCropAsync.rejected, (state, action) => {
             console.error("Error adding crop data (individual):", action.error);
@@ -117,9 +114,6 @@ const cropSlice = createSlice({
         .addCase(
             addLandAndCropAsync.fulfilled,
             (state, action: PayloadAction<any>) => {
-                // Update state with newly added land and crop (optional, consider using immer)
-                console.log("Land and Crop data after adding (combined):", action.payload);
-                // You can update state here if needed
             }
         )
         .addCase(addLandAndCropAsync.rejected, (state, action) => {

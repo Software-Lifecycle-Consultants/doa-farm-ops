@@ -16,9 +16,8 @@ import i18n from "../../config/i18n"; // Import the i18n instance
 import { CustomBox1 } from "@/Theme";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
-
 import { useSelector } from "react-redux";
-import store from "@/redux/store";
+
 // Import the necessary selectors from the respective slices
 import { selectFarmerDetails, updateandfetchfarmer } from "@/redux/farmerSlice";
 import { selectOfficer, updateAndFetchOfficer } from "@/redux/officerSlice";

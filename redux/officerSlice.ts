@@ -33,7 +33,6 @@ const officerSlice = createSlice({
   reducers: {
     // When a 'register' action is dispatched, update the state.
     OfficerRegister: (state, action) => {
-      console.log("Register Action Payload:", action.payload);
       // state.officer = action.payload; // Set 'officer' to the payload provided in the action.
       state.officerDetails = { ...state.officerDetails, ...action.payload }; // Merges existing officer data with fields from action.payload.
     },

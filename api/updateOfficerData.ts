@@ -30,9 +30,6 @@ export async function UpdateOfficerData(
 
     // Check if the request was successful
     if (response.status === 200) {
-      console.log(
-        "-------------Data coming from BE-----------" + response.data
-      );
       // Return the updated officer data
       return response.data;
     }

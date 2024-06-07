@@ -18,9 +18,8 @@ import {
 import PlaceOutlinedIcon from "@mui/icons-material/PlaceOutlined";
 // Import the router object to handle routing
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch} from "react-redux";
 import { addNewLand } from "@/redux/landSlice";
-import { RootState } from "@/redux/types";
 import { useTranslation } from 'react-i18next';
 import i18n from "../config/i18n";// Import the i18n instance
 import MapComponent from "../../components/MapComponent";
@@ -31,7 +30,18 @@ import store from "@/redux/store";
 import { selectLands } from "@/redux/landSlice";
 import { selectAuth } from "@/redux/authSlice";
 import { districtList } from "@/data/landsData";
+import { z } from "zod";
+import { ZodErrors } from "@/components/ZodErrors";;
 
+// Define Zod schema for form validation
+const landSchema = z.object({
+  landName: z.string().min(1, "Land name is required"),
+  district: z.string().min(1, "District is required"),
+  dsDivision: z.string().min(1, "Division is required"),
+  landRent: z.string().min(1, "Land rent is required"),
+  irrigationMode: z.string().min(1, "Irrigation mode is required"),
+
+});
 /**
  * Add Land page serves as a form to add details about land properties.
  */
@@ -41,7 +51,8 @@ export default function AddNewLand() {
 
   const districtNames = districtList.map((district) => district.name);
 
-  const landDetails = useSelector((state: RootState) => state.land);
+  //const landDetails = useSelector((state: RootState) => state.land);
+
   // State for managing form data and map-related data
   const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(
     null
@@ -55,7 +66,7 @@ export default function AddNewLand() {
   const [responseData, setResponseData] = useState(null);
 
   // Define the structure of the form data
-  interface FormData{
+  interface FormData {
     _id: string;
     landName: string;
     district: string | null;
@@ -63,7 +74,7 @@ export default function AddNewLand() {
     landRent: string;
     irrigationMode: string;
     userId: string;
-    crops: any[];
+
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -74,9 +85,10 @@ export default function AddNewLand() {
     landRent: "",
     irrigationMode: "",
     userId: "",
-    crops: [],
+
   });
 
+  const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
   const dispatch = useDispatch();
 
   // Managing state for displaying the map
@@ -92,34 +104,37 @@ export default function AddNewLand() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    try {
+     try {
+      const validation = landSchema.safeParse(formData);
+      if (!validation.success) {
+        const flattenedErrors = validation.error.flatten().fieldErrors;
+        setValidationErrors({
+          landName: flattenedErrors.landName?.[0],
+          district: flattenedErrors.district?.[0],
+          dsDivision: flattenedErrors.dsDivision?.[0],
+          landRent: flattenedErrors.landRent?.[0],
+          irrigationMode: flattenedErrors.irrigationMode?.[0],
+        });
+        return;
+      }
       const action = addNewLand(formData);
       dispatch(action);
-      console.log("Dispatching action for add land:", action);
 
       //Get logged user Id from redux
       const loggedUser = selectAuth(store.getState());
-      console.log("----------getUserFromRedux----------------", loggedUser);
       const userId = loggedUser.auth._id;
-      console.log("----------getUserFromRedux----------------", userId);
 
       // Get land data from the Redux store
       const landData = selectLands(store.getState());
       const landDataObject = landData?.[landData.length - 1];
-
-      const landDetails = {...landDataObject, userId};
-      const jsonLandDetails = JSON.stringify(landDetails);
-      console.log("----------jsonLandDetails----------------" + jsonLandDetails);
+      const landDetails = { ...landDataObject, userId };
 
       const response = await axios.post(
         "http://localhost:5000/api/land/create", landDetails
       );
       if (response && response.status === 200) {
-        console.log(response);
         setResponseData(response.data);
         setOpenSuccessDialog(true); // Open success dialog on success
-        // // Simulate an add land action by creating a land data object.
-        // dispatch(addLand(landData));
       } else if (response && response.status === 400) {
         console.error("Failed to fetch data");
       }
@@ -138,7 +153,6 @@ export default function AddNewLand() {
       const landData = formData;
       const action = addNewLand(landData);
       dispatch(action);
-      console.log("Dispatching action for land:", action);
       router.push(`/add-crop?fromAddLand=${fromAddLandValue}`); //Pass the value
     } catch (error) {
       console.error("Error fetching data:", error);
@@ -277,6 +291,9 @@ export default function AddNewLand() {
                 value={formData.landName}
                 onChange={(e) => handleChangeAddNewLand(e, "landName")}
               />
+                {validationErrors.landName && (
+                <ZodErrors error={[validationErrors.landName]} />)}
+                
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblDistrict")}</Typography>
@@ -296,6 +313,7 @@ export default function AddNewLand() {
                   />
                 )}
               />
+           
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblDivision")}</Typography>
@@ -310,6 +328,8 @@ export default function AddNewLand() {
                 value={formData.dsDivision}
                 onChange={(e) => handleChangeAddNewLand(e, "dsDivision")}
               />
+              {validationErrors.dsDivision && (
+              <ZodErrors error={[validationErrors.dsDivision]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblLandRent")}</Typography>
@@ -324,6 +344,8 @@ export default function AddNewLand() {
                 value={formData.landRent}
                 onChange={(e) => handleChangeAddNewLand(e, "landRent")}
               />
+               {validationErrors.landRent && (
+              <ZodErrors error={[validationErrors.landRent]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblMode")}</Typography>
@@ -338,6 +360,9 @@ export default function AddNewLand() {
                 value={formData.irrigationMode}
                 onChange={(e) => handleChangeAddNewLand(e, "irrigationMode")}
               />
+              {validationErrors.irrigationMode && (
+              <ZodErrors error={[validationErrors.irrigationMode]} />)}
+
             </Grid>
           </Grid>
           {/* Buttons for saving and proceeding */}
@@ -366,12 +391,12 @@ export default function AddNewLand() {
           </Grid>
         </Box>
         <Dialog
-            open={openSuccessDialog}
-            onClose={handleCloseSuccessDialog}
-            aria-labelledby="success-dialog-title"
+          open={openSuccessDialog}
+          onClose={handleCloseSuccessDialog}
+          aria-labelledby="success-dialog-title"
         >
-            {/* Display a translated 'Record added successfully!' message based on the selected language. */}
-            <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtAddedSuccess")}</DialogTitle>
+          {/* Display a translated 'Record added successfully!' message based on the selected language. */}
+          <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtAddedSuccess")}</DialogTitle>
           <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
             <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
               {i18n.t("dialogBoxes.capBtnOk")}
