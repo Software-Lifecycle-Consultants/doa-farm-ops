@@ -29,7 +29,7 @@ import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { register } from "@/redux/userSlice";
 import { z } from 'zod';
-import { ZodErrors } from "@/app/ZodErrors";
+import { ZodErrors } from "@/components/ZodErrors";
 /**
  * SignUp page allows to users to register to the system
  */

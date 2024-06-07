@@ -31,16 +31,9 @@ import { CustomBox1 } from "@/Theme";
 import { toast } from "react-toastify";
 import { login } from "@/redux/authSlice";
 import { AppDispatch} from "@/redux/store";
-import { ZodErrors } from "@/app/ZodErrors";
-import { z } from "zod";
-
-
-//zod validation Schema
-const schemaLogin = z.object({
-  email: z.string().email("Please enter a valid email address"),
-  password: z.string().min(6, "Please Enter Correct Password").max(100),
-});
-
+import { ZodErrors } from "@/components/ZodErrors";
+import { schemaLogin } from '@/schemas/login.schema';
+import { validateFormData } from '@/utils/validation';
 
 // Export the sign-in component
 export default function SignIn() {
@@ -79,10 +72,11 @@ export default function SignIn() {
 
   // Define a function to handle user login.
   const handleLogin = async () => {
-    const validation = schemaLogin.safeParse(formData);
-    if (!validation.success) {
-      setValidationErrors(validation.error.flatten().fieldErrors);
-      toast.error("Validation failed. Please check your inputs.");
+    // const validation = schemaLogin.safeParse(formData);
+    const { valid, errors }= validateFormData(schemaLogin,formData);
+
+    if (!valid) {  
+      setValidationErrors(errors);
       return;
     }
 

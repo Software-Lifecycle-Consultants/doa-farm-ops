@@ -27,21 +27,10 @@ import { addCrop, addCropAsync, addLandAndCropAsync } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
 import { Land } from "@/redux/types";
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
-import { z } from "zod";
-import { ZodErrors } from "@/app/ZodErrors";
-
-// zod validation Schema
-const schemaAddCrop = z.object({
-  cropName: z.string().min(1, "Crop name is required"),
-  season: z.string().min(1, "season is required"),
-  cropType: z.string().min(1, "Crop type is required"),
-  totalSoldQty: z.string().min(1, "Total sold quantity is required"),
-  totalIncome: z.string().min(1, "Total income is required"),
-  reservedQtyHome: z.string().min(1, "Quantity kept for home is required"),
-  reservedQtySeed: z.string().min(1, "Quantity kept for seed is required"),
-  noOfPicks: z.string().min(1, "Number of picks is required"),
-  isCultivationLoan: z.string().min(1, "Cultivation loan status is required"),
-});
+import { ZodErrors } from "@/components/ZodErrors";
+import { schemaAddCrop } from '@/schemas/add.crop.schema';
+import { validateFormData } from '@/utils/validation';
+import { toast } from 'react-toastify';
 
 // Styles for labels
 const styles = {
@@ -70,7 +59,7 @@ export default function AddCrop() {
   const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
   //Interface FormData to save inputs from Add Crop screen
   interface FormData {
-    cropName: string | null;
+    cropName: string;
     season: string;
     cropType: string;
     totalSoldQty: string;
@@ -84,7 +73,7 @@ export default function AddCrop() {
   }
 
   const [formData, setFormData] = useState<FormData>({
-    cropName: null, // Specify the type as string | null
+    cropName: "", // Specify the type as string | null
     season: "1",
     cropType: "",
     totalSoldQty: "",
@@ -139,20 +128,20 @@ export default function AddCrop() {
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
 
-    const validation = schemaAddCrop.safeParse(formData);
-    if (!validation.success) {
-       const flattenedErrors = validation.error.flatten().fieldErrors;
-       setValidationErrors({
-         cropName: flattenedErrors.cropName?.[0],
-         season: flattenedErrors.season?.[0],
-         cropType: flattenedErrors.cropType?.[0],
-         totalSoldQty: flattenedErrors.totalSoldQty?.[0],
-         totalIncome: flattenedErrors.totalIncome?.[0],
-         reservedQtyHome: flattenedErrors.reservedQtyHome?.[0],
-         reservedQtySeed: flattenedErrors.reservedQtySeed?.[0],
-         noOfPicks: flattenedErrors.noOfPicks?.[0],
-         isCultivationLoan: flattenedErrors.isCultivationLoan?.[0],
-       });
+    // //If Crop Name is not selected, prompt the user to select cropName
+    // if (!formData.cropName) {
+    //   toast.error("Please select a crop name.");
+    //   return;
+    // }
+
+    // const validation = schemaAddCrop.safeParse(formData);
+    const { valid, errors } = validateFormData(schemaAddCrop, formData);
+    if (!valid) {
+      //  const flattenedErrors = validation.error.flatten().fieldErrors;
+      setValidationErrors(errors);
+      if (errors.cropName) {
+        toast.error(errors.cropName[0]);
+      }
     return;
       }
    
@@ -218,7 +207,7 @@ export default function AddCrop() {
   const selectChangeAddCropName = (event: any, newValue: string | null) => {
     setFormData({
       ...formData,
-      cropName: newValue,
+      cropName: newValue || "",
     });
   };
 
@@ -395,7 +384,7 @@ export default function AddCrop() {
                 name="QtyForHome"
                 autoComplete="QtyForHome"
                 value={formData.reservedQtyHome}
-                onChange={(e) => handleChangeAddCrop(e, "totalIncome")}
+                onChange={(e) => handleChangeAddCrop(e, "reservedQtyHome")}
               />
                  {validationErrors?.reservedQtyHome && (
                 <ZodErrors error={[validationErrors.reservedQtyHome]} />)}

@@ -29,7 +29,7 @@ import { CustomBox1 } from "@/Theme";
 import store, { AppDispatch } from "@/redux/store";
 import { selectAuth } from "@/redux/authSlice";
 import { z } from "zod";
-import { ZodErrors } from "@/app/ZodErrors";
+import { ZodErrors } from "@/components/ZodErrors";
 
 
 // zod validation Schema
