@@ -2,38 +2,23 @@
 import React, { useState } from "react";
 import ProfileTitle from "../../../components/ProfileTitle";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import DeleteIcon from "@mui/icons-material/Delete";
-import TableHead from "@mui/material/TableHead";
 import CssBaseline from "@mui/material/CssBaseline";
 import { useRouter } from "next/navigation";
 import {
-  laborCostData,
-  materialCostData,
   majorOps,
   subOps,
   fertilizerApps,
   fertilizers,
-  machinery,
-  material,
 } from "../../../data/operationCostData";
 
 import {
-  IconButton,
-  Input,
-  Table,
-  TableBody,
-  TableCell,
-  TableRow,
   Typography,
   Grid,
   Button,
   InputLabel,
   MenuItem,
   FormControl,
-  Paper,
-  TableContainer,
   Stack,
-  Alert,
   Dialog,
   DialogTitle,
   DialogActions,
@@ -46,7 +31,6 @@ import { selectCrops } from "@/redux/cropSlice";
 import { useSelector } from "react-redux";
 import MachineryCostTable from "@/components/MachineryCostTable";
 import LaborCostTable from "@/components/LaborCostTable";
-import { Mate } from "next/font/google";
 import MaterialCostTable from "@/components/MaterialCostTable";
 import { addCostData } from "@/api/addCostData";
 
