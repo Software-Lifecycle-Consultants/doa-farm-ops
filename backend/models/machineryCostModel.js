@@ -17,7 +17,7 @@ const machinerycostSchema = new Schema(
       trim: true,
     },
     isOwned: {
-      type: Boolean,
+      type: String,
       required: true,
       trim: true,
     },

@@ -26,28 +26,25 @@ import { t } from "i18next";
 
 interface laborCost {
   gender: string;
-  freeOrHired: string;
+  isHired: string;
   quantity: string;
   dailyWage: string;
   foodCostPerDay: string;
 }
 
-// Define the component to display the table
-interface TableTitleProps {
-  title: string;
+interface LaborCostTableProps {
+  addlabor: laborCost[];
+  setAddlabor: React.Dispatch<React.SetStateAction<laborCost[]>>;
 }
 
-export default function LaborCostTable({ title }: TableTitleProps) {
+export default function LaborCostTable({addlabor, setAddlabor}: LaborCostTableProps) {
   const [laborMethod, setlaborMethod] = React.useState<laborCost>({
     gender: "",
-    freeOrHired: "",
+    isHired: "",
     quantity: "",
     dailyWage: "",
     foodCostPerDay: "",
   });
-
-  const [addlabor, setAddlabor] = React.useState<laborCost[]>([]);
-
   // Event handler for select labor cost method filter change in labor cost table
   const handleChangelaborCost = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -73,7 +70,7 @@ export default function LaborCostTable({ title }: TableTitleProps) {
   const handleAddlaborCost = async () => {
     if (
       !laborMethod.gender ||
-      !laborMethod.freeOrHired ||
+      !laborMethod.isHired ||
       !laborMethod.quantity ||
       !laborMethod.dailyWage ||
       !laborMethod.foodCostPerDay
@@ -83,7 +80,7 @@ export default function LaborCostTable({ title }: TableTitleProps) {
       setAddlabor((prevArray) => [...prevArray, laborMethod]);
       setlaborMethod({
         gender: "",
-        freeOrHired: "",
+        isHired: "",
         quantity: "",
         dailyWage: "",
         foodCostPerDay: "",
@@ -137,8 +134,8 @@ export default function LaborCostTable({ title }: TableTitleProps) {
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
-            value={laborMethod.freeOrHired}
-            onChange={(e) => handleChangelaborCostDropdown(e, "freeOrHired")}
+            value={laborMethod.isHired}
+            onChange={(e) => handleChangelaborCostDropdown(e, "isHired")}
           >
             <MenuItem value="">
               <em>None</em>
@@ -247,8 +244,8 @@ export default function LaborCostTable({ title }: TableTitleProps) {
                       <Select
                         labelId="demo-simple-select-filled-label"
                         id="demo-simple-select-filled"
-                        value={laborMethod.freeOrHired}
-                        onChange={(e) => handleChangelaborCostDropdown(e, "freeOrHired")}
+                        value={laborMethod.isHired}
+                        onChange={(e) => handleChangelaborCostDropdown(e, "isHired")}
                       >
                         <MenuItem value="">
                           <em>None</em>
@@ -344,7 +341,7 @@ export default function LaborCostTable({ title }: TableTitleProps) {
                 {addlabor.map((data, index) => (
                   <TableRow key={index}>
                     <TableCell>{data.gender}</TableCell>
-                    <TableCell>{data.freeOrHired}</TableCell>
+                    <TableCell>{data.isHired}</TableCell>
                     <TableCell>{data.quantity}</TableCell>
                     <TableCell>{data.dailyWage}</TableCell>
                     <TableCell>{data.foodCostPerDay}</TableCell>

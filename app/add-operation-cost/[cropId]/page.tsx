@@ -1,5 +1,5 @@
 "use client";
-import * as React from "react";
+import React, { useState } from "react";
 import ProfileTitle from "../../../components/ProfileTitle";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -34,6 +34,9 @@ import {
   TableContainer,
   Stack,
   Alert,
+  Dialog,
+  DialogTitle,
+  DialogActions,
 } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
@@ -45,6 +48,7 @@ import MachineryCostTable from "@/components/MachineryCostTable";
 import LaborCostTable from "@/components/LaborCostTable";
 import { Mate } from "next/font/google";
 import MaterialCostTable from "@/components/MaterialCostTable";
+import { addCostData } from "@/api/addCostData";
 
 /**
  * Add Operation Cost page represents a page where users can add operation costs for a specific crop.(Machinery Cost, Labor Cost, Material Cost)
@@ -80,7 +84,78 @@ export default function AddOperationCost({
     setSelectFertilizer(event.target.value);
   };
 
-  const [materialCost, setMaterialCost] = React.useState("");
+  // const [materialCost, setMaterialCost] = React.useState("");
+
+  interface materialCost {
+    material: string;
+    qtyUsed: string;
+    materialCost: string;
+  }
+
+  const [addMaterialCost, setAddMaterialCost] = React.useState<materialCost[]>([]);
+
+  interface MachineryCost {
+    method: string;
+    isOwned: string;
+    noUsed: string;
+    days: string;
+    machineryCost: string;
+  }
+
+  const [addMachinery, setaddMachinery] = React.useState<MachineryCost[]>([]);
+  
+  interface laborCost {
+    gender: string;
+    isHired: string;
+    quantity: string;
+    dailyWage: string;
+    foodCostPerDay: string;
+  }
+
+  const [addlabor, setAddlabor] = React.useState<laborCost[]>([]);
+
+    
+    const handleAddCost = async (
+      event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+      event.preventDefault(); // Prevent the default form submission behavior
+      try {
+        //Add the operational cost to the database
+      
+        const costdetails = {
+          cropId: params.cropId,
+          majorOp: majorOperations,
+          subOp: subOperations,
+          machineryCostDetails: addMachinery,
+          labourCostDetails: addlabor,
+          materialCostDetails: addMaterialCost,
+        };
+
+        console.log("costdetails", costdetails);
+
+        // Call the addCostData function with the provided cost details
+        const response = await addCostData(costdetails);
+
+        // If the operation cost is added successfully, open the success dialog
+        if (response && response.status === 200){
+          setOpenSuccessDialog(true);
+        }
+        else if (response && response.status === 400) {
+          console.error("Failed to fetch data");
+        }
+        
+      } catch (error) {
+        console.error("Error adding operational cost", error);
+      }
+    };
+
+  // State to manage the visibility of the success dialog
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+
+  const handleCloseSuccessDialog = () => {
+    setOpenSuccessDialog(false);
+    router.push("/my-crops");
+  };
 
   //Function to navigate to my crops page
   const navigationToMyCrops = () => {
@@ -223,11 +298,11 @@ export default function AddOperationCost({
           </Grid>
         </Grid>
         {/* Machinery Cost Table */}
-        <MachineryCostTable title="Machine Cost" />
+        <MachineryCostTable setaddMachinery={setaddMachinery} addMachinery={addMachinery} />
         {/* Labor Cost Section */}
-        <LaborCostTable title="Labor Cost" />
+        <LaborCostTable setAddlabor={setAddlabor} addlabor={addlabor} />
         {/* Material Cost Section */}
-        <MaterialCostTable title="Material Cost" />
+        <MaterialCostTable setAddMaterialCost={setAddMaterialCost}  addMaterialCost={addMaterialCost}/>
         <Grid container justifyContent="center" alignItems="center">
           <Grid item>
             <Stack direction="row" spacing={4} paddingTop={4}>
@@ -247,12 +322,25 @@ export default function AddOperationCost({
                 variant="contained"
                 fullWidth
                 sx={{ mt: 3, mb: 2, width: "18vw" }}
-                onClick={navigationToMyCrops}
+                onClick={handleAddCost}
               >
                 {t("operationCost.capBtnSave")}
               </Button>
             </Stack>
           </Grid>
+          <Dialog
+              open={openSuccessDialog}
+              onClose={handleCloseSuccessDialog}
+              aria-labelledby="success-dialog-title"
+          >
+              {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
+              <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtUpdatedSuccess")}</DialogTitle>
+            <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
+              <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
+                {i18n.t("dialogBoxes.capBtnOk")}
+              </Button>
+            </DialogActions>
+          </Dialog>
         </Grid>
       </Grid>
     </>

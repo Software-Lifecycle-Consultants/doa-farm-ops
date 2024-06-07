@@ -35,25 +35,39 @@ const costController = {
 
       /////Get cost details from the request/////
 
-      const oldCostData = await Operation.findOne({ cropId: cropId }).sort({$natural:-1})
-      console.log("oldCostData", oldCostData);
-      const oldtotalLabourCosts = oldCostData && oldCostData.totalLabourCosts ? oldCostData.totalLabourCosts:0;
-      const oldtotalMaterialCosts = oldCostData && oldCostData.totalMaterialCosts ? oldCostData.totalMaterialCosts:0;
-      const oldtotalMachineryCosts = oldCostData && oldCostData.totalMachineryCosts ? oldCostData.totalMachineryCosts:0;
+      const oldCostData = await Operation.findOne({ cropId: cropId }).sort({
+        $natural: -1,
+      });
+      const oldtotalLabourCosts =
+        oldCostData && oldCostData.totalLabourCosts
+          ? oldCostData.totalLabourCosts
+          : 0;
+      const oldtotalMaterialCosts =
+        oldCostData && oldCostData.totalMaterialCosts
+          ? oldCostData.totalMaterialCosts
+          : 0;
+      const oldtotalMachineryCosts =
+        oldCostData && oldCostData.totalMachineryCosts
+          ? oldCostData.totalMachineryCosts
+          : 0;
 
       //Labour Cost
       let newtotalLabourCosts = 0;
       for (const labourdetails of labourCostDetails) {
-        const { gender, isHired, qty, dailyWage, foodCost } = labourdetails;
-
-        if (!gender || !isHired || !qty || !dailyWage || !foodCost) {
-          return res.status(400).json({ msg: "Please fill in all fields." });
+        const { gender, isHired, quantity, dailyWage, foodCostPerDay } =
+          labourdetails;
+        if (!gender || !isHired || !quantity || !dailyWage || !foodCostPerDay) {
+          return res
+            .status(400)
+            .json({ msg: "Please fill in all labour cost fields." });
         }
 
-        newtotalLabourCosts += dailyWage * qty + foodCost;
+        newtotalLabourCosts +=
+          Number(quantity) * (Number(dailyWage) + Number(foodCostPerDay));
       }
 
-      const totalLabourCosts = oldtotalLabourCosts + newtotalLabourCosts;
+      const totalLabourCosts =
+        Number(oldtotalLabourCosts) + newtotalLabourCosts;
 
       console.log("totalLabour", totalLabourCosts);
 
@@ -61,15 +75,18 @@ const costController = {
       let newtotalMaterialCosts = 0;
       for (const materialdeails of materialCostDetails) {
         const { material, qtyUsed, materialCost } = materialdeails;
-
+        console.log("material", materialdeails);
         if (!material || !qtyUsed || !materialCost) {
-          return res.status(400).json({ msg: "Please fill in all fields." });
+          return res
+            .status(400)
+            .json({ msg: "Please fill in all material cost fields." });
         }
 
-        newtotalMaterialCosts += materialCost;
+        newtotalMaterialCosts += Number(materialCost);
       }
 
-      const totalMaterialCosts = oldtotalMaterialCosts + newtotalMaterialCosts;
+      const totalMaterialCosts =
+        Number(oldtotalMaterialCosts) + newtotalMaterialCosts;
 
       console.log("totalMaterial", totalMaterialCosts);
 
@@ -80,19 +97,23 @@ const costController = {
           machinerydetails;
 
         if (!method || !isOwned || !noUsed || !days || !machineryCost) {
-          return res.status(400).json({ msg: "Please fill in all fields." });
+          return res
+            .status(400)
+            .json({ msg: "Please fill in all machinery cost fields." });
         }
 
-        newtotalMachineryCosts += machineryCost;
+        newtotalMachineryCosts += Number(machineryCost);
       }
 
-      const totalMachineryCosts = oldtotalMachineryCosts + newtotalMachineryCosts;
+      const totalMachineryCosts =
+        Number(oldtotalMachineryCosts) + newtotalMachineryCosts;
 
       console.log("totalMachinery", totalMachineryCosts);
 
       /// Operation Cost
 
-      const totalOperationCosts = totalLabourCosts + totalMaterialCosts + totalMachineryCosts;
+      const totalOperationCosts =
+        totalLabourCosts + totalMaterialCosts + totalMachineryCosts;
 
       console.log("totalOperation", totalOperationCosts);
 
@@ -148,9 +169,9 @@ const costController = {
             operationCostId: doc.operationCostId,
             gender: doc.gender,
             isHired: doc.isHired,
-            qty: doc.qty,
+            quantity: doc.quantity,
             dailyWage: doc.dailyWage,
-            foodCost: doc.foodCost,
+            foodCostPerDay: doc.foodCostPerDay,
           }));
 
           // Create the response data

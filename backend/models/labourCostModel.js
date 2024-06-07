@@ -17,12 +17,12 @@ const labourcostschema = new Schema(
       trim: true,
     },
     isHired: {
-      type: Boolean,
+      type: String,
       required: true,
       trim: true,
     },
 
-    qty: {
+    quantity: {
       type: Number,
       required: true,
       trim: true,
@@ -32,7 +32,7 @@ const labourcostschema = new Schema(
       required: true,
       trim: true,
     },
-    foodCost: {
+    foodCostPerDay: {
       type: Number,
       required: true,
     },

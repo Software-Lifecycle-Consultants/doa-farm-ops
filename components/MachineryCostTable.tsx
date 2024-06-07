@@ -25,31 +25,30 @@ import {
 import { customGridStyles1 } from "@/styles/customStyles";
 import { t } from "i18next";
 
-// Define the component to display the table
-interface TableTitleProps {
-  title: string;
+interface MachineryCost {
+  method: string;
+  isOwned: string;
+  noUsed: string;
+  days: string;
+  machineryCost: string;
 }
 
-export default function MachineryCostTable({ title }: TableTitleProps) {
-  interface MachineryCost {
-    method: string;
-    ownedOrHired: string;
-    noOfTimes: string;
-    days: string;
-    cost: string;
-  }
+interface MachineryCostTableProps {
+  addMachinery: MachineryCost[];
+  setaddMachinery: React.Dispatch<React.SetStateAction<MachineryCost[]>>;
+}
 
+export default function MachineryCostTable({ addMachinery, setaddMachinery} : MachineryCostTableProps) {
+  
   const [machineryMethod, setMachineryMethod] = React.useState<MachineryCost>({
     method: "",
-    ownedOrHired: "",
-    noOfTimes: "",
+    isOwned: "",
+    noUsed: "",
     days: "",
-    cost: "",
+    machineryCost: "",
   });
 
-  const [addMachinery, setaddMachinery] = React.useState<MachineryCost[]>([]);
-
-  // Event handler for select machinery cost method filter change in machinery cost table
+  // Event handler for select machineryCost method filter change in machineryCost table
   const handleChangeMachineryCost = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
@@ -70,24 +69,24 @@ export default function MachineryCostTable({ title }: TableTitleProps) {
     });
   };
 
-  // Event handler for select material cost filter change in material cost table
+  // Event handler for select material machineryCost filter change in material machineryCost table
   const handleAddMachineCost = async () => {
     if (
       !machineryMethod.method ||
-      !machineryMethod.ownedOrHired ||
-      !machineryMethod.noOfTimes ||
+      !machineryMethod.isOwned ||
+      !machineryMethod.noUsed ||
       !machineryMethod.days ||
-      !machineryMethod.cost
+      !machineryMethod.machineryCost
     ) {
       <Alert severity="error">This is an error Alert.</Alert>;
     } else {
       setaddMachinery((prevArray) => [...prevArray, machineryMethod]);
       setMachineryMethod({
         method: "",
-        ownedOrHired: "",
-        noOfTimes: "",
+        isOwned: "",
+        noUsed: "",
         days: "",
-        cost: "",
+        machineryCost: "",
       });
     }
   };
@@ -138,9 +137,9 @@ export default function MachineryCostTable({ title }: TableTitleProps) {
           <Select
             labelId="demo-simple-select-filled-label"
             id="demo-simple-select-filled"
-            value={machineryMethod.ownedOrHired}
+            value={machineryMethod.isOwned}
             onChange={(e) =>
-              handleChangeMachineryCostDropdown(e, "ownedOrHired")
+              handleChangeMachineryCostDropdown(e, "isOwned")
             }
           >
             <MenuItem value="">
@@ -159,8 +158,8 @@ export default function MachineryCostTable({ title }: TableTitleProps) {
           </InputLabel>
           <Input
             required
-            value={machineryMethod.noOfTimes}
-            onChange={(e) => handleChangeMachineryCost(e, "noOfTimes")}
+            value={machineryMethod.noUsed}
+            onChange={(e) => handleChangeMachineryCost(e, "noUsed")}
           />
         </FormControl>
         <FormControl
@@ -181,8 +180,8 @@ export default function MachineryCostTable({ title }: TableTitleProps) {
           <InputLabel>{t("operationCost.tblMachineryCost.colCost")}</InputLabel>
           <Input
             required
-            value={machineryMethod.cost}
-            onChange={(e) => handleChangeMachineryCost(e, "cost")}
+            value={machineryMethod.machineryCost}
+            onChange={(e) => handleChangeMachineryCost(e, "machineryCost")}
           />
         </FormControl>
         <FormControl
@@ -194,7 +193,7 @@ export default function MachineryCostTable({ title }: TableTitleProps) {
           </Button>
         </FormControl>
       </Grid>
-      {/* Machinery Cost Data Table */}
+      {/* Machinery machineryCost Data Table */}
       <Grid item xs={12}>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer sx={{ maxHeight: 440 }}>
@@ -250,9 +249,9 @@ export default function MachineryCostTable({ title }: TableTitleProps) {
                       <Select
                         labelId="demo-simple-select-filled-label"
                         id="demo-simple-select-filled"
-                        value={machineryMethod.ownedOrHired}
+                        value={machineryMethod.isOwned}
                         onChange={(e) =>
-                          handleChangeMachineryCostDropdown(e, "ownedOrHired")
+                          handleChangeMachineryCostDropdown(e, "isOwned")
                         }
                       >
                         <MenuItem value="">
@@ -280,9 +279,9 @@ export default function MachineryCostTable({ title }: TableTitleProps) {
                       </InputLabel>
                       <Input
                         required
-                        value={machineryMethod.noOfTimes}
+                        value={machineryMethod.noUsed}
                         onChange={(e) =>
-                          handleChangeMachineryCost(e, "noOfTimes")
+                          handleChangeMachineryCost(e, "noUsed")
                         }
                       />
                     </FormControl>
@@ -326,8 +325,8 @@ export default function MachineryCostTable({ title }: TableTitleProps) {
                       </InputLabel>
                       <Input
                         required
-                        value={machineryMethod.cost}
-                        onChange={(e) => handleChangeMachineryCost(e, "cost")}
+                        value={machineryMethod.machineryCost}
+                        onChange={(e) => handleChangeMachineryCost(e, "machineryCost")}
                       />
                     </FormControl>
                   </TableCell>
@@ -351,10 +350,10 @@ export default function MachineryCostTable({ title }: TableTitleProps) {
                 {addMachinery.map((data, index) => (
                   <TableRow key={index}>
                     <TableCell>{data.method}</TableCell>
-                    <TableCell>{data.ownedOrHired}</TableCell>
-                    <TableCell>{data.noOfTimes}</TableCell>
+                    <TableCell>{data.isOwned}</TableCell>
+                    <TableCell>{data.noUsed}</TableCell>
                     <TableCell>{data.days}</TableCell>
-                    <TableCell>{data.cost}</TableCell>
+                    <TableCell>{data.machineryCost}</TableCell>
                     <TableCell>
                       <IconButton>
                         <DeleteIcon />
