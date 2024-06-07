@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ProfileTitle from "../../../components/ProfileTitle";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -76,8 +76,6 @@ export default function AddOperationCost({
     setSelectFertilizer(event.target.value);
   };
 
-  // const [materialCost, setMaterialCost] = React.useState("");
-
   interface materialCost {
     material: string;
     qtyUsed: string;
@@ -106,7 +104,17 @@ export default function AddOperationCost({
 
   const [addlabor, setAddlabor] = React.useState<laborCost[]>([]);
 
-    
+  useEffect(() => {
+    // This function will be called whenever any of the dependencies change.
+    if (
+      addMachinery.length > 0 ||
+      addlabor.length > 0 ||
+      addMaterialCost.length > 0
+    ) {
+      setShowWarning(false); // Hide the warning if any cost field is filled
+    }
+  }, [addMachinery, addlabor, addMaterialCost]);
+
     const handleAddCost = async (
       event: React.MouseEvent<HTMLButtonElement>
     ) => {
