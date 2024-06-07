@@ -22,6 +22,7 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
+  Alert,
 } from "@mui/material";
 
 import { useTranslation } from "react-i18next";
@@ -50,14 +51,21 @@ export default function AddOperationCost({
   const [subOperations, setSubOperations] = React.useState("");
   const [fertilizerApplication, setFertilizerApplication] = React.useState("");
   const [selectFertilizer, setSelectFertilizer] = React.useState("");
+  const [majorOperationsSelected, setMajorOperationsSelected] = useState(false);
+  const [subOperationsSelected, setSubOperationsSelected] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
 
   // Event handler for major operations filter change
   const handleChange1 = (event: SelectChangeEvent) => {
     setMajorOperations(event.target.value);
+    setMajorOperationsSelected(true);
+    setShowWarning(false);
   };
   // Event handler for sub operations filter change
   const handleChange2 = (event: SelectChangeEvent) => {
     setSubOperations(event.target.value);
+    setSubOperationsSelected(true);
+    setShowWarning(false);
   };
   // Event handler for fertilizer application filter change
   const handleChange3 = (event: SelectChangeEvent) => {
@@ -105,7 +113,11 @@ export default function AddOperationCost({
       event.preventDefault(); // Prevent the default form submission behavior
       try {
         //Add the operational cost to the database
-      
+        if (!majorOperationsSelected || !subOperationsSelected || (addMachinery.length === 0 && addlabor.length === 0 && addMaterialCost.length === 0)) {
+          setShowWarning(true);
+        } else {
+          setShowWarning(false);
+
         const costdetails = {
           cropId: params.cropId,
           majorOp: majorOperations,
@@ -127,7 +139,7 @@ export default function AddOperationCost({
         else if (response && response.status === 400) {
           console.error("Failed to fetch data");
         }
-        
+      }
       } catch (error) {
         console.error("Error adding operational cost", error);
       }
@@ -282,11 +294,17 @@ export default function AddOperationCost({
           </Grid>
         </Grid>
         {/* Machinery Cost Table */}
-        <MachineryCostTable setaddMachinery={setaddMachinery} addMachinery={addMachinery} />
+        <MachineryCostTable
+          setaddMachinery={setaddMachinery}
+          addMachinery={addMachinery}
+        />
         {/* Labor Cost Section */}
         <LaborCostTable setAddlabor={setAddlabor} addlabor={addlabor} />
         {/* Material Cost Section */}
-        <MaterialCostTable setAddMaterialCost={setAddMaterialCost}  addMaterialCost={addMaterialCost}/>
+        <MaterialCostTable
+          setAddMaterialCost={setAddMaterialCost}
+          addMaterialCost={addMaterialCost}
+        />
         <Grid container justifyContent="center" alignItems="center">
           <Grid item>
             <Stack direction="row" spacing={4} paddingTop={4}>
@@ -301,6 +319,12 @@ export default function AddOperationCost({
                 {t("operationCost.capBtnCancel")}
               </Button>
               {/* Save Button */}
+              {showWarning && (
+                <Alert severity="warning">
+                  Please add necessary fields before
+                  saving.
+                </Alert>
+              )}
               <Button
                 type="submit"
                 variant="contained"
@@ -313,14 +337,21 @@ export default function AddOperationCost({
             </Stack>
           </Grid>
           <Dialog
-              open={openSuccessDialog}
-              onClose={handleCloseSuccessDialog}
-              aria-labelledby="success-dialog-title"
+            open={openSuccessDialog}
+            onClose={handleCloseSuccessDialog}
+            aria-labelledby="success-dialog-title"
           >
-              {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
-              <DialogTitle id="success-dialog-title"> {i18n.t("dialogBoxes.txtUpdatedSuccess")}</DialogTitle>
-            <DialogActions sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Button onClick={handleCloseSuccessDialog} variant="contained" color="primary">
+            {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
+            <DialogTitle id="success-dialog-title">
+              {" "}
+              {i18n.t("dialogBoxes.txtUpdatedSuccess")}
+            </DialogTitle>
+            <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
+              <Button
+                onClick={handleCloseSuccessDialog}
+                variant="contained"
+                color="primary"
+              >
                 {i18n.t("dialogBoxes.capBtnOk")}
               </Button>
             </DialogActions>
