@@ -91,6 +91,12 @@ export default function MachineryCostTable({ addMachinery, setaddMachinery} : Ma
     }
   };
 
+  // Event handler for delete machineryCost row in machineryCost table
+  const handleDeleteMachineCost = (index: number) => {
+    const newMachineCost = addMachinery.filter((_, i) => i !== index);
+    setaddMachinery(newMachineCost);
+  };
+
   return (
     <Grid item container gap={3} p={2} xs={12} md={12} sx={customGridStyles1}>
       <Typography variant="h6">
@@ -356,7 +362,9 @@ export default function MachineryCostTable({ addMachinery, setaddMachinery} : Ma
                     <TableCell>{data.machineryCost}</TableCell>
                     <TableCell>
                       <IconButton>
-                        <DeleteIcon />
+                        <DeleteIcon 
+                        onClick={() => handleDeleteMachineCost(index)}
+                        />
                       </IconButton>
                     </TableCell>
                   </TableRow>

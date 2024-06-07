@@ -45,7 +45,11 @@ export default function MaterialCostTable({setAddMaterialCost ,addMaterialCost}:
     materialCost: "",
   });
 
- 
+  // Event handler for delete materialCost row in materialyCost table
+  const handleDeleteMaterialCost = (index: number) => {
+    const newMaterialCost = addMaterialCost.filter((_, i) => i !== index);
+    setAddMaterialCost(newMaterialCost);
+  };
 
   // Event handler for select material cost method filter change in material cost table
   const handleChangeMaterialCost = (
@@ -275,7 +279,9 @@ export default function MaterialCostTable({setAddMaterialCost ,addMaterialCost}:
                         <TableCell></TableCell>
                         <TableCell>
                           <IconButton>
-                            <DeleteIcon />
+                            <DeleteIcon 
+                            onClick={() => handleDeleteMaterialCost(index)}
+                            />
                           </IconButton>
                         </TableCell>
                       </TableRow>

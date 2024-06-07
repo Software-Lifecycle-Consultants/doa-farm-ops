@@ -88,6 +88,12 @@ export default function LaborCostTable({addlabor, setAddlabor}: LaborCostTablePr
     }
   };
 
+   // Event handler for delete machineryCost row in machineryCost table
+   const handleDeleteLabourCost = (index: number) => {
+    const newLabourCost = addlabor.filter((_, i) => i !== index);
+    setAddlabor(newLabourCost);
+  };
+
   return (
     <Grid item container gap={3} p={2} xs={12} md={12} sx={customGridStyles1}>
       <Typography variant="h6">
@@ -347,7 +353,9 @@ export default function LaborCostTable({addlabor, setAddlabor}: LaborCostTablePr
                     <TableCell>{data.foodCostPerDay}</TableCell>
                     <TableCell>
                       <IconButton>
-                        <DeleteIcon />
+                        <DeleteIcon 
+                        onClick={() => handleDeleteLabourCost(index)}
+                        />
                       </IconButton>
                     </TableCell>
                   </TableRow>
