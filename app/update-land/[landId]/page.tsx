@@ -27,20 +27,10 @@ import store from "@/redux/store";
 import { selectAuth } from "@/redux/authSlice";
 import { Land } from '@/redux/types';
 import { districtList } from "@/data/landsData";
-import { z } from "zod";
-import { ZodErrors } from "@/app/ZodErrors";;
-
-// Define Zod schema for form validation
-const landSchema = z.object({
-  landName: z.string().min(1, "Land name is required"),
-  district: z.string().min(1, "District is required"),
-  dsDivision: z.string().min(1, "Division is required"),
-  landRent: z.string().min(1, "Land rent is required"),
-  irrigationMode: z.string().min(1, "Irrigation mode is required"),
-
-});
-
-
+import { schemaLand  } from "@/schemas/add.land.schema";
+import { validateFormData } from '@/utils/validation';
+import { toast } from 'react-toastify';
+import { ZodErrors } from "@/components/ZodErrors";;
 
 /**
  * UpdateLand page is a form to edit or update details about land properties.
@@ -97,17 +87,15 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
       // Transform the error format using flatten() method
-      const validation = landSchema.safeParse(formData);
-      if (!validation.success) {
-        const flattenedErrors = validation.error.flatten().fieldErrors;
-        setValidationErrors({
-          landName: flattenedErrors.landName?.[0],
-          district: flattenedErrors.district?.[0],
-          dsDivision: flattenedErrors.dsDivision?.[0],
-          landRent: flattenedErrors.landRent?.[0],
-          irrigationMode: flattenedErrors.irrigationMode?.[0],
-        });
-        return;
+ // const validation = schemaAddLand.safeParse(formData);
+ const { valid, errors } = validateFormData(schemaLand, formData);
+    if (!valid) {
+      //  const flattenedErrors = validation.error.flatten().fieldErrors;
+      setValidationErrors(errors);
+      if (errors.landName) {
+        toast.error(errors.landName[0]);
+      }
+    return;
       }
 
     try {
@@ -160,7 +148,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     router.push("/farmer-profile");
   };
   // Define a function to select district.
-  const selectChangeAddDistrict = (event: any, newValue: any | null) => {
+  const selectChangeAddDistrict = (event: any, newValue: any) => {
     setFormData({
       ...formData,
       district: newValue,
@@ -224,8 +212,10 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 options={districtNames}
                 getOptionLabel={(option) => option}
                 value={formData.district}
-                onChange={(event, newValue) =>
-                  selectChangeAddDistrict(event, newValue)
+                onChange={(event, newValue) =>{
+                  if (newValue !== null) {
+                    selectChangeAddDistrict(event, newValue);
+                  }}
                 }
                 renderInput={(params) => (
                   <TextField
@@ -236,6 +226,9 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                   />
                 )}
               />  
+              {validationErrors.district && (
+              <ZodErrors error={[validationErrors.district]} />)}
+
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblDivision")}</Typography>

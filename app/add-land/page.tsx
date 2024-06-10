@@ -30,7 +30,7 @@ import store from "@/redux/store";
 import { selectLands } from "@/redux/landSlice";
 import { selectAuth } from "@/redux/authSlice";
 import { districtList } from "@/data/landsData";
-import { schemaAddLand  } from "@/schemas/add.land.schema";
+import { schemaLand  } from "@/schemas/add.land.schema";
 import { validateFormData } from '@/utils/validation';
 import { toast } from 'react-toastify';
 import { ZodErrors } from "@/components/ZodErrors";;
@@ -98,7 +98,7 @@ export default function AddNewLand() {
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
     // const validation = schemaAddLand.safeParse(formData);
-    const { valid, errors } = validateFormData(schemaAddLand, formData);
+    const { valid, errors } = validateFormData(schemaLand, formData);
     if (!valid) {
       //  const flattenedErrors = validation.error.flatten().fieldErrors;
       setValidationErrors(errors);
