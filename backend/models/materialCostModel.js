@@ -26,6 +26,10 @@ const materialcostSchema = new Schema(
       required: true,
       trim: true,
     },
+    TotalmaterialCost: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,
