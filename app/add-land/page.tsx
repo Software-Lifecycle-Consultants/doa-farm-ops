@@ -30,18 +30,11 @@ import store from "@/redux/store";
 import { selectLands } from "@/redux/landSlice";
 import { selectAuth } from "@/redux/authSlice";
 import { districtList } from "@/data/landsData";
-import { z } from "zod";
+import { schemaLand  } from "@/schemas/add.land.schema";
+import { validateFormData } from '@/utils/validation';
+import { toast } from 'react-toastify';
 import { ZodErrors } from "@/components/ZodErrors";;
 
-// Define Zod schema for form validation
-const landSchema = z.object({
-  landName: z.string().min(1, "Land name is required"),
-  district: z.string().min(1, "District is required"),
-  dsDivision: z.string().min(1, "Division is required"),
-  landRent: z.string().min(1, "Land rent is required"),
-  irrigationMode: z.string().min(1, "Irrigation mode is required"),
-
-});
 /**
  * Add Land page serves as a form to add details about land properties.
  */
@@ -69,7 +62,7 @@ export default function AddNewLand() {
   interface FormData {
     _id: string;
     landName: string;
-    district: string | null;
+    district: string ;
     dsDivision: string;
     landRent: string;
     irrigationMode: string;
@@ -80,7 +73,7 @@ export default function AddNewLand() {
   const [formData, setFormData] = useState<FormData>({
     _id: "",
     landName: "",
-    district: null,
+    district: "",
     dsDivision: "",
     landRent: "",
     irrigationMode: "",
@@ -104,19 +97,17 @@ export default function AddNewLand() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-     try {
-      const validation = landSchema.safeParse(formData);
-      if (!validation.success) {
-        const flattenedErrors = validation.error.flatten().fieldErrors;
-        setValidationErrors({
-          landName: flattenedErrors.landName?.[0],
-          district: flattenedErrors.district?.[0],
-          dsDivision: flattenedErrors.dsDivision?.[0],
-          landRent: flattenedErrors.landRent?.[0],
-          irrigationMode: flattenedErrors.irrigationMode?.[0],
-        });
-        return;
+    // const validation = schemaAddLand.safeParse(formData);
+    const { valid, errors } = validateFormData(schemaLand, formData);
+    if (!valid) {
+      //  const flattenedErrors = validation.error.flatten().fieldErrors;
+      setValidationErrors(errors);
+      if (errors.landName) {
+        toast.error(errors.landName[0]);
       }
+    return;
+      }
+    try {
       const action = addNewLand(formData);
       dispatch(action);
 
@@ -177,7 +168,7 @@ export default function AddNewLand() {
   };
 
   // Define a function to select district.
-  const selectChangeAddDistrict = (event: any, newValue: string | null) => {
+  const selectChangeAddDistrict = (event: any, newValue: string) => {
     setFormData({
       ...formData,
       district: newValue,
@@ -301,8 +292,10 @@ export default function AddNewLand() {
                 options={districtNames}
                 getOptionLabel={(option) => option}
                 value={formData.district}
-                onChange={(event, newValue) =>
-                  selectChangeAddDistrict(event, newValue)
+                onChange={(event, newValue) =>{
+                  if (newValue !== null) {
+                    selectChangeAddDistrict(event, newValue);
+                  }}
                 }
                 renderInput={(params) => (
                   <TextField
@@ -313,7 +306,9 @@ export default function AddNewLand() {
                   />
                 )}
               />
-           
+             {validationErrors.district && (
+                <ZodErrors error={[validationErrors.district]} />)}
+                
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("addLand.lblDivision")}</Typography>
