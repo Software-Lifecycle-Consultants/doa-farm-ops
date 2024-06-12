@@ -202,14 +202,13 @@ export default function AddOperationCost({
           <p>{t("operationCost.txtDescription")}</p>
         </Grid>
 
-        {/* Machinery Cost Section */}
+        {/* Major Operations and Sub Operations filters */}
         <Grid item p={2} rowGap={2} xs={12} md={12} sx={customGridStyles1}>
-          {/* Dropdowns and input fields for machinery costs */}
           <FormControl
             variant="filled"
             sx={{
               m: 1,
-              width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" },
+              width: { xs: "30%", sm: "30%", md: "30%"},
             }}
           >
             <InputLabel id="demo-simple-select-filled-label">
@@ -229,77 +228,24 @@ export default function AddOperationCost({
               ))}
             </Select>
           </FormControl>
-          {/* Sub-operations, Fertilizer Application, and Select Fertilizer */}
-          <Grid
-            container
-            direction="row"
-            paddingTop={2}
-            spacing={2}
-            width={"100%"}
-          >
-            {/* Sub-operations */}
-            <Grid item xs={12} sm={6} md={3} lg={2}>
-              <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
-                <InputLabel id="demo-simple-select-filled-label">
-                  {t("operationCost.txtSubOperations")}
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={subOperations}
-                  onChange={handleChange2}
-                >
-                  {subOps.map((subOp) => (
-                    <MenuItem key={subOp.value} value={subOp.value}>
-                      {subOp.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            {/* Fertilizer Application */}
-            <Grid item xs={12} sm={6} md={3} lg={2}>
-              {/* Select dropdown for fertilizer application */}
-              <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
-                <InputLabel id="demo-simple-select-filled-label">
-                  {t("operationCost.txtFertilizerApplication")}
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={fertilizerApplication}
-                  onChange={handleChange3}
-                >
-                  {fertilizerApps.map((fertilizer) => (
-                    <MenuItem key={fertilizer.value} value={fertilizer.value}>
-                      {fertilizer.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            {/* Select Fertilizer */}
-            <Grid item xs={12} sm={6} md={3} lg={2}>
-              {/* Select dropdown for selecting a fertilizer */}
-              <FormControl variant="filled" sx={{ m: 1, width: "100%" }}>
-                <InputLabel id="demo-simple-select-filled-label">
-                  {t("operationCost.txtSelectFertilizer")}
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={selectFertilizer}
-                  onChange={handleChange4}
-                >
-                  {fertilizers.map((select) => (
-                    <MenuItem key={select.value} value={select.value}>
-                      {select.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-          </Grid>
+          {/* Sub-operations */}
+          <FormControl variant="filled" sx={{ m: 1, width: "30%" }}>
+            <InputLabel id="demo-simple-select-filled-label">
+              {t("operationCost.txtSubOperations")}
+            </InputLabel>
+            <Select
+              labelId="demo-simple-select-filled-label"
+              id="demo-simple-select-filled"
+              value={subOperations}
+              onChange={handleChange2}
+            >
+              {subOps.map((subOp) => (
+                <MenuItem key={subOp.value} value={subOp.value}>
+                  {subOp.label}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </Grid>
         {/* Machinery Cost Table */}
         <MachineryCostTable
@@ -329,8 +275,7 @@ export default function AddOperationCost({
               {/* Save Button */}
               {showWarning && (
                 <Alert severity="warning">
-                  Please add necessary fields before
-                  saving.
+                  Please add necessary fields before saving.
                 </Alert>
               )}
               <Button
