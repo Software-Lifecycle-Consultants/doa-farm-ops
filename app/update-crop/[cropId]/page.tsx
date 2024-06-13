@@ -28,22 +28,11 @@ import i18n from "../../config/i18n";// Import the i18n instance
 import { CustomBox1 } from "@/Theme";
 import store, { AppDispatch } from "@/redux/store";
 import { selectAuth } from "@/redux/authSlice";
-import { z } from "zod";
 import { ZodErrors } from "@/components/ZodErrors";
+import { CropsSchema } from '@/schemas/crop.schema';
+import { validateFormData } from '@/utils/validation';
+import { toast } from 'react-toastify';
 
-
-// zod validation Schema
-const schemaAddCrop = z.object({
-  cropName: z.string().min(1, "Crop name is required"),
-  season: z.string().min(1, "season is required"),
-  cropType: z.string().min(1, "Crop type is required"),
-  totalSoldQty: z.string().min(1, "Total sold quantity is required"),
-  totalIncome: z.string().min(1, "Total income is required"),
-  reservedQtyHome: z.string().min(1, "Quantity kept for home is required"),
-  reservedQtySeed: z.string().min(1, "Quantity kept for seed is required"),
-  noOfPicks: z.string().min(1, "Number of picks is required"),
-  isCultivationLoan: z.string().min(1, "Cultivation loan status is required"),
-});
 
 // Styles for labels
 const styles = {
@@ -128,23 +117,15 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
   //Function to navigate to my crops page clicking save button
   const handleOnClickUpdateCrop = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
- // Transform the error format using flatten() method
-    const validation = schemaAddCrop.safeParse(formData);
-    if (!validation.success) {
-       const flattenedErrors = validation.error.flatten().fieldErrors;
-       setValidationErrors({
-         cropName: flattenedErrors.cropName?.[0],
-         season: flattenedErrors.season?.[0],
-         cropType: flattenedErrors.cropType?.[0],
-         totalSoldQty: flattenedErrors.totalSoldQty?.[0],
-         totalIncome: flattenedErrors.totalIncome?.[0],
-         reservedQtyHome: flattenedErrors.reservedQtyHome?.[0],
-         reservedQtySeed: flattenedErrors.reservedQtySeed?.[0],
-         noOfPicks: flattenedErrors.noOfPicks?.[0],
-         isCultivationLoan: flattenedErrors.isCultivationLoan?.[0],
-       });
-    return;
-      }
+  // Transform the error format using flatten() method
+ const { valid, errors } = validateFormData(CropsSchema, formData);
+ if (!valid) {
+   setValidationErrors(errors);
+   if (errors.cropName) {
+     toast.error(errors.cropName[0]);
+   }
+ return;
+   }
     const loggedUser = selectAuth(store.getState());
     const userId = loggedUser.auth._id;
     try {// Prevent the default form submission behavior
