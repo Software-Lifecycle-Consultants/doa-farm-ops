@@ -35,6 +35,10 @@ const machinerycostSchema = new Schema(
       type: Number,
       required: true,
     },
+    TotalmachineryCost: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,

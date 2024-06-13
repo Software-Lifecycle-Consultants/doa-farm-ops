@@ -36,6 +36,10 @@ const labourcostschema = new Schema(
       type: Number,
       required: true,
     },
+    TotallabourCost: {
+      type: Number,
+      required: true,
+    },
   },
   {
     timestamps: true,

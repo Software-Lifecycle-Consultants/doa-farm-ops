@@ -63,7 +63,7 @@ const costController = {
         }
 
         newtotalLabourCosts +=
-          Number(quantity) * (Number(dailyWage) + Number(foodCostPerDay));
+          (Number(quantity) * (Number(dailyWage) + Number(foodCostPerDay)));
       }
 
       const totalLabourCosts =
@@ -82,7 +82,7 @@ const costController = {
             .json({ msg: "Please fill in all material cost fields." });
         }
 
-        newtotalMaterialCosts += Number(materialCost);
+        newtotalMaterialCosts += (Number(materialCost)*Number(qtyUsed));
       }
 
       const totalMaterialCosts =
@@ -102,7 +102,7 @@ const costController = {
             .json({ msg: "Please fill in all machinery cost fields." });
         }
 
-        newtotalMachineryCosts += Number(machineryCost);
+        newtotalMachineryCosts +=( Number(machineryCost)*Number(days));
       }
 
       const totalMachineryCosts =
@@ -156,6 +156,7 @@ const costController = {
           cropId,
           operationCostId,
           ...details,
+          TotallabourCost: Number(details.quantity) * (Number(details.dailyWage) + Number(details.foodCostPerDay)),
         }))
       )
         .then((docs) => {
@@ -172,6 +173,7 @@ const costController = {
             quantity: doc.quantity,
             dailyWage: doc.dailyWage,
             foodCostPerDay: doc.foodCostPerDay,
+            TotallabourCost: doc.TotallabourCost,
           }));
 
           // Create the response data
@@ -191,6 +193,7 @@ const costController = {
           cropId,
           operationCostId,
           ...details,
+          TotalmaterialCost: Number(details.qtyUsed) * Number(details.materialCost),
         }))
       )
         .then((docs) => {
@@ -205,6 +208,7 @@ const costController = {
             material: doc.material,
             qtyUsed: doc.qtyUsed,
             materialCost: doc.materialCost,
+            TotalmaterialCost: doc.TotalmaterialCost,
           }));
 
           // Create the response data
@@ -224,6 +228,7 @@ const costController = {
           cropId,
           operationCostId,
           ...details,
+          TotalmachineryCost: Number(details.days) * Number(details.machineryCost),
         }))
       )
         .then((docs) => {
@@ -240,6 +245,7 @@ const costController = {
             noUsed: doc.noUsed,
             days: doc.days,
             machineryCost: doc.machineryCost,
+            TotalmachineryCost: doc.TotalmachineryCost,
           }));
 
           // Create the response data
