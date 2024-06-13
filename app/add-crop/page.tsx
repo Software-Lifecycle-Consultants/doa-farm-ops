@@ -28,7 +28,7 @@ import { selectAuth } from "@/redux/authSlice";
 import { Land } from "@/redux/types";
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
 import { ZodErrors } from "@/components/ZodErrors";
-import { schemaAddCrop } from '@/schemas/add.crop.schema';
+import { CropsSchema } from '@/schemas/crop.schema';
 import { validateFormData } from '@/utils/validation';
 import { toast } from 'react-toastify';
 
@@ -135,7 +135,7 @@ export default function AddCrop() {
     // }
 
     // const validation = schemaAddCrop.safeParse(formData);
-    const { valid, errors } = validateFormData(schemaAddCrop, formData);
+    const { valid, errors } = validateFormData(CropsSchema, formData);
     if (!valid) {
       //  const flattenedErrors = validation.error.flatten().fieldErrors;
       setValidationErrors(errors);
