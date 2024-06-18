@@ -7,14 +7,15 @@ import { useRouter } from 'next/navigation';
 const NotFound = () => {
   const router = useRouter();
 
-  const handleGoBack = () => {
+  const handleGoBack = () => {     // Goback button function
     router.back();
   };
 
-  const handleProfile = () => {
+  const handlelogin = () => {     // Profile button function
     router.push('/login');
   };
 
+// 404 
   return (
     <Container
       sx={{
@@ -25,7 +26,7 @@ const NotFound = () => {
         height: '100vh',
         maxHeight: '100px',
       }}
-    >
+    >  
       <Grid container spacing={18} sx={{ alignItems: 'center', height: '100%' }}>
         <Grid item xs={12} md={5}>
           <Typography variant="h1" sx={{ fontSize: '9rem', textAlign: 'right', fontWeight: 'bold', color: '#3665C5' }}>
@@ -38,13 +39,15 @@ const NotFound = () => {
               Oops,
             </Typography>
             <Typography variant="h3" sx={{ mb: 2 }}>
-              Page <span style={{ color: '#3665C5' }}>Not</span> Found!
+              Page <Box component="span" sx={{ color: '#3665C5' }}>Not</Box> Found!
             </Typography>
             <Typography variant="body1" sx={{ mb: 4 }}>
               Uh oh we can't seem to find the page you're looking for.
-              <br /><br />
-              Try going back to the previous page or contact us for more <br />information. <br/>
-              <br/>
+              <Box sx={{ color: "white", width:"50px" , height:"15px"}}></Box>
+              <Box sx={{ width:"400px" }}> Try going back to the previous page or contact us for more
+              information. 
+              </Box>
+              <Box sx={{ color: "white", width:"50px" , height:"20px"}}></Box>
             </Typography>
             <Box sx={{ display: 'flex', gap: '50px' }}>
               <Button
@@ -75,7 +78,7 @@ const NotFound = () => {
                     backgroundColor: '#2c54a3',
                   },
                 }}
-                onClick={handleProfile}
+                onClick={handlelogin}
               >
                 Profile
               </Button>
