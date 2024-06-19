@@ -30,20 +30,12 @@ import { useRouter } from "next/navigation";
 import { register } from "@/redux/userSlice";
 import { z } from 'zod';
 import { ZodErrors } from "@/components/ZodErrors";
+import { userRegisterSchema } from "@/schemas/register.schema";
+import { validateFormData } from '@/utils/validation';
 /**
  * SignUp page allows to users to register to the system
  */
 
-// zod validation Schema
-const userSchema = z.object({
-  firstName: z.string().min(1, 'First name is required'),
-  lastName: z.string().min(1, 'Last name is required'),
-  email: z.string().email('Invalid email address'),
-  phoneNumber: z.string().min(10, 'Phone number must be at least 10 digits'),
-  nic: z.string().min(10, 'NIC must be at least 10 characters'),
-  address: z.string().min(1, 'Address is required'),
-  password: z.string().min(6, 'Password must be at least 6 characters'),
-});
 
 export default function SignUp() {
 
@@ -98,24 +90,13 @@ export default function SignUp() {
   // Function to handle user registration
   const handleOnClickNext = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default form submission
+    // const validation = userRegisterSchema.safeParse(formData);
+    const { valid, errors }= validateFormData(userRegisterSchema,formData);
+    if (!valid) {  
+      setValidationErrors(errors);
+      return; // Stop execution if validation fails
+    }
     try {
-      // Validate form data with Zod
-      const validationResult = userSchema.safeParse(formData);
-      if (!validationResult.success) {
-        // Transform the error format using flatten() method
-        const flattenedErrors = validationResult.error.flatten().fieldErrors;
-        setValidationErrors({
-          firstName: flattenedErrors.firstName?.[0],
-          lastName: flattenedErrors.lastName?.[0],
-          email: flattenedErrors.email?.[0],
-          phoneNumber: flattenedErrors.phoneNumber?.[0],
-          nic: flattenedErrors.nic?.[0],
-          address: flattenedErrors.address?.[0],
-          password: flattenedErrors.password?.[0],
-        });
-        return;
-      }
-      
       // Dispatch the register action from userSlice
       const action = register(formData);
       dispatch(action);
@@ -267,6 +248,8 @@ export default function SignUp() {
                   />
                 </RadioGroup>
               </FormControl>
+              {validationErrors?.role && (
+              <ZodErrors error={[validationErrors.role]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("register.lblPassword")}</Typography>

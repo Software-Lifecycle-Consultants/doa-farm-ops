@@ -25,6 +25,9 @@ import store from "@/redux/store";
 import { selectFarmerDetails } from "@/redux/farmerSlice";
 import { selectOfficer } from "@/redux/officerSlice";
 import { AppDispatch } from '@/redux/store';
+import { ZodErrors } from "@/components/ZodErrors";
+import { FarmerAdditionalDetails , OfficerAdditionalDetails } from "@/schemas/additional.reg.details.schema";
+import { validateFormData } from '@/utils/validation';
 
 export default function AdditionalRegistration() {
 
@@ -57,6 +60,11 @@ export default function AdditionalRegistration() {
     orgAddress: string;
     university: string;
   }
+
+  type ValidationErrors = Partial<FormDataFarmer & FormDataOfficer>;
+  
+ // State variable to store validation error messages for each form field
+ const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
 
   // Get user data from the Redux store
   const userData = useSelector((state: RootState) => state.user.user);
@@ -93,6 +101,16 @@ export default function AdditionalRegistration() {
   const handleOnClickRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default form submission
     try {
+      const schema = selectedRole === "farmer" ? FarmerAdditionalDetails : OfficerAdditionalDetails;
+      const formData = selectedRole === "farmer" ? farmerFormData : officerFormData;
+
+        // Validate form data
+        const { valid, errors } = validateFormData(schema, formData);
+        if (!valid) {
+          setValidationErrors(errors);
+          return;
+        }
+
       if (selectedRole === "farmer") {
         //Dispatch farmer data to redux store
         const action = registerFarmer(farmerFormData);
@@ -174,6 +192,9 @@ export default function AdditionalRegistration() {
                     value={farmerFormData.household}
                     onChange={(e) => handleChangeUserRegister(e, "household")}
                   />
+                {validationErrors?.household && (
+                    <ZodErrors error={[validationErrors.household]} />
+                  )}
                 </Grid>
               </>
             )}
@@ -193,6 +214,9 @@ export default function AdditionalRegistration() {
                     value={officerFormData.university}
                     onChange={(e) => handleChangeUserRegister(e, "university")}
                   />
+                   {validationErrors?.university && (
+                    <ZodErrors error={[validationErrors.university]} />
+                  )}
                 </Grid>
               </>
             )}
@@ -214,7 +238,11 @@ export default function AdditionalRegistration() {
                 }
                 onChange={(e) => handleChangeUserRegister(e, "orgName")}
               />
+               {validationErrors?.orgName && (
+                <ZodErrors error={[validationErrors.orgName]} />
+              )}
             </Grid>
+            
             <Grid item xs={12}>
               <Typography>
                 {i18n.t("additionalRegister.lblOrganizationAddress")}
@@ -233,6 +261,9 @@ export default function AdditionalRegistration() {
                 }
                 onChange={(e) => handleChangeUserRegister(e, "orgAddress")}
               />
+               {validationErrors?.orgAddress && (
+                <ZodErrors error={[validationErrors.orgAddress]} />
+              )}
             </Grid>
 
             {/* Terms & Conditions Checkbox */}
