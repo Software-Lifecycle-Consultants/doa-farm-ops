@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
-import { machinery } from "../data/operationCostData";
+import { machinery, majorOps, subOps } from "../data/operationCostData";
 import {
   IconButton,
   Input,
@@ -21,9 +21,15 @@ import {
   Alert,
   Modal,
   Box,
+  Dialog,
+  DialogTitle,
+  DialogActions,
 } from "@mui/material";
 import { customGridStyles1 } from "@/styles/customStyles";
 import { t } from "i18next";
+import { addCostData } from "@/api/addCostData";
+import i18n from "@/app/config/i18n";
+import { useRouter } from "next/navigation";
 
 interface MachineryCost {
   method: string;
@@ -34,12 +40,14 @@ interface MachineryCost {
 }
 
 interface MachineryCostTableProps {
+  cropId: string;
   mcost: MachineryCost[];
   addMachinery: MachineryCost[];
   setaddMachinery: React.Dispatch<React.SetStateAction<MachineryCost[]>>;
 }
 
 export default function MachineryCostTable({
+  cropId,
   mcost,
   addMachinery,
   setaddMachinery,
@@ -51,6 +59,8 @@ export default function MachineryCostTable({
     days: "",
     machineryCost: "",
   });
+
+  const router = useRouter();
 
   // Event handler for select machineryCost method filter change in machineryCost table
   const handleChangeMachineryCost = (
@@ -101,9 +111,27 @@ export default function MachineryCostTable({
     setaddMachinery(newMachineCost);
   };
 
+  const [majorOperations, setMajorOperations] = React.useState("");
+  const [subOperations, setSubOperations] = React.useState("");
+  const [majorOperationsSelected, setMajorOperationsSelected] = useState(false);
+  const [subOperationsSelected, setSubOperationsSelected] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
+
+  // Event handler for major operations filter change
+  const handleChange1 = (event: SelectChangeEvent) => {
+    setMajorOperations(event.target.value);
+    setMajorOperationsSelected(true);
+    setShowWarning(false);
+  };
+  // Event handler for sub operations filter change
+  const handleChange2 = (event: SelectChangeEvent) => {
+    setSubOperations(event.target.value);
+    setSubOperationsSelected(true);
+    setShowWarning(false);
+  };
 
   const modalStyle = {
     position: "absolute" as "absolute",
@@ -116,6 +144,54 @@ export default function MachineryCostTable({
     borderRadius: "5px",
     boxShadow: 24,
     p: 4,
+  };
+
+  const handleAddCost = async (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault(); // Prevent the default form submission behavior
+    try {
+      //Add the operational cost to the database
+      if (
+        !majorOperationsSelected ||
+        !subOperationsSelected ||
+        addMachinery.length === 0
+      ) {
+        setShowWarning(true);
+      } else {
+        setShowWarning(false);
+
+        const costdetails = {
+          cropId: cropId,
+          majorOp: majorOperations,
+          subOp: subOperations,
+          machineryCostDetails: addMachinery,
+          labourCostDetails: [],
+          materialCostDetails: [],
+        };
+
+        console.log("costdetails", costdetails);
+
+        // Call the addCostData function with the provided cost details
+        const response = await addCostData(costdetails);
+
+        // If the operation cost is added successfully, open the success dialog
+        if (response && response.status === 200) {
+          setOpenSuccessDialog(true);
+        } else if (response && response.status === 400) {
+          console.error("Failed to fetch data");
+        }
+      }
+    } catch (error) {
+      console.error("Error adding operational cost", error);
+    }
+  };
+
+  // State to manage the visibility of the success dialog
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+
+  const handleCloseSuccessDialog = () => {
+    setOpenSuccessDialog(false);
+    handleCloseModal();
+    setaddMachinery([]);
   };
 
   return (
@@ -174,7 +250,7 @@ export default function MachineryCostTable({
                     <TableCell>
                       <IconButton>
                         <DeleteIcon
-                          onClick={() => handleDeleteMachineCost(index)}
+                          //onClick={() => handleDeleteMachineCost(index)}
                         />
                       </IconButton>
                     </TableCell>
@@ -193,6 +269,51 @@ export default function MachineryCostTable({
         >
           <TableContainer sx={modalStyle}>
             Add Machinery Cost
+            {/* Major Operations and Sub Operations filters */}
+            <Grid item p={2} rowGap={2} xs={12} md={12} sx={customGridStyles1}>
+              <FormControl
+                variant="filled"
+                sx={{
+                  m: 1,
+                  width: { xs: "30%", sm: "30%", md: "30%" },
+                }}
+              >
+                <InputLabel id="demo-simple-select-filled-label">
+                  {t("operationCost.txtMajorOperations")}
+                </InputLabel>
+                {/* Select dropdown for major operations */}
+                <Select
+                  labelId="demo-simple-select-filled-label"
+                  id="demo-simple-select-filled"
+                  value={majorOperations}
+                  onChange={handleChange1}
+                >
+                  {majorOps.map((majorOp) => (
+                    <MenuItem key={majorOp.value} value={majorOp.value}>
+                      {majorOp.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+              {/* Sub-operations */}
+              <FormControl variant="filled" sx={{ m: 1, width: "30%" }}>
+                <InputLabel id="demo-simple-select-filled-label">
+                  {t("operationCost.txtSubOperations")}
+                </InputLabel>
+                <Select
+                  labelId="demo-simple-select-filled-label"
+                  id="demo-simple-select-filled"
+                  value={subOperations}
+                  onChange={handleChange2}
+                >
+                  {subOps.map((subOp) => (
+                    <MenuItem key={subOp.value} value={subOp.value}>
+                      {subOp.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
             {/* Hidden form fields for mobile view */}
             <Grid
               item
@@ -475,16 +596,42 @@ export default function MachineryCostTable({
               >
                 Cancel
               </Button>
+              {showWarning && (
+                <Alert severity="warning">
+                  Please add necessary fields before saving.
+                </Alert>
+              )}
               <Button
                 type="submit"
                 variant="contained"
                 sx={{ mt: 3, mb: 2, ml: 2 }}
+                onClick={handleAddCost}
               >
                 Submit
               </Button>
             </Box>
           </TableContainer>
         </Modal>
+        <Dialog
+          open={openSuccessDialog}
+          onClose={handleCloseSuccessDialog}
+          aria-labelledby="success-dialog-title"
+        >
+          {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
+          <DialogTitle id="success-dialog-title">
+            {" "}
+            {i18n.t("dialogBoxes.txtUpdatedSuccess")}
+          </DialogTitle>
+          <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
+            <Button
+              onClick={handleCloseSuccessDialog}
+              variant="contained"
+              color="primary"
+            >
+              {i18n.t("dialogBoxes.capBtnOk")}
+            </Button>
+          </DialogActions>
+        </Dialog>
       </Grid>
     </Grid>
   );

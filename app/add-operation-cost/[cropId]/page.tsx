@@ -7,8 +7,6 @@ import { useRouter } from "next/navigation";
 import {
   majorOps,
   subOps,
-  fertilizerApps,
-  fertilizers,
 } from "../../../data/operationCostData";
 
 import {
@@ -115,7 +113,7 @@ export default function AddOperationCost({
       setmaterialCost(matcost);
     };
     fetchData();
-  }, [cropId]);
+  }, [addMachinery, addlabor, addMaterialCost, cropId]);
 
   console.log("machinerycost", machinerycost);
   console.log("laborcost", laborcost);
@@ -266,6 +264,7 @@ export default function AddOperationCost({
         </Grid>
         {/* Machinery Cost Table */}
         <MachineryCostTable
+        cropId={cropId}
           mcost={machinerycost}
           setaddMachinery={setaddMachinery}
           addMachinery={addMachinery}
