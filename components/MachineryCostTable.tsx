@@ -52,6 +52,16 @@ export default function MachineryCostTable({
   addMachinery,
   setaddMachinery,
 }: MachineryCostTableProps) {
+
+  const [majorOperations, setMajorOperations] = React.useState("");
+  const [subOperations, setSubOperations] = React.useState("");
+  const [majorOperationsSelected, setMajorOperationsSelected] = useState(false);
+  const [subOperationsSelected, setSubOperationsSelected] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [machineryMethod, setMachineryMethod] = React.useState<MachineryCost>({
     method: "",
     isOwned: "",
@@ -59,8 +69,6 @@ export default function MachineryCostTable({
     days: "",
     machineryCost: "",
   });
-
-  const router = useRouter();
 
   // Event handler for select machineryCost method filter change in machineryCost table
   const handleChangeMachineryCost = (
@@ -110,15 +118,6 @@ export default function MachineryCostTable({
     const newMachineCost = addMachinery.filter((_, i) => i !== index);
     setaddMachinery(newMachineCost);
   };
-
-  const [majorOperations, setMajorOperations] = React.useState("");
-  const [subOperations, setSubOperations] = React.useState("");
-  const [majorOperationsSelected, setMajorOperationsSelected] = useState(false);
-  const [subOperationsSelected, setSubOperationsSelected] = useState(false);
-  const [showWarning, setShowWarning] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleOpenModal = () => setIsModalOpen(true);
-  const handleCloseModal = () => setIsModalOpen(false);
 
   // Event handler for major operations filter change
   const handleChange1 = (event: SelectChangeEvent) => {
@@ -184,9 +183,6 @@ export default function MachineryCostTable({
       console.error("Error adding operational cost", error);
     }
   };
-
-  // State to manage the visibility of the success dialog
-  const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
 
   const handleCloseSuccessDialog = () => {
     setOpenSuccessDialog(false);
@@ -263,7 +259,6 @@ export default function MachineryCostTable({
         <Modal
           open={isModalOpen}
           onClose={handleCloseModal}
-          // sx={modalStyle}
           aria-labelledby="modal-modal-title"
           aria-describedby="modal-modal-description"
         >

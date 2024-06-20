@@ -277,6 +277,7 @@ export default function AddOperationCost({
         />
         {/* Material Cost Section */}
         <MaterialCostTable
+          matcost={materialcost}
           setAddMaterialCost={setAddMaterialCost}
           addMaterialCost={addMaterialCost}
         />
