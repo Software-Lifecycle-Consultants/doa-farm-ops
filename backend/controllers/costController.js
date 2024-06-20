@@ -4,6 +4,29 @@ const Machinery = require("../models/machineryCostModel");
 const Operation = require("../models/operationCostsModel");
 
 const costController = {
+  getCostByCropId: async (req, res) => {
+    try {
+      const cropId = req.params.id;
+      const operationCost = await Operation.findOne({ cropId: cropId });
+      const labourCost = await Labour.find({ cropId: cropId });
+      const materialCost = await Material.find({ cropId: cropId });
+      const machineryCost = await Machinery.find({ cropId: cropId });
+
+      const response = {
+        cropId,
+        operationCost,
+        labourCost,
+        materialCost,
+        machineryCost,
+      };
+      console.log("response", response);
+
+      res.status(200).json(response);
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
   addCost: async (req, res) => {
     try {
       // Get the data from the request
@@ -63,7 +86,7 @@ const costController = {
         }
 
         newtotalLabourCosts +=
-          (Number(quantity) * (Number(dailyWage) + Number(foodCostPerDay)));
+          Number(quantity) * (Number(dailyWage) + Number(foodCostPerDay));
       }
 
       const totalLabourCosts =
@@ -82,7 +105,7 @@ const costController = {
             .json({ msg: "Please fill in all material cost fields." });
         }
 
-        newtotalMaterialCosts += (Number(materialCost)*Number(qtyUsed));
+        newtotalMaterialCosts += Number(materialCost) * Number(qtyUsed);
       }
 
       const totalMaterialCosts =
@@ -102,7 +125,7 @@ const costController = {
             .json({ msg: "Please fill in all machinery cost fields." });
         }
 
-        newtotalMachineryCosts +=( Number(machineryCost)*Number(days));
+        newtotalMachineryCosts += Number(machineryCost) * Number(days);
       }
 
       const totalMachineryCosts =
@@ -156,7 +179,9 @@ const costController = {
           cropId,
           operationCostId,
           ...details,
-          TotallabourCost: Number(details.quantity) * (Number(details.dailyWage) + Number(details.foodCostPerDay)),
+          TotallabourCost:
+            Number(details.quantity) *
+            (Number(details.dailyWage) + Number(details.foodCostPerDay)),
         }))
       )
         .then((docs) => {
@@ -193,7 +218,8 @@ const costController = {
           cropId,
           operationCostId,
           ...details,
-          TotalmaterialCost: Number(details.qtyUsed) * Number(details.materialCost),
+          TotalmaterialCost:
+            Number(details.qtyUsed) * Number(details.materialCost),
         }))
       )
         .then((docs) => {
@@ -228,7 +254,8 @@ const costController = {
           cropId,
           operationCostId,
           ...details,
-          TotalmachineryCost: Number(details.days) * Number(details.machineryCost),
+          TotalmachineryCost:
+            Number(details.days) * Number(details.machineryCost),
         }))
       )
         .then((docs) => {

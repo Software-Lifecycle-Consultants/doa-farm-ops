@@ -1,4 +1,4 @@
-import * as React from "react";
+import React, { useState } from 'react';
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
@@ -33,11 +33,12 @@ interface laborCost {
 }
 
 interface LaborCostTableProps {
+  lcost: laborCost[];
   addlabor: laborCost[];
   setAddlabor: React.Dispatch<React.SetStateAction<laborCost[]>>;
 }
 
-export default function LaborCostTable({addlabor, setAddlabor}: LaborCostTableProps) {
+export default function LaborCostTable({lcost, addlabor, setAddlabor}: LaborCostTableProps) {
   const [laborMethod, setlaborMethod] = React.useState<laborCost>({
     gender: "",
     isHired: "",
@@ -344,7 +345,7 @@ export default function LaborCostTable({addlabor, setAddlabor}: LaborCostTablePr
                 </TableRow>
               </TableHead>
               <TableBody>
-                {addlabor.map((data, index) => (
+                {lcost.map((data, index) => (
                   <TableRow key={index}>
                     <TableCell>{data.gender}</TableCell>
                     <TableCell>{data.isHired}</TableCell>

@@ -32,12 +32,13 @@ interface materialCost {
 }
 
 interface MaterialCostTableProps {
+  matcost: materialCost[];
   addMaterialCost: materialCost[];
   setAddMaterialCost: React.Dispatch<React.SetStateAction<materialCost[]>>;
 }
 
 
-export default function MaterialCostTable({setAddMaterialCost ,addMaterialCost}: MaterialCostTableProps) {
+export default function MaterialCostTable({matcost,setAddMaterialCost ,addMaterialCost}: MaterialCostTableProps) {
 
   const [materialCost, setMaterialCost] = React.useState<materialCost>({
     material: "",
@@ -271,7 +272,7 @@ export default function MaterialCostTable({setAddMaterialCost ,addMaterialCost}:
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {addMaterialCost.map((data, index) => (
+                    {matcost.map((data, index) => (
                       <TableRow key={index}>
                         <TableCell>{data.material}</TableCell>
                         <TableCell>{data.qtyUsed}</TableCell>
