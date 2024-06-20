@@ -106,7 +106,7 @@ const NavBar = () => {
   // Define a function to handle user logout.
   const handleLogout = () => {
     dispatch(logout()); // Dispatch logout action
-    router.push('./'); // Redirect to Home tab after logout
+    router.push('/'); // Redirect to Home tab after logout
   };
 
   // Define a function to handle user login.
