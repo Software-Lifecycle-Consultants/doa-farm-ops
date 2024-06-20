@@ -26,7 +26,7 @@ import { selectFarmerDetails } from "@/redux/farmerSlice";
 import { selectOfficer } from "@/redux/officerSlice";
 import { AppDispatch } from '@/redux/store';
 import { ZodErrors } from "@/components/ZodErrors";
-import { FarmerAdditionalDetails , OfficerAdditionalDetails } from "@/schemas/additional.reg.details.schema";
+import { FarmerAdditionalDetails , OfficerAdditionalDetails } from "@/schemas/additional.user.details.schema";
 import { validateFormData } from '@/utils/validation';
 
 export default function AdditionalRegistration() {

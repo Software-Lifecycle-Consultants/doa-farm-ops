@@ -30,7 +30,7 @@ import { useRouter } from "next/navigation";
 import { register } from "@/redux/userSlice";
 import { z } from 'zod';
 import { ZodErrors } from "@/components/ZodErrors";
-import { userRegisterSchema } from "@/schemas/register.schema";
+import { userRegisterSchema } from "@/schemas/user.schema";
 import { validateFormData } from '@/utils/validation';
 /**
  * SignUp page allows to users to register to the system
