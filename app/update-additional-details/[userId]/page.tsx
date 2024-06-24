@@ -24,6 +24,9 @@ import { selectOfficer, updateAndFetchOfficer } from "@/redux/officerSlice";
 import { selectUser } from "@/redux/userSlice";
 import { Stack } from "@mui/system";
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
+import { ZodErrors } from "@/components/ZodErrors";
+import { FarmerAdditionalDetails , OfficerAdditionalDetails } from "@/schemas/additional.user.details.schema";
+import { validateFormData } from '@/utils/validation';
 
 export default function UpdateAdditionalDetails() {
   const router = useRouter();
@@ -63,7 +66,10 @@ export default function UpdateAdditionalDetails() {
     orgAddress: string;
     university: string;
   }
-
+  type ValidationErrors = Partial<FormDataFarmer & FormDataOfficer>;
+    
+ // State variable to store validation error messages for each form field
+ const [validationErrors, setValidationErrors] = useState<ValidationErrors>({});
   // Get user role from the userData
   const selectedRole = userData?.role;
 
@@ -94,10 +100,10 @@ export default function UpdateAdditionalDetails() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
-    if (userData?.role === "farmer") {
-      router.push("/farmer-profile");
-    } else if (userData?.role === "officer") {
+    if (userData?.role === "officer") {
       router.push("/officer-profile");
+    } else if  (userData?.role === "farmer") {
+      router.push("/farmer-profile");
     }
   };
 
@@ -118,6 +124,15 @@ export default function UpdateAdditionalDetails() {
   ) => {
     e.preventDefault(); // Prevent default form submission
     try {
+      const schema = selectedRole === "farmer" ? FarmerAdditionalDetails : OfficerAdditionalDetails;
+      const formData = selectedRole === "farmer" ? farmerFormData : officerFormData;
+  
+      // Validate form data
+      const { valid, errors } = validateFormData(schema, formData);
+      if (!valid) {
+        setValidationErrors(errors);
+        return;
+      }
       if (selectedRole === "farmer") {
         const farmerDataupdate = {
           farmerData: farmerFormData,
@@ -126,7 +141,7 @@ export default function UpdateAdditionalDetails() {
         if (userData && farmerData) {
           const data = await dispatch(updateandfetchfarmer(farmerDataupdate));
           if (data.type === "farmer/updateandfetchfarmer/fulfilled") {
-          setOpenSuccessDialog(true); // Open success dialog on success
+            setOpenSuccessDialog(true); // Open success dialog on success
           }
         }
       } else {
@@ -137,7 +152,7 @@ export default function UpdateAdditionalDetails() {
         if (userData && officerData) {
           const data = await dispatch(updateAndFetchOfficer(officerDataupdate));
           if (data.type === "officer/updateAndFetchOfficer/fulfilled") {
-          setOpenSuccessDialog(true);
+            setOpenSuccessDialog(true);
           }
         }
       }
@@ -179,6 +194,9 @@ export default function UpdateAdditionalDetails() {
                     value={farmerFormData.household}
                     onChange={(e) => handleChangeUserRegister(e, "household")}
                   />
+                    {validationErrors?.household && (
+                    <ZodErrors error={[validationErrors.household]} />
+                  )}
                 </Grid>
               </>
             )}
@@ -198,6 +216,9 @@ export default function UpdateAdditionalDetails() {
                     value={officerFormData.university}
                     onChange={(e) => handleChangeUserRegister(e, "university")}
                   />
+                     {validationErrors?.university && (
+                    <ZodErrors error={[validationErrors.university]} />
+                  )}
                 </Grid>
               </>
             )}
@@ -219,6 +240,9 @@ export default function UpdateAdditionalDetails() {
                 }
                 onChange={(e) => handleChangeUserRegister(e, "orgName")}
               />
+                 {validationErrors?.orgName && (
+                <ZodErrors error={[validationErrors.orgName]} />
+              )}
             </Grid>
             <Grid item xs={12}>
               <Typography>
@@ -238,7 +262,10 @@ export default function UpdateAdditionalDetails() {
                 }
                 onChange={(e) => handleChangeUserRegister(e, "orgAddress")}
               />
-            </Grid>
+                {validationErrors?.orgAddress && (
+                <ZodErrors error={[validationErrors.orgAddress]} />
+              )}
+          </Grid>
           </Grid>
           {/* Update Button */}
           <Stack spacing={2} direction="row" paddingTop={2}>
