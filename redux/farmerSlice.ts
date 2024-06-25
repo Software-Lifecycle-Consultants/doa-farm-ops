@@ -21,7 +21,7 @@ export const fetchAndRegisterFarmer = createAsyncThunk(
 );
 
 export const updateandfetchfarmer = createAsyncThunk(
-  'farmer/updateandfetchfarmer',
+  'farmer/updateanfetchfarmer',
   async (farmerData: any) => {
     const farmer = await UpdateFarmerData(farmerData);
     return farmer;
