@@ -11,6 +11,16 @@ const labourcostschema = new Schema(
       type: String,
       required: true,
     },
+    majorOp: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    subOp: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     gender: {
       type: String,
       required: true,

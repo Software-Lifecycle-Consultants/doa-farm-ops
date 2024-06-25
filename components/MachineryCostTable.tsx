@@ -190,7 +190,7 @@ export default function MachineryCostTable({
         }
       }
     } catch (error) {
-      console.error("Error adding operational cost", error);
+      console.error("Error adding Machinery cost", error);
     }
   };
 
@@ -208,7 +208,7 @@ export default function MachineryCostTable({
       <Button variant="outlined" onClick={handleOpenModal}>
         Add Machinery Cost
       </Button>
-      {/* Machinery machineryCost Data Table */}
+      {/* Machinery Cost Data Table */}
       <Grid item xs={12}>
         <Paper sx={{ width: "100%", overflow: "hidden" }}>
           <TableContainer>
@@ -217,12 +217,12 @@ export default function MachineryCostTable({
                 <TableRow>
                   <TableCell>
                     <Typography>
-                      {t("operationCost.tblMachineryCost.colMajorOperation")}
+                      {t("operationCost.txtMajorOperations")}
                     </Typography>
                   </TableCell>
                   <TableCell>
                     <Typography>
-                      {t("operationCost.tblMachineryCost.colSubOperation")}
+                      {t("operationCost.txtSubOperations")}
                     </Typography>
                   </TableCell>
                   <TableCell>
@@ -268,7 +268,7 @@ export default function MachineryCostTable({
                     <TableCell>
                       <IconButton>
                         <DeleteIcon
-                          //onClick={() => handleDeleteMachineCost(index)}
+                        //onClick={() => handleDeleteMachineCost(index)}
                         />
                       </IconButton>
                     </TableCell>
@@ -278,378 +278,374 @@ export default function MachineryCostTable({
             </Table>
           </TableContainer>
         </Paper>
-        <Modal
-          open={isModalOpen}
-          onClose={handleCloseModal}
-          aria-labelledby="modal-modal-title"
-          aria-describedby="modal-modal-description"
-        >
-          <TableContainer sx={modalStyle}>
-            Add Machinery Cost
-            {/* Major Operations and Sub Operations filters */}
-            <Grid item p={2} rowGap={2} xs={12} md={12} sx={customGridStyles1}>
-              <FormControl
-                variant="filled"
-                sx={{
-                  m: 1,
-                  width: { xs: "30%", sm: "30%", md: "30%" },
-                }}
-              >
-                <InputLabel id="demo-simple-select-filled-label">
-                  {t("operationCost.txtMajorOperations")}
-                </InputLabel>
-                {/* Select dropdown for major operations */}
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={majorOperations}
-                  onChange={handleChange1}
-                >
-                  {majorOps.map((majorOp) => (
-                    <MenuItem key={majorOp.value} value={majorOp.value}>
-                      {majorOp.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              {/* Sub-operations */}
-              <FormControl variant="filled" sx={{ m: 1, width: "30%" }}>
-                <InputLabel id="demo-simple-select-filled-label">
-                  {t("operationCost.txtSubOperations")}
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={subOperations}
-                  onChange={handleChange2}
-                >
-                  {subOps.map((subOp) => (
-                    <MenuItem key={subOp.value} value={subOp.value}>
-                      {subOp.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            {/* Hidden form fields for mobile view */}
-            <Grid
-              item
-              container
-              direction="row"
-              justifyContent="space-between"
-              alignItems="center"
-              width={"100%"}
-              gap={2}
-              sx={{ display: { sm: "none" } }}
+      </Grid>
+      <Modal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <TableContainer sx={modalStyle}>
+          Add Machinery Cost
+          {/* Major Operations and Sub Operations filters */}
+          <Grid item p={2} rowGap={2} xs={12} md={12} sx={customGridStyles1}>
+            <FormControl
+              variant="filled"
+              sx={{
+                m: 1,
+                width: { xs: "30%", sm: "30%", md: "30%" },
+              }}
             >
-              <FormControl
-                variant="filled"
-                sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
+              <InputLabel id="demo-simple-select-filled-label">
+                {t("operationCost.txtMajorOperations")}
+              </InputLabel>
+              {/* Select dropdown for major operations */}
+              <Select
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+                value={majorOperations}
+                onChange={handleChange1}
               >
-                <InputLabel id="demo-simple-select-filled-label">
-                  {t("operationCost.tblMachineryCost.colMethod")}
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={machineryMethod.method}
-                  onChange={(e) =>
-                    handleChangeMachineryCostDropdown(e, "method")
-                  }
-                >
-                  {machinery?.map((select) => (
-                    <MenuItem key={select.value} value={select.value}>
-                      {select.label}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-              <FormControl
-                variant="filled"
-                sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
-              >
-                <InputLabel id="demo-simple-select-filled-label">
-                  {t("operationCost.tblMachineryCost.colOwnedOrHired")}
-                </InputLabel>
-                <Select
-                  labelId="demo-simple-select-filled-label"
-                  id="demo-simple-select-filled"
-                  value={machineryMethod.isOwned}
-                  onChange={(e) =>
-                    handleChangeMachineryCostDropdown(e, "isOwned")
-                  }
-                >
-                  <MenuItem value="">
-                    <em>None</em>
+                {majorOps.map((majorOp) => (
+                  <MenuItem key={majorOp.value} value={majorOp.value}>
+                    {majorOp.label}
                   </MenuItem>
-                  <MenuItem value={10}>Owned</MenuItem>
-                  <MenuItem value={20}>Hired</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl
-                variant="standard"
-                sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
+                ))}
+              </Select>
+            </FormControl>
+            {/* Sub-operations */}
+            <FormControl variant="filled" sx={{ m: 1, width: "30%" }}>
+              <InputLabel id="demo-simple-select-filled-label">
+                {t("operationCost.txtSubOperations")}
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+                value={subOperations}
+                onChange={handleChange2}
               >
-                <InputLabel>
-                  {t("operationCost.tblMachineryCost.colNumberOfTimes")}
-                </InputLabel>
-                <Input
-                  required
-                  value={machineryMethod.noUsed}
-                  onChange={(e) => handleChangeMachineryCost(e, "noUsed")}
-                />
-              </FormControl>
-              <FormControl
-                variant="standard"
-                sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
+                {subOps.map((subOp) => (
+                  <MenuItem key={subOp.value} value={subOp.value}>
+                    {subOp.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </Grid>
+          {/* Hidden form fields for mobile view */}
+          <Grid
+            item
+            container
+            direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            width={"100%"}
+            gap={2}
+            sx={{ display: { sm: "none" } }}
+          >
+            <FormControl
+              variant="filled"
+              sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
+            >
+              <InputLabel id="demo-simple-select-filled-label">
+                {t("operationCost.tblMachineryCost.colMethod")}
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+                value={machineryMethod.method}
+                onChange={(e) => handleChangeMachineryCostDropdown(e, "method")}
               >
-                <InputLabel>
-                  {t("operationCost.tblMachineryCost.colDays")}
-                </InputLabel>
-                <Input
-                  required
-                  value={machineryMethod.days}
-                  onChange={(e) => handleChangeMachineryCost(e, "days")}
-                />
-              </FormControl>
-              <FormControl
-                variant="standard"
-                sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
+                {machinery?.map((select) => (
+                  <MenuItem key={select.value} value={select.value}>
+                    {select.label}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <FormControl
+              variant="filled"
+              sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "20%" } }}
+            >
+              <InputLabel id="demo-simple-select-filled-label">
+                {t("operationCost.tblMachineryCost.colOwnedOrHired")}
+              </InputLabel>
+              <Select
+                labelId="demo-simple-select-filled-label"
+                id="demo-simple-select-filled"
+                value={machineryMethod.isOwned}
+                onChange={(e) =>
+                  handleChangeMachineryCostDropdown(e, "isOwned")
+                }
               >
-                <InputLabel>
-                  {t("operationCost.tblMachineryCost.colCost")}
-                </InputLabel>
-                <Input
-                  required
-                  value={machineryMethod.machineryCost}
-                  onChange={(e) =>
-                    handleChangeMachineryCost(e, "machineryCost")
-                  }
-                />
-              </FormControl>
-              <FormControl
-                variant="standard"
-                sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
-              >
-                <Button variant="outlined" onClick={handleAddMachineCost}>
-                  {t("operationCost.tblMachineryCost.capBtnAdd")}
-                </Button>
-              </FormControl>
-            </Grid>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>
-                    <Typography sx={{ display: { sm: "none" } }}>
+                <MenuItem value="">
+                  <em>None</em>
+                </MenuItem>
+                <MenuItem value={"Owned"}>Owned</MenuItem>
+                <MenuItem value={"Hired"}>Hired</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl
+              variant="standard"
+              sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
+            >
+              <InputLabel>
+                {t("operationCost.tblMachineryCost.colNumberOfTimes")}
+              </InputLabel>
+              <Input
+                required
+                value={machineryMethod.noUsed}
+                onChange={(e) => handleChangeMachineryCost(e, "noUsed")}
+              />
+            </FormControl>
+            <FormControl
+              variant="standard"
+              sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
+            >
+              <InputLabel>
+                {t("operationCost.tblMachineryCost.colDays")}
+              </InputLabel>
+              <Input
+                required
+                value={machineryMethod.days}
+                onChange={(e) => handleChangeMachineryCost(e, "days")}
+              />
+            </FormControl>
+            <FormControl
+              variant="standard"
+              sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
+            >
+              <InputLabel>
+                {t("operationCost.tblMachineryCost.colCost")}
+              </InputLabel>
+              <Input
+                required
+                value={machineryMethod.machineryCost}
+                onChange={(e) => handleChangeMachineryCost(e, "machineryCost")}
+              />
+            </FormControl>
+            <FormControl
+              variant="standard"
+              sx={{ width: { xs: "100%", sm: "50%", md: "25%", lg: "10%" } }}
+            >
+              <Button variant="outlined" onClick={handleAddMachineCost}>
+                {t("operationCost.tblMachineryCost.capBtnAdd")}
+              </Button>
+            </FormControl>
+          </Grid>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>
+                  <Typography sx={{ display: { sm: "none" } }}>
+                    {t("operationCost.tblMachineryCost.colMethod")}
+                  </Typography>
+                  <FormControl
+                    variant="filled"
+                    fullWidth
+                    sx={{
+                      minWidth: 120,
+                      display: { xs: "none", sm: "flex" },
+                    }}
+                  >
+                    <InputLabel id="demo-simple-select-filled-label">
                       {t("operationCost.tblMachineryCost.colMethod")}
-                    </Typography>
-                    <FormControl
-                      variant="filled"
-                      fullWidth
-                      sx={{
-                        minWidth: 120,
-                        display: { xs: "none", sm: "flex" },
-                      }}
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-filled-label"
+                      id="demo-simple-select-filled"
+                      value={machineryMethod.method}
+                      onChange={(e) =>
+                        handleChangeMachineryCostDropdown(e, "method")
+                      }
                     >
-                      <InputLabel id="demo-simple-select-filled-label">
-                        {t("operationCost.tblMachineryCost.colMethod")}
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-filled-label"
-                        id="demo-simple-select-filled"
-                        value={machineryMethod.method}
-                        onChange={(e) =>
-                          handleChangeMachineryCostDropdown(e, "method")
-                        }
-                      >
-                        {machinery?.map((select) => (
-                          <MenuItem key={select.value} value={select.value}>
-                            {select.label}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                    </FormControl>
-                  </TableCell>
-                  <TableCell>
-                    <Typography sx={{ display: { sm: "none" } }}>
-                      {t("operationCost.tblMachineryCost.colOwnedOrHired")}
-                    </Typography>
-                    <FormControl
-                      variant="filled"
-                      fullWidth
-                      sx={{
-                        minWidth: 140,
-                        display: { xs: "none", sm: "flex" },
-                      }}
-                    >
-                      <InputLabel id="demo-simple-select-filled-label">
-                        {t("operationCost.tblMachineryCost.colOwnedOrHired")}
-                      </InputLabel>
-                      <Select
-                        labelId="demo-simple-select-filled-label"
-                        id="demo-simple-select-filled"
-                        value={machineryMethod.isOwned}
-                        onChange={(e) =>
-                          handleChangeMachineryCostDropdown(e, "isOwned")
-                        }
-                      >
-                        <MenuItem value="">
-                          <em>None</em>
+                      {machinery?.map((select) => (
+                        <MenuItem key={select.value} value={select.value}>
+                          {select.label}
                         </MenuItem>
-                        <MenuItem value={10}>Owned</MenuItem>
-                        <MenuItem value={20}>Hired</MenuItem>
-                      </Select>
-                    </FormControl>
-                  </TableCell>
-                  <TableCell>
-                    <Typography sx={{ display: { sm: "none" } }}>
+                      ))}
+                    </Select>
+                  </FormControl>
+                </TableCell>
+                <TableCell>
+                  <Typography sx={{ display: { sm: "none" } }}>
+                    {t("operationCost.tblMachineryCost.colOwnedOrHired")}
+                  </Typography>
+                  <FormControl
+                    variant="filled"
+                    fullWidth
+                    sx={{
+                      minWidth: 140,
+                      display: { xs: "none", sm: "flex" },
+                    }}
+                  >
+                    <InputLabel id="demo-simple-select-filled-label">
+                      {t("operationCost.tblMachineryCost.colOwnedOrHired")}
+                    </InputLabel>
+                    <Select
+                      labelId="demo-simple-select-filled-label"
+                      id="demo-simple-select-filled"
+                      value={machineryMethod.isOwned}
+                      onChange={(e) =>
+                        handleChangeMachineryCostDropdown(e, "isOwned")
+                      }
+                    >
+                      <MenuItem value="">
+                        <em>None</em>
+                      </MenuItem>
+                      <MenuItem value={"Owned"}>Owned</MenuItem>
+                      <MenuItem value={"Hired"}>Hired</MenuItem>
+                    </Select>
+                  </FormControl>
+                </TableCell>
+                <TableCell>
+                  <Typography sx={{ display: { sm: "none" } }}>
+                    {t("operationCost.tblMachineryCost.colNumberOfTimes")}
+                  </Typography>
+                  <FormControl
+                    variant="standard"
+                    fullWidth
+                    sx={{
+                      minWidth: 120,
+                      display: { xs: "none", sm: "flex" },
+                    }}
+                  >
+                    <InputLabel>
                       {t("operationCost.tblMachineryCost.colNumberOfTimes")}
-                    </Typography>
-                    <FormControl
-                      variant="standard"
-                      fullWidth
-                      sx={{
-                        minWidth: 120,
-                        display: { xs: "none", sm: "flex" },
-                      }}
-                    >
-                      <InputLabel>
-                        {t("operationCost.tblMachineryCost.colNumberOfTimes")}
-                      </InputLabel>
-                      <Input
-                        required
-                        value={machineryMethod.noUsed}
-                        onChange={(e) => handleChangeMachineryCost(e, "noUsed")}
-                      />
-                    </FormControl>
-                  </TableCell>
-                  <TableCell>
-                    <Typography sx={{ display: { sm: "none" } }}>
+                    </InputLabel>
+                    <Input
+                      required
+                      value={machineryMethod.noUsed}
+                      onChange={(e) => handleChangeMachineryCost(e, "noUsed")}
+                    />
+                  </FormControl>
+                </TableCell>
+                <TableCell>
+                  <Typography sx={{ display: { sm: "none" } }}>
+                    {t("operationCost.tblMachineryCost.colDays")}
+                  </Typography>
+                  <FormControl
+                    variant="standard"
+                    fullWidth
+                    sx={{
+                      minWidth: 120,
+                      display: { xs: "none", sm: "flex" },
+                    }}
+                  >
+                    <InputLabel>
                       {t("operationCost.tblMachineryCost.colDays")}
-                    </Typography>
-                    <FormControl
-                      variant="standard"
-                      fullWidth
-                      sx={{
-                        minWidth: 120,
-                        display: { xs: "none", sm: "flex" },
-                      }}
-                    >
-                      <InputLabel>
-                        {t("operationCost.tblMachineryCost.colDays")}
-                      </InputLabel>
-                      <Input
-                        required
-                        value={machineryMethod.days}
-                        onChange={(e) => handleChangeMachineryCost(e, "days")}
-                      />
-                    </FormControl>
-                  </TableCell>
-                  <TableCell>
-                    <Typography sx={{ display: { sm: "none" } }}>
+                    </InputLabel>
+                    <Input
+                      required
+                      value={machineryMethod.days}
+                      onChange={(e) => handleChangeMachineryCost(e, "days")}
+                    />
+                  </FormControl>
+                </TableCell>
+                <TableCell>
+                  <Typography sx={{ display: { sm: "none" } }}>
+                    {t("operationCost.tblMachineryCost.colCost")}
+                  </Typography>
+                  <FormControl
+                    variant="standard"
+                    fullWidth
+                    sx={{
+                      minWidth: 120,
+                      display: { xs: "none", sm: "flex" },
+                    }}
+                  >
+                    <InputLabel>
                       {t("operationCost.tblMachineryCost.colCost")}
-                    </Typography>
-                    <FormControl
-                      variant="standard"
-                      fullWidth
-                      sx={{
-                        minWidth: 120,
-                        display: { xs: "none", sm: "flex" },
-                      }}
-                    >
-                      <InputLabel>
-                        {t("operationCost.tblMachineryCost.colCost")}
-                      </InputLabel>
-                      <Input
-                        required
-                        value={machineryMethod.machineryCost}
-                        onChange={(e) =>
-                          handleChangeMachineryCost(e, "machineryCost")
-                        }
-                      />
-                    </FormControl>
-                  </TableCell>
+                    </InputLabel>
+                    <Input
+                      required
+                      value={machineryMethod.machineryCost}
+                      onChange={(e) =>
+                        handleChangeMachineryCost(e, "machineryCost")
+                      }
+                    />
+                  </FormControl>
+                </TableCell>
+                <TableCell>
+                  <FormControl
+                    variant="standard"
+                    fullWidth
+                    sx={{
+                      minWidth: 120,
+                      display: { xs: "none", sm: "flex" },
+                    }}
+                  >
+                    <Button variant="outlined" onClick={handleAddMachineCost}>
+                      {t("operationCost.tblMachineryCost.capBtnAdd")}
+                    </Button>
+                  </FormControl>
+                </TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {addMachinery?.map((data, index) => (
+                <TableRow key={index}>
+                  <TableCell>{data.method}</TableCell>
+                  <TableCell>{data.isOwned}</TableCell>
+                  <TableCell>{data.noUsed}</TableCell>
+                  <TableCell>{data.days}</TableCell>
+                  <TableCell>{data.machineryCost}</TableCell>
                   <TableCell>
-                    <FormControl
-                      variant="standard"
-                      fullWidth
-                      sx={{
-                        minWidth: 120,
-                        display: { xs: "none", sm: "flex" },
-                      }}
-                    >
-                      <Button variant="outlined" onClick={handleAddMachineCost}>
-                        {t("operationCost.tblMachineryCost.capBtnAdd")}
-                      </Button>
-                    </FormControl>
+                    <IconButton>
+                      <DeleteIcon
+                        onClick={() => handleDeleteMachineCost(index)}
+                      />
+                    </IconButton>
                   </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {addMachinery?.map((data, index) => (
-                  <TableRow key={index}>
-                    <TableCell>{data.method}</TableCell>
-                    <TableCell>{data.isOwned}</TableCell>
-                    <TableCell>{data.noUsed}</TableCell>
-                    <TableCell>{data.days}</TableCell>
-                    <TableCell>{data.machineryCost}</TableCell>
-                    <TableCell>
-                      <IconButton>
-                        <DeleteIcon
-                          onClick={() => handleDeleteMachineCost(index)}
-                        />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-              <Button
-                type="submit"
-                variant="outlined"
-                sx={{ mt: 3, mb: 2, ml: 2 }}
-                onClick={handleCloseModal}
-              >
-                Cancel
-              </Button>
-              {showWarning && (
-                <Alert severity="warning">
-                  Please add necessary fields before saving.
-                </Alert>
-              )}
-              <Button
-                type="submit"
-                variant="contained"
-                sx={{ mt: 3, mb: 2, ml: 2 }}
-                onClick={handleAddCost}
-              >
-                Submit
-              </Button>
-            </Box>
-          </TableContainer>
-        </Modal>
-        <Dialog
-          open={openSuccessDialog}
-          onClose={handleCloseSuccessDialog}
-          aria-labelledby="success-dialog-title"
-        >
-          {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
-          <DialogTitle id="success-dialog-title">
-            {" "}
-            {i18n.t("dialogBoxes.txtUpdatedSuccess")}
-          </DialogTitle>
-          <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
+              ))}
+            </TableBody>
+          </Table>
+          <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
             <Button
-              onClick={handleCloseSuccessDialog}
-              variant="contained"
-              color="primary"
+              type="submit"
+              variant="outlined"
+              sx={{ mt: 3, mb: 2, ml: 2 }}
+              onClick={handleCloseModal}
             >
-              {i18n.t("dialogBoxes.capBtnOk")}
+              Cancel
             </Button>
-          </DialogActions>
-        </Dialog>
-      </Grid>
+            {showWarning && (
+              <Alert severity="warning">
+                Please add necessary fields before saving.
+              </Alert>
+            )}
+            <Button
+              type="submit"
+              variant="contained"
+              sx={{ mt: 3, mb: 2, ml: 2 }}
+              onClick={handleAddCost}
+            >
+              Submit
+            </Button>
+          </Box>
+        </TableContainer>
+      </Modal>
+      <Dialog
+        open={openSuccessDialog}
+        onClose={handleCloseSuccessDialog}
+        aria-labelledby="success-dialog-title"
+      >
+        {/* Display a translated 'Record Updated successfully!' message based on the selected language. */}
+        <DialogTitle id="success-dialog-title">
+          {" "}
+          {i18n.t("dialogBoxes.txtUpdatedSuccess")}
+        </DialogTitle>
+        <DialogActions sx={{ display: "flex", justifyContent: "center" }}>
+          <Button
+            onClick={handleCloseSuccessDialog}
+            variant="contained"
+            color="primary"
+          >
+            {i18n.t("dialogBoxes.capBtnOk")}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 }

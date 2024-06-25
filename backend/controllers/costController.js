@@ -177,6 +177,8 @@ const costController = {
       await Labour.insertMany(
         labourCostDetails.map((details) => ({
           cropId,
+          majorOp,
+          subOp,
           operationCostId,
           ...details,
           TotallabourCost:
@@ -216,6 +218,8 @@ const costController = {
       await Material.insertMany(
         materialCostDetails.map((details) => ({
           cropId,
+          majorOp,
+          subOp,
           operationCostId,
           ...details,
           TotalmaterialCost:
@@ -230,6 +234,8 @@ const costController = {
           const materialCost = docs.map((doc) => ({
             _id: doc._id,
             cropId: doc.cropId,
+            majorOp: doc.majorOp,
+            subOp: doc.subOp,
             operationCostId: doc.operationCostId,
             material: doc.material,
             qtyUsed: doc.qtyUsed,

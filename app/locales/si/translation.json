@@ -135,8 +135,6 @@
     "txtFertilizerApplication": "පොහොර යෙදීම",
     "txtSelectFertilizer": "පොහොර තෝරන්න",
     "tblMachineryCost": {
-      "colMajorOperation": "ප්‍රධාන මෙහෙයුම්",
-      "colSubOperation": "උප මෙහෙයුම්",
       "txtMachineryCost": "යන්ත්‍රෝපකරණ පිරිවැය",
       "colMethod": "ක්‍රමය",
       "colOwnedOrHired": "අයිති/කුලියට ගත්",
