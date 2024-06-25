@@ -10,16 +10,6 @@ const operationcostschema = new Schema(
       required: true,
       trim: true,
     },
-    majorOp: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    subOp: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     totalMachineryCosts: {
       type: Number,
       required: true,

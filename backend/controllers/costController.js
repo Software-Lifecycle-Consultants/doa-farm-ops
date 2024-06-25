@@ -144,15 +144,23 @@ const costController = {
 
       // Operation Cost
       // Create new operation cost
-      const newOperationCost = new Operation({
-        cropId,
-        majorOp,
-        subOp,
-        totalLabourCosts,
-        totalMaterialCosts,
-        totalMachineryCosts,
-        totalOperationCosts,
-      });
+      let newOperationCost;
+      const existingOperationCost = await Operation.findOne({ cropId: cropId });
+      if (existingOperationCost) {
+        existingOperationCost.totalLabourCosts = totalLabourCosts;
+        existingOperationCost.totalMaterialCosts = totalMaterialCosts;
+        existingOperationCost.totalMachineryCosts = totalMachineryCosts;
+        existingOperationCost.totalOperationCosts = totalOperationCosts;
+        newOperationCost = existingOperationCost;
+      } else {
+        newOperationCost = new Operation({
+          cropId,
+          totalLabourCosts,
+          totalMaterialCosts,
+          totalMachineryCosts,
+          totalOperationCosts,
+        });
+      }
 
       const savedOperationCost = await newOperationCost.save();
       const operationCostId = savedOperationCost.id;
@@ -160,9 +168,6 @@ const costController = {
       if (savedOperationCost) {
         operationresponseData = {
           _id: savedOperationCost.id,
-          cropId: savedOperationCost.cropId,
-          majorOp: savedOperationCost.majorOp,
-          subOp: savedOperationCost.subOp,
           totalLabourCosts: savedOperationCost.totalLabourCosts,
           totalMaterialCosts: savedOperationCost.totalMaterialCosts,
           totalMachineryCosts: savedOperationCost.totalMachineryCosts,
@@ -194,6 +199,8 @@ const costController = {
           const labourCost = docs.map((doc) => ({
             _id: doc._id,
             cropId: doc.cropId,
+            majorOp: doc.majorOp,
+            subOp: doc.subOp,
             operationCostId: doc.operationCostId,
             gender: doc.gender,
             isHired: doc.isHired,
