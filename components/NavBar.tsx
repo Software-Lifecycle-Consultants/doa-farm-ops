@@ -29,9 +29,9 @@ import { navBarBtnStyles } from "@/styles/customStyles";
 
 //Define the pages and routes for navigation
 const pages = [
-  { label: "navBar.tabHome", route: "./" },
+  { label: "navBar.tabHome", route: "/" },
   // { label: "navBar.tabProfile", route: "./farmer-profile" },
-  { label: "navBar.tabCrops", route: "./my-crops" },
+  { label: "navBar.tabCrops", route: "/my-crops" },
 ];
 
 //Define languages for the language selector button
@@ -106,7 +106,7 @@ const NavBar = () => {
   // Define a function to handle user logout.
   const handleLogout = () => {
     dispatch(logout()); // Dispatch logout action
-    router.push('./'); // Redirect to Home tab after logout
+    router.push('/'); // Redirect to Home tab after logout
   };
 
   // Define a function to handle user login.

@@ -39,9 +39,19 @@ interface MachineryCost {
   machineryCost: string;
 }
 
+interface MachineryCostTable {
+  majorOp: string;
+  subOp: string;
+  method: string;
+  isOwned: string;
+  noUsed: string;
+  days: string;
+  machineryCost: string;
+}
+
 interface MachineryCostTableProps {
   cropId: string;
-  mcost: MachineryCost[];
+  mcost: MachineryCostTable[];
   addMachinery: MachineryCost[];
   setaddMachinery: React.Dispatch<React.SetStateAction<MachineryCost[]>>;
 }
@@ -207,6 +217,16 @@ export default function MachineryCostTable({
                 <TableRow>
                   <TableCell>
                     <Typography>
+                      {t("operationCost.tblMachineryCost.colMajorOperation")}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography>
+                      {t("operationCost.tblMachineryCost.colSubOperation")}
+                    </Typography>
+                  </TableCell>
+                  <TableCell>
+                    <Typography>
                       {t("operationCost.tblMachineryCost.colMethod")}
                     </Typography>
                   </TableCell>
@@ -238,6 +258,8 @@ export default function MachineryCostTable({
               <TableBody>
                 {mcost.map((data, index) => (
                   <TableRow key={index}>
+                    <TableCell>{data.majorOp}</TableCell>
+                    <TableCell>{data.subOp}</TableCell>
                     <TableCell>{data.method}</TableCell>
                     <TableCell>{data.isOwned}</TableCell>
                     <TableCell>{data.noUsed}</TableCell>

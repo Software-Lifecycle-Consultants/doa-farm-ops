@@ -85,6 +85,17 @@ export default function AddOperationCost({
     machineryCost: string;
   }
 
+  interface MachineryCostTable {
+    majorOp: string;
+    subOp: string;
+    method: string;
+    isOwned: string;
+    noUsed: string;
+    days: string;
+    machineryCost: string;
+  }
+
+
   const [addMachinery, setaddMachinery] = React.useState<MachineryCost[]>([]);
 
   interface laborCost {
@@ -97,7 +108,7 @@ export default function AddOperationCost({
 
   const [addlabor, setAddlabor] = React.useState<laborCost[]>([]);
 
-  const [machinerycost, setmachineryCost] = React.useState<MachineryCost[]>([]);
+  const [machinerycost, setmachineryCost] = React.useState<MachineryCostTable[]>([]);
   const [laborcost, setlaborCost] = React.useState<laborCost[]>([]);
   const [materialcost, setmaterialCost] = React.useState<materialCost[]>([]);
 
