@@ -24,6 +24,8 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 import { customGridStyles1 } from "@/styles/customStyles";
 import { t } from "i18next";
@@ -75,6 +77,17 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
     days: "",
     machineryCost: "",
   });
+  const [openDialog, setOpenDialog] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState<string>("");
+
+  const handleOpenDialog = (itemId: string) => {
+    setOpenDialog(true);
+    setDeleteItemId(itemId); // Assuming each item has a unique ID
+  };
+  
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
 
   // Event handler for select machineryCost method filter change in machineryCost table
   const handleChangeMachineryCost = (
@@ -126,12 +139,13 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
   };
 
    //Delete crop data
-   const deleteCost = async (costId: string) => {
+   const deleteCost = async () => {
     try {
       // Call the deleteCostData function with the provided cost ID
-    const response = await deleteCostData(costId);
+    const response = await deleteCostData(deleteItemId);
     if (response && response.status === 200) {
       console.log("Delete cost response", response);
+      handleCloseDialog();
     } 
     } catch (error) {
       console.error("Error deleting cost data:", error);
@@ -284,7 +298,7 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
                     <TableCell>{data.days}</TableCell>
                     <TableCell>{data.machineryCost}</TableCell>
                     <TableCell>
-                      <IconButton onClick={() => deleteCost(data._id)}>
+                      <IconButton onClick={() => handleOpenDialog(data._id)}>
                         <DeleteIcon/>
                       </IconButton>
                     </TableCell>
@@ -662,6 +676,25 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
           </Button>
         </DialogActions>
       </Dialog>
+      <Dialog
+      open={openDialog}
+      onClose={handleCloseDialog}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          Are you sure you want to delete this item?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="outlined"  onClick={handleCloseDialog}>Cancel</Button>
+        <Button variant="contained"  onClick={deleteCost} autoFocus>
+          Confirm
+        </Button>
+      </DialogActions>
+    </Dialog>
     </Grid>
   );
 }

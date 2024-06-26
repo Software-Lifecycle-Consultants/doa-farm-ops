@@ -22,6 +22,8 @@ import {
   Dialog,
   DialogTitle,
   DialogActions,
+  DialogContent,
+  DialogContentText,
 } from "@mui/material";
 import { customGridStyles1 } from "@/styles/customStyles";
 import { t } from "i18next";
@@ -74,6 +76,18 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
     dailyWage: "",
     foodCostPerDay: "",
   });
+  const [openDialog, setOpenDialog] = useState(false);
+  const [deleteItemId, setDeleteItemId] = useState<string>("");
+
+  const handleOpenDialog = (itemId: string) => {
+    setOpenDialog(true);
+    setDeleteItemId(itemId); // Assuming each item has a unique ID
+  };
+  
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+  };
+
   // Event handler for select labor cost method filter change in labor cost table
   const handleChangelaborCost = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -156,12 +170,13 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
   };
 
   //Delete crop data
-  const deleteCost = async (costId: string) => {
+  const deleteCost = async () => {
     try {
       // Call the deleteCostData function with the provided cost ID
-    const response = await deleteCostData(costId);
+    const response = await deleteCostData(deleteItemId);
     if (response && response.status === 200) {
       console.log("Delete cost response", response);
+      handleCloseDialog();
     } 
     } catch (error) {
       console.error("Error deleting cost data:", error);
@@ -284,7 +299,7 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                     <TableCell>
                       <IconButton>
                         <DeleteIcon
-                          onClick={() => deleteCost(data._id)}
+                          onClick={() => handleOpenDialog(data._id)}
                         />
                       </IconButton>
                     </TableCell>
@@ -674,6 +689,25 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
           </Button>
         </DialogActions>
       </Dialog>
+      <Dialog
+      open={openDialog}
+      onClose={handleCloseDialog}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          Are you sure you want to delete this item?
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button variant="outlined"  onClick={handleCloseDialog}>Cancel</Button>
+        <Button variant="contained"  onClick={deleteCost} autoFocus>
+          Confirm
+        </Button>
+      </DialogActions>
+    </Dialog>
     </Grid>
   );
 }
