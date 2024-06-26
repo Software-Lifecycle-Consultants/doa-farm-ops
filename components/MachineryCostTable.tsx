@@ -79,6 +79,7 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
   });
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("");
+  const [deleteStatus, setDeleteStatus] = useState(false);
 
   const handleOpenDialog = (itemId: string) => {
     setOpenDialog(true);
@@ -146,6 +147,7 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
     if (response && response.status === 200) {
       console.log("Delete cost response", response);
       handleCloseDialog();
+      setDeleteStatus(true);
     } 
     } catch (error) {
       console.error("Error deleting cost data:", error);
@@ -159,7 +161,7 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
       setMachineryCost(mcost);
     };
     fetchData();
-  }, [cropId, machinerycost]);
+  }, [cropId, addMachinery, deleteStatus]);
 
   // Event handler for major operations filter change
   const handleChange1 = (event: SelectChangeEvent) => {

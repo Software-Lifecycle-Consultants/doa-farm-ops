@@ -78,6 +78,7 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
   });
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("");
+  const [deleteStatus, setDeleteStatus] = useState(false);
 
   const handleOpenDialog = (itemId: string) => {
     setOpenDialog(true);
@@ -177,6 +178,7 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
     if (response && response.status === 200) {
       console.log("Delete cost response", response);
       handleCloseDialog();
+      setDeleteStatus(!deleteStatus);
     } 
     } catch (error) {
       console.error("Error deleting cost data:", error);
@@ -190,7 +192,7 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
       setLabourCost(lcost); 
     };
     fetchData();
-  }, [cropId, labourCost]);
+  }, [cropId, addlabor, deleteStatus]);
 
   const handleAddCost = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior

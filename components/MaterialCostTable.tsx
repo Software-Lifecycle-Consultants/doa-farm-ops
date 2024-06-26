@@ -73,6 +73,7 @@ export default function MaterialCostTable({cropId}: MaterialCostTableProps) {
   const [materialCost, setMaterialCost] = React.useState<MaterialCostTable[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("");
+  const [deleteStatus, setDeleteStatus] = useState(false);
 
   const handleOpenDialog = (itemId: string) => {
     setOpenDialog(true);
@@ -194,6 +195,7 @@ export default function MaterialCostTable({cropId}: MaterialCostTableProps) {
       if (response && response.status === 200) {
         console.log("Delete cost response", response);
         handleCloseDialog();
+        setDeleteStatus(!deleteStatus);
       } 
       } catch (error) {
         console.error("Error deleting cost data:", error);
@@ -207,7 +209,7 @@ export default function MaterialCostTable({cropId}: MaterialCostTableProps) {
         setMaterialCost(matcost); 
       };
       fetchData();
-    }, [cropId, materialCost]);
+    }, [cropId, addMaterialCost ,deleteStatus]);
 
   const modalStyle = {
     position: "absolute" as "absolute",
