@@ -329,6 +329,8 @@ const costController = {
           const cropId = labourCost.cropId;
           const operationCost = await Operation.findOne({ cropId: cropId });
           operationCost.totalLabourCosts -= labourCost.TotallabourCost;
+          operationCost.totalOperationCosts -= labourCost.TotallabourCost;
+          await operationCost.save();
           response=labourCost;
         }
        else if (materialCost) {
@@ -336,6 +338,8 @@ const costController = {
           const cropId = materialCost.cropId;
           const operationCost = await Operation.findOne({ cropId: cropId });
           operationCost.totalMaterialCosts -= materialCost.TotalmaterialCost;
+          operationCost.totalOperationCosts -= materialCost.TotalmaterialCost;
+          await operationCost.save();
           response=materialCost;
         }
        else if  (machineryCost) {
@@ -343,6 +347,8 @@ const costController = {
           const cropId = machineryCost.cropId;
           const operationCost = await Operation.findOne({ cropId: cropId });
           operationCost.totalMachineryCosts -= machineryCost.TotalmachineryCost;
+          operationCost.totalOperationCosts -= machineryCost.TotalmachineryCost;
+          await operationCost.save();
           response=machineryCost;
         } else {
           return res.status(400).json({ msg: "Invalid cost type" });
