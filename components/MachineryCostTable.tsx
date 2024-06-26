@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
@@ -29,7 +29,8 @@ import { customGridStyles1 } from "@/styles/customStyles";
 import { t } from "i18next";
 import { addCostData } from "@/api/addCostData";
 import i18n from "@/app/config/i18n";
-import { useRouter } from "next/navigation";
+import { deleteCostData } from "@/api/deleteCostData";
+import { fetchCostData } from "@/api/fetchCostData";
 
 interface MachineryCost {
   method: string;
@@ -40,6 +41,7 @@ interface MachineryCost {
 }
 
 interface MachineryCostTable {
+  _id: string;
   majorOp: string;
   subOp: string;
   method: string;
@@ -51,17 +53,9 @@ interface MachineryCostTable {
 
 interface MachineryCostTableProps {
   cropId: string;
-  mcost: MachineryCostTable[];
-  addMachinery: MachineryCost[];
-  setaddMachinery: React.Dispatch<React.SetStateAction<MachineryCost[]>>;
 }
 
-export default function MachineryCostTable({
-  cropId,
-  mcost,
-  addMachinery,
-  setaddMachinery,
-}: MachineryCostTableProps) {
+export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
 
   const [majorOperations, setMajorOperations] = React.useState("");
   const [subOperations, setSubOperations] = React.useState("");
@@ -72,6 +66,8 @@ export default function MachineryCostTable({
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
+  const [addMachinery, setaddMachinery] = React.useState<MachineryCost[]>([]);
+  const [machinerycost, setMachineryCost] = React.useState<MachineryCostTable[]>([]);
   const [machineryMethod, setMachineryMethod] = React.useState<MachineryCost>({
     method: "",
     isOwned: "",
@@ -128,6 +124,28 @@ export default function MachineryCostTable({
     const newMachineCost = addMachinery.filter((_, i) => i !== index);
     setaddMachinery(newMachineCost);
   };
+
+   //Delete crop data
+   const deleteCost = async (costId: string) => {
+    try {
+      // Call the deleteCostData function with the provided cost ID
+    const response = await deleteCostData(costId);
+    if (response && response.status === 200) {
+      console.log("Delete cost response", response);
+    } 
+    } catch (error) {
+      console.error("Error deleting cost data:", error);
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedCost = await fetchCostData(cropId);
+      const mcost = fetchedCost.machineryCost;
+      setMachineryCost(mcost);
+    };
+    fetchData();
+  }, [cropId, machinerycost]);
 
   // Event handler for major operations filter change
   const handleChange1 = (event: SelectChangeEvent) => {
@@ -256,7 +274,7 @@ export default function MachineryCostTable({
                 </TableRow>
               </TableHead>
               <TableBody>
-                {mcost.map((data, index) => (
+                {machinerycost?.map((data, index) => (
                   <TableRow key={index}>
                     <TableCell>{data.majorOp}</TableCell>
                     <TableCell>{data.subOp}</TableCell>
@@ -266,10 +284,8 @@ export default function MachineryCostTable({
                     <TableCell>{data.days}</TableCell>
                     <TableCell>{data.machineryCost}</TableCell>
                     <TableCell>
-                      <IconButton>
-                        <DeleteIcon
-                        //onClick={() => handleDeleteMachineCost(index)}
-                        />
+                      <IconButton onClick={() => deleteCost(data._id)}>
+                        <DeleteIcon/>
                       </IconButton>
                     </TableCell>
                   </TableRow>

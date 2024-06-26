@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
-
 import {
   IconButton,
   Input,
@@ -24,13 +23,14 @@ import {
   DialogTitle,
   DialogActions,
 } from "@mui/material";
-
 import { customGridStyles1 } from "@/styles/customStyles";
 import { t } from "i18next";
 import i18n from '@/app/config/i18n';
 import { majorOps, subOps } from '@/data/operationCostData';
 import { Box } from '@mui/system';
 import { addCostData } from '@/api/addCostData';
+import { deleteCostData } from '@/api/deleteCostData';
+import { fetchCostData } from '@/api/fetchCostData';
 
 interface laborCost {
   gender: string;
@@ -41,6 +41,7 @@ interface laborCost {
 }
 
 interface LaborCostTable {
+  _id: string;
   majorOp: string;
   subOp: string
   gender: string;
@@ -52,12 +53,9 @@ interface LaborCostTable {
 
 interface LaborCostTableProps {
   cropId: string;
-  lcost: LaborCostTable[];
-  addlabor: laborCost[];
-  setAddlabor: React.Dispatch<React.SetStateAction<laborCost[]>>;
 }
 
-export default function LaborCostTable({cropId, lcost, addlabor, setAddlabor}: LaborCostTableProps) {
+export default function LaborCostTable({cropId}: LaborCostTableProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleOpenModal = () => setIsModalOpen(true);
   const handleCloseModal = () => setIsModalOpen(false);
@@ -67,6 +65,8 @@ export default function LaborCostTable({cropId, lcost, addlabor, setAddlabor}: L
   const [majorOperationsSelected, setMajorOperationsSelected] = useState(false);
   const [subOperationsSelected, setSubOperationsSelected] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const [addlabor, setAddlabor] = React.useState<laborCost[]>([]);
+  const [labourCost, setLabourCost] = React.useState<LaborCostTable[]>([]);
   const [laborMethod, setlaborMethod] = React.useState<laborCost>({
     gender: "",
     isHired: "",
@@ -149,11 +149,33 @@ export default function LaborCostTable({cropId, lcost, addlabor, setAddlabor}: L
     }
   };
 
-   // Event handler for delete machineryCost row in machineryCost table
+   // Event handler for delete labourCost row in machineryCost table
    const handleDeleteLabourCost = (index: number) => {
     const newLabourCost = addlabor.filter((_, i) => i !== index);
     setAddlabor(newLabourCost);
   };
+
+  //Delete crop data
+  const deleteCost = async (costId: string) => {
+    try {
+      // Call the deleteCostData function with the provided cost ID
+    const response = await deleteCostData(costId);
+    if (response && response.status === 200) {
+      console.log("Delete cost response", response);
+    } 
+    } catch (error) {
+      console.error("Error deleting cost data:", error);
+    }
+  }
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const fetchedCost = await fetchCostData(cropId);
+      const lcost = fetchedCost.labourCost;
+      setLabourCost(lcost); 
+    };
+    fetchData();
+  }, [cropId, labourCost]);
 
   const handleAddCost = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -250,7 +272,7 @@ export default function LaborCostTable({cropId, lcost, addlabor, setAddlabor}: L
                 </TableRow>
               </TableHead>
               <TableBody>
-                {lcost.map((data, index) => (
+                {labourCost?.map((data, index) => (
                   <TableRow key={index}>
                     <TableCell>{data.majorOp}</TableCell>
                     <TableCell>{data.subOp}</TableCell>
@@ -262,7 +284,7 @@ export default function LaborCostTable({cropId, lcost, addlabor, setAddlabor}: L
                     <TableCell>
                       <IconButton>
                         <DeleteIcon
-                          onClick={() => handleDeleteLabourCost(index)}
+                          onClick={() => deleteCost(data._id)}
                         />
                       </IconButton>
                     </TableCell>

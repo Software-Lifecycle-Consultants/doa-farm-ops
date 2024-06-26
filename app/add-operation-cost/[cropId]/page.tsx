@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import ProfileTitle from "../../../components/ProfileTitle";
 import CssBaseline from "@mui/material/CssBaseline";
 import {Typography,Grid,Stack} from "@mui/material";
@@ -10,7 +10,6 @@ import { useSelector } from "react-redux";
 import MachineryCostTable from "@/components/MachineryCostTable";
 import LaborCostTable from "@/components/LaborCostTable";
 import MaterialCostTable from "@/components/MaterialCostTable";
-import { fetchCostData } from "@/api/fetchCostData";
 
 /**
  * Add Operation Cost page represents a page where users can add operation costs for a specific crop.(Machinery Cost, Labor Cost, Material Cost)
@@ -24,84 +23,6 @@ export default function AddOperationCost({
 
   // Extract the cropId from the parameters
   const cropId = params.cropId;
-
-  interface materialCost {
-    material: string;
-    qtyUsed: string;
-    materialCost: string;
-  }
-
-  interface MaterialCostTable {
-    majorOp: string;
-    subOp: string;
-    material: string;
-    qtyUsed: string;
-    materialCost: string;
-  }
-
-  const [addMaterialCost, setAddMaterialCost] = React.useState<materialCost[]>([]);
-
-  interface MachineryCost {
-    method: string;
-    isOwned: string;
-    noUsed: string;
-    days: string;
-    machineryCost: string;
-  }
-
-  interface MachineryCostTable {
-    majorOp: string;
-    subOp: string;
-    method: string;
-    isOwned: string;
-    noUsed: string;
-    days: string;
-    machineryCost: string;
-  }
-
-  const [addMachinery, setaddMachinery] = React.useState<MachineryCost[]>([]);
-
-  interface laborCost {
-    gender: string;
-    isHired: string;
-    quantity: string;
-    dailyWage: string;
-    foodCostPerDay: string;
-  }
-
-  interface LaborCostTable {
-    majorOp: string;
-    subOp: string;
-    gender: string;
-    isHired: string;
-    quantity: string;
-    dailyWage: string;
-    foodCostPerDay: string;
-  }
-
-  const [addlabor, setAddlabor] = React.useState<laborCost[]>([]);
-
-  const [machinerycost, setmachineryCost] = React.useState<MachineryCostTable[]>([]);
-  const [laborcost, setlaborCost] = React.useState<LaborCostTable[]>([]);
-  const [materialcost, setmaterialCost] = React.useState<MaterialCostTable[]>([]);
-
-  // Fetch the cost data based on the cropId
-useEffect(() => {
-    const fetchData = async () => {
-      const fetchedCost = await fetchCostData(cropId);
-      const mcost = fetchedCost.machineryCost;
-      const lcost = fetchedCost.labourCost;
-      const matcost = fetchedCost.materialCost;
-      setmachineryCost(mcost);
-      setlaborCost(lcost);
-      setmaterialCost(matcost);
-    };
-    fetchData();
-  }, [addMachinery, addlabor, addMaterialCost, cropId]);
-
-  console.log("machinerycost", machinerycost);
-  console.log("laborcost", laborcost);
-  console.log("materialcost", materialcost);
 
   const { t } = useTranslation();
   const cropdetails = useSelector(selectCrops);
@@ -135,25 +56,16 @@ useEffect(() => {
           <p>{t("operationCost.txtDescription")}</p>
         </Grid>
         {/* Machinery Cost Table */}
-        <MachineryCostTable
-          cropId={cropId}
-          mcost={machinerycost}
-          setaddMachinery={setaddMachinery}
-          addMachinery={addMachinery}
+        <MachineryCostTable 
+        cropId={cropId}
         />
         {/* Labor Cost Section */}
         <LaborCostTable
           cropId={cropId}
-          lcost={laborcost}
-          setAddlabor={setAddlabor}
-          addlabor={addlabor}
         />
         {/* Material Cost Section */}
         <MaterialCostTable
           cropId={cropId}
-          matcost={materialcost}
-          setAddMaterialCost={setAddMaterialCost}
-          addMaterialCost={addMaterialCost}
         />
       </Grid>
     </>

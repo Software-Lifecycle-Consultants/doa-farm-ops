@@ -188,7 +188,7 @@ export default function CropsTable({ title }: TableTitleProps) {
           {/* Table header */}
           <TableHead>
             <TableRow>
-              <TableCell align={"left"} style={{ minWidth: 170 }}>
+              <TableCell align={"left"} style={{ minWidth:100}}>
                 {t("myCrops.tblCrop.colLandName")}
               </TableCell>
               {columns.map((column) => (
@@ -200,7 +200,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                   {t(column.label)}
                 </TableCell>
               ))}
-              <TableCell align={"right"} style={{ minWidth: 170 }}>
+              <TableCell align={"right"} style={{ minWidth: 100 }}>
                 {""}
               </TableCell>
               <TableCell align={"right"} style={{ minWidth: 170 }}>
@@ -236,12 +236,11 @@ export default function CropsTable({ title }: TableTitleProps) {
                         <IconButton
                           onClick={() => openDeleteConfirmation(row._id)}
                         >
-                          <DeleteIcon />
+                          <DeleteIcon/>
                         </IconButton>
                       </Stack>
                     </TableCell>
-
-                    <TableCell align={"right"}>
+                    <TableCell align={"left"}>
                       <Button
                         style={{
                           backgroundColor: theme.palette.secondary.main,
@@ -251,7 +250,7 @@ export default function CropsTable({ title }: TableTitleProps) {
                         }}
                         onClick={() => navigationToAddOperationCost(row._id)}
                       >
-                        Add Cost
+                        Operation Cost
                       </Button>
                     </TableCell>
                   </TableRow>

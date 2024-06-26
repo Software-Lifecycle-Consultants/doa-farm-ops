@@ -315,6 +315,43 @@ const costController = {
       return res.status(500).json({ message: err.message });
     }
   },
+
+  deleteCost: async (req, res) => {
+    try {
+      let response;
+      const costId = req.params.id;
+      const labourCost = await Labour.findOne({ _id: costId });
+      const materialCost = await Material.findOne({ _id: costId });
+      const machineryCost = await Machinery.findById({ _id: costId });
+
+      if (labourCost) {
+          await Labour.findOneAndDelete({ _id: costId });
+          const cropId = labourCost.cropId;
+          const operationCost = await Operation.findOne({ cropId: cropId });
+          operationCost.totalLabourCosts -= labourCost.TotallabourCost;
+          response=labourCost;
+        }
+       else if (materialCost) {
+          await Material.findOneAndDelete({ _id: costId });
+          const cropId = materialCost.cropId;
+          const operationCost = await Operation.findOne({ cropId: cropId });
+          operationCost.totalMaterialCosts -= materialCost.TotalmaterialCost;
+          response=materialCost;
+        }
+       else if  (machineryCost) {
+          await Machinery.findByIdAndDelete({ _id: costId });
+          const cropId = machineryCost.cropId;
+          const operationCost = await Operation.findOne({ cropId: cropId });
+          operationCost.totalMachineryCosts -= machineryCost.TotalmachineryCost;
+          response=machineryCost;
+        } else {
+          return res.status(400).json({ msg: "Invalid cost type" });
+      }
+      res.status(200).json(response);
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
 };
 
 module.exports = costController;

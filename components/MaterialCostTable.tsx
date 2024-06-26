@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import DeleteIcon from "@mui/icons-material/Delete";
 import TableHead from "@mui/material/TableHead";
-
 import {
   IconButton,
   Input,
@@ -24,13 +23,14 @@ import {
   Dialog,
   DialogActions,
 } from "@mui/material";
-
 import { customGridStyles1 } from "@/styles/customStyles";
 import { t } from "i18next";
-import { majorOps, material, materialCostData, subOps } from "@/data/operationCostData";
+import { majorOps, material, subOps } from "@/data/operationCostData";
 import { addCostData } from '@/api/addCostData';
 import { Box } from '@mui/system';
 import i18n from '@/app/config/i18n';
+import { deleteCostData } from '@/api/deleteCostData';
+import { fetchCostData } from '@/api/fetchCostData';
 
 interface materialCost {
   material: string;
@@ -39,6 +39,7 @@ interface materialCost {
 }
 
 interface MaterialCostTable {
+  _id: string;
   majorOp: string;
   subOp: string;
   material: string;
@@ -48,15 +49,11 @@ interface MaterialCostTable {
 
 interface MaterialCostTableProps {
   cropId: string;
-  matcost: MaterialCostTable[];
-  addMaterialCost: materialCost[];
-  setAddMaterialCost: React.Dispatch<React.SetStateAction<materialCost[]>>;
 }
 
+export default function MaterialCostTable({cropId}: MaterialCostTableProps) {
 
-export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,addMaterialCost}: MaterialCostTableProps) {
-
-  const [materialCost, setMaterialCost] = React.useState<materialCost>({
+  const [materialMethod, setMaterialMethod] = React.useState<materialCost>({
     material: "",
     qtyUsed: "",
     materialCost: "",
@@ -70,7 +67,9 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
   const [majorOperationsSelected, setMajorOperationsSelected] = useState(false);
   const [subOperationsSelected, setSubOperationsSelected] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
-
+  const [addMaterialCost, setAddMaterialCost] = React.useState<materialCost[]>([]);
+  const [materialCost, setMaterialCost] = React.useState<MaterialCostTable[]>([]);
+ 
   // Event handler for delete materialCost row in materialyCost table
   const handleDeleteMaterialCost = (index: number) => {
     const newMaterialCost = addMaterialCost.filter((_, i) => i !== index);
@@ -82,8 +81,8 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
     field: string
   ) => {
-    setMaterialCost({
-      ...materialCost,
+    setMaterialMethod({
+      ...materialMethod,
       [field]: event.target.value,
     });
   };
@@ -92,8 +91,8 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
     event: SelectChangeEvent,
     field: string
   ) => {
-    setMaterialCost({
-      ...materialCost,
+    setMaterialMethod({
+      ...materialMethod,
       [field]: event.target.value,
     });
   };
@@ -114,14 +113,14 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
   // Event handler for select material cost filter change in material cost table
   const handleAddMaterialCost = async () => {
     if (
-      !materialCost.material ||
-      !materialCost.qtyUsed ||
-      !materialCost.materialCost
+      !materialMethod.material ||
+      !materialMethod.qtyUsed ||
+      !materialMethod.materialCost
     ) {
       <Alert severity="error">This is an error Alert.</Alert>;
     } else {
-      setAddMaterialCost((prevArray) => [...prevArray, materialCost]);
-      setMaterialCost({
+      setAddMaterialCost((prevArray) => [...prevArray, materialMethod]);
+      setMaterialMethod({
         material: "",
         qtyUsed: "",
         materialCost: "",
@@ -174,6 +173,29 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
     setAddMaterialCost([]);
   };
 
+    //Delete crop data
+    const deleteCost = async (costId: string) => {
+      try {
+        // Call the deleteCostData function with the provided cost ID
+      const response = await deleteCostData(costId);
+      if (response && response.status === 200) {
+        console.log("Delete cost response", response);
+
+      } 
+      } catch (error) {
+        console.error("Error deleting cost data:", error);
+      }
+    }
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        const fetchedCost = await fetchCostData(cropId);
+        const matcost = fetchedCost.materialCost;
+        setMaterialCost(matcost); 
+      };
+      fetchData();
+    }, [cropId, materialCost]);
+
   const modalStyle = {
     position: "absolute" as "absolute",
     top: "50%",
@@ -225,7 +247,7 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
           </TableRow>
         </TableHead>
         <TableBody>
-          {matcost.map((data, index) => (
+          {materialCost?.map((data, index) => (
             <TableRow key={index}>
               <TableCell>{data.majorOp}</TableCell>
               <TableCell>{data.subOp}</TableCell>
@@ -234,7 +256,7 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
               <TableCell>{data.materialCost}</TableCell>
               <TableCell>
                 <IconButton>
-                  <DeleteIcon onClick={() => handleDeleteMaterialCost(index)} />
+                  <DeleteIcon onClick={() => deleteCost(data._id)} />
                 </IconButton>
               </TableCell>
             </TableRow>
@@ -315,7 +337,7 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
               <Select
                 labelId="demo-simple-select-filled-label"
                 id="demo-simple-select-filled"
-                value={materialCost.material}
+                value={materialMethod.material}
                 onChange={(e) =>
                   handleChangeMaterialCostDropdown(e, "material")
                 }
@@ -336,7 +358,7 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
               </InputLabel>
               <Input
                 required
-                value={materialCost.qtyUsed}
+                value={materialMethod.qtyUsed}
                 onChange={(e) => handleChangeMaterialCost(e, "qtyUsed")}
               />
             </FormControl>
@@ -349,7 +371,7 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
               </InputLabel>
               <Input
                 required
-                value={materialCost.materialCost}
+                value={materialMethod.materialCost}
                 onChange={(e) => handleChangeMaterialCost(e, "materialCost")}
               />
             </FormControl>
@@ -384,7 +406,7 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
                     <Select
                       labelId="demo-simple-select-filled-label"
                       id="demo-simple-select-filled"
-                      value={materialCost.material}
+                      value={materialMethod.material}
                       onChange={(e) =>
                         handleChangeMaterialCostDropdown(e, "material")
                       }
@@ -414,7 +436,7 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
                     </InputLabel>
                     <Input
                       required
-                      value={materialCost.qtyUsed}
+                      value={materialMethod.qtyUsed}
                       onChange={(e) => handleChangeMaterialCost(e, "qtyUsed")}
                     />
                   </FormControl>
@@ -436,7 +458,7 @@ export default function MaterialCostTable({cropId, matcost,setAddMaterialCost ,a
                     </InputLabel>
                     <Input
                       required
-                      value={materialCost.materialCost}
+                      value={materialMethod.materialCost}
                       onChange={(e) =>
                         handleChangeMaterialCost(e, "materialCost")
                       }
