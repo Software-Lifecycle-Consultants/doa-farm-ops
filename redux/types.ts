@@ -63,6 +63,27 @@ export interface OfficerDetails {
   university: string;
 }
 
+export interface MaterialCost{
+  material: string;
+  qtyUsed: string;
+  materialCost: string;
+}
+
+export interface MachineryCost{
+  method: string;
+  isOwned: string;
+  noUsed: string;
+  days: string;
+  machineryCost: string;
+}
+
+export interface LabourCost{
+  noOfLabour: string;
+  days: string;
+  wage: string;
+  labourCost: string;
+}
+
 // Define the structure of the Redux store's state using the RootState type.
 export type RootState = {
   auth: Auth;
@@ -75,6 +96,9 @@ export type RootState = {
   user: { user: User | null };
   farmer: { farmerDetails: FarmerDetails | null };
   officer: { officerDetails: OfficerDetails | null };
+  material: {material: MaterialCost};
+  machinery: {machinery: MachineryCost}
+  labour: {labour: LabourCost};
 };
 
 

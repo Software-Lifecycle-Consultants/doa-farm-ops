@@ -6,15 +6,12 @@ const Operation = require("../models/operationCostsModel");
 const costController = {
   getCostByCropId: async (req, res) => {
     try {
-      const cropId = req.params.id;
-      const operationCost = await Operation.findOne({ cropId: cropId });
+      const cropId = req.params.id;      
       const labourCost = await Labour.find({ cropId: cropId });
       const materialCost = await Material.find({ cropId: cropId });
       const machineryCost = await Machinery.find({ cropId: cropId });
 
       const response = {
-        cropId,
-        operationCost,
         labourCost,
         materialCost,
         machineryCost,
