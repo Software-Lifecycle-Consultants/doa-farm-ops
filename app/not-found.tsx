@@ -3,6 +3,8 @@
 import React, { ReactNode } from 'react';
 import { Box, Typography, Button, Container, Grid } from '@mui/material';
 import { useRouter } from 'next/navigation';
+import { useTranslation } from "react-i18next";
+import i18n from '../app/config/i18n';
 
 // Define the type for the children prop
 interface ItemProps {
@@ -17,6 +19,9 @@ const Item: React.FC<ItemProps> = ({ children }) => (
 );
 
 const NotFound = () => {
+
+  const { t } = useTranslation();
+  
   const router = useRouter();
 
   const handleGoBack = () => {     // Goback button function
@@ -51,10 +56,12 @@ const NotFound = () => {
         <Grid item xs={12} md={7}>
           <Box sx={{ textAlign: { xs: 'center', md: 'left' }, ml: { md: 8 } }}>
             <Typography variant="h3" sx={{ mt: 2, mb: 2, fontFamily: 'DM Sans' }}>
-              Oops&#44;
+            {i18n.t("404errorpage.txtOops")}
             </Typography>
             <Typography variant="h3" sx={{ mb: 4 }}>
-              Page <Box component="span" sx={{ color: '#3665C5' }}>Not</Box> Found&#33;
+            {i18n.t("404errorpage.txtPage")} 
+            <Box component="span" sx={{ color: '#3665C5' }}>
+             {i18n.t("404errorpage.txtNot")}</Box> {i18n.t("404errorpage.txtFound")}
             </Typography>
             <Typography variant="body1" sx={{ mb: 10 }}>
               <Box sx={{ width: { md: '73%', sm: '50%' }, textAlign: { sm: 'center', md: 'left' }, display: { sm: 'inline-flex', md: 'block' } }}>
@@ -64,8 +71,8 @@ const NotFound = () => {
 
                   }}
                 >
-                  <Item>Uh oh we can&#39;t seem to find the page you&#39;re looking for.</Item>
-                  <Item>Try going back to the previous page or contact us for more information.</Item>
+                  <Item>{i18n.t("404errorpage.txtUhooh")}</Item>
+                  <Item>{i18n.t("404errorpage.txtTry")}</Item>
                 </Box>
               </Box>
             </Typography>
@@ -82,7 +89,7 @@ const NotFound = () => {
                 }}
                 onClick={handleGoBack}
               >
-                Go Back
+               {i18n.t("404errorpage.capBtnBack")}
               </Button>
               <Button
                 variant="contained"
@@ -96,7 +103,7 @@ const NotFound = () => {
                 }}
                 onClick={handlelogin}
               >
-                Profile
+               {i18n.t("404errorpage.capBtnProfile")}
               </Button>
             </Box>
           </Box>
