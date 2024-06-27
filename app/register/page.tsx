@@ -28,10 +28,14 @@ import { CustomBox1 } from "@/Theme";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 import { register } from "@/redux/userSlice";
-
+import { z } from 'zod';
+import { ZodErrors } from "@/components/ZodErrors";
+import { userRegisterSchema } from "@/schemas/user.schema";
+import { validateFormData } from '@/utils/validation';
 /**
  * SignUp page allows to users to register to the system
  */
+
 
 export default function SignUp() {
 
@@ -62,6 +66,9 @@ export default function SignUp() {
     password: string;
   }
 
+  // State variable to store validation error messages for each form field
+  const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
+
   // State to manage password visibility
   const [showPassword, setShowPassword] = useState(false);
 
@@ -83,6 +90,12 @@ export default function SignUp() {
   // Function to handle user registration
   const handleOnClickNext = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault(); // Prevent default form submission
+    // const validation = userRegisterSchema.safeParse(formData);
+    const { valid, errors }= validateFormData(userRegisterSchema,formData);
+    if (!valid) {  
+      setValidationErrors(errors);
+      return; // Stop execution if validation fails
+    }
     try {
       // Dispatch the register action from userSlice
       const action = register(formData);
@@ -122,19 +135,20 @@ export default function SignUp() {
               <TextField
                 autoComplete="given-name"
                 name="firstName"
-                required
                 fullWidth
                 id="firstName"
                 placeholder={i18n.t("register.hintTxtFirstName")}
                 autoFocus
                 value={formData.firstName}
                 onChange={(e) => handleChangeUserRegister(e, "firstName")}
+                required 
               />
+              {validationErrors?.firstName && (
+              <ZodErrors error={[validationErrors.firstName]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("register.lblLastName")}</Typography>
               <TextField
-                required
                 fullWidth
                 id="lastName"
                 placeholder={i18n.t("register.hintTxtLastName")}
@@ -142,12 +156,14 @@ export default function SignUp() {
                 autoComplete="family-name"
                 value={formData.lastName}
                 onChange={(e) => handleChangeUserRegister(e, "lastName")}
+                required 
               />
+               {validationErrors?.lastName && (
+              <ZodErrors error={[validationErrors.lastName]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("register.lblEmail")}</Typography>
               <TextField
-                required
                 fullWidth
                 id="email"
                 placeholder={i18n.t("register.hintTxtEmail")}
@@ -155,12 +171,15 @@ export default function SignUp() {
                 autoComplete="email"
                 value={formData.email}
                 onChange={(e) => handleChangeUserRegister(e, "email")}
+                required
               />
+              {validationErrors?.email && (
+              <ZodErrors error={[validationErrors.email]} />)}
+
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("register.lblPhoneNo")}</Typography>
               <TextField
-                required
                 fullWidth
                 id="phoneNumber"
                 placeholder={i18n.t("register.hintTxtPhoneNo")}
@@ -168,12 +187,14 @@ export default function SignUp() {
                 autoComplete="phoneNumber"
                 value={formData.phoneNumber}
                 onChange={(e) => handleChangeUserRegister(e, "phoneNumber")}
+                required
               />
+              {validationErrors?.phoneNumber && (
+              <ZodErrors error={[validationErrors.phoneNumber]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("register.lblNIC")}</Typography>
               <TextField
-                required
                 fullWidth
                 id="nic"
                 placeholder={i18n.t("register.hintTxtNIC")}
@@ -181,12 +202,14 @@ export default function SignUp() {
                 autoComplete="nic"
                 value={formData.nic}
                 onChange={(e) => handleChangeUserRegister(e, "nic")}
+                required
               />
+              {validationErrors?.nic && (
+              <ZodErrors error={[validationErrors.nic]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("register.lblAddress")}</Typography>
               <TextField
-                required
                 fullWidth
                 id="address"
                 placeholder={i18n.t("register.hintTxtAddress")}
@@ -194,7 +217,10 @@ export default function SignUp() {
                 autoComplete="address"
                 value={formData.address}
                 onChange={(e) => handleChangeUserRegister(e, "address")}
+                required
               />
+              {validationErrors?.address && (
+              <ZodErrors error={[validationErrors.address]} />)}
             </Grid>
             <Grid item xs={12}>
               <FormControl>
@@ -222,6 +248,8 @@ export default function SignUp() {
                   />
                 </RadioGroup>
               </FormControl>
+              {validationErrors?.role && (
+              <ZodErrors error={[validationErrors.role]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("register.lblPassword")}</Typography>
@@ -232,6 +260,7 @@ export default function SignUp() {
                 onChange={(e) => handleChangeUserRegister(e, "password")}
                 placeholder={i18n.t("register.hintTxtPassword")}
                 type={showPassword ? "text" : "password"}
+                required
                 endAdornment={
                   <InputAdornment position="end">
                     <IconButton
@@ -246,6 +275,8 @@ export default function SignUp() {
                 }
                 label={<InputLabel disabled={true} />}
               />
+              {validationErrors?.password && (
+              <ZodErrors error={[validationErrors.password]} />)}
             </Grid>
           </Grid>
           {/* Next Button for Registration */}

@@ -27,6 +27,11 @@ import store from "@/redux/store";
 import { selectAuth } from "@/redux/authSlice";
 import { Land } from '@/redux/types';
 import { districtList } from "@/data/landsData";
+import { schemaLand  } from "@/schemas/add.land.schema";
+import { validateFormData } from '@/utils/validation';
+import { toast } from 'react-toastify';
+import { ZodErrors } from "@/components/ZodErrors";;
+
 /**
  * UpdateLand page is a form to edit or update details about land properties.
  */
@@ -73,13 +78,26 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     irrigationMode: string;
     userId: string;
   }
-
+  // State to manage validation errors with type safety
+  const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
 
   //Function to navigate to my crops page clicking save & exit to my crops button
   const handleOnClickUpdateLand = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
+      // Transform the error format using flatten() method
+ // const validation = schemaAddLand.safeParse(formData);
+ const { valid, errors } = validateFormData(schemaLand, formData);
+    if (!valid) {
+      //  const flattenedErrors = validation.error.flatten().fieldErrors;
+      setValidationErrors(errors);
+      if (errors.landName) {
+        toast.error(errors.landName[0]);
+      }
+    return;
+      }
+
     try {
       //Get logged user Id from redux
       const loggedUser = selectAuth(store.getState());
@@ -130,7 +148,7 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
     router.push("/farmer-profile");
   };
   // Define a function to select district.
-  const selectChangeAddDistrict = (event: any, newValue: any | null) => {
+  const selectChangeAddDistrict = (event: any, newValue: any) => {
     setFormData({
       ...formData,
       district: newValue,
@@ -184,6 +202,9 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 value={formData.landName}
                 onChange={(e) => handleChangeUpdateLand(e, "landName")}
               />
+               {validationErrors.landName && (
+              <ZodErrors error={[validationErrors.landName]} />)}
+                
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblDistrict")}</Typography>
@@ -191,8 +212,10 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 options={districtNames}
                 getOptionLabel={(option) => option}
                 value={formData.district}
-                onChange={(event, newValue) =>
-                  selectChangeAddDistrict(event, newValue)
+                onChange={(event, newValue) =>{
+                  if (newValue !== null) {
+                    selectChangeAddDistrict(event, newValue);
+                  }}
                 }
                 renderInput={(params) => (
                   <TextField
@@ -202,7 +225,10 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                     variant="outlined"
                   />
                 )}
-              />
+              />  
+              {validationErrors.district && (
+              <ZodErrors error={[validationErrors.district]} />)}
+
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblDivision")}</Typography>
@@ -217,6 +243,8 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 value={formData.dsDivision}
                 onChange={(e) => handleChangeUpdateLand(e, "dsDivision")}
               />
+                {validationErrors.dsDivision && (
+                <ZodErrors error={[validationErrors.dsDivision]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblLandRent")}</Typography>
@@ -231,6 +259,9 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 value={formData.landRent}
                 onChange={(e) => handleChangeUpdateLand(e, "landRent")}
               />
+               {validationErrors.landRent && (
+                <ZodErrors error={[validationErrors.landRent]} />)}
+                
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateLand.lblMode")}</Typography>
@@ -245,6 +276,9 @@ export default function UpdateLand({ params }: { params: { landId: string } }) {
                 value={formData.irrigationMode}
                 onChange={(e) => handleChangeUpdateLand(e, "irrigationMode")}
               />
+               {validationErrors.irrigationMode && (
+               <ZodErrors error={[validationErrors.irrigationMode]} />)}
+                
             </Grid>
           </Grid>
           {/* Buttons for saving and proceeding */}

@@ -27,6 +27,10 @@ import { addCrop, addCropAsync, addLandAndCropAsync } from "@/redux/cropSlice";
 import { selectAuth } from "@/redux/authSlice";
 import { Land } from "@/redux/types";
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
+import { ZodErrors } from "@/components/ZodErrors";
+import { CropsSchema } from '@/schemas/crop.schema';
+import { validateFormData } from '@/utils/validation';
+import { toast } from 'react-toastify';
 
 // Styles for labels
 const styles = {
@@ -52,10 +56,10 @@ export default function AddCrop() {
   // State variables for form fields
   const [landId, setLandId] = useState("");
   const [responseData, setResponseData] = useState(null);
-
+  const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
   //Interface FormData to save inputs from Add Crop screen
   interface FormData {
-    cropName: string | null;
+    cropName: string;
     season: string;
     cropType: string;
     totalSoldQty: string;
@@ -69,7 +73,7 @@ export default function AddCrop() {
   }
 
   const [formData, setFormData] = useState<FormData>({
-    cropName: null, // Specify the type as string | null
+    cropName: "", // Specify the type as string | null
     season: "1",
     cropType: "",
     totalSoldQty: "",
@@ -123,7 +127,27 @@ export default function AddCrop() {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
+
+    // //If Crop Name is not selected, prompt the user to select cropName
+    // if (!formData.cropName) {
+    //   toast.error("Please select a crop name.");
+    //   return;
+    // }
+
+    // const validation = schemaAddCrop.safeParse(formData);
+    const { valid, errors } = validateFormData(CropsSchema, formData);
+    if (!valid) {
+      //  const flattenedErrors = validation.error.flatten().fieldErrors;
+      setValidationErrors(errors);
+      if (errors.cropName) {
+        toast.error(errors.cropName[0]);
+      }
+    return;
+      }
+   
+    // Prevent the default form submission behavior
     const cropData = { ...formData };
+
 
     //Get logged user Id from redux
     const loggedUser = selectAuth(store.getState());
@@ -183,7 +207,7 @@ export default function AddCrop() {
   const selectChangeAddCropName = (event: any, newValue: string | null) => {
     setFormData({
       ...formData,
-      cropName: newValue,
+      cropName: newValue || "",
     });
   };
 
@@ -265,6 +289,8 @@ export default function AddCrop() {
                   />
                 )}
               />
+               {validationErrors?.cropName && (
+              <ZodErrors error={[validationErrors.cropName]} />)}
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -278,6 +304,9 @@ export default function AddCrop() {
                 value={formData.season}
                 onChange={(e) => handleChangeAddCrop(e, "season")}
               >
+               {validationErrors?.season && (
+              <ZodErrors error={[validationErrors.season]} />)}
+
                 <MenuItem value="1">
                   {i18n.t("addCrop.menuItemTxtSelectOption2")}
                 </MenuItem>
@@ -288,6 +317,7 @@ export default function AddCrop() {
                   {i18n.t("addCrop.menuItemTxtMaha")}
                 </MenuItem>
               </TextField>
+        
             </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl>
@@ -314,6 +344,8 @@ export default function AddCrop() {
                   />
                 </RadioGroup>
               </FormControl>
+                  {validationErrors?.cropType && (
+                  <ZodErrors error={[validationErrors.cropType]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("addCrop.lblSoldQuantity")}</Typography>
@@ -326,6 +358,8 @@ export default function AddCrop() {
                 value={formData.totalSoldQty}
                 onChange={(e) => handleChangeAddCrop(e, "totalSoldQty")}
               />
+                {validationErrors?.totalSoldQty && (
+                <ZodErrors error={[validationErrors.totalSoldQty]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("addCrop.lblIncome")}</Typography>
@@ -338,6 +372,8 @@ export default function AddCrop() {
                 value={formData.totalIncome}
                 onChange={(e) => handleChangeAddCrop(e, "totalIncome")}
               />
+               {validationErrors?.totalIncome && (
+                <ZodErrors error={[validationErrors.totalIncome]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("addCrop.lblQuantityHome")}</Typography>
@@ -350,6 +386,8 @@ export default function AddCrop() {
                 value={formData.reservedQtyHome}
                 onChange={(e) => handleChangeAddCrop(e, "reservedQtyHome")}
               />
+                 {validationErrors?.reservedQtyHome && (
+                <ZodErrors error={[validationErrors.reservedQtyHome]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("addCrop.lblQuantitySeed")}</Typography>
@@ -362,6 +400,8 @@ export default function AddCrop() {
                 value={formData.reservedQtySeed}
                 onChange={(e) => handleChangeAddCrop(e, "reservedQtySeed")}
               />
+                {validationErrors?.reservedQtySeed && (
+                <ZodErrors error={[validationErrors.reservedQtySeed]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("addCrop.lblNoOfPicks")}</Typography>
@@ -374,6 +414,8 @@ export default function AddCrop() {
                 value={formData.noOfPicks}
                 onChange={(e) => handleChangeAddCrop(e, "noOfPicks")}
               />
+                {validationErrors?.noOfPicks && (
+                <ZodErrors error={[validationErrors.noOfPicks]} />)}
             </Grid>
             <Grid
               container
@@ -421,6 +463,7 @@ export default function AddCrop() {
                     formData.isCultivationLoan === "1"
                   }
                 />
+      
               </Grid>
             </Grid>
           </Grid>
