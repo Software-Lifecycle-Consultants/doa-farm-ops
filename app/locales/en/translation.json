@@ -136,6 +136,8 @@
     "txtFertilizerApplication": "Fertilizer Application",
     "txtSelectFertilizer": "Select Fertilizer",
     "tblMachineryCost": {
+      "colMajorOperation": "Major Operation",
+      "colSubOperation": "Sub Operation",
       "txtMachineryCost": "Machinery Cost",
       "colMethod": "Method",
       "colOwnedOrHired": "Owned/Hired",
@@ -306,5 +308,15 @@
     "txtDeleteSuccess": "Record deleted successfully!",
     "txtAddedSuccess": "Record added successfully!",
     "txtDeleteConfirmation":"Are you sure you want to delete this record?"
+  },
+  "404errorpage":{
+    "txtOops": "Oops,",
+    "txtPage": "Page",
+    "txtNot": " Not",
+    "txtFound": "Found!",
+    "txtUhooh": "Uh oh we can't seem to find the page you're looking for.",
+    "txtTry": "Try going back to the previous page or contact us for more information.",
+    "capBtnBack": "Go Back",
+    "capBtnProfile": "Profile"
   }
 }

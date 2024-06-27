@@ -27,24 +27,30 @@ import { material, materialCostData } from "@/data/operationCostData";
 
 interface materialCost {
   material: string;
-  quantity: string;
-  costForTheMaterial: string;
+  qtyUsed: string;
+  materialCost: string;
 }
 
-// Define the component to display the table
-interface TableTitleProps {
-  title: string;
+interface MaterialCostTableProps {
+  matcost: materialCost[];
+  addMaterialCost: materialCost[];
+  setAddMaterialCost: React.Dispatch<React.SetStateAction<materialCost[]>>;
 }
 
-export default function MaterialCostTable({ title }: TableTitleProps) {
+
+export default function MaterialCostTable({matcost,setAddMaterialCost ,addMaterialCost}: MaterialCostTableProps) {
 
   const [materialCost, setMaterialCost] = React.useState<materialCost>({
     material: "",
-    quantity: "",
-    costForTheMaterial: "",
+    qtyUsed: "",
+    materialCost: "",
   });
 
-  const [addMaterialCost, setAddMaterialCost] = React.useState<materialCost[]>([]);
+  // Event handler for delete materialCost row in materialyCost table
+  const handleDeleteMaterialCost = (index: number) => {
+    const newMaterialCost = addMaterialCost.filter((_, i) => i !== index);
+    setAddMaterialCost(newMaterialCost);
+  };
 
   // Event handler for select material cost method filter change in material cost table
   const handleChangeMaterialCost = (
@@ -71,16 +77,16 @@ export default function MaterialCostTable({ title }: TableTitleProps) {
   const handleAddMaterialCost = async () => {
     if (
       !materialCost.material ||
-      !materialCost.quantity ||
-      !materialCost.costForTheMaterial
+      !materialCost.qtyUsed ||
+      !materialCost.materialCost
     ) {
       <Alert severity="error">This is an error Alert.</Alert>;
     } else {
       setAddMaterialCost((prevArray) => [...prevArray, materialCost]);
       setMaterialCost({
         material: "",
-        quantity: "",
-        costForTheMaterial: "",
+        qtyUsed: "",
+        materialCost: "",
       });
     }
   };
@@ -138,8 +144,8 @@ export default function MaterialCostTable({ title }: TableTitleProps) {
               </InputLabel>
               <Input 
               required
-              value={materialCost.quantity}
-              onChange={(e) => handleChangeMaterialCost(e, "quantity")}
+              value={materialCost.qtyUsed}
+              onChange={(e) => handleChangeMaterialCost(e, "qtyUsed")}
               />
             </FormControl>
             <FormControl
@@ -151,8 +157,8 @@ export default function MaterialCostTable({ title }: TableTitleProps) {
               </InputLabel>
               <Input 
               required
-              value={materialCost.costForTheMaterial}
-              onChange={(e) => handleChangeMaterialCost(e, "costForTheMaterial")}
+              value={materialCost.materialCost}
+              onChange={(e) => handleChangeMaterialCost(e, "materialCost")}
               />
             </FormControl>
             <FormControl
@@ -217,8 +223,8 @@ export default function MaterialCostTable({ title }: TableTitleProps) {
                           </InputLabel>
                           <Input 
                           required
-                          value={materialCost.quantity}
-                          onChange={(e) => handleChangeMaterialCost(e, "quantity")}
+                          value={materialCost.qtyUsed}
+                          onChange={(e) => handleChangeMaterialCost(e, "qtyUsed")}
                           />
                         </FormControl>
                       </TableCell>
@@ -243,8 +249,8 @@ export default function MaterialCostTable({ title }: TableTitleProps) {
                           </InputLabel>
                           <Input 
                           required
-                          value={materialCost.costForTheMaterial}
-                          onChange={(e) => handleChangeMaterialCost(e, "costForTheMaterial")}
+                          value={materialCost.materialCost}
+                          onChange={(e) => handleChangeMaterialCost(e, "materialCost")}
                           />
                         </FormControl>
                       </TableCell>
@@ -266,15 +272,17 @@ export default function MaterialCostTable({ title }: TableTitleProps) {
                     </TableRow>
                   </TableHead>
                   <TableBody>
-                    {addMaterialCost.map((data, index) => (
+                    {matcost.map((data, index) => (
                       <TableRow key={index}>
                         <TableCell>{data.material}</TableCell>
-                        <TableCell>{data.quantity}</TableCell>
-                        <TableCell>{data.costForTheMaterial}</TableCell>
+                        <TableCell>{data.qtyUsed}</TableCell>
+                        <TableCell>{data.materialCost}</TableCell>
                         <TableCell></TableCell>
                         <TableCell>
                           <IconButton>
-                            <DeleteIcon />
+                            <DeleteIcon 
+                            onClick={() => handleDeleteMaterialCost(index)}
+                            />
                           </IconButton>
                         </TableCell>
                       </TableRow>

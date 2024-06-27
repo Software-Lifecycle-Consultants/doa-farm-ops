@@ -21,6 +21,9 @@ import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
+import { ZodErrors } from "@/components/ZodErrors";
+import { userUpdatechema} from "@/schemas/user.schema";
+import { validateFormData } from '@/utils/validation';
 
 
 export default function UpdateUser({ params }: { params: { userId: string } }) {
@@ -56,12 +59,20 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
     address: string;
     phoneNumber: string;
   }
+  // State variable to store validation error messages for each form field
+  const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
 
   // Function to update user data
   const handleUpdateUser = async (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault(); // Prevent the default form submission behavior
+    const { valid, errors } = validateFormData(userUpdatechema, formData);
+    if (!valid) {
+      //  const flattenedErrors = validation.error.flatten().fieldErrors;
+      setValidationErrors(errors);
+    return;
+      }
     try {
       // Get the logged user ID from Redux
       const loggedUser = selectAuth(store.getState());
@@ -167,6 +178,8 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
                 value={formData.firstName}
                 onChange={(e) => handleChangeUpdateUser(e, "firstName")}
               />
+               {validationErrors?.firstName && (
+              <ZodErrors error={[validationErrors.firstName]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateUser.lblLastName")}</Typography>
@@ -180,6 +193,8 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
                 value={formData.lastName}
                 onChange={(e) => handleChangeUpdateUser(e, "lastName")}
               />
+              {validationErrors?.lastName && (
+              <ZodErrors error={[validationErrors.lastName]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateUser.lblEmail")}</Typography>
@@ -194,6 +209,8 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
                 value={formData.email}
                 onChange={(e) => handleChangeUpdateUser(e, "email")}
               />
+               {validationErrors?.email && (
+              <ZodErrors error={[validationErrors.email]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateUser.lblnicNumber")}</Typography>
@@ -207,6 +224,8 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
                 value={formData.nicNumber}
                 onChange={(e) => handleChangeUpdateUser(e, "nicNumber")}
               />
+              {validationErrors?.nicNumber && (
+              <ZodErrors error={[validationErrors.nicNumber]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateUser.lblAddress")}</Typography>
@@ -220,6 +239,8 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
                 value={formData.address}
                 onChange={(e) => handleChangeUpdateUser(e, "address")}
               />
+                {validationErrors?.address && (
+              <ZodErrors error={[validationErrors.address]} />)}
             </Grid>
             <Grid item xs={12}>
               <Typography>{i18n.t("updateUser.lblphoneNumber")}</Typography>
@@ -234,6 +255,8 @@ export default function UpdateUser({ params }: { params: { userId: string } }) {
                 value={formData.phoneNumber}
                 onChange={(e) => handleChangeUpdateUser(e, "phoneNumber")}
               />
+               {validationErrors?.phoneNumber && (
+              <ZodErrors error={[validationErrors.phoneNumber]} />)}
             </Grid>
           </Grid>
           {/* Buttons for saving and proceeding */}
