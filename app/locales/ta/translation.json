@@ -135,8 +135,6 @@
     "txtFertilizerApplication": "உர பயன்பாடு",
     "txtSelectFertilizer": "உரத்தைத் தேர்ந்தெடு",
     "tblMachineryCost": {
-      "colMajorOperation": "முக்கிய செயல்பாடுகள்",
-      "colSubOperation": "துணை செயல்பாடுகள்",
       "txtMachineryCost": "மெஷினரி செலவு",
       "colMethod": "முறை",
       "colOwnedOrHired": "சொந்தமானது/பணியமர்த்தப்பட்டது",

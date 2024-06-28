@@ -11,6 +11,16 @@ const materialcostSchema = new Schema(
       type: String,
       required: true,
     },
+    majorOp: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    subOp: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     material: {
       type: String,
       required: true,

@@ -136,8 +136,6 @@
     "txtFertilizerApplication": "Fertilizer Application",
     "txtSelectFertilizer": "Select Fertilizer",
     "tblMachineryCost": {
-      "colMajorOperation": "Major Operation",
-      "colSubOperation": "Sub Operation",
       "txtMachineryCost": "Machinery Cost",
       "colMethod": "Method",
       "colOwnedOrHired": "Owned/Hired",

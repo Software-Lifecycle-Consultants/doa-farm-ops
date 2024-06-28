@@ -144,15 +144,23 @@ const costController = {
 
       // Operation Cost
       // Create new operation cost
-      const newOperationCost = new Operation({
-        cropId,
-        majorOp,
-        subOp,
-        totalLabourCosts,
-        totalMaterialCosts,
-        totalMachineryCosts,
-        totalOperationCosts,
-      });
+      let newOperationCost;
+      const existingOperationCost = await Operation.findOne({ cropId: cropId });
+      if (existingOperationCost) {
+        existingOperationCost.totalLabourCosts = totalLabourCosts;
+        existingOperationCost.totalMaterialCosts = totalMaterialCosts;
+        existingOperationCost.totalMachineryCosts = totalMachineryCosts;
+        existingOperationCost.totalOperationCosts = totalOperationCosts;
+        newOperationCost = existingOperationCost;
+      } else {
+        newOperationCost = new Operation({
+          cropId,
+          totalLabourCosts,
+          totalMaterialCosts,
+          totalMachineryCosts,
+          totalOperationCosts,
+        });
+      }
 
       const savedOperationCost = await newOperationCost.save();
       const operationCostId = savedOperationCost.id;
@@ -160,9 +168,6 @@ const costController = {
       if (savedOperationCost) {
         operationresponseData = {
           _id: savedOperationCost.id,
-          cropId: savedOperationCost.cropId,
-          majorOp: savedOperationCost.majorOp,
-          subOp: savedOperationCost.subOp,
           totalLabourCosts: savedOperationCost.totalLabourCosts,
           totalMaterialCosts: savedOperationCost.totalMaterialCosts,
           totalMachineryCosts: savedOperationCost.totalMachineryCosts,
@@ -177,6 +182,8 @@ const costController = {
       await Labour.insertMany(
         labourCostDetails.map((details) => ({
           cropId,
+          majorOp,
+          subOp,
           operationCostId,
           ...details,
           TotallabourCost:
@@ -192,6 +199,8 @@ const costController = {
           const labourCost = docs.map((doc) => ({
             _id: doc._id,
             cropId: doc.cropId,
+            majorOp: doc.majorOp,
+            subOp: doc.subOp,
             operationCostId: doc.operationCostId,
             gender: doc.gender,
             isHired: doc.isHired,
@@ -216,6 +225,8 @@ const costController = {
       await Material.insertMany(
         materialCostDetails.map((details) => ({
           cropId,
+          majorOp,
+          subOp,
           operationCostId,
           ...details,
           TotalmaterialCost:
@@ -230,6 +241,8 @@ const costController = {
           const materialCost = docs.map((doc) => ({
             _id: doc._id,
             cropId: doc.cropId,
+            majorOp: doc.majorOp,
+            subOp: doc.subOp,
             operationCostId: doc.operationCostId,
             material: doc.material,
             qtyUsed: doc.qtyUsed,
@@ -297,6 +310,49 @@ const costController = {
       };
 
       // Send the response
+      res.status(200).json(response);
+    } catch (err) {
+      return res.status(500).json({ message: err.message });
+    }
+  },
+
+  deleteCost: async (req, res) => {
+    try {
+      let response;
+      const costId = req.params.id;
+      const labourCost = await Labour.findOne({ _id: costId });
+      const materialCost = await Material.findOne({ _id: costId });
+      const machineryCost = await Machinery.findById({ _id: costId });
+
+      if (labourCost) {
+          await Labour.findOneAndDelete({ _id: costId });
+          const cropId = labourCost.cropId;
+          const operationCost = await Operation.findOne({ cropId: cropId });
+          operationCost.totalLabourCosts -= labourCost.TotallabourCost;
+          operationCost.totalOperationCosts -= labourCost.TotallabourCost;
+          await operationCost.save();
+          response=labourCost;
+        }
+       else if (materialCost) {
+          await Material.findOneAndDelete({ _id: costId });
+          const cropId = materialCost.cropId;
+          const operationCost = await Operation.findOne({ cropId: cropId });
+          operationCost.totalMaterialCosts -= materialCost.TotalmaterialCost;
+          operationCost.totalOperationCosts -= materialCost.TotalmaterialCost;
+          await operationCost.save();
+          response=materialCost;
+        }
+       else if  (machineryCost) {
+          await Machinery.findByIdAndDelete({ _id: costId });
+          const cropId = machineryCost.cropId;
+          const operationCost = await Operation.findOne({ cropId: cropId });
+          operationCost.totalMachineryCosts -= machineryCost.TotalmachineryCost;
+          operationCost.totalOperationCosts -= machineryCost.TotalmachineryCost;
+          await operationCost.save();
+          response=machineryCost;
+        } else {
+          return res.status(400).json({ msg: "Invalid cost type" });
+      }
       res.status(200).json(response);
     } catch (err) {
       return res.status(500).json({ message: err.message });
