@@ -9,7 +9,7 @@ import userReducer from "./userSlice";
 import farmerSlice from './farmerSlice';
 import officerSlice from './officerSlice';
 import authSlice from './authSlice';
-import { RootState } from './types';
+import machineryReducer from './machineryCostSlice';
 
 // Create the Redux store for managing application state.
 const store = configureStore({
@@ -19,7 +19,8 @@ const store = configureStore({
     land: landReducer, // Assign the 'landReducer' to the 'land' key in the Redux store.
     user: userReducer,
     farmer: farmerSlice,
-    officer: officerSlice
+    officer: officerSlice,
+    machinery: machineryReducer,
   },
 });
 

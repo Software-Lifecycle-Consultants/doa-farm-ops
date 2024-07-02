@@ -4,7 +4,7 @@ import { MachineryCost, RootState } from "./types";
 import { deleteCostData } from "@/api/deleteCostData";
 
 //Define intial state for costSlice
-const initialState: { machinery : MachineryCost | null}={
+const initialState: { machinery : MachineryCost[] | null}={
     machinery: null
 }
 
@@ -12,7 +12,7 @@ export const fetchMachineryCost = createAsyncThunk(
     'cost/fetchMachineryCost',
     async (cropId: string) => {
         const costData = await fetchCostData(cropId)
-        return costData.machinery;
+        return costData.machineryCost;
     }
 );
 
@@ -30,7 +30,7 @@ const machineryCostSlice = createSlice({
     initialState,
     reducers: {
         //Reducer function to register machinery cost details
-        registerMachineryCost: (state, action:PayloadAction<MachineryCost | null>) => {
+        registerMachineryCost: (state, action:PayloadAction<MachineryCost[] | null>) => {
             state.machinery = action.payload;
         },
     },
@@ -38,7 +38,7 @@ const machineryCostSlice = createSlice({
     extraReducers: (builder) => {
         builder
             //Handle successful fulfillment of fetchMachineryCost
-            .addCase(fetchMachineryCost.fulfilled, (state, action) => {
+            .addCase(fetchMachineryCost.fulfilled, (state, action: PayloadAction<MachineryCost[]>) => {
                 state.machinery = action.payload;
             })
             //Handle rejection of fetchMachineryCost

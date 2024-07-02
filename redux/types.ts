@@ -70,6 +70,9 @@ export interface MaterialCost{
 }
 
 export interface MachineryCost{
+  _id:string
+  majorOp:string
+  subOp:string
   method: string;
   isOwned: string;
   noUsed: string;
@@ -92,13 +95,13 @@ export type RootState = {
   }; // An array of Crop objects, representing the state of crop data.
   land: {
     lands: Land[] | null;
-    };// An array of Land objects, representing the state of land data.
+  }; // An array of Land objects, representing the state of land data.
   user: { user: User | null };
   farmer: { farmerDetails: FarmerDetails | null };
   officer: { officerDetails: OfficerDetails | null };
-  material: {material: MaterialCost};
-  machinery: {machinery: MachineryCost}
-  labour: {labour: LabourCost};
+  material: { material: MaterialCost[] | null};
+  machinery: { machinery: MachineryCost[] | null};
+  labour: { labour: LabourCost[] | null};
 };
 
 
