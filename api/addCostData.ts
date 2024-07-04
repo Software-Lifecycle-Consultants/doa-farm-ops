@@ -3,7 +3,7 @@ import axios from "axios";
 /**
  * Function to add cost data based on user ID from the backend server.
  */
-export async function addCostData(costdetails: any) {
+export async function addCostData(costdetails: any): Promise<any>{
 
     try{            
           const response = await axios.post(

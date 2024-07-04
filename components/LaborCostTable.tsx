@@ -30,9 +30,9 @@ import { t } from "i18next";
 import i18n from '@/app/config/i18n';
 import { majorOps, subOps } from '@/data/operationCostData';
 import { Box } from '@mui/system';
-import { addCostData } from '@/api/addCostData';
-import { deleteCostData } from '@/api/deleteCostData';
-import { fetchCostData } from '@/api/fetchCostData';
+import { useDispatch, useSelector } from 'react-redux';
+import { addLabourCostAsync, deleteLabourCost, fetchLabourCost, selectLabourCost } from '@/redux/labourCostSlice';
+import { AppDispatch } from '@/redux/store';
 
 interface laborCost {
   gender: string;
@@ -68,7 +68,6 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
   const [subOperationsSelected, setSubOperationsSelected] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
   const [addlabor, setAddlabor] = React.useState<laborCost[]>([]);
-  const [labourCost, setLabourCost] = React.useState<LaborCostTable[]>([]);
   const [laborMethod, setlaborMethod] = React.useState<laborCost>({
     gender: "",
     isHired: "",
@@ -78,7 +77,12 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
   });
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("");
-  const [deleteStatus, setDeleteStatus] = useState(false);
+
+  const dispatch: AppDispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchLabourCost(cropId));
+  },[cropId,dispatch]);
 
   const handleOpenDialog = (itemId: string) => {
     setOpenDialog(true);
@@ -174,25 +178,18 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
   const deleteCost = async () => {
     try {
       // Call the deleteCostData function with the provided cost ID
-    const response = await deleteCostData(deleteItemId);
-    if (response && response.status === 200) {
-      console.log("Delete cost response", response);
-      handleCloseDialog();
-      setDeleteStatus(!deleteStatus);
-    } 
+      const response = await dispatch(deleteLabourCost(deleteItemId));
+      if (response.type === 'cost/deleteLabourCost/fulfilled') {
+        console.log("Delete cost response", response);
+        handleCloseDialog();
+      }
     } catch (error) {
       console.error("Error deleting cost data:", error);
     }
-  }
+  };
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedCost = await fetchCostData(cropId);
-      const lcost = fetchedCost.labourCost;
-      setLabourCost(lcost); 
-    };
-    fetchData();
-  }, [cropId, addlabor, deleteStatus]);
+  const lcost = useSelector(selectLabourCost);
+  console.log("lcost", lcost);
 
   const handleAddCost = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault(); // Prevent the default form submission behavior
@@ -219,12 +216,13 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
         console.log("costdetails", costdetails);
 
         // Call the addCostData function with the provided cost details
-        const response = await addCostData(costdetails);
+        const response = await dispatch(addLabourCostAsync(costdetails));
 
         // If the operation cost is added successfully, open the success dialog
-        if (response && response.status === 200) {
+        if (response.type === 'cost/addLabourCost/fulfilled') {
           setOpenSuccessDialog(true);
-        } else if (response && response.status === 400) {
+          //dispatch(fetchLabourCost(cropId));
+        } else if (response.type === 'cost/addLabourCost/rejected') {
           console.error("Failed to fetch data");
         }
       }
@@ -289,7 +287,7 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {labourCost?.map((data, index) => (
+                {lcost?.map((data, index) => (
                   <TableRow key={index}>
                     <TableCell>{data.majorOp}</TableCell>
                     <TableCell>{data.subOp}</TableCell>

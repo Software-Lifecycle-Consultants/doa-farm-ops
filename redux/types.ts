@@ -64,6 +64,9 @@ export interface OfficerDetails {
 }
 
 export interface MaterialCost{
+  _id: string;
+  majorOp: string;
+  subOp: string;
   material: string;
   qtyUsed: string;
   materialCost: string;
@@ -81,10 +84,14 @@ export interface MachineryCost{
 }
 
 export interface LabourCost{
-  noOfLabour: string;
-  days: string;
-  wage: string;
-  labourCost: string;
+  _id: string;
+  majorOp: string;
+  subOp: string
+  gender: string;
+  isHired: string;
+  quantity: string;
+  dailyWage: string;
+  foodCostPerDay: string;
 }
 
 // Define the structure of the Redux store's state using the RootState type.

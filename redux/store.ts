@@ -10,6 +10,8 @@ import farmerSlice from './farmerSlice';
 import officerSlice from './officerSlice';
 import authSlice from './authSlice';
 import machineryReducer from './machineryCostSlice';
+import labourReducer from './labourCostSlice';
+import materialReducer from './materialCostSlice';
 
 // Create the Redux store for managing application state.
 const store = configureStore({
@@ -21,6 +23,8 @@ const store = configureStore({
     farmer: farmerSlice,
     officer: officerSlice,
     machinery: machineryReducer,
+    labour: labourReducer,
+    material: materialReducer,
   },
 });
 
