@@ -6,15 +6,12 @@ const Operation = require("../models/operationCostsModel");
 const costController = {
   getCostByCropId: async (req, res) => {
     try {
-      const cropId = req.params.id;
-      const operationCost = await Operation.findOne({ cropId: cropId });
+      const cropId = req.params.id;      
       const labourCost = await Labour.find({ cropId: cropId });
       const materialCost = await Material.find({ cropId: cropId });
       const machineryCost = await Machinery.find({ cropId: cropId });
 
       const response = {
-        cropId,
-        operationCost,
         labourCost,
         materialCost,
         machineryCost,
@@ -44,7 +41,6 @@ const costController = {
       let labourresponseData = {};
       let materialresponseData = {};
       let machineryresponseData = {};
-      let operationresponseData = {};
 
       if (
         !cropId ||
@@ -164,18 +160,6 @@ const costController = {
 
       const savedOperationCost = await newOperationCost.save();
       const operationCostId = savedOperationCost.id;
-
-      if (savedOperationCost) {
-        operationresponseData = {
-          _id: savedOperationCost.id,
-          totalLabourCosts: savedOperationCost.totalLabourCosts,
-          totalMaterialCosts: savedOperationCost.totalMaterialCosts,
-          totalMachineryCosts: savedOperationCost.totalMachineryCosts,
-          totalOperationCosts: savedOperationCost.totalOperationCosts,
-        };
-      } else {
-        return res.status(400).json({ msg: "Invalid operation cost data" });
-      }
 
       // Labour Cost
       // Create new labour costs
@@ -306,7 +290,6 @@ const costController = {
         labourresponseData,
         materialresponseData,
         machineryresponseData,
-        operationresponseData,
       };
 
       // Send the response
@@ -331,7 +314,7 @@ const costController = {
           operationCost.totalLabourCosts -= labourCost.TotallabourCost;
           operationCost.totalOperationCosts -= labourCost.TotallabourCost;
           await operationCost.save();
-          response=labourCost;
+          response=labourCost._id;
         }
        else if (materialCost) {
           await Material.findOneAndDelete({ _id: costId });
@@ -340,7 +323,7 @@ const costController = {
           operationCost.totalMaterialCosts -= materialCost.TotalmaterialCost;
           operationCost.totalOperationCosts -= materialCost.TotalmaterialCost;
           await operationCost.save();
-          response=materialCost;
+          response=materialCost._id;
         }
        else if  (machineryCost) {
           await Machinery.findByIdAndDelete({ _id: costId });
@@ -349,7 +332,7 @@ const costController = {
           operationCost.totalMachineryCosts -= machineryCost.TotalmachineryCost;
           operationCost.totalOperationCosts -= machineryCost.TotalmachineryCost;
           await operationCost.save();
-          response=machineryCost;
+          response=machineryCost._id;
         } else {
           return res.status(400).json({ msg: "Invalid cost type" });
       }

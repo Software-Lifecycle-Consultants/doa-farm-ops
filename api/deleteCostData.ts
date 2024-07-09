@@ -3,7 +3,7 @@ import axios from "axios";
 /**
  * Function to delete cost data based on user ID from the backend server.
  */
-export async function deleteCostData(costId: string) {
+export async function deleteCostData(costId: string): Promise<any> {
     try {
         const response = await axios.delete(
             `http://localhost:5000/api/cost/delete/${costId}`

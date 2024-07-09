@@ -29,10 +29,10 @@ import {
 } from "@mui/material";
 import { customGridStyles1 } from "@/styles/customStyles";
 import { t } from "i18next";
-import { addCostData } from "@/api/addCostData";
 import i18n from "@/app/config/i18n";
-import { deleteCostData } from "@/api/deleteCostData";
-import { fetchCostData } from "@/api/fetchCostData";
+import { addMachineryCostAsync, deleteMachineryCost, fetchMachineryCost, selectMachineryCost } from "@/redux/machineryCostSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/redux/store";
 
 interface MachineryCost {
   method: string;
@@ -41,16 +41,15 @@ interface MachineryCost {
   days: string;
   machineryCost: string;
 }
-
 interface MachineryCostTable {
   _id: string;
-  majorOp: string;
-  subOp: string;
-  method: string;
-  isOwned: string;
-  noUsed: string;
-  days: string;
-  machineryCost: string;
+  majorOp: string | null;
+  subOp: string | null;
+  method: string | null;
+  isOwned: string | null;
+  noUsed: string | null;
+  days: string | null;
+  machineryCost: string | null;
 }
 
 interface MachineryCostTableProps {
@@ -69,7 +68,6 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
   const handleCloseModal = () => setIsModalOpen(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [addMachinery, setaddMachinery] = React.useState<MachineryCost[]>([]);
-  const [machinerycost, setMachineryCost] = React.useState<MachineryCostTable[]>([]);
   const [machineryMethod, setMachineryMethod] = React.useState<MachineryCost>({
     method: "",
     isOwned: "",
@@ -79,7 +77,12 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
   });
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("");
-  const [deleteStatus, setDeleteStatus] = useState(false);
+
+  const dispatch: AppDispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchMachineryCost(cropId));
+  },[cropId,dispatch]);
 
   const handleOpenDialog = (itemId: string) => {
     setOpenDialog(true);
@@ -143,25 +146,20 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
    const deleteCost = async () => {
     try {
       // Call the deleteCostData function with the provided cost ID
-    const response = await deleteCostData(deleteItemId);
-    if (response && response.status === 200) {
-      console.log("Delete cost response", response);
+      const response = await dispatch(deleteMachineryCost(deleteItemId));
+    //const response = await deleteCostData(deleteItemId);
+    if (response.type === 'cost/deleteMachineryCost/fulfilled') {
       handleCloseDialog();
-      setDeleteStatus(true);
+      console.log("Delete cost response", response);
     } 
     } catch (error) {
       console.error("Error deleting cost data:", error);
     }
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const fetchedCost = await fetchCostData(cropId);
-      const mcost = fetchedCost.machineryCost;
-      setMachineryCost(mcost);
-    };
-    fetchData();
-  }, [cropId, addMachinery, deleteStatus]);
+  //fetch machinery cost
+const mcost = useSelector(selectMachineryCost);
+console.log("mcost", mcost);
 
   // Event handler for major operations filter change
   const handleChange1 = (event: SelectChangeEvent) => {
@@ -214,12 +212,12 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
         console.log("costdetails", costdetails);
 
         // Call the addCostData function with the provided cost details
-        const response = await addCostData(costdetails);
+        const response = await dispatch(addMachineryCostAsync(costdetails));
 
         // If the operation cost is added successfully, open the success dialog
-        if (response && response.status === 200) {
+        if (response.type === 'cost/addMachineryCost/fulfilled') {
           setOpenSuccessDialog(true);
-        } else if (response && response.status === 400) {
+        } else if (response.type === 'cost/addMachineryCost/rejected') {
           console.error("Failed to fetch data");
         }
       }
@@ -290,7 +288,7 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {machinerycost?.map((data, index) => (
+                {mcost?.map((data, index) => (
                   <TableRow key={index}>
                     <TableCell>{data.majorOp}</TableCell>
                     <TableCell>{data.subOp}</TableCell>

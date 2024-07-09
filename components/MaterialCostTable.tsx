@@ -28,11 +28,11 @@ import {
 import { customGridStyles1 } from "@/styles/customStyles";
 import { t } from "i18next";
 import { majorOps, material, subOps } from "@/data/operationCostData";
-import { addCostData } from '@/api/addCostData';
 import { Box } from '@mui/system';
 import i18n from '@/app/config/i18n';
-import { deleteCostData } from '@/api/deleteCostData';
-import { fetchCostData } from '@/api/fetchCostData';
+import { addMaterialCostAsync, deleteMaterialCost, fetchMaterialCost, selectMaterialCost } from '@/redux/materialCostSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch } from '@/redux/store';
 
 interface materialCost {
   material: string;
@@ -70,10 +70,18 @@ export default function MaterialCostTable({cropId}: MaterialCostTableProps) {
   const [subOperationsSelected, setSubOperationsSelected] = useState(false);
   const [openSuccessDialog, setOpenSuccessDialog] = useState(false);
   const [addMaterialCost, setAddMaterialCost] = React.useState<materialCost[]>([]);
-  const [materialCost, setMaterialCost] = React.useState<MaterialCostTable[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("");
   const [deleteStatus, setDeleteStatus] = useState(false);
+
+  const dispatch: AppDispatch = useDispatch()
+
+  // Fetch material cost data from the database
+  useEffect(() => {
+    dispatch(fetchMaterialCost(cropId));
+  },[cropId,dispatch]);
+
+  const matcost = useSelector(selectMaterialCost);
 
   const handleOpenDialog = (itemId: string) => {
     setOpenDialog(true);
@@ -167,12 +175,12 @@ export default function MaterialCostTable({cropId}: MaterialCostTableProps) {
         console.log("costdetails", costdetails);
 
         // Call the addCostData function with the provided cost details
-        const response = await addCostData(costdetails);
-
+        const response = await dispatch(addMaterialCostAsync(costdetails));
+        console.log("Add material cost response from table file:", response);
         // If the operation cost is added successfully, open the success dialog
-        if (response && response.status === 200) {
+        if (response.type === 'cost/addMaterialCost/fulfilled') {
           setOpenSuccessDialog(true);
-        } else if (response && response.status === 400) {
+        } else if (response.type === 'cost/addMaterialCostAsync/rejected') {
           console.error("Failed to fetch data");
         }
       }
@@ -191,9 +199,8 @@ export default function MaterialCostTable({cropId}: MaterialCostTableProps) {
     const deleteCost = async () => {
       try {
         // Call the deleteCostData function with the provided cost ID
-      const response = await deleteCostData(deleteItemId);
-      if (response && response.status === 200) {
-        console.log("Delete cost response", response);
+      const response = await dispatch(deleteMaterialCost(deleteItemId));
+      if (response.type === 'cost/deleteMaterialCost/fulfilled') {
         handleCloseDialog();
         setDeleteStatus(!deleteStatus);
       } 
@@ -201,15 +208,6 @@ export default function MaterialCostTable({cropId}: MaterialCostTableProps) {
         console.error("Error deleting cost data:", error);
       }
     }
-  
-    useEffect(() => {
-      const fetchData = async () => {
-        const fetchedCost = await fetchCostData(cropId);
-        const matcost = fetchedCost.materialCost;
-        setMaterialCost(matcost); 
-      };
-      fetchData();
-    }, [cropId, addMaterialCost ,deleteStatus]);
 
   const modalStyle = {
     position: "absolute" as "absolute",
@@ -262,7 +260,7 @@ export default function MaterialCostTable({cropId}: MaterialCostTableProps) {
           </TableRow>
         </TableHead>
         <TableBody>
-          {materialCost?.map((data, index) => (
+          {matcost?.map((data, index) => (
             <TableRow key={index}>
               <TableCell>{data.majorOp}</TableCell>
               <TableCell>{data.subOp}</TableCell>
