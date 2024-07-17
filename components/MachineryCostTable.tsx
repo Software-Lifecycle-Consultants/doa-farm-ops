@@ -33,6 +33,9 @@ import i18n from "@/app/config/i18n";
 import { addMachineryCostAsync, deleteMachineryCost, fetchMachineryCost, selectMachineryCost } from "@/redux/machineryCostSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/redux/store";
+import { MachineryCostSchema } from "@/schemas/cost.schema";
+import { validateFormData } from "@/utils/validation";
+import { ZodErrors } from "./ZodErrors";
 
 interface MachineryCost {
   method: string;
@@ -77,6 +80,7 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
   });
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("");
+  const [validationErrors, setValidationErrors] = useState<Partial<MachineryCostTable>>({});
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -116,24 +120,25 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
 
   // Event handler for select material machineryCost filter change in material machineryCost table
   const handleAddMachineCost = async () => {
-    if (
-      !machineryMethod.method ||
-      !machineryMethod.isOwned ||
-      !machineryMethod.noUsed ||
-      !machineryMethod.days ||
-      !machineryMethod.machineryCost
-    ) {
-      <Alert severity="error">This is an error Alert.</Alert>;
-    } else {
-      setaddMachinery((prevArray) => [...prevArray, machineryMethod]);
-      setMachineryMethod({
-        method: "",
-        isOwned: "",
-        noUsed: "",
-        days: "",
-        machineryCost: "",
-      });
+
+    // Validate the form data
+    const { valid, errors } = validateFormData(
+      MachineryCostSchema,
+      machineryMethod
+    );
+    if (!valid) {
+      setValidationErrors(errors);
+      return;
     }
+
+    setaddMachinery((prevArray) => [...prevArray, machineryMethod]);
+    setMachineryMethod({
+      method: "",
+      isOwned: "",
+      noUsed: "",
+      days: "",
+      machineryCost: "",
+    });
   };
 
   // Event handler for delete machineryCost row in machineryCost table
@@ -342,6 +347,9 @@ console.log("mcost", mcost);
                   </MenuItem>
                 ))}
               </Select>
+              {validationErrors.majorOp && (
+                <ZodErrors error={[validationErrors.majorOp]} />
+              )}
             </FormControl>
             {/* Sub-operations */}
             <FormControl variant="filled" sx={{ m: 1, width: "30%" }}>
@@ -360,6 +368,9 @@ console.log("mcost", mcost);
                   </MenuItem>
                 ))}
               </Select>
+              {validationErrors.subOp && (
+                <ZodErrors error={[validationErrors.subOp]} />
+              )}
             </FormControl>
           </Grid>
           {/* Hidden form fields for mobile view */}
@@ -392,6 +403,9 @@ console.log("mcost", mcost);
                   </MenuItem>
                 ))}
               </Select>
+              {validationErrors.method && (
+                <ZodErrors error={[validationErrors.method]} />
+              )}
             </FormControl>
             <FormControl
               variant="filled"
@@ -414,6 +428,9 @@ console.log("mcost", mcost);
                 <MenuItem value={"Owned"}>Owned</MenuItem>
                 <MenuItem value={"Hired"}>Hired</MenuItem>
               </Select>
+              {validationErrors.isOwned && (
+                <ZodErrors error={[validationErrors.isOwned]} />
+              )}
             </FormControl>
             <FormControl
               variant="standard"
@@ -427,6 +444,9 @@ console.log("mcost", mcost);
                 value={machineryMethod.noUsed}
                 onChange={(e) => handleChangeMachineryCost(e, "noUsed")}
               />
+              {validationErrors.noUsed && (
+                <ZodErrors error={[validationErrors.noUsed]} />
+              )}
             </FormControl>
             <FormControl
               variant="standard"
@@ -440,6 +460,9 @@ console.log("mcost", mcost);
                 value={machineryMethod.days}
                 onChange={(e) => handleChangeMachineryCost(e, "days")}
               />
+              {validationErrors.days && (
+                <ZodErrors error={[validationErrors.days]} />
+              )}
             </FormControl>
             <FormControl
               variant="standard"
@@ -453,6 +476,9 @@ console.log("mcost", mcost);
                 value={machineryMethod.machineryCost}
                 onChange={(e) => handleChangeMachineryCost(e, "machineryCost")}
               />
+              {validationErrors.machineryCost && (
+                <ZodErrors error={[validationErrors.machineryCost]} />
+              )}
             </FormControl>
             <FormControl
               variant="standard"
@@ -495,6 +521,9 @@ console.log("mcost", mcost);
                         </MenuItem>
                       ))}
                     </Select>
+                    {validationErrors.method && (
+                      <ZodErrors error={[validationErrors.method]} />
+                    )}
                   </FormControl>
                 </TableCell>
                 <TableCell>
@@ -526,6 +555,9 @@ console.log("mcost", mcost);
                       <MenuItem value={"Owned"}>Owned</MenuItem>
                       <MenuItem value={"Hired"}>Hired</MenuItem>
                     </Select>
+                    {validationErrors.isOwned && (
+                      <ZodErrors error={[validationErrors.isOwned]} />
+                    )}
                   </FormControl>
                 </TableCell>
                 <TableCell>
@@ -548,6 +580,9 @@ console.log("mcost", mcost);
                       value={machineryMethod.noUsed}
                       onChange={(e) => handleChangeMachineryCost(e, "noUsed")}
                     />
+                    {validationErrors.noUsed && (
+                      <ZodErrors error={[validationErrors.noUsed]} />
+                    )}
                   </FormControl>
                 </TableCell>
                 <TableCell>
@@ -570,6 +605,9 @@ console.log("mcost", mcost);
                       value={machineryMethod.days}
                       onChange={(e) => handleChangeMachineryCost(e, "days")}
                     />
+                    {validationErrors.days && (
+                      <ZodErrors error={[validationErrors.days]} />
+                    )}
                   </FormControl>
                 </TableCell>
                 <TableCell>
@@ -594,6 +632,9 @@ console.log("mcost", mcost);
                         handleChangeMachineryCost(e, "machineryCost")
                       }
                     />
+                    {validationErrors.machineryCost && (
+                      <ZodErrors error={[validationErrors.machineryCost]} />
+                    )}
                   </FormControl>
                 </TableCell>
                 <TableCell>
@@ -677,24 +718,24 @@ console.log("mcost", mcost);
         </DialogActions>
       </Dialog>
       <Dialog
-      open={openDialog}
-      onClose={handleCloseDialog}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete this item?
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this item?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
         <Button variant="outlined"  onClick={handleCloseDialog}>Cancel</Button>
         <Button variant="contained"  onClick={deleteCost} autoFocus>
-          Confirm
-        </Button>
-      </DialogActions>
-    </Dialog>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 }
