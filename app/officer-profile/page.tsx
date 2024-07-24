@@ -45,6 +45,12 @@ export default function OfficerProfile() {
       console.error("Error updating details:", error);
     }
   };
+  // Function to handle the search farmer button click
+  const handleSearchClick = () => {
+    router.push("/farmer-search");
+  };
+
+
 
   // Return the JSX for rendering
   return (
@@ -55,6 +61,18 @@ export default function OfficerProfile() {
           {/* Page title */}
           <ProfileTitle title={t("officerProfile.txtProfileName")} />
         </Grid>
+
+          {/* Add Search Farmer Button */}
+          <Grid item xs={12}>
+          <Button
+            sx={btnBackgroundColor}
+            variant="contained"
+            onClick={handleSearchClick}  // New button to route to farmer search page
+          >
+            {t("Search Farmers")}
+          </Button>
+        </Grid>
+
         {/* Officer Info Section*/}
         <Grid item xs={12}>
           <CustomBox2>
