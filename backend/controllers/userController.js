@@ -313,6 +313,37 @@ const userController = {
     }
   },
 
+  //Get Farmer using NIC in same ORG Address
+  getFarmersByOrgAddress: async (req, res) => {
+    try {
+      const officerId = req.params.id;
+  
+      // Find the officer by ID
+      const officer = await Officer.findOne({ userId: officerId });
+      if (!officer) {
+        return res.status(404).json({ message: "Officer not found" });
+      }
+  
+      // Find farmers with the same orgAddress
+      const farmers = await Farmer.find({ orgAddress: officer.orgAddress }).populate('userId');
+      if (!farmers || farmers.length === 0) {
+        return res.status(404).json({ message: "No farmers found for this organization address" });
+      }
+  
+      // Filter farmers by NIC if provided
+      const { nic } = req.query;
+      let filteredFarmers = farmers;
+      if (nic) {
+        filteredFarmers = farmers.filter(farmer => farmer.userId.nic === nic);
+      }
+  
+      res.status(200).json(filteredFarmers);
+    } catch (err) {
+      console.error("Error fetching farmers by orgAddress:", err);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
+
 }
 
 module.exports = userController;
