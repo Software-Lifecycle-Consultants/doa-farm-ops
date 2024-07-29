@@ -33,6 +33,9 @@ import { Box } from '@mui/system';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLabourCostAsync, deleteLabourCost, fetchLabourCost, selectLabourCost } from '@/redux/labourCostSlice';
 import { AppDispatch } from '@/redux/store';
+import { LaborCostSchema } from '@/schemas/cost.schema';
+import { validateFormData } from '@/utils/validation';
+import { ZodErrors } from './ZodErrors';
 
 interface laborCost {
   gender: string;
@@ -77,6 +80,7 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
   });
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("");
+  const [validationErrors, setValidationErrors] = useState<Partial<LaborCostTable>>({});
 
   const dispatch: AppDispatch = useDispatch()
 
@@ -148,15 +152,16 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
 
   // Event handler for select material cost filter change in material cost table
   const handleAddlaborCost = async () => {
-    if (
-      !laborMethod.gender ||
-      !laborMethod.isHired ||
-      !laborMethod.quantity ||
-      !laborMethod.dailyWage ||
-      !laborMethod.foodCostPerDay
-    ) {
-      <Alert severity="error">This is an error Alert.</Alert>;
-    } else {
+    
+    // Validate the form data
+    const { valid, errors } = validateFormData(
+      LaborCostSchema,
+      laborMethod
+    );
+    if (!valid) {
+      setValidationErrors(errors);
+      return;
+    }
       setAddlabor((prevArray) => [...prevArray, laborMethod]);
       setlaborMethod({
         gender: "",
@@ -165,7 +170,6 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
         dailyWage: "",
         foodCostPerDay: "",
       });
-    }
   };
 
    // Event handler for delete labourCost row in machineryCost table
@@ -343,6 +347,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                   </MenuItem>
                 ))}
               </Select>
+              {validationErrors.majorOp && (
+                <ZodErrors error={[validationErrors.majorOp]} />
+              )}
             </FormControl>
             {/* Sub-operations */}
             <FormControl variant="filled" sx={{ m: 1, width: "30%" }}>
@@ -361,6 +368,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                   </MenuItem>
                 ))}
               </Select>
+              {validationErrors.subOp && (
+                <ZodErrors error={[validationErrors.subOp]} />
+              )}
             </FormControl>
           </Grid>
           {/* Hidden form fields for mobile view */}
@@ -393,6 +403,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                 <MenuItem value={"male"}>Male</MenuItem>
                 <MenuItem value={"female"}>Female</MenuItem>
               </Select>
+              {validationErrors.gender && (
+                <ZodErrors error={[validationErrors.gender]} />
+              )}
             </FormControl>
             <FormControl
               variant="filled"
@@ -413,6 +426,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                 <MenuItem value={"free"}>Free</MenuItem>
                 <MenuItem value={"hired"}>Hired</MenuItem>
               </Select>
+              {validationErrors.isHired && (
+                <ZodErrors error={[validationErrors.isHired]} />
+              )}
             </FormControl>
             <FormControl
               variant="standard"
@@ -426,6 +442,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                 value={laborMethod.quantity}
                 onChange={(e) => handleChangelaborCost(e, "colQuantity")}
               />
+              {validationErrors.quantity && (
+                <ZodErrors error={[validationErrors.quantity]} />
+              )}
             </FormControl>
             <FormControl
               variant="standard"
@@ -439,6 +458,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                 value={laborMethod.dailyWage}
                 onChange={(e) => handleChangelaborCost(e, "dailyWage")}
               />
+              {validationErrors.dailyWage && (
+                <ZodErrors error={[validationErrors.dailyWage]} />
+              )}
             </FormControl>
             <FormControl
               variant="standard"
@@ -452,6 +474,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                 value={laborMethod.foodCostPerDay}
                 onChange={(e) => handleChangelaborCost(e, "foodCostPerDay")}
               />
+              {validationErrors.foodCostPerDay && (
+                <ZodErrors error={[validationErrors.foodCostPerDay]} />
+              )}
             </FormControl>
             <FormControl
               variant="standard"
@@ -498,6 +523,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                             <MenuItem value={"male"}>Male</MenuItem>
                             <MenuItem value={"female"}>Female</MenuItem>
                           </Select>
+                          {validationErrors.gender && (
+                            <ZodErrors error={[validationErrors.gender]} />
+                          )}
                         </FormControl>
                       </TableCell>
                       <TableCell>
@@ -529,6 +557,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                             <MenuItem value={"free"}>Free</MenuItem>
                             <MenuItem value={"hired"}>Hired</MenuItem>
                           </Select>
+                          {validationErrors.subOp && (
+                            <ZodErrors error={[validationErrors.subOp]} />
+                          )}
                         </FormControl>
                       </TableCell>
                       <TableCell>
@@ -553,6 +584,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                               handleChangelaborCost(e, "quantity")
                             }
                           />
+                          {validationErrors.quantity && (
+                            <ZodErrors error={[validationErrors.quantity]} />
+                          )}
                         </FormControl>
                       </TableCell>
                       <TableCell>
@@ -577,6 +611,9 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                               handleChangelaborCost(e, "dailyWage")
                             }
                           />
+                          {validationErrors.dailyWage && (
+                            <ZodErrors error={[validationErrors.dailyWage]} />
+                          )}
                         </FormControl>
                       </TableCell>
                       <TableCell>
@@ -601,6 +638,10 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
                               handleChangelaborCost(e, "foodCostPerDay")
                             }
                           />
+                          {validationErrors.foodCostPerDay && (
+                            <ZodErrors
+                              error={[validationErrors.foodCostPerDay]}/>
+                          )}
                         </FormControl>
                       </TableCell>
                       <TableCell>
@@ -690,24 +731,26 @@ export default function LaborCostTable({cropId}: LaborCostTableProps) {
         </DialogActions>
       </Dialog>
       <Dialog
-      open={openDialog}
-      onClose={handleCloseDialog}
-      aria-labelledby="alert-dialog-title"
-      aria-describedby="alert-dialog-description"
-    >
-      <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
-      <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Are you sure you want to delete this item?
-        </DialogContentText>
-      </DialogContent>
-      <DialogActions>
-        <Button variant="outlined"  onClick={handleCloseDialog}>Cancel</Button>
-        <Button variant="contained"  onClick={deleteCost} autoFocus>
-          Confirm
-        </Button>
-      </DialogActions>
-    </Dialog>
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirm Delete"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Are you sure you want to delete this item?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button variant="outlined" onClick={handleCloseDialog}>
+            Cancel
+          </Button>
+          <Button variant="contained" onClick={deleteCost} autoFocus>
+            Confirm
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Grid>
   );
 }
