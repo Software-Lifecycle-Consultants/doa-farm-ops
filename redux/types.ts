@@ -109,6 +109,10 @@ export type RootState = {
   material: { material: MaterialCost[] | null};
   machinery: { machinery: MachineryCost[] | null};
   labour: { labour: LabourCost[] | null};
+  viewFarmer: {
+    user: User | null;
+    farmerDetails: FarmerDetails | null;
+  };
 };
 
 
