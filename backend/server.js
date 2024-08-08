@@ -39,7 +39,9 @@ app.listen(PORT, () => {
 const userRoute = require("./routes/userRoute");
 const cropRoute = require("./routes/cropRoute");
 const landRoute = require("./routes/landRoute");
+const costRoute = require("./routes/costRoute");
 //routes
 app.use(userRoute);
 app.use(cropRoute);
 app.use(landRoute);
+app.use(costRoute);

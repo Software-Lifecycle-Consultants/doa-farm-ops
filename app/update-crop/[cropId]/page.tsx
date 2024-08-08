@@ -28,6 +28,11 @@ import i18n from "../../config/i18n";// Import the i18n instance
 import { CustomBox1 } from "@/Theme";
 import store, { AppDispatch } from "@/redux/store";
 import { selectAuth } from "@/redux/authSlice";
+import { ZodErrors } from "@/components/ZodErrors";
+import { CropsSchema } from '@/schemas/crop.schema';
+import { validateFormData } from '@/utils/validation';
+import { toast } from 'react-toastify';
+
 
 // Styles for labels
 const styles = {
@@ -63,7 +68,8 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
 
   // Initialize states
   const [isCultivationLoan, setIsCultivationLoan] = useState("");
-
+  
+  const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
   // Define a TypeScript interface to represent the form data
   interface FormData {
     cropName: string;
@@ -111,6 +117,15 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
   //Function to navigate to my crops page clicking save button
   const handleOnClickUpdateCrop = async (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault();
+  // Transform the error format using flatten() method
+ const { valid, errors } = validateFormData(CropsSchema, formData);
+ if (!valid) {
+   setValidationErrors(errors);
+   if (errors.cropName) {
+     toast.error(errors.cropName[0]);
+   }
+ return;
+   }
     const loggedUser = selectAuth(store.getState());
     const userId = loggedUser.auth._id;
     try {// Prevent the default form submission behavior
@@ -205,15 +220,19 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                 freeSolo // Allow entering new crop names
                 onChange={(e, value) => handleAutocompleteChange(e, value)}
 
+              
                 renderInput={(params) => (
                   <TextField
                     {...params}
                     name="cropName"
                     placeholder={i18n.t("updateCrop.hintTxtSelectCrop")}
                     variant="outlined"
+                    required 
                   />
                 )}
               />
+               {validationErrors?.cropName && (
+              <ZodErrors error={[validationErrors.cropName]} />)}
             </Grid>
 
             <Grid item xs={12} sm={6}>
@@ -226,6 +245,7 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                 variant="outlined"
                 value={formData.season}
                 onChange={(e) => handleChangeUpdateCrop(e, "season")}
+              
               >
                 <MenuItem value="1">
                   {i18n.t("updateCrop.menuItemTxtSelectOption2")}
@@ -237,7 +257,10 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                   {i18n.t("updateCrop.menuItemTxtMaha")}
                 </MenuItem>
               </TextField>
-            </Grid>
+              {validationErrors?.season && (
+              <ZodErrors error={[validationErrors.season]} />)}
+            
+          </Grid>
             <Grid item xs={12} sm={6}>
               <FormControl>
                 <Typography id="demo-controlled-radio-buttons-group">
@@ -262,7 +285,10 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                     label={i18n.t("updateCrop.formControlLabel2")}
                   />
                 </RadioGroup>
+                required 
               </FormControl>
+              {validationErrors?.cropType && (
+              <ZodErrors error={[validationErrors.cropType]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("updateCrop.lblSoldQuantity")}</Typography>
@@ -274,7 +300,10 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                 autoComplete="soldQuantity"
                 value={formData.totalSoldQty}
                 onChange={(e) => handleChangeUpdateCrop(e, "totalSoldQty")}
+                required 
               />
+              {validationErrors?.totalSoldQty && (
+              <ZodErrors error={[validationErrors.totalSoldQty]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("updateCrop.lblIncome")}</Typography>
@@ -286,7 +315,10 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                 autoComplete="income"
                 value={formData.totalIncome}
                 onChange={(e) => handleChangeUpdateCrop(e, "totalIncome")}
+                required 
               />
+                {validationErrors?.totalIncome && (
+                <ZodErrors error={[validationErrors.totalIncome]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("updateCrop.lblQuantityHome")}</Typography>
@@ -298,7 +330,10 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                 autoComplete="QtyForHome"
                 value={formData.reservedQtyHome}
                 onChange={(e) => handleChangeUpdateCrop(e, "reservedQtyHome")}
+                required 
               />
+               {validationErrors?.reservedQtyHome && (
+              <ZodErrors error={[validationErrors.reservedQtyHome]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("updateCrop.lblQuantitySeed")}</Typography>
@@ -310,7 +345,10 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                 autoComplete="qtyForSeed"
                 value={formData.reservedQtySeed}
                 onChange={(e) => handleChangeUpdateCrop(e, "reservedQtySeed")}
+                required 
               />
+              {validationErrors?.reservedQtySeed && (
+              <ZodErrors error={[validationErrors.reservedQtySeed]} />)}
             </Grid>
             <Grid item xs={12} sm={6}>
               <Typography>{i18n.t("updateCrop.lblNoOfPicks")}</Typography>
@@ -322,7 +360,10 @@ export default function UpdateCrop({ params }: { params: { cropId: string } }) {
                 autoComplete="NoOfPicks"
                 value={formData.noOfPicks}
                 onChange={(e) => handleChangeUpdateCrop(e, "noOfPicks")}
+                required 
               />
+                {validationErrors?.noOfPicks && (
+                <ZodErrors error={[validationErrors.noOfPicks]} />)}
             </Grid>
             <Grid
               container

@@ -46,7 +46,7 @@ Follow these instructions to set up the Hotel Management System project locally 
 
 1. Clone the repository to your local machine:
  ```bash
-git clone https://github.com/Software-Lifecycle-Consultants/doa-farm-ops.git
+git https://github.com/Software-Lifecycle-Consultants/doa-farm-ops.git
 cd  doa-farm-ops
  ```
 2. Install the Node Modules:
