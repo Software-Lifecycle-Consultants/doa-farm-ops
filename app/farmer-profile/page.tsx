@@ -19,26 +19,32 @@ import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { selectUser, fetchAndRegisterUser } from '@/redux/userSlice';
 import { fetchAndRegisterFarmer, selectFarmerDetails } from '@/redux/farmerSlice';
-import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
-/**
- * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
- * Users can view and edit their profile information, as well as add new land details.
- */
+import { AppDispatch } from '@/redux/store';
+import {  selectViewedFarmerUser, selectViewedFarmerDetails } from '@/redux/ViewFarmerSlice';
+
 export default function FarmerProfile() {
   const router = useRouter();
   const { t } = useTranslation();
-  // const dispatch = useDispatch();
-  const dispatch: AppDispatch = useDispatch() // Type the dispatch function with explicitly specifies the type of dispatch as AppDispatch.
-  // Fetch the authentication status from Redux store
-  const auth = useSelector(selectAuth);
-  const user = useSelector(selectUser);
-  const farmerDetails = useSelector(selectFarmerDetails);
+  const dispatch: AppDispatch = useDispatch();
 
-  //Funtion to execute the two asynchronous actions to fetch and register farmer details and user details using the current authentication ID. 
+  const auth = useSelector(selectAuth);
+  const isOfficer = auth.auth.role === 'officer';
+  const viewedFarmerUser = useSelector(selectViewedFarmerUser);
+  const viewedFarmerDetails = useSelector(selectViewedFarmerDetails);
+
+  const user = isOfficer ? viewedFarmerUser : useSelector(selectUser);
+  const farmerDetails = isOfficer ? viewedFarmerDetails : useSelector(selectFarmerDetails);
+
   React.useEffect(() => {
-    dispatch(fetchAndRegisterUser(auth.auth._id)); // Fetch user details
-    dispatch(fetchAndRegisterFarmer(auth.auth._id)); // Fetch farmer details
-  }, [auth.auth._id, dispatch]);
+    console.log("viewedFarmerUser:", viewedFarmerUser);
+    console.log("viewedFarmerDetails:", viewedFarmerDetails);
+   
+    if (isOfficer && (!viewedFarmerUser || !viewedFarmerDetails)) {
+    } else if (!isOfficer) {
+      dispatch(fetchAndRegisterUser(auth.auth._id));
+      dispatch(fetchAndRegisterFarmer(auth.auth._id));
+    }
+  }, [isOfficer, viewedFarmerUser, viewedFarmerDetails, dispatch, auth.auth._id]);
 
   const handleEditClick = async (userId: any) => {
     try {
@@ -55,6 +61,7 @@ export default function FarmerProfile() {
       console.error("Error updating details:", error);
     }
   };
+
 
   return (
     <>
@@ -274,9 +281,11 @@ export default function FarmerProfile() {
           </Grid>
           {/* Include the LandsTable component */}
           <Grid item xs={12}>
-            <LandsTable title="Farmer profile" />
+                  {/* render the LandsTable component only if user?._id is defined */}
+                  <LandsTable title="Land Details" userId={user?._id || ''} />
           </Grid>
         </Grid>
+    
       </Grid>
     </>
   );

@@ -1,10 +1,8 @@
+// viewFarmerSlice.ts
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, User, FarmerDetails } from './types';
-// Replace the following with your API
-import { searchFarmerByNIC } from '@/api/searchFarmerByNIC'; 
+import { searchFarmerByNIC } from '@/api/searchFarmerByNIC';
 
-
-// Define the structure for the ViewFarmer state
 interface ViewFarmerState {
   user: User | null;
   farmerDetails: FarmerDetails | null;
@@ -12,7 +10,6 @@ interface ViewFarmerState {
   error: string | null;
 }
 
-// Define the initial state
 const initialState: ViewFarmerState = {
   user: null,
   farmerDetails: null,
@@ -20,12 +17,12 @@ const initialState: ViewFarmerState = {
   error: null,
 };
 
-// Create an async thunk to search and fetch farmer data by NIC
 export const searchFarmerByNICThunk = createAsyncThunk(
   'viewFarmer/searchFarmerByNIC',
-  async (nic: string, { rejectWithValue }) => {
+  async ({ officerId, nic }: { officerId: string; nic: string }, { rejectWithValue }) => {
     try {
-      const farmerData = await searchFarmerByNIC(nic);
+      const farmerData = await searchFarmerByNIC(officerId, nic);
+      console.log('searchFarmerByNICThunk fulfilled:', farmerData); // Log the payload
       return farmerData;
     } catch (error) {
       return rejectWithValue((error as Error).message);
@@ -33,12 +30,10 @@ export const searchFarmerByNICThunk = createAsyncThunk(
   }
 );
 
-// Create the ViewFarmerSlice
 const viewFarmerSlice = createSlice({
   name: 'viewFarmer',
   initialState,
   reducers: {
-    // Clear the viewed farmer data
     clearViewedFarmer: (state) => {
       state.user = null;
       state.farmerDetails = null;
@@ -56,7 +51,7 @@ const viewFarmerSlice = createSlice({
         state.user = action.payload.user;
         state.farmerDetails = action.payload.farmerDetails;
       })
-      .addCase(searchFarmerByNICThunk.rejected, (state, action) => {
+      .addCase(searchFarmerByNICThunk.rejected, (state, action: PayloadAction<any>) => {
         state.isLoading = false;
         state.error = action.payload as string;
         state.user = null;
@@ -65,12 +60,7 @@ const viewFarmerSlice = createSlice({
   },
 });
 
-// Export actions
 export const { clearViewedFarmer } = viewFarmerSlice.actions;
-
-// Export selectors
 export const selectViewedFarmerUser = (state: RootState) => state.viewFarmer.user;
 export const selectViewedFarmerDetails = (state: RootState) => state.viewFarmer.farmerDetails;
-
-// Export reducer
 export default viewFarmerSlice.reducer;
