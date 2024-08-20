@@ -209,40 +209,33 @@ const userController = {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-
-      //   res.json({ message: "User details fetch success", data: user });
-      console.log("user.role---------------", user.role);
-      // Check user role
+  
+      let userDetails = { user };
+      let land = await Land.find({ userId });
+  
       if (user.role === "farmer") {
         const farmer = await Farmer.findOne({ userId });
-        const land = await Land.find({ userId });
         if (!farmer) {
           return res.status(404).json({ message: "Farmer details not found" });
         }
-        userDetails = {
-          user,
-          farmerDetails: {
-            household: farmer.household,
-            orgName: farmer.orgName,
-            orgAddress: farmer.orgAddress,
-          },
-          land
+        userDetails.farmerDetails = {
+          household: farmer.household,
+          orgName: farmer.orgName,
+          orgAddress: farmer.orgAddress,
         };
-        console.log("userDetails-----------------", userDetails);
       } else if (user.role === "officer") {
         const officer = await Officer.findOne({ userId });
         if (!officer) {
           return res.status(404).json({ message: "Officer details not found" });
         }
-        userDetails = {
-          user,
-          officerDetails: {
-            orgName: officer.orgName,
-            orgAddress: officer.orgAddress,
-            university: officer.university,
-          },
+        userDetails.officerDetails = {
+          orgName: officer.orgName,
+          orgAddress: officer.orgAddress,
+          university: officer.university,
         };
       }
+  
+      userDetails.land = land;
       res.status(200).json(userDetails);
     } catch (err) {
       return res.status(500).json({ message: err.message });
