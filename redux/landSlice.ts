@@ -12,8 +12,13 @@ const initialState: { lands: Land[] | null } = {
 export const fetchAndRegisterLands = createAsyncThunk(
   'land/fetchAndRegisterLands',
   async (userId: string) => {
-    const userData = await fetchUserData(userId);
-    return userData.land;
+    try {
+      const userData = await fetchUserData(userId);
+      return userData.land || [];
+    } catch (error) {
+      console.error('Error fetching land details:', error);
+      throw error;
+    }
   }
 );
 
