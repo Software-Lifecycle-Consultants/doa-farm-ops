@@ -81,14 +81,23 @@ export default function LandsTable({ title, userId }: TableTitleProps) {
  
   const dispatch: AppDispatch = useDispatch();
 
-  // Fetch land data when the component mounts
-  const landDetails = useSelector((state: RootState) => selectLands(state));
 
 
   console.log('User Id from Land table:', userId);
   React.useEffect(() => {
-    dispatch(fetchAndRegisterLands(userId)); // Fetch land data for the provided user ID
+    if (userId) {
+      console.log('Fetching lands for userId:', userId);
+      dispatch(fetchAndRegisterLands(userId)) // Fetch land data for the provided user ID
+        .then(() => console.log('Lands fetched successfully'))
+        .catch((error) => console.error('Error fetching lands:', error));
+    }
   }, [userId, dispatch]);
+
+    // Fetch land data when the component mounts
+  const landDetails = useSelector((state: RootState) => {
+    console.log('landDetails in useSelector:', state.land.lands);
+    return state.land.lands;
+  });
 
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
