@@ -172,10 +172,11 @@ export default function CropsTable({ title }: TableTitleProps) {
   //Function for deleting a land
   const handleDeleteClick = async (cropId: any) => {
     try {
-      await dispatch(deleteCropAsync(cropId));
-      dispatch(deleteCrop(cropId));
-      setOpenSuccessDialog(true); // Open success dialog on success
-      closeDeleteConfirmation(); // Close the delete confirmation dialog
+      const response = await dispatch(deleteCropAsync(cropId));
+      if (response.type === "crop/deleteCrop/fulfilled") {
+        setOpenSuccessDialog(true); // Open success dialog on success
+        closeDeleteConfirmation(); // Close the delete confirmation dialog
+      }
     } catch (error) {
       console.error('Error deleting land:', error);
     }
