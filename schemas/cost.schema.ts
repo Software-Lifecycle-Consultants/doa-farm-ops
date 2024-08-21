@@ -56,26 +56,33 @@ export const LaborCostSchema = z.object({
 
 //Machinery Cost Schema
 // Define the schema for a single machinery cost entry
-const MachineryCostEntrySchema = z.object({
-    method: z.string(),
-    isOwned: z.boolean().refine((val) => val === true || val === false, {
-        message: "Please select if machinery is owned or not",
-        }),
-    noUsed: z.number().positive("Number of machinery used must be a positive number"),
-    days: z.number().positive("Number of days must be a positive number"),
-    machineryCost: z
-        .number()
-        .positive("Machinery cost must be a positive number")
-        .refine((val) => /^\d+(\.\d{1,2})?$/.test(val.toString()), {
-        message: "Machinery cost must have at most two decimal places",
-        }),
-});
+// const MachineryCostEntrySchema = z.object({
+//     method: z.string(),
+//     isOwned: z.boolean().refine((val) => val === true || val === false, {
+//         message: "Please select if machinery is owned or not",
+//         }),
+//     noUsed: z.number().positive("Number of machinery used must be a positive number"),
+//     days: z.number().positive("Number of days must be a positive number"),
+//     machineryCost: z
+//         .number()
+//         .positive("Machinery cost must be a positive number")
+//         .refine((val) => /^\d+(\.\d{1,2})?$/.test(val.toString()), {
+//         message: "Machinery cost must have at most two decimal places",
+//         }),
+// });
 
 // Define the schema for the whole object, including an array of machinery cost entries
 export const MachineryCostSchema = z.object({
-    majorOp: z.string().min(1, "Please select a major operation"),
-    subOp: z.string().min(1, "Please select a sub operation"),
-    machineryCostDetails: z
-        .array(MachineryCostEntrySchema)
-        .nonempty("At least one machinery cost entry is required"),
+    // majorOp: z.string().nonempty({ message: "Please select a major operation"}),
+    // subOp: z.string().min(1,  {message:"Please select a sub operation"}),
+    method: z.string().nonempty({ message: "Please select a method"}),
+    isOwned: z.string().nonempty({message: "Please select if machinery is owned or not"}),
+    noUsed: z.number().positive( {message: "Number of machinery used must be a positive number"}),
+    days: z.number().positive({ message: "Number of days must be a positive number"}),
+    machineryCost: z
+        .number()
+        .positive({ message:"Machinery cost must be a positive number"})
+        .refine((val) => /^\d+(\.\d{1,2})?$/.test(val.toString()), {
+        message: "Machinery cost must have at most two decimal places",
+        }),
 });

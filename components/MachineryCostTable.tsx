@@ -40,9 +40,9 @@ import { ZodErrors } from "./ZodErrors";
 interface MachineryCost {
   method: string;
   isOwned: string;
-  noUsed: string;
-  days: string;
-  machineryCost: string;
+  noUsed: number;
+  days: number;
+  machineryCost: number;
 }
 interface MachineryCostTable {
   _id: string;
@@ -50,9 +50,9 @@ interface MachineryCostTable {
   subOp: string | null;
   method: string | null;
   isOwned: string | null;
-  noUsed: string | null;
-  days: string | null;
-  machineryCost: string | null;
+  noUsed: number | null;
+  days: number | null;
+  machineryCost: number | null;
 }
 
 interface MachineryCostTableProps {
@@ -74,9 +74,9 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
   const [machineryMethod, setMachineryMethod] = React.useState<MachineryCost>({
     method: "",
     isOwned: "",
-    noUsed: "",
-    days: "",
-    machineryCost: "",
+    noUsed: 0,
+    days: 0,
+    machineryCost: 0,
   });
   const [openDialog, setOpenDialog] = useState(false);
   const [deleteItemId, setDeleteItemId] = useState<string>("");
@@ -120,7 +120,7 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
 
   // Event handler for select material machineryCost filter change in material machineryCost table
   const handleAddMachineCost = async () => {
-
+    console.log("machineryMethod", machineryMethod);
     // Validate the form data
     const { valid, errors } = validateFormData(
       MachineryCostSchema,
@@ -130,14 +130,14 @@ export default function MachineryCostTable({cropId}: MachineryCostTableProps) {
       setValidationErrors(errors);
       return;
     }
-
+    console.log("machineryMethod 2", machineryMethod);
     setaddMachinery((prevArray) => [...prevArray, machineryMethod]);
     setMachineryMethod({
       method: "",
       isOwned: "",
-      noUsed: "",
-      days: "",
-      machineryCost: "",
+      noUsed: 0,
+      days: 0,
+      machineryCost: 0
     });
   };
 
@@ -347,9 +347,9 @@ console.log("mcost", mcost);
                   </MenuItem>
                 ))}
               </Select>
-              {validationErrors.majorOp && (
+              {/* {validationErrors.majorOp && (
                 <ZodErrors error={[validationErrors.majorOp]} />
-              )}
+              )} */}
             </FormControl>
             {/* Sub-operations */}
             <FormControl variant="filled" sx={{ m: 1, width: "30%" }}>
@@ -368,9 +368,9 @@ console.log("mcost", mcost);
                   </MenuItem>
                 ))}
               </Select>
-              {validationErrors.subOp && (
+              {/* {validationErrors.subOp && (
                 <ZodErrors error={[validationErrors.subOp]} />
-              )}
+              )} */}
             </FormControl>
           </Grid>
           {/* Hidden form fields for mobile view */}

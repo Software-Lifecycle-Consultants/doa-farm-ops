@@ -103,38 +103,26 @@ export const cropType = "paddy";
 
 export const majorOps = [
   { value: '', label: 'None' },
-  { value: 10, label: 'Input 1' },
-  { value: 20, label: 'Input 2' },
-  { value: 30, label: 'Input 3' },
+  { value: 'Input 1', label: 'Input 1' },
+  { value: 'Input 2', label: 'Input 2' },
+  { value: 'Input 3', label: 'Input 3' },
 ];
 export const subOps = [
   { value: '', label: 'None' },
-  { value: 10, label: 'Input 1' },
-  { value: 20, label: 'Input 2' },
-  { value: 30, label: 'Input 3' },
-];
-export const fertilizerApps = [
-  { value: '', label: 'None' },
-  { value: 10, label: 'Input 1' },
-  { value: 20, label: 'Input 2' },
-  { value: 30, label: 'Input 3' },
-];
-export const fertilizers = [
-  { value: '', label: 'None' },
-  { value: 10, label: 'Input 1' },
-  { value: 20, label: 'Input 2' },
-  { value: 30, label: 'Input 3' },
+  { value: 'Input 1', label: 'Input 1' },
+  { value: 'Input 2', label: 'Input 2' },
+  { value: 'Input 3', label: 'Input 3' },
 ];
 
 export const machinery = [
   { value: '', label: 'None' },
-  { value: 10, label: 'Method 1' },
-  { value: 20, label: 'Method 2' },
-  { value: 30, label: 'Method 3' },
+  { value: 'Method 1', label: 'Method 1' },
+  { value: 'Method 2', label: 'Method 2' },
+  { value: 'Method 1', label: 'Method 3' },
 ];
 export const material = [
   { value: '', label: 'None' },
-  { value: 10, label: 'Material 1' },
-  { value: 20, label: 'Material 2' },
-  { value: 30, label: 'Material 3' },
+  { value: 'Material 1', label: 'Material 1' },
+  { value: 'Material 2', label: 'Material 2' },
+  { value: 'Material 3', label: 'Material 3' },
 ];
