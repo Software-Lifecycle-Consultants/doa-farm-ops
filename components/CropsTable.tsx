@@ -32,7 +32,7 @@ import theme from '@/Theme';
 import { selectUser } from '@/redux/userSlice';
 import { AppDispatch } from '@/redux/store';
 import { selectLands } from '@/redux/landSlice';
-
+import { RootState } from '@/redux/types';
 
 // Define the table columns
 interface Column {
@@ -91,25 +91,35 @@ const columns: readonly Column[] = [
   },
 ];
 
-// Define the component to display the table
 interface TableTitleProps {
   title: string;
+  userId: string; // Add a userId prop
 }
 
-export default function CropsTable({ title }: TableTitleProps) {
+export default function CropsTable({ title ,userId }: TableTitleProps) {
   const router = useRouter();
   const { t } = useTranslation();
   const user = useSelector(selectUser);
   const dispatch: AppDispatch = useDispatch()
-  const cropsData = useSelector(selectCrops);
+  // const cropsData = useSelector(selectCrops);
   const land = useSelector(selectLands);
 
   useEffect(() => {
     // Fetch the crop data when the component mounts
-    if (user) {
-      dispatch(fetchCrops(user._id));
+    if (userId) {
+      console.log('Fetching crops for userId:', userId);
+      dispatch(fetchCrops(userId))
+      .then(() => console.log('crop fetched successfully'))
+      .catch((error) => console.error('Error fetching crops:', error));
     }
-  }, [user, dispatch]);
+  }, [userId, dispatch]);
+
+
+      // Fetch crop data when the component mounts
+      const cropsData = useSelector((state: RootState) => {
+        console.log('cropsData in useSelector:', state.crop.crops);
+        return state.crop.crops;
+      });
 
   // State for handling pagination
   const [page, setPage] = React.useState(0);

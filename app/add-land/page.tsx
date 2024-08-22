@@ -37,7 +37,7 @@ import { ZodErrors } from "@/components/ZodErrors";
 import { AppDispatch } from '@/redux/store';
 import { useSelector } from 'react-redux';
 import { selectViewedFarmerUser } from '@/redux/ViewFarmerSlice'; // Adjust the path if necessary
-
+import { RootState } from "@/redux/types";
 
 
 /**
@@ -46,21 +46,20 @@ import { selectViewedFarmerUser } from '@/redux/ViewFarmerSlice'; // Adjust the 
 
 export default function AddNewLand() {
   const router = useRouter();
+  const dispatch: AppDispatch = useDispatch();
+  const { t } = useTranslation();
+
+  // Get the current user and the viewed farmer user (if switched by an officer)
+  const currentUser = useSelector((state: RootState) => state.user.user); // Updated to correctly access the 'user'
+  // const farmerUser = useSelector((state: RootState) => state.viewFarmer.user);
+  const farmerUser = useSelector(selectViewedFarmerUser);
+  const farmerId = farmerUser?._id || currentUser?._id;
 
   const districtNames = districtList.map((district) => district.name);
 
-  //const landDetails = useSelector((state: RootState) => state.land);
-
-  // State for managing form data and map-related data
-  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(
-    null
-  );
-  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>(
-    []
-  );
+  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(null);
+  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>([]);
   const [drawType, setDrawType] = useState<"Point" | "Polygon">("Point");
-  const { t } = useTranslation();
-
   const [responseData, setResponseData] = useState(null);
 
   // Define the structure of the form data
@@ -87,10 +86,6 @@ export default function AddNewLand() {
   });
 
   const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
-  const dispatch: AppDispatch = useDispatch();
-
-  const farmerUser = useSelector(selectViewedFarmerUser);
-  const farmerId = farmerUser?._id;
 
   // Managing state for displaying the map
   const [showMap, setShowMap] = useState(false);
