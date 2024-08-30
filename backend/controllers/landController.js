@@ -216,23 +216,23 @@ const landController = {
     try {
       const id = req.params.id;
 
+      const land = await Land.findById(id).session(session);
+      if (!land) {
+        await session.abortTransaction();
+        session.endSession();
+        return res.status(404).json({ message: "Land not found" });
+      }
+
       const crops = await Crop.find({ landId: id }).session(session);
-      const cropIds = crops.map((crop) => crop._id);
 
-      console.log("Crops: ", crops);
-      console.log("CropIds: ", cropIds);
-
-      for (const cropId of cropIds) {
-        console.log("CropId: ", cropId);
-          await Crop.deleteCrop(null, null, cropId, session);
-          console.log("Crop deleted: ", cropId);
+      // Use deleteCrop for each associated crop
+      for (const crop of crops) {
+        await deleteCrop(null, null, crop._id, session);
       }
 
       // Delete the land
       await Land.findByIdAndDelete(id).session(session);
-      console.log("Land deleted: ", id);
 
-      // Commit the transaction
       await session.commitTransaction();
       session.endSession();
 
@@ -240,7 +240,8 @@ const landController = {
     } catch (error) {
       await session.abortTransaction();
       session.endSession();
-      return res.status(500).json({ message: error.message });
+      console.error("Error in deleteLand:", error);
+      return res.status(500).json({ message: "An error occurred while deleting the land", error: error.message });
     }
   },
 };
