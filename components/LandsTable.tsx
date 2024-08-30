@@ -146,9 +146,11 @@ export default function LandsTable({ title, userId }: TableTitleProps) {
   //Function for deleting a land
   const handleDeleteClick = async (landId: any) => {
     try {
-      await dispatch(deleteLandAsync(landId));
+      const response = await dispatch(deleteLandAsync(landId));
+      if (response.type === "land/deleteLandAsync/fulfilled") {
       setOpenSuccessDialog(true); // Open success dialog on success
       closeDeleteConfirmation(); // Close the delete confirmation dialog
+      }
     } catch (error) {
       console.error('Error deleting land:', error);
     }
