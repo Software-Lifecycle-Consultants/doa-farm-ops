@@ -1,4 +1,3 @@
-const Land = require("../models/landModel");
 const Crop = require("../models/cropModel");
 const Operation = require("../models/operationCostsModel");
 const Labour = require("../models/labourCostModel");
@@ -114,42 +113,64 @@ const cropController = {
   },
 
 
-// Delete crop details by ID
-  deleteCrop: async (req, res) => {
-    const session = await mongoose.startSession();
-    session.startTransaction();
-
+  // Delete crop details by ID
+  deleteCrop: async (req, res, cropId = null, session = null) => {
+    const useProvidedSession = !!session;
+    let id;
+    let ownSession = false;
+  
     try {
-      const id = req.params.id;
-      
-      // Delete cost details of the crop within the transaction
-      await Labour.deleteMany({ cropId: id }, { session });
-      await Machinery.deleteMany({ cropId: id }, { session });
-      await Material.deleteMany({ cropId: id }, { session });
-      await Operation.deleteOne({ cropId: id }, { session });
-
-      // Delete the crop within the transaction
-      const deletedCrop = await Crop.findByIdAndDelete(
-        { _id: id },
-        { session }
-      );
-
-      // Commit the transaction
-      await session.commitTransaction();
-      session.endSession();
-
-      if (!deletedCrop) {
-        return res.status(404).json({ message: "Crop not found" });
+      if (useProvidedSession) {
+        id = cropId;
+      } else {
+        id = req.params.id;
+        session = await mongoose.startSession();
+        session.startTransaction();
+        ownSession = true;
       }
-      res.status(200).json({ message: "Crop deleted successfully", cropId: id });
+  
+      console.log("Deleting crop with ID:", id);
+  
+      // Delete cost details of the crop
+      await Labour.deleteMany({ cropId: id }).session(session);
+      await Machinery.deleteMany({ cropId: id }).session(session);
+      await Material.deleteMany({ cropId: id }).session(session);
+      await Operation.deleteOne({ cropId: id }).session(session);
+  
+      // Delete the crop
+      const deletedCrop = await Crop.findByIdAndDelete(id).session(session);
+  
+      if (ownSession) {
+        await session.commitTransaction();
+      }
+  
+      if (!deletedCrop) {
+        if (res) {
+          return res.status(404).json({ message: "Crop not found" });
+        }
+        return null;
+      }
+  
+      if (res) {
+        res.status(200).json({ message: "Crop deleted successfully", cropId: id });
+      }
+  
+      return id;
     } catch (err) {
-      // Rollback the transaction if any operation fails
-      await session.abortTransaction();
-      session.endSession();
-      // Return the error response
-      return res.status(500).json({ message: err.message });
+      console.error("Error in deleteCrop:", err);
+      if (ownSession) {
+        await session.abortTransaction();
+      }
+      if (res) {
+        return res.status(500).json({ message: err.message });
+      }
+      throw err;
+    } finally {
+      if (ownSession && session) {
+        session.endSession();
+      }
     }
-  },
+  }
 };
 
 module.exports = cropController;

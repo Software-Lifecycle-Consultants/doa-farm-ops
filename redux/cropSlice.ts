@@ -64,6 +64,7 @@ export const deleteCropAsync = createAsyncThunk(
     async (cropId: string) => {
         try {
         const response = await axios.delete(`http://localhost:5000/api/crop/delete/${cropId}`);
+        console.log("Response:", response.data);
         return response.data.cropId; // Assuming the response contains a success message
     } catch (error) {
             return Promise.reject(error);

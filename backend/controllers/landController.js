@@ -1,6 +1,8 @@
 const Land = require("../models/landModel");
 const Crop = require("../models/cropModel");
 require("dotenv").config();
+const mongoose = require('mongoose');
+const { deleteCrop } = require("./cropController");
 
 const landController = {
   createLand: async (req, res) => {
@@ -11,7 +13,7 @@ const landController = {
         dsDivision,
         landRent,
         irrigationMode,
-        userId
+        userId,
       } = req.body;
 
       /* TO be uncommented if this requirement comes in the future
@@ -31,7 +33,7 @@ const landController = {
         dsDivision,
         landRent,
         irrigationMode,
-        userId
+        userId,
       });
 
       const savedLand = await newLand.save();
@@ -56,21 +58,21 @@ const landController = {
   updateLand: async (req, res) => {
     try {
       const id = req.params.id;
-      const { landName, district, dsDivision, landRent, irrigationMode } = req.body;
+      const { landName, district, dsDivision, landRent, irrigationMode } =
+        req.body;
       console.log("update land name: " + landName);
-      
+
       if (!landName || !district || !dsDivision || !landRent || !irrigationMode)
         return res.status(400).json({ msg: "Please fill in all fields." });
 
-       await Land.findOneAndUpdate(
-         { _id: id },
-         { landName, district, dsDivision, landRent, irrigationMode }
+      await Land.findOneAndUpdate(
+        { _id: id },
+        { landName, district, dsDivision, landRent, irrigationMode }
       );
-       res.json({
-         message: "Land update success",
-         data: { landName, district, dsDivision, landRent, irrigationMode },
-       });
-      
+      res.json({
+        message: "Land update success",
+        data: { landName, district, dsDivision, landRent, irrigationMode },
+      });
     } catch (err) {
       return res.status(500).json({ message: err.message });
     }
@@ -208,15 +210,39 @@ const landController = {
   },
 
   deleteLand: async (req, res) => {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+
     try {
       const id = req.params.id;
 
-      await Land.findByIdAndDelete({ _id: id });
-      res.json({ message: "Land delete success !" });
+      const crops = await Crop.find({ landId: id }).session(session);
+      const cropIds = crops.map((crop) => crop._id);
+
+      console.log("Crops: ", crops);
+      console.log("CropIds: ", cropIds);
+
+      for (const cropId of cropIds) {
+        console.log("CropId: ", cropId);
+          await Crop.deleteCrop(null, null, cropId, session);
+          console.log("Crop deleted: ", cropId);
+      }
+
+      // Delete the land
+      await Land.findByIdAndDelete(id).session(session);
+      console.log("Land deleted: ", id);
+
+      // Commit the transaction
+      await session.commitTransaction();
+      session.endSession();
+
+      res.json({ message: "Land and associated crops deleted successfully!" });
     } catch (error) {
+      await session.abortTransaction();
+      session.endSession();
       return res.status(500).json({ message: error.message });
     }
-  }
+  },
 };
 
 module.exports = landController;
