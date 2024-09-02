@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "9437d947-a833-40c3-8e7e-bc77d98ade04",
+		"_postman_id": "77c2a091-05b2-49f1-8cd9-ba92bb6e9dda",
 		"name": "DOA Crop Management APIs",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
-		"_exporter_id": "29079947"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "25156663"
 	},
 	"item": [
 		{
@@ -20,7 +20,19 @@
 						}
 					}
 				},
-				"url": "http://localhost:5000/api/user/register"
+				"url": {
+					"raw": "http://localhost:5000/api/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				}
 			},
 			"response": []
 		},
@@ -38,7 +50,19 @@
 						}
 					}
 				},
-				"url": "http://localhost:5000/api/user/register"
+				"url": {
+					"raw": "http://localhost:5000/api/user/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"user",
+						"register"
+					]
+				}
 			},
 			"response": []
 		},
@@ -56,7 +80,19 @@
 						}
 					}
 				},
-				"url": "http://localhost:5000/api/user/login"
+				"url": {
+					"raw": "http://localhost:5000/api/user/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"user",
+						"login"
+					]
+				}
 			},
 			"response": []
 		},
@@ -67,14 +103,26 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"cropName\": \"Crop3\",\r\n  \"season\": \"Yala\",\r\n  \"cropType\": \"Paddy\",\r\n  \"totalSoldQty\": \"100\",\r\n  \"totalIncome\": \"100\",\r\n  \"reservedQtyHome\": \"100\",\r\n  \"reservedQtySeed\": \"100\",\r\n  \"noOfPicks\": \"100\",\r\n  \"isCultivationLoan\": \"Yes\",\r\n  \"loanObtained\": \"100\"\r\n}",
+					"raw": "{\r\n  \"cropName\": \"Crop74\",\r\n  \"season\": \"Yala\",\r\n  \"cropType\": \"Paddy\",\r\n  \"totalSoldQty\": \"100\",\r\n  \"totalIncome\": \"100\",\r\n  \"reservedQtyHome\": \"100\",\r\n  \"reservedQtySeed\": \"100\",\r\n  \"noOfPicks\": \"100\",\r\n  \"isCultivationLoan\": \"Yes\",\r\n  \"loanObtained\": \"100\",\r\n  \"userId\": \"6642f43e842504d9c5813567\",\r\n  \"landId\": \"66437678632756327a56ac8c\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:5000/api/crop/add"
+				"url": {
+					"raw": "http://localhost:5000/api/crop/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"crop",
+						"add"
+					]
+				}
 			},
 			"response": []
 		},
@@ -92,7 +140,19 @@
 						}
 					}
 				},
-				"url": "http://localhost:5000/api/land/create"
+				"url": {
+					"raw": "http://localhost:5000/api/land/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"land",
+						"create"
+					]
+				}
 			},
 			"response": []
 		},
@@ -110,7 +170,20 @@
 						}
 					}
 				},
-				"url": "http://localhost:5000/api/land/addCrop/6576a388b39f65c72454b777"
+				"url": {
+					"raw": "http://localhost:5000/api/land/addCrop/6576a388b39f65c72454b777",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"land",
+						"addCrop",
+						"6576a388b39f65c72454b777"
+					]
+				}
 			},
 			"response": []
 		},
@@ -121,14 +194,88 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n  \"landId\": \"123\",\r\n  \"landName\": \"Land3\",\r\n  \"district\": \"District3\",\r\n  \"dsDivision\": \"Division\",\r\n  \"landRent\": \"500\",\r\n  \"irrigationMode\": \"Well\",\r\n    \"cropName\": \"Crop1\",\r\n    \"season\": \"Yala\",\r\n    \"cropType\": \"Paddy\",\r\n    \"totalSoldQty\": \"2000\",\r\n    \"totalIncome\": \"2000\",\r\n    \"reservedQtyHome\": \"2000\",\r\n    \"reservedQtySeed\": \"2000\",\r\n    \"noOfPicks\": \"2000\",\r\n    \"isCultivationLoan\": \"Yes\",\r\n    \"loanObtained\": \"2000\"\r\n}",
+					"raw": "{\r\n  \"landName\": \"Green Acres\",\r\n  \"district\": \"Springfield\",\r\n  \"dsDivision\": \"Central\",\r\n  \"landRent\": 1200,\r\n  \"irrigationMode\": \"Drip\",\r\n  \"cropName\": \"Corn\",\r\n  \"season\": \"Summer\",\r\n  \"cropType\": \"Grain\",\r\n  \"totalSoldQty\": 1500,\r\n  \"totalIncome\": 3000,\r\n  \"reservedQtyHome\": 200,\r\n  \"reservedQtySeed\": 100,\r\n  \"noOfPicks\": 3,\r\n  \"isCultivationLoan\": true,\r\n  \"loanObtained\": 5000,\r\n  \"userId\": \"66437678632756327a56ac8c\"\r\n}\r\n",
 					"options": {
 						"raw": {
 							"language": "json"
 						}
 					}
 				},
-				"url": "http://localhost:5000/api/landAndCrop/add"
+				"url": {
+					"raw": "http://localhost:5000/api/landAndCrop/add",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"landAndCrop",
+						"add"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Land",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"cropName\": \"Corn 3\",\r\n  \"season\": \"Summer\",\r\n  \"cropType\": \"Grain\",\r\n  \"totalSoldQty\": 1500,\r\n  \"totalIncome\": 3000,\r\n  \"reservedQtyHome\": 200,\r\n  \"reservedQtySeed\": 100,\r\n  \"noOfPicks\": 3,\r\n  \"isCultivationLoan\": true,\r\n  \"loanObtained\": 5000,\r\n  \"landId\": \"66966247e4fbb6880a1c59b7\",\r\n  \"userId\": \"66437678632756327a56ac8c\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/land/addCrop/66966247e4fbb6880a1c59b7",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"land",
+						"addCrop",
+						"66966247e4fbb6880a1c59b7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Land",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/land/deleteLand/6572c0d83696c46468cb8052",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"land",
+						"deleteLand",
+						"6572c0d83696c46468cb8052"
+					]
+				}
 			},
 			"response": []
 		},
@@ -149,7 +296,232 @@
 						}
 					}
 				},
-				"url": "http://localhost:5000/api/get/user/6597c52c1d85fb2f7c7336ca"
+				"url": {
+					"raw": "http://localhost:5000/api/get/user/6642f43e842504d9c5813567",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"get",
+						"user",
+						"6642f43e842504d9c5813567"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Crop by userID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/get/crops/6642f43e842504d9c5813567",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"get",
+						"crops",
+						"6642f43e842504d9c5813567"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Crop",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/crop/delete/66965fc4e4fbb6880a1c599d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"crop",
+						"delete",
+						"66965fc4e4fbb6880a1c599d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update Crops",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "  {\r\n            \"cropName\": \"Crop76\",\r\n            \"season\": \"Yala\",\r\n            \"cropType\": \"Paddy\",\r\n            \"totalSoldQty\": \"100\",\r\n            \"totalIncome\": \"100\",\r\n            \"reservedQtyHome\": \"100\",\r\n            \"reservedQtySeed\": \"100\",\r\n            \"noOfPicks\": \"100\",\r\n            \"isCultivationLoan\": \"Yes\",\r\n            \"loanObtained\": \"100\",\r\n            \"userId\": \"6642f43e842504d9c5813567\",\r\n            \"landId\": \"66437678632756327a56ac8c\"\r\n\r\n        }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/crop/update/66965fc4e4fbb6880a1c599d",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"crop",
+						"update",
+						"66965fc4e4fbb6880a1c599d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search farmers who are in same Org",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/officer/66989fb24f67253b17e601dc/farmers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"officer",
+						"66989fb24f67253b17e601dc",
+						"farmers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search farmers by NIC",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/officer/66989fb24f67253b17e601dc/farmers?nic=1234512348",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"officer",
+						"66989fb24f67253b17e601dc",
+						"farmers"
+					],
+					"query": [
+						{
+							"key": "nic",
+							"value": "1234512348"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Operation Cost",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"cropId\": \"66cc1fe9d6ca5dd686fbe49f\",\r\n    \"majorOp\": \"Input 1\",\r\n    \"subOp\": \"Input 3\",\r\n    \"labourCostDetails\": [\r\n        {\r\n            \"gender\": \"Male\",\r\n            \"isHired\": \"Hired\",\r\n            \"quantity\": 5,\r\n            \"dailyWage\": 100,\r\n            \"foodCostPerDay\": 10\r\n        }\r\n    ],\r\n    \"machineryCostDetails\": [\r\n        {\r\n            \"method\": \"Method 1\",\r\n            \"isOwned\": \"Owned\",\r\n            \"noUsed\": 1,\r\n            \"days\": 3,\r\n            \"machineryCost\": 150\r\n        }\r\n    ],\r\n    \"materialCostDetails\": [\r\n        {\r\n            \"material\": \"Fertilizer\",\r\n            \"qtyUsed\": 20,\r\n            \"materialCost\": 50\r\n        }\r\n    ]\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:5000/api/cost/add/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"cost",
+						"add",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cost by Crop ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/get/cost/66cc1fe9d6ca5dd686fbe49f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"get",
+						"cost",
+						"66cc1fe9d6ca5dd686fbe49f"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cost by Cost ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:5000/api/cost/delete/66d072875ac44308427949ee",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"api",
+						"cost",
+						"delete",
+						"66d072875ac44308427949ee"
+					]
+				}
 			},
 			"response": []
 		}

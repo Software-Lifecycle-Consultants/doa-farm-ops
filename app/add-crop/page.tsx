@@ -31,7 +31,9 @@ import { ZodErrors } from "@/components/ZodErrors";
 import { CropsSchema } from '@/schemas/crop.schema';
 import { validateFormData } from '@/utils/validation';
 import { toast } from 'react-toastify';
-
+import { useSelector } from 'react-redux';
+import { selectViewedFarmerUser } from '@/redux/ViewFarmerSlice'; // Adjust the path if necessary
+import { RootState } from "@/redux/types";
 // Styles for labels
 const styles = {
   label: {
@@ -45,6 +47,10 @@ const styles = {
 
 export default function AddCrop() {
   const router = useRouter();
+  // Get the current user and the viewed farmer user (if switched by an officer)
+  const currentUser = useSelector((state: RootState) => state.user.user); // Updated to correctly access the 'user'
+  const farmerUser = useSelector((state: RootState) => state.viewFarmer.user);
+  const farmerId = farmerUser?._id || currentUser?._id;
   // Get land data from the Redux store
   const landData = selectLands(store.getState());
 
@@ -70,6 +76,7 @@ export default function AddCrop() {
     isCultivationLoan: string;
     loanObtained: number;
     landId: string;
+    userId: string;
   }
 
   const [formData, setFormData] = useState<FormData>({
@@ -84,7 +91,9 @@ export default function AddCrop() {
     isCultivationLoan: "1",
     loanObtained: 0,
     landId: "",
+    userId:"",
   });
+
 
   const dispatch: AppDispatch = useDispatch();
 
@@ -146,25 +155,28 @@ export default function AddCrop() {
       }
    
     // Prevent the default form submission behavior
-    const cropData = { ...formData };
+    const cropData = { ...formData , userId: farmerId };
 
 
-    //Get logged user Id from redux
-    const loggedUser = selectAuth(store.getState());
-    const userId = loggedUser.auth._id;
+
+    // //Get logged user Id from redux
+    // const loggedUser = selectAuth(store.getState());
+    // const userId = loggedUser.auth._id;
 
     // Prepare landCropData object (For Add Land with Crop instance)
     const landDataObject = landData ? landData[landData.length - 1] : {};
     const landCropData = {
       ...landDataObject,
       ...cropData,
-      userId,
+      userId: farmerId
+
     };
 
     // Prepare cropData object (For Add Crop Data instance)
     const CropDataObj = {
       ...cropData,
-      userId,
+      userId: farmerId
+
     };
 
     //Update redux store with newly added crop data

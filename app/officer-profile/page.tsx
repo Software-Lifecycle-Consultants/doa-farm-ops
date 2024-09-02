@@ -46,6 +46,7 @@ export default function OfficerProfile() {
     }
   };
 
+
   // Return the JSX for rendering
   return (
     <>
