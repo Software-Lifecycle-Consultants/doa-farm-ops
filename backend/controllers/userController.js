@@ -209,40 +209,33 @@ const userController = {
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-
-      //   res.json({ message: "User details fetch success", data: user });
-      console.log("user.role---------------", user.role);
-      // Check user role
+  
+      let userDetails = { user };
+      let land = await Land.find({ userId });
+  
       if (user.role === "farmer") {
         const farmer = await Farmer.findOne({ userId });
-        const land = await Land.find({ userId });
         if (!farmer) {
           return res.status(404).json({ message: "Farmer details not found" });
         }
-        userDetails = {
-          user,
-          farmerDetails: {
-            household: farmer.household,
-            orgName: farmer.orgName,
-            orgAddress: farmer.orgAddress,
-          },
-          land
+        userDetails.farmerDetails = {
+          household: farmer.household,
+          orgName: farmer.orgName,
+          orgAddress: farmer.orgAddress,
         };
-        console.log("userDetails-----------------", userDetails);
       } else if (user.role === "officer") {
         const officer = await Officer.findOne({ userId });
         if (!officer) {
           return res.status(404).json({ message: "Officer details not found" });
         }
-        userDetails = {
-          user,
-          officerDetails: {
-            orgName: officer.orgName,
-            orgAddress: officer.orgAddress,
-            university: officer.university,
-          },
+        userDetails.officerDetails = {
+          orgName: officer.orgName,
+          orgAddress: officer.orgAddress,
+          university: officer.university,
         };
       }
+  
+      userDetails.land = land;
       res.status(200).json(userDetails);
     } catch (err) {
       return res.status(500).json({ message: err.message });
@@ -312,6 +305,37 @@ const userController = {
       return res.status(500).json({ message: err.message });
     }
   },
+
+  //Get Farmer using NIC in same ORG Address
+  getFarmersByOrgAddress: async (req, res) => {
+    try {
+      const officerId = req.params.id;
+  
+      // Find the officer by ID
+      const officer = await Officer.findOne({ userId: officerId });
+      if (!officer) {
+        return res.status(404).json({ message: "Officer not found" });
+      }
+  
+      // Find farmers with the same orgAddress
+      const farmers = await Farmer.find({ orgAddress: officer.orgAddress }).populate('userId');
+      if (!farmers || farmers.length === 0) {
+        return res.status(404).json({ message: "No farmers found for this organization address" });
+      }
+  
+      // Filter farmers by NIC if provided
+      const { nic } = req.query;
+      let filteredFarmers = farmers;
+      if (nic) {
+        filteredFarmers = farmers.filter(farmer => farmer.userId.nic === nic);
+      }
+  
+      res.status(200).json(filteredFarmers);
+    } catch (err) {
+      console.error("Error fetching farmers by orgAddress:", err);
+      return res.status(500).json({ message: "Internal Server Error" });
+    }
+  }
 
 }
 

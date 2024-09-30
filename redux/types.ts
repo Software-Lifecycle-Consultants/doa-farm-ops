@@ -94,6 +94,18 @@ export interface LabourCost{
   foodCostPerDay: string;
 }
 
+
+export interface FarmerSearchResult{
+  household: string;
+  orgName: string;
+  orgAddress: string;
+  userId: User; 
+  lands: Land[]
+
+}
+
+
+
 // Define the structure of the Redux store's state using the RootState type.
 export type RootState = {
   auth: Auth;
@@ -109,6 +121,12 @@ export type RootState = {
   material: { material: MaterialCost[] | null};
   machinery: { machinery: MachineryCost[] | null};
   labour: { labour: LabourCost[] | null};
+  viewFarmer: {
+    user: User | null;
+    farmerDetails: FarmerDetails | null;
+    isLoading: boolean;
+    error: string | null;
+  };
 };
 
 
