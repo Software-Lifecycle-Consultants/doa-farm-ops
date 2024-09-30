@@ -27,13 +27,18 @@ import { CustomBox1 } from "@/Theme";
 import axios from "axios";
 import store from "@/redux/store";
 // Import the necessary selectors from the respective slices
-import { selectLands } from "@/redux/landSlice";
+import { selectLands, fetchAndRegisterLands } from "@/redux/landSlice";
 import { selectAuth } from "@/redux/authSlice";
 import { districtList } from "@/data/landsData";
 import { schemaLand  } from "@/schemas/add.land.schema";
 import { validateFormData } from '@/utils/validation';
 import { toast } from 'react-toastify';
-import { ZodErrors } from "@/components/ZodErrors";;
+import { ZodErrors } from "@/components/ZodErrors";
+import { AppDispatch } from '@/redux/store';
+import { useSelector } from 'react-redux';
+import { selectViewedFarmerUser } from '@/redux/ViewFarmerSlice'; // Adjust the path if necessary
+import { RootState } from "@/redux/types";
+
 
 /**
  * Add Land page serves as a form to add details about land properties.
@@ -41,21 +46,20 @@ import { ZodErrors } from "@/components/ZodErrors";;
 
 export default function AddNewLand() {
   const router = useRouter();
+  const dispatch: AppDispatch = useDispatch();
+  const { t } = useTranslation();
+
+  // Get the current user and the viewed farmer user (if switched by an officer)
+  const currentUser = useSelector((state: RootState) => state.user.user); // Updated to correctly access the 'user'
+  // const farmerUser = useSelector((state: RootState) => state.viewFarmer.user);
+  const farmerUser = useSelector(selectViewedFarmerUser);
+  const farmerId = farmerUser?._id || currentUser?._id;
 
   const districtNames = districtList.map((district) => district.name);
 
-  //const landDetails = useSelector((state: RootState) => state.land);
-
-  // State for managing form data and map-related data
-  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(
-    null
-  );
-  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>(
-    []
-  );
+  const [markerCoordinates, setMarkerCoordinates] = useState<number[] | null>(null);
+  const [polygonCoordinates, setPolygonCoordinates] = useState<number[][][]>([]);
   const [drawType, setDrawType] = useState<"Point" | "Polygon">("Point");
-  const { t } = useTranslation();
-
   const [responseData, setResponseData] = useState(null);
 
   // Define the structure of the form data
@@ -82,7 +86,6 @@ export default function AddNewLand() {
   });
 
   const [validationErrors, setValidationErrors] = useState<Partial<FormData>>({});
-  const dispatch = useDispatch();
 
   // Managing state for displaying the map
   const [showMap, setShowMap] = useState(false);
@@ -92,47 +95,57 @@ export default function AddNewLand() {
     setShowMap(true);
   };
 
-  //Function to navigate to Farmer Profile page clicking save & exit to Farmer Profile button
-  const handleOnClickAddNewLand = async (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault(); // Prevent the default form submission behavior
-    // const validation = schemaAddLand.safeParse(formData);
-    const { valid, errors } = validateFormData(schemaLand, formData);
-    if (!valid) {
-      //  const flattenedErrors = validation.error.flatten().fieldErrors;
-      setValidationErrors(errors);
-      if (errors.landName) {
-        toast.error(errors.landName[0]);
-      }
-    return;
-      }
-    try {
-      const action = addNewLand(formData);
-      dispatch(action);
+// Function to navigate to Farmer Profile page by clicking save & exit to Farmer Profile button
+const handleOnClickAddNewLand = async (
+  event: React.MouseEvent<HTMLButtonElement>
+) => {
+  event.preventDefault(); // Prevent the default form submission behavior
 
-      //Get logged user Id from redux
-      const loggedUser = selectAuth(store.getState());
-      const userId = loggedUser.auth._id;
-
-      // Get land data from the Redux store
-      const landData = selectLands(store.getState());
-      const landDataObject = landData?.[landData.length - 1];
-      const landDetails = { ...landDataObject, userId };
-
-      const response = await axios.post(
-        "http://localhost:5000/api/land/create", landDetails
-      );
-      if (response && response.status === 200) {
-        setResponseData(response.data);
-        setOpenSuccessDialog(true); // Open success dialog on success
-      } else if (response && response.status === 400) {
-        console.error("Failed to fetch data");
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
+  const { valid, errors } = validateFormData(schemaLand, formData);
+  if (!valid) {
+    setValidationErrors(errors);
+    if (errors.landName) {
+      toast.error(errors.landName[0]);
     }
-  };
+    return;
+  }
+
+  try {
+    // Ensure farmerId is available
+    if (!farmerId) {
+      console.error('Farmer ID is not available');
+      return;
+    }
+
+    // Add user ID to land details
+    const landDetails = { ...formData, userId: farmerId };
+
+    // Post land details to the server
+    const response = await axios.post(
+      'http://localhost:5000/api/land/create',
+      landDetails
+    );
+
+    if (response && response.status === 200) {
+      // Dispatch action to add land to Redux store
+      dispatch(addNewLand(response.data));
+
+      // Re-fetch lands for the farmer to update the profile view
+      await dispatch(fetchAndRegisterLands(farmerId));
+
+      // Open success dialog on success
+      setResponseData(response.data);
+      setOpenSuccessDialog(true);
+    } else if (response && response.status === 400) {
+      console.error('Failed to add land');
+    }
+  } catch (error) {
+    console.error('Error adding land:', error);
+  }
+};
+
+
+
 
   //Function to navigate to add crop page
   const navigationToAddCrop = async (
@@ -193,6 +206,8 @@ export default function AddNewLand() {
     setOpenSuccessDialog(false);
     router.push("/farmer-profile");
   };
+
+  
 
   return (
     <Container component="main" maxWidth="xl">

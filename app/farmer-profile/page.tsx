@@ -19,26 +19,35 @@ import { useSelector } from "react-redux";
 import { useDispatch } from 'react-redux';
 import { selectUser, fetchAndRegisterUser } from '@/redux/userSlice';
 import { fetchAndRegisterFarmer, selectFarmerDetails } from '@/redux/farmerSlice';
-import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
-/**
- * This component represents the farmer's profile page, displaying personal information, other details, and a table of land details associated with the farmer.
- * Users can view and edit their profile information, as well as add new land details.
- */
-export default function FarmerProfile() {
+import { AppDispatch } from '@/redux/store';
+import {  selectViewedFarmerUser, selectViewedFarmerDetails } from '@/redux/ViewFarmerSlice';
+
+const FarmerProfile = () => {
   const router = useRouter();
   const { t } = useTranslation();
-  // const dispatch = useDispatch();
-  const dispatch: AppDispatch = useDispatch() // Type the dispatch function with explicitly specifies the type of dispatch as AppDispatch.
-  // Fetch the authentication status from Redux store
-  const auth = useSelector(selectAuth);
-  const user = useSelector(selectUser);
-  const farmerDetails = useSelector(selectFarmerDetails);
+  const dispatch: AppDispatch = useDispatch();
 
-  //Funtion to execute the two asynchronous actions to fetch and register farmer details and user details using the current authentication ID. 
+  const auth = useSelector(selectAuth);
+  const isOfficer = auth.auth.role === 'officer';
+  
+  // Always call useSelector for both values
+  const regularUser = useSelector(selectUser);
+  const viewedFarmerUser = useSelector(selectViewedFarmerUser);
+  const regularFarmerDetails = useSelector(selectFarmerDetails);
+  const viewedFarmerDetails = useSelector(selectViewedFarmerDetails);
+
+  // Conditionally assign values based on the officer status
+  const user = isOfficer ? viewedFarmerUser : regularUser;
+  const farmerDetails = isOfficer ? viewedFarmerDetails : regularFarmerDetails;
+
   React.useEffect(() => {
-    dispatch(fetchAndRegisterUser(auth.auth._id)); // Fetch user details
-    dispatch(fetchAndRegisterFarmer(auth.auth._id)); // Fetch farmer details
-  }, [auth.auth._id, dispatch]);
+    if (isOfficer && (!viewedFarmerUser || !viewedFarmerDetails)) {
+      // Officer-specific logic, potentially fetch viewed farmer details here
+    } else if (!isOfficer) {
+      dispatch(fetchAndRegisterUser(auth.auth._id));
+      dispatch(fetchAndRegisterFarmer(auth.auth._id));
+    }
+  }, [isOfficer, viewedFarmerUser, viewedFarmerDetails, dispatch, auth.auth._id]);
 
   const handleEditClick = async (userId: any) => {
     try {
@@ -55,6 +64,7 @@ export default function FarmerProfile() {
       console.error("Error updating details:", error);
     }
   };
+
 
   return (
     <>
@@ -80,7 +90,7 @@ export default function FarmerProfile() {
                   marginBottom: "4px",
                 }}
               >
-                {user && user.firstName} {user && user.lastName}
+                {user?.firstName} {user?.lastName}
               </Typography>
               <Typography
                 variant="subtitle1"
@@ -129,7 +139,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {user && user.firstName}
+                {user?.firstName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -139,7 +149,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {user && user.lastName}
+                {user?.lastName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -149,7 +159,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {user && user.email}
+                {user?.email}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -159,7 +169,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {user && user.nic}
+                {user?.nic}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -169,7 +179,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {user && user.address}
+                {user?.address}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -179,12 +189,12 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {user && user.phoneNumber}
+                {user?.phoneNumber}
               </Typography>
             </Grid>
           </Grid>
         </Grid>
-        {/* Other Details Section*/}
+        {/* Other Details Section */}
         <Grid item xs={12} p={2} sx={customGridStyles1}>
           <Grid container item rowGap={2} p={2} sx={customGridStyles2}>
             <Grid
@@ -219,7 +229,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {farmerDetails && farmerDetails.household}
+                {farmerDetails?.household}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -229,7 +239,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {farmerDetails && farmerDetails.orgName}
+                {farmerDetails?.orgName}
               </Typography>
             </Grid>
             <Grid item xs={12} md={6}>
@@ -239,7 +249,7 @@ export default function FarmerProfile() {
               <Typography
                 variant="body1"
               >
-                {farmerDetails && farmerDetails.orgAddress}
+                {farmerDetails?.orgAddress}
               </Typography>
             </Grid>
           </Grid>
@@ -274,10 +284,14 @@ export default function FarmerProfile() {
           </Grid>
           {/* Include the LandsTable component */}
           <Grid item xs={12}>
-            <LandsTable title="Farmer profile" />
+                  {/* render the LandsTable component only if user?._id is defined */}
+                  <LandsTable title="Land Details" userId={user?._id || ''} />
           </Grid>
         </Grid>
+    
       </Grid>
     </>
   );
-}
+};
+
+export default FarmerProfile;

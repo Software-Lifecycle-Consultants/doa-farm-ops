@@ -64,7 +64,8 @@ export const deleteCropAsync = createAsyncThunk(
     async (cropId: string) => {
         try {
         const response = await axios.delete(`http://localhost:5000/api/crop/delete/${cropId}`);
-        return response.data; // Assuming the response contains a success message
+        console.log("Response:", response.data);
+        return response.data.cropId; // Assuming the response contains a success message
     } catch (error) {
             return Promise.reject(error);
         } }
@@ -122,6 +123,7 @@ const cropSlice = createSlice({
       // Handle successful fulfillment of deleteCropAsync
         .addCase(deleteCropAsync.fulfilled, (state, action: PayloadAction<string>) => {
             const deletedCropId = action.payload;
+            console.log("Deleted crop ID:", deletedCropId);
             if (state.crops) {
                 state.crops = state.crops.filter((crop) => crop._id !== deletedCropId);
             }

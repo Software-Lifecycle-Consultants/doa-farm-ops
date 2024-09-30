@@ -28,10 +28,21 @@ import { navBarBtnStyles } from "@/styles/customStyles";
 
 
 //Define the pages and routes for navigation
-const pages = [
+// Define the common pages
+const commonPages = [
   { label: "navBar.tabHome", route: "/" },
-  // { label: "navBar.tabProfile", route: "./farmer-profile" },
+];
+
+// Define pages for farmers
+const farmerPages = [
   { label: "navBar.tabCrops", route: "/my-crops" },
+  { label: "navBar.tabProfile", route: "/farmer-profile" },
+];
+
+// Define pages for officers
+const officerPages = [
+  { label: "Search Farmers", route: "/farmer-search" },
+  { label: "navBar.tabProfile", route: "/officer-profile" },
 ];
 
 //Define languages for the language selector button
@@ -55,190 +66,181 @@ const NavBar = () => {
   const isMatch = useMediaQuery(theme.breakpoints.down("md")); // Media query for responsiveness
   const { t } = useTranslation(); // Translation function
 
-  // Fetch the authentication status from Redux store
+// Fetch the authentication status from Redux store
   const { isAuthenticated } = useSelector(selectAuth);
 
   // Fetch the authentication status from Redux store
   const { auth } = useSelector(selectAuth);
 
-  // Effect to set initial tab state based on authentication status
-  useEffect(() => {
-    if (isAuthenticated) {
-      setValue(0); // If authenticated, show Home tab
-    } else {
-      setValue(-1); // If not authenticated, no tab selected
-    }
-  }, [isAuthenticated]);
+// Effect to set initial tab state based on authentication status
+useEffect(() => {
+  if (isAuthenticated) {
+    setValue(0); // If authenticated, show Home tab
+  } else {
+    setValue(-1); // If not authenticated, no tab selected
+  }
+}, [isAuthenticated]);
 
-  //Function to handle tab change
-  const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
-    setValue(newValue);
-  };
+//Function to handle tab change
+const handleChange = (event: ChangeEvent<{}>, newValue: number) => {
+  setValue(newValue);
+};
 
-  //Function to navigate to different screens
-  const navigationToScreens = (route: string) => {
-    router.push(route);
-  };
+//Function to navigate to different screens
+const navigationToScreens = (route: string) => {
+  router.push(route);
+};
 
-  //Function to handle language selector
-  const handleLanguageClick = (event: React.MouseEvent<HTMLElement>) => {
-    setLanguageAnchorEl(event.currentTarget);
-  };
+//Function to handle language selector
+const handleLanguageClick = (event: React.MouseEvent<HTMLElement>) => {
+  setLanguageAnchorEl(event.currentTarget);
+};
 
-  //Function to close language selector
-  const handleLanguageClose = () => {
-    setLanguageAnchorEl(null);
-  };
+//Function to close language selector
+const handleLanguageClose = () => {
+  setLanguageAnchorEl(null);
+};
 
-  // Function to handle language change
-  const changeLanguage = (code: string) => {
-    i18n.changeLanguage(code).then(() => {
-      // Ensure the language change is complete before updating UI
-      handleLanguageClose();
-      // Update the selected language in the state
-      setSelectedLanguage(code);
-    });
-  };
+// Function to handle language change
+const changeLanguage = (code: string) => {
+  i18n.changeLanguage(code).then(() => {
+    // Ensure the language change is complete before updating UI
+    handleLanguageClose();
+    // Update the selected language in the state
+    setSelectedLanguage(code);
+  });
+};
 
-  // Find the selected language label, or use "Unknown Language" if not found
-  const selectedLanguageLabel = languages.find((lang) => lang.code === selectedLanguage)?.label ?? "Unknown Language";
+// Find the selected language label, or use "Unknown Language" if not found
+const selectedLanguageLabel = languages.find((lang) => lang.code === selectedLanguage)?.label ?? "Unknown Language";
 
-  // Define a function to handle user logout.
-  const handleLogout = () => {
-    dispatch(logout()); // Dispatch logout action
-    router.push('/'); // Redirect to Home tab after logout
-  };
+// Define a function to handle user logout.
+const handleLogout = () => {
+  dispatch(logout()); // Dispatch logout action
+  router.push('/'); // Redirect to Home tab after logout
+};
 
-  // Define a function to handle user login.
-  const handleLogin = () => {
-    router.push('/login'); // Redirect to login page
-  };
+// Define a function to handle user login.
+const handleLogin = () => {
+  router.push('/login'); // Redirect to login page
+};
 
-  return (
-    <>
-      <AppBar
-        position="static"
-        elevation={0}
-        sx={{
-          backgroundColor: "white",
-          color: "#000000",
-          paddingTop: "20px",
-          boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25)",
-        }}
-      >
-        <Toolbar disableGutters>
-          <Box sx={{ width: "18vh", height: "7vh", paddingLeft: "2vh" }}>
-            <Image src={logo} width={142} height={50} alt="logo" />
-          </Box>
+// Determine which pages to display based on user role
+const pages = [
+  ...commonPages,
+  ...(auth.role === "officer" ? officerPages : farmerPages)
+];
+return (
+  <>
+    <AppBar
+      position="static"
+      elevation={0}
+      sx={{
+        backgroundColor: "white",
+        color: "#000000",
+        paddingTop: "20px",
+        boxShadow: "0px 0px 4px 0px rgba(0, 0, 0, 0.25)",
+      }}
+    >
+      <Toolbar disableGutters>
+        <Box sx={{ width: "18vh", height: "7vh", paddingLeft: "2vh" }}>
+          <Image src={logo} width={142} height={50} alt="logo" />
+        </Box>
 
-          {isMatch ? (
-            <>
+        {isMatch ? (
+          <>
               {/* Call the drawer component for mobile views */}
               {/* DrawerComponent with various props */}
-              <DrawerComponent
-                changeLanguage={changeLanguage}
-                handleLanguageClick={handleLanguageClick}
-                selectedLanguageLabel={selectedLanguageLabel}
-                languageAnchorEl={languageAnchorEl}
-                handleLanguageClose={handleLanguageClose}
-                selectedLanguage={selectedLanguage}
-              />
-            </>
-          ) : (
-            <>
-              {isAuthenticated && (
-                <Tabs
-                  sx={{ marginLeft: "auto" }}
-                  value={value}
-                  onChange={handleChange}
-                  textColor="inherit"
-                  indicatorColor="secondary"
-                  TabIndicatorProps={{
-                    style: { backgroundColor: "#000", width: "90px" },
-                  }}
-                >
-                  {pages.map((page, index) => (
+            <DrawerComponent
+              changeLanguage={changeLanguage}
+              handleLanguageClick={handleLanguageClick}
+              selectedLanguageLabel={selectedLanguageLabel}
+              languageAnchorEl={languageAnchorEl}
+              handleLanguageClose={handleLanguageClose}
+              selectedLanguage={selectedLanguage}
+            />
+          </>
+        ) : (
+          <>
+            {isAuthenticated && (
+              <Tabs
+                sx={{ marginLeft: "auto" }}
+                value={value}
+                onChange={handleChange}
+                textColor="inherit"
+                indicatorColor="secondary"
+                TabIndicatorProps={{
+                  style: { backgroundColor: "#000", width: "90px" },
+                }}
+              >
+                {pages.map((page, index) => (
 
-                    <Tab
-                      key={index}
-                      label={t(page.label)}
-                      onClick={() => navigationToScreens(page.route)}
-                    />
-                  ))}
-
-                  {/* Profile tab based on user role */}
-                  {auth.role === "farmer" && (
-                    <Tab
-                      label={t("navBar.tabProfile")}
-                      onClick={() => navigationToScreens("/farmer-profile")} // Redirects to farmer profile page
-                    />
-                  )}
-                  {auth.role === "officer" && (
-                    <Tab
-                      label={t("navBar.tabProfile")}
-                      onClick={() => navigationToScreens("/officer-profile")} // Redirects to officer profile page
-                    />
-                  )}
-                </Tabs>
-              )}
+                  <Tab
+                    key={index}
+                    label={t(page.label)}
+                    onClick={() => navigationToScreens(page.route)}
+                  />
+                ))}
+              </Tabs>
+            )}
 
               {/* Language selector button */}
-              <Button
-                variant="text"
-                sx={{
-                  color: "#000000",
-                  textTransform: "none",
-                  margin: "5px",
-                  marginLeft: "auto",
-                }}
-                onClick={handleLanguageClick}
-              >
-                {selectedLanguageLabel}
-                <LanguageIcon sx={{ marginLeft: "5px" }} />
-              </Button>
+            <Button
+              variant="text"
+              sx={{
+                color: "#000000",
+                textTransform: "none",
+                margin: "5px",
+                marginLeft: "auto",
+              }}
+              onClick={handleLanguageClick}
+            >
+              {selectedLanguageLabel}
+              <LanguageIcon sx={{ marginLeft: "5px" }} />
+            </Button>
 
               {/* Language selector */}
-              <Menu
-                anchorEl={languageAnchorEl}
-                open={Boolean(languageAnchorEl)}
-                onClose={handleLanguageClose}
-              >
-                {languages.map((lang) => (
-                  <MenuItem
-                    key={lang.code}
-                    onClick={() => changeLanguage(lang.code)}
+            <Menu
+              anchorEl={languageAnchorEl}
+              open={Boolean(languageAnchorEl)}
+              onClose={handleLanguageClose}
+            >
+              {languages.map((lang) => (
+                <MenuItem
+                  key={lang.code}
+                  onClick={() => changeLanguage(lang.code)}
                     selected={selectedLanguage === lang.code} // Set 'selected' prop
-                  >
-                    {lang.label}
-                  </MenuItem>
-                ))}
-              </Menu>
+                >
+                  {lang.label}
+                </MenuItem>
+              ))}
+            </Menu>
 
               {/* SignOut button */}
-              {isAuthenticated ? (
-                <Button
-                  variant="text"
-                  sx={navBarBtnStyles}
-                  onClick={handleLogout}
-                >
-                  Sign Out <ExitToAppIcon sx={{ marginLeft: "5px" }} />
-                </Button>
-              ) : (
+            {isAuthenticated ? (
+              <Button
+                variant="text"
+                sx={navBarBtnStyles}
+                onClick={handleLogout}
+              >
+                Sign Out <ExitToAppIcon sx={{ marginLeft: "5px" }} />
+              </Button>
+            ) : (
                 // SignIn button
-                <Button
-                  variant="text"
-                  sx={navBarBtnStyles}
-                  onClick={handleLogin}
-                >
-                  Sign In <LoginIcon sx={{ marginLeft: "5px" }} />
-                </Button>
-              )}
-            </>
-          )}
-        </Toolbar>
-      </AppBar>
-    </>
-  );
+              <Button
+                variant="text"
+                sx={navBarBtnStyles}
+                onClick={handleLogin}
+              >
+                Sign In <LoginIcon sx={{ marginLeft: "5px" }} />
+              </Button>
+            )}
+          </>
+        )}
+      </Toolbar>
+    </AppBar>
+  </>
+);
 }
 
 export default NavBar;

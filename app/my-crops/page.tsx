@@ -23,6 +23,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { selectAuth } from "@/redux/authSlice";
 import { fetchAndRegisterLands } from "@/redux/landSlice";
 import { AppDispatch } from '@/redux/store'; // Import the AppDispatch type
+import { RootState } from "@/redux/types";
 // import i18n from "../config/i18n";// Import the i18n instance
 
 /**
@@ -33,8 +34,12 @@ export default function MyCrops() {
 
   const router = useRouter();
   const { t } = useTranslation();
-  const dispatch:AppDispatch = useDispatch();
-  const auth = useSelector(selectAuth);
+  const dispatch: AppDispatch = useDispatch();
+
+  // Fetch current user and farmer user from the Redux store
+  const currentUser = useSelector((state: RootState) => state.user.user);
+  const farmerUser = useSelector((state: RootState) => state.viewFarmer.user);
+  const farmerId = farmerUser?._id || currentUser?._id || "";
 
   // State variables to store filter values
   const [seasonFilter, setSeasonFilter] = React.useState("");
@@ -54,11 +59,11 @@ export default function MyCrops() {
 
   // Fetch crops and lands data on component mount
   React.useEffect(() => {
-    if (auth.auth._id) {
-      dispatch(fetchCrops(auth.auth._id));
-      dispatch(fetchAndRegisterLands(auth.auth._id));
+    if (farmerId) {
+      dispatch(fetchCrops(farmerId));
+      dispatch(fetchAndRegisterLands(farmerId));
     }
-  }, [auth.auth._id, dispatch]);
+  }, [farmerId, dispatch]);
 
   // Return the JSX for rendering
   return (
@@ -145,7 +150,7 @@ export default function MyCrops() {
         ></Grid>
         <Grid item xs={12}>
           {/* Table to display crops */}
-          <CropsTable title="My Crops" />
+          <CropsTable title="My Crops" userId={farmerId} />
         </Grid>
       </Grid>
     </Grid>
